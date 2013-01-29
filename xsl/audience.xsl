@@ -34,12 +34,10 @@
     <xsl:param name="rootMapDocUrl" as="xs:string" tunnel="yes"/>
     <xsl:message> + [INFO] Generating audience select </xsl:message>
     <span id="audience-widget">
-    	<h2><xsl:call-template name="getString">
-                    <xsl:with-param name="stringName" select="'change'"/>
-                </xsl:call-template>
-                <span class="ui-icon ui-icon-triangle-1-s">
-                      <xsl:sequence select="'&#x0a;'"/>
-                </span></h2>
+    	<h1>
+    		<xsl:value-of select="*[df:class(., 'map/topicmeta')]/*[contains(@class, ' topic/audience ')][@name=$activeAudience]/@othertype" />
+    		<span class="ui-icon ui-icon-carat-2-n-s"></span>
+    	</h1>
 		<ul id="audience-select">
     		<xsl:apply-templates select="*[df:class(., 'map/topicmeta')]" mode="generate-audience-select"/>
     	</ul>
@@ -57,7 +55,8 @@
   <xsl:if test="@name != $activeAudience">
 	<li>
 		<a href="{concat($relativePath, $indexUri, '/../../', @name, '/')}">
-			<xsl:value-of select="concat(upper-case(@name), ' - ', @othertype)" />
+			<xsl:value-of select="@othertype" />
+			<span class="ligther"> <xsl:value-of select="upper-case(@name)" /></span>
 		</a>
 	</li>
 </xsl:if>
