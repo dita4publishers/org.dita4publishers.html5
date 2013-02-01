@@ -18,7 +18,6 @@
   <style path="modules/images/css/images.css" />  
   <style path="themes/uo/css/theme.css" /> 
   
-  <script path="core/jQuery/jquery-1.7.1.min.js" />
   <script path="core/d4p/js/array.prototype.js" />
   <script path="core/d4p/js/d4p.js" />
   

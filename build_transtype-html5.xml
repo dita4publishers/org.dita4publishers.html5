@@ -343,9 +343,8 @@
   	<property name="args.xhtml.toc" value="index"></property>
 
     <xslt processor="trax" basedir="${dita.temp.dir}" destdir="${output.dir}" includesfile="${dita.temp.dir}${file.separator}${user.input.file.listfile}" classpathref="dost.class.path" style="${map2html5.style}" filenameparameter="inputFileNameParam">
-
-      
-    		
+    	
+     	
 	
 <param name="siteTheme" expression="${html5.site.theme}"></param>
 	
