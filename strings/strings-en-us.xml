@@ -10,6 +10,6 @@
 <str name="turnJavascriptOn">To read this documentation, you must turn JavaScript on.</str>
 <str name="BackToTop">Back to top</str>
 
-   <str name="change">[Select another group]</str>  
+   <str name="chooseAudience">Select another group</str>  
 
 </strings>

@@ -12,7 +12,7 @@
    <str name="SkipToFooter">Aller au bas de la page</str>
    <str name="turnJavascriptOn">Pour consulter cette documentation, vous devez activer Javascript.</str>
    <str name="BackToTop">Haut de la page</str>
-   <str name="change">[Sélectionner un autre groupe]</str>  
+   <str name="chooseAudience">Sélectionner un autre groupe</str>  
    
    
 </strings>

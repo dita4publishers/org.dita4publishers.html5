@@ -36,7 +36,11 @@
     <span id="audience-widget">
     	<h1>
     		<xsl:value-of select="*[df:class(., 'map/topicmeta')]/*[contains(@class, ' topic/audience ')][@name=$activeAudience]/@othertype" />
-    		<span class="ui-icon ui-icon-carat-2-n-s"></span>
+    		<button class="audienceBtn">
+    			<span class="ui-icon ui-icon-carat-2-n-s"><xsl:call-template name="getString">
+                    <xsl:with-param name="stringName" select="'chooseAudience'"/>
+                </xsl:call-template></span>
+    		</button>
     	</h1>
 		<ul id="audience-select">
     		<xsl:apply-templates select="*[df:class(., 'map/topicmeta')]" mode="generate-audience-select"/>
