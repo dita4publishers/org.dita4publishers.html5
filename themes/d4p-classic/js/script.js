@@ -1187,7 +1187,7 @@ Array.prototype.clean = function (s) {
 
         'ext': '.html',
 
-        'timeout': 3000,
+        'timeout': 30000,
 
         // main output selectors
         'outputSelector': '#d4h5-main-content',
@@ -1228,6 +1228,9 @@ Array.prototype.clean = function (s) {
 
         // scrollElement
         'scrollElem': {},
+        
+        // document information
+        'document': {},
 
         //scroll duration in ms
         'scrollDuration': 400,
@@ -1253,19 +1256,22 @@ Array.prototype.clean = function (s) {
 
         // l current hash and return the uri + the hash
         l: function () {
-            var r = document.location.hash.substring(1), s = [], o = {};
+            var r = document.location.hash.substring(1), s = [], o = {}, v = false;
             if (r !== '') {
                 s = r.split('#');
+                v = s[0].substring(0, 1) === "/" ? true : false; 
                 o = {
                     'uri': s[0],
                     'hash': s[1] !== undefined ? s[1] : '',
-                    'id': s[0].replace(/\//g, '__')
+                    'id': s[0].replace(/\//g, '__'),
+                    'virtual': v
                 };
             } else {
                 o = {
                     'uri': '',
                     'hash': '',
-                    'id': ''
+                    'id': '',
+                    'virtual': v
                 };
             }
             return o;
@@ -1332,21 +1338,24 @@ Array.prototype.clean = function (s) {
         },
 
         // check if a jQuery object has an id or create one
-        getIds: function (obj) {
-            var id = obj.attr('id');
-            var href = obj.attr('href');
-            var hrefID = href.substring(0, href.length - d4p.ext.length);
-            var attrs = {};
+        vlink: function (obj) {
+            var objId = obj.attr('id'),
+            objHref = obj.attr('href'),
+            href = objHref.substring(0, objHref.length - d4p.ext.length),
+            hrefID = "/"+ href,
+            id = hrefID.replace(/\//g, '__');
 
             // create an ID for future reference if not set
-            if (id === '' || id == undefined) {
-                id = d4p.ids.prefixLink + d4p.ids.n;
+            if (objId === '' || objId == undefined) {
+                objId = d4p.ids.prefixLink + d4p.ids.n;
                 d4p.ids.n++;
             };
 
             return {
-                linkID: id,
-                hrefID: hrefID
+                'linkID': objId,
+                'href': objHref,
+                'hrefID': hrefID,
+                'id': id
             };
 
         },
@@ -1366,24 +1375,34 @@ Array.prototype.clean = function (s) {
 
         // load initial content to avoid a blank page
         getInitialContent: function () {
-            if ($(d4p.outputSelector).length == 1 && d4p.loadInitialContent) {
-                var l = d4p.l();
-                if (l.uri !== '') {
-                    d4p.uriChanged(l.uri, l.hash);
-                } else {
-                    var el = $(d4p.navigationSelector + ' a:first-child');
-                    if (el.attr('href') == undefined) {
-                        return false;
-                    }
-                    url = $(d4p.navigationSelector + ' a:first-child')
-                        .attr('href')
-                        .replace(/^#/, '');
-                    document.location.hash = url;
-                }
-                d4p.loadInitialContent = false;
+            var l = d4p.l();
+           
+            if (l.uri !== '') {
+              d4p.uriChanged(l.uri, l.hash);
+              return true;
             }
+            
+            if ($(d4p.outputSelector).length == 1 && d4p.loadInitialContent) {
+               
+				var el = $(d4p.navigationSelector + ' a:first-child');
+                if (el.attr('href') == undefined) {
+                    return false;
+                }
+                url = $(d4p.navigationSelector + ' a:first-child')                         
+                	.attr('href')
+					.replace(/^#/, '');
+                    document.location.hash = url;
+                
+               	d4p.loadInitialContent = false;
+            }
+            
+          
         },
-
+        
+        getDocInfos: function () {
+        	this.document['title'] = $('title').html();
+        },
+        
         // execute callbacks function on uri changed
         uriChanged: function (uri, hash) {
             var l = d4p.l();
@@ -1412,6 +1431,10 @@ Array.prototype.clean = function (s) {
             // extend options
             this.setProps(options);
 
+			// get document information
+			 this.getDocInfos();
+
+			
             // redirect if not on the index page
             if (d4p.relativePath != "" && l.uri.indexOf(d4p.indexFilename) != 0) {
                 redirect = d4p.resolveRoot();
@@ -1442,7 +1465,7 @@ Array.prototype.clean = function (s) {
             });
 
             this.getInitialContent();
-
+            
             this.inited = true;
 
             return true;
@@ -1528,85 +1551,6 @@ Array.prototype.clean = function (s) {
   };
 
 })(window, d4p);/**
- *  @file message
- *
- *  Allow to send quick message to the user
- *  Might have an alternate version to work with UI dialog
- *
- *  Copyright 2012 DITA For Publishers  
- * 
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *  http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- */ 
-(function (d4p) {
-
-  // use ui-dialog instead ?
-
-  var message = new d4p.module('msg', {
-    // id of the div element to be created
-    'id': 'd4p-message',
-
-    'timeout': 3000,
-
-    // message type
-    create: function () {
-      var msgBox = $("<div />")
-        .attr('id', this.id)
-        .attr('role', 'alertdialog')
-        .attr('aria-hidden', 'true')
-        .attr('aria-label', 'Message')
-        .addClass('rounded')
-        .hide(), 
-      div = msgBox.append($("<div />"));
-      $('body')
-        .append(msgBox);
-    },
-
-    // create message container    
-    init: function () {
-      this.create();
-
-      $(document).mouseup(function (e) {
-        var container = $(this.id);
-
-        if (container.has(e.target).length === 0) {
-          container.hide();
-        }
-      });
-    },
-
-    show: function () {
-      $("#" + this.id)
-        .show()
-        .attr('aria-hidden', 'false')
-        .delay(this.timeout)
-        .fadeOut()
-        .attr('aria-hidden', 'true');
-    },
-
-    alert: function (msg, type) {
-      var p = {};
-      type = type == undefined ? '' : type;
-      p = $("<p />")
-        .addClass(type)
-        .text(msg);
-      $("#" + this.id + " > div")
-        .html(p);
-      this.show();
-    }
-  });
-
-})(d4p);/**
  *  @file d4p.ajaxLoader
  *
  *  This object is used to perform ajax call on page
@@ -1647,6 +1591,7 @@ Array.prototype.clean = function (s) {
         this._ready = [];
         this._live = [];
         this._failed = [];
+        this._postFilter = [];
 
         // store references
         this.collection = [],
@@ -1708,43 +1653,53 @@ Array.prototype.clean = function (s) {
     };
 
     // Add entry into the collection
-    d4p.ajaxLoader.prototype.collectionSet = function (id, uri, title) {
-        if (this.collection[id] == undefined) {
-            this.collection[id] = {
+    d4p.ajaxLoader.prototype.collectionSet = function (refpath, uri, id, refid, title) {
+        if (this.collection[refpath] == undefined) {
+            this.collection[refpath] = {
                 'cache': false,
-                'uri': uri,
-                'id': uri.replace(/\//g, '__'),
+                'uri':  uri,
+                'id': id,
+                'refid' : refid,
                 'title': title
             };
         }
     };
 
     // Add entry into the collection
-    d4p.ajaxLoader.prototype.setCacheStatus = function (id) {
-        this.collection[id].cache = true;
+    d4p.ajaxLoader.prototype.setCacheStatus = function (refpath) {
+        this.collection[refpath].cache = true;
     };
 
     // tell if id is cached
-    d4p.ajaxLoader.prototype.isCached = function (id) {
-        return this.collection[id] != undefined ? this.collection[id].cache : false;
+    d4p.ajaxLoader.prototype.isCached = function (refpath) {
+    	var ret = false;
+        if(this.inCollection(refpath)){
+            ret = this.collection[refpath].cache;
+        }
+        return ret;
     };
-
+    
     // Add entry into the collection
-    d4p.ajaxLoader.prototype.inCollection = function (id) {
-        return this.collection[id];
+    d4p.ajaxLoader.prototype.getCollection = function (refpath) {
+        return this.collection[refpath];
+    };
+    
+    // Add entry into the collection
+    d4p.ajaxLoader.prototype.inCollection = function (refpath) {
+        return this.collection[refpath] == undefined ? false : true;
     };
 
     // Set title of the page
     d4p.ajaxLoader.prototype.setTitle = function () {
         $('title').html(this.title);
         // replace title in collection, may be more accurate
-        this.collection[this.id]['title'] = this.title;
+        this.collection[this.refpath]['title'] = this.title;
     },
 
     // set content of the page
     // this function use the hash value as an ID
     d4p.ajaxLoader.prototype.setMainContent = function () {
-        var id = this.id.replace(/\//g, '__'),
+        var id = this.refpath.replace(/\//g, '__'),
             div = $("<div />").attr('id', id).attr('class', 'content-chunk').html(this.content),
             fn = {};
 
@@ -1761,7 +1716,7 @@ Array.prototype.clean = function (s) {
         if (this.mode == 'append') {
             // append new div, but hide it
             $(this.outputSelector).append(div);
-            this.setCacheStatus(this.id);
+            this.setCacheStatus(this.refpath);
         } else {
             $(this.outputSelector).html(div.html());
         }
@@ -1778,7 +1733,7 @@ Array.prototype.clean = function (s) {
             if(d4p.protocols.indexOf(parts[0]) !== -1) {
                 nhref = src;
             } else {
-                nhref = l.uri.substring(0, l.uri.lastIndexOf("/")) + "/" + src;   
+                nhref = l.uri.substring(1, l.uri.lastIndexOf("/")) + "/" + src;   
             }
             return attr + '="' + nhref + '"';
         });
@@ -1819,7 +1774,7 @@ Array.prototype.clean = function (s) {
 
                 // anchors on the same page
                 if (idx == 0) {
-                    newHref = href.substring(l.uri.length);
+                    newHref = '#' + href;
                 } else {
 
                     parts = href.split('/');
@@ -1831,6 +1786,10 @@ Array.prototype.clean = function (s) {
                         if (parts[i] === '..' || (parts[i] === '')) {
                             nPath[i] = '';
                             base[base.length - 1] = '';
+                        }
+                        
+                        if (parts[i] === 'index') {
+                            nPath[i] = '/home';
                         }
                         
                     }
@@ -1858,13 +1817,13 @@ Array.prototype.clean = function (s) {
      * @todo: implement beforeSend, error callback
      */
     d4p.ajaxLoader.prototype.load = function (uri, hash) {
-        var fn = {}, i = 0;
-        this.id = uri.replace(d4p.ext, '');
-        this.uri = uri;
+        var fn = {}, i = 0;      
+        this.uri = this.collection[uri].uri;
+        this.refpath = uri;
         this.hash = hash;
 
         // todo: implement cache method
-        if (this.isCached(this.id)) {
+        if (this.isCached(uri)) {
             return true;
         }
 
@@ -1891,7 +1850,7 @@ Array.prototype.clean = function (s) {
 
             timeout: this.timeout,
 
-            url: uri,
+            url: this.uri,
 
             dataType: 'html',
 
@@ -1908,17 +1867,15 @@ Array.prototype.clean = function (s) {
                 // is status is an error, return an error dialog
                 if (status === 'error' || status === 'timeout') {
 
-                    var msg = status === 'timeout' ? 'Sorry, the content could not be loaded' : 'Sorry, the server does not respond.';
-                    d4p.msg.alert(msg, 'error');
-
                     this.contentIsLoaded();
 
                     document.location.hash = d4p.hash.previous;
 
                     // ajax failed callback
-                    for (fn in this._failed) {
-                        if (this._failed.hasOwnProperty(fn)) {
-                            this._failed[fn].call(d4p.content);
+                    for (i in this._failed) {
+                        if (this._failed.hasOwnProperty(i)) {
+                            fn = this._failed[i];
+                            this[fn].call(this, status, responseText);
                         }
                     }
 
@@ -1946,11 +1903,19 @@ Array.prototype.clean = function (s) {
                     }
 
                     // remove scripts from the ajax calls unless they will be loaded
-                    var html = $(this.responseText).not('script');
+                    this.html = $(this.responseText).not('script');
 
-                    this.content = html.find(this.externalContentElement);
+                    this.content = this.html.find(this.externalContentElement);
 
-                    this.title = html.find("title").html();
+                    this.title = this.html.find("title").html();
+                    
+                    // execute ajaxReady
+                    for (i in this._postFilter) {
+                        if (this._postFilter.hasOwnProperty(i)) {
+                            fn = this._postFilter[i];
+                            this[fn].call(this);
+                        }
+                    }
 
                     this.setMainContent();
 
@@ -1958,17 +1923,13 @@ Array.prototype.clean = function (s) {
                     for (i in this._ready) {
                         if (this._ready.hasOwnProperty(i)) {
                             fn = this._ready[i];
-                            this[fn].call(this, this.content);
+                            this[fn].call(this);
                         }
                     }
 
                     this.contentIsLoaded();
 
                     $(this.outputSelector).attr('aria-busy', 'false');
-
-                    if (hash != undefined) {
-                        d4p.scrollToHash('#' + hash);
-                    }
 
                 }
             }
@@ -2004,26 +1965,29 @@ Array.prototype.clean = function (s) {
   var ajaxnav = new d4p.module('ajaxnav', {
 
     traverse: function () {
+      
       // navigation: prefix all href with #
       $(d4p.navigationSelector + ' a').each(function (index) {
 
         var href = $(this).attr('href'), 
         list = href.split("/"),
+        except = $(this).hasClass('d4p-no-ajax'),
         
         // ids.linkID;
         // ids.hrefID;
-        ids = d4p.getIds($(this));
+      
+        v = d4p.vlink($(this));
 
         // attribute an ID for future reference if not set
-        $(this).attr('id', ids.linkID);
+        $(this).attr('id', v.linkID);
+          
 
         // do not rewrite anchors and absolute uri
         // @todo check for absolute uri
-        if (href.substring(0, 1) != '#' && d4p.protocols.indexOf(list[0]) == -1) {
-
+        if (href.substring(0, 1) != '#' && d4p.protocols.indexOf(list[0]) == -1 && except==false) {
           // add it in the collection
-          d4p.ajax.collectionSet(ids.hrefID, ids.linkID, $(this).html());
-          $(this).attr('href', '#' + ids.hrefID);
+          d4p.ajax.collectionSet(v.hrefID, v.href, v.id, v.linkID, $(this).html());
+          $(this).attr('href', '#' + v.hrefID);
 
         }
 
@@ -2049,9 +2013,13 @@ Array.prototype.clean = function (s) {
     },
 
     load: function () {
-      var l = d4p.l();
-      if (d4p.ajax.inCollection(l.uri) != undefined) {
-        d4p.ajax.load(l.uri + d4p.ext, l.hash);
+      var l = d4p.l(),
+      o = d4p.ajax.getCollection(l.uri);
+      if (o != undefined && o.cache == false) {
+        d4p.ajax.load(l.uri, l.hash);
+      }
+      if (l.hash != undefined) {
+         d4p.scrollToHash('#' + l.hash);
       }
     },
 
@@ -2071,6 +2039,93 @@ Array.prototype.clean = function (s) {
   });
 
 })(window, d4p);/**
+ *  @file message
+ *
+ *  Allow to send quick message to the user
+ *  Might have an alternate version to work with UI dialog
+ *
+ *  Copyright 2012 DITA For Publishers  
+ * 
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ */ 
+(function (d4p) {
+
+    // Set outputSelector
+    d4p.ajaxLoader.prototype.setErrorMsg = function (responseText, status) {
+        var msg = status === 'timeout' ? 'Sorry, the content could not be loaded' : 'Sorry, the server does not respond.';
+        d4p.msg.alert(msg, 'error');
+    };
+                    
+  // use ui-dialog instead ?
+
+  var message = new d4p.module('msg', {
+    // id of the div element to be created
+    'id': 'd4p-message',
+
+    'timeout': 3000,
+
+    // message type
+    create: function () {
+      var msgBox = $("<div />")
+        .attr('id', this.id)
+        .attr('role', 'alertdialog')
+        .attr('aria-hidden', 'true')
+        .attr('aria-label', 'Message')
+        .addClass('rounded')
+        .hide(), 
+      div = msgBox.append($("<div />"));
+      $('body')
+        .append(msgBox);
+    },
+
+    // create message container    
+    init: function () {
+    
+      this.create();
+	  d4p.ajax.bind('failed', 'setErrorMsg');
+	  
+      $(document).mouseup(function (e) {
+        var container = $(this.id);
+
+        if (container.has(e.target).length === 0) {
+          container.hide();
+        }
+      });
+    },
+
+    show: function () {
+      $("#" + this.id)
+        .show()
+        .attr('aria-hidden', 'false')
+        .delay(this.timeout)
+        .fadeOut()
+        .attr('aria-hidden', 'true');
+    },
+
+    alert: function (msg, type) {
+      var p = {};
+      type = type == undefined ? '' : type;
+      p = $("<p />")
+        .addClass(type)
+        .text(msg);
+      $("#" + this.id + " > div")
+        .html(p);
+      this.show();
+    }
+  });
+
+})(d4p);/**
  *  @file navigation module
  *
  *  A classic navigation behavior
@@ -2112,26 +2167,34 @@ Array.prototype.clean = function (s) {
     select: function () {
       var o = this, 
       l = d4p.l(),
-      id = d4p.ajax.collection[l.uri].id;
-
-      $(d4p.navigationSelector + ' li')
-      .removeClass('selected')
-      .removeAttr('aria-expanded');
-        
-      $("d4p.navigationSelector span."+o.icon).removeClass(o.leafActive).addClass(o.leaf);  
-
-      $('#' + id).parent('li').attr('aria-expanded', 'true').addClass('selected');
+      id = '';
       
-      $('#' + id).parents('li').each(function(){
-        $(this).children("span."+o.icon)
-          .removeClass(o.leaf)
-          .addClass(o.leafActive);      
-      });
+      if(d4p.ajax.inCollection(l.uri)) {
+      	id = d4p.ajax.collection[l.uri].refid;
+      }
+      
+      if(id !== '') {
 
-      $('#' + id)
-        .parentsUntil(d4p.navigationSelector)
-        .addClass('active')
-        .removeClass('collapsed');
+          $(d4p.navigationSelector + ' li')
+          .removeClass('selected')
+          .removeAttr('aria-expanded');
+            
+          $("d4p.navigationSelector span."+o.icon).removeClass(o.leafActive).addClass(o.leaf);  
+    
+          $('#' + id).parent('li').attr('aria-expanded', 'true').addClass('selected');
+          
+          $('#' + id).parents('li').each(function(){
+            $(this).children("span."+o.icon)
+              .removeClass(o.leaf)
+              .addClass(o.leafActive);      
+          });
+    
+          $('#' + id)
+            .parentsUntil(d4p.navigationSelector)
+            .addClass('active')
+            .removeClass('collapsed');
+        
+        }
     },
 
     selectFromHash: function () {
@@ -2325,7 +2388,7 @@ Array.prototype.clean = function (s) {
   // new prototype
   // register a hashChange callback
   d4p.ajaxLoader.prototype.addWidgets = function () {
-    $("*[class]").each(function (index) {
+    this.content.find("*[class]").each(function (index) {
       var classes = $(this)
         .attr('class')
         .split(" ");
@@ -2345,7 +2408,6 @@ Array.prototype.clean = function (s) {
           }
 
           if (d4p.ui[ui]['init'] != undefined) {
-            console.log(ui);
             d4p.ui[ui]['init'].call(d4p.ui[ui], $(this));
           }
         }
@@ -2985,7 +3047,7 @@ $.Widget.prototype = {
  *  limitations under the License.
  *
  */ 
-(function (d4p) {
+(function (d4p, document) {
 
   d4p.ui.accordion = {
 
@@ -3001,6 +3063,13 @@ $.Widget.prototype = {
         autoHeight: false, // required for Safari
         active: false,
         collapsible: true
+        //,
+        //change: function( event, ui ) {
+        //	var l = d4p.l(), hash = l.uri;
+        //	if(l.hash != '') {
+        //		window.location.hash = hash;
+        //	}
+       // } 
       });
     }
   };

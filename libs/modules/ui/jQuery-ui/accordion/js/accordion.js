@@ -18,7 +18,7 @@
  *  limitations under the License.
  *
  */ 
-(function (d4p) {
+(function (d4p, document) {
 
   d4p.ui.accordion = {
 
@@ -34,6 +34,13 @@
         autoHeight: false, // required for Safari
         active: false,
         collapsible: true
+        //,
+        //change: function( event, ui ) {
+        //	var l = d4p.l(), hash = l.uri;
+        //	if(l.hash != '') {
+        //		window.location.hash = hash;
+        //	}
+       // } 
       });
     }
   };

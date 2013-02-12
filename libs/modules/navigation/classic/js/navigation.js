@@ -40,26 +40,34 @@
     select: function () {
       var o = this, 
       l = d4p.l(),
-      id = d4p.ajax.collection[l.uri].id;
-
-      $(d4p.navigationSelector + ' li')
-      .removeClass('selected')
-      .removeAttr('aria-expanded');
-        
-      $("d4p.navigationSelector span."+o.icon).removeClass(o.leafActive).addClass(o.leaf);  
-
-      $('#' + id).parent('li').attr('aria-expanded', 'true').addClass('selected');
+      id = '';
       
-      $('#' + id).parents('li').each(function(){
-        $(this).children("span."+o.icon)
-          .removeClass(o.leaf)
-          .addClass(o.leafActive);      
-      });
+      if(d4p.ajax.inCollection(l.uri)) {
+      	id = d4p.ajax.collection[l.uri].refid;
+      }
+      
+      if(id !== '') {
 
-      $('#' + id)
-        .parentsUntil(d4p.navigationSelector)
-        .addClass('active')
-        .removeClass('collapsed');
+          $(d4p.navigationSelector + ' li')
+          .removeClass('selected')
+          .removeAttr('aria-expanded');
+            
+          $("d4p.navigationSelector span."+o.icon).removeClass(o.leafActive).addClass(o.leaf);  
+    
+          $('#' + id).parent('li').attr('aria-expanded', 'true').addClass('selected');
+          
+          $('#' + id).parents('li').each(function(){
+            $(this).children("span."+o.icon)
+              .removeClass(o.leaf)
+              .addClass(o.leafActive);      
+          });
+    
+          $('#' + id)
+            .parentsUntil(d4p.navigationSelector)
+            .addClass('active')
+            .removeClass('collapsed');
+        
+        }
     },
 
     selectFromHash: function () {

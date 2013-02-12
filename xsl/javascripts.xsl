@@ -48,7 +48,6 @@
   <!-- This template render ons script element per script element declared in the theme config.xml -->  
   <xsl:template match="*" mode="generate-d4p-uncompressed-javascript">
     <xsl:param name="relativePath" as="xs:string" select="''" tunnel="yes" />
-  	<xsl:message> + [INFO] Debug mode on, render individual script link </xsl:message>
     <xsl:for-each select="$HTML5THEMECONFIGDOC/html5/script">
     	<script type="text/javascript" charset="utf-8" src="{relpath:assets-uri($relativePath, @path)}"></script><xsl:sequence select="'&#x0a;'"/>
     </xsl:for-each>

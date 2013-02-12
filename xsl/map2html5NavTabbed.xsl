@@ -329,7 +329,8 @@
     <xsl:param name="result-uri" tunnel="yes"/>
     <xsl:param name="rootMapDocUrl" as="xs:string" tunnel="yes"/>
     <xsl:message> + [INFO] MERGING TOPIC <xsl:value-of select="@href"/> INTO CONTENT with result uri <xsl:value-of
-        select="$result-uri"/></xsl:message>
+        select="$result-uri"/>
+        </xsl:message>
 
     <xsl:variable name="topic" select="df:resolveTopicRef(.)" as="element()*"/>
     <xsl:variable name="topicResultUri" select="htmlutil:getTopicResultUrl($outdir, root($topic), $rootMapDocUrl)"

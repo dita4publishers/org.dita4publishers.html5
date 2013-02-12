@@ -23,7 +23,7 @@
   // new prototype
   // register a hashChange callback
   d4p.ajaxLoader.prototype.addWidgets = function () {
-    $("*[class]").each(function (index) {
+    this.content.find("*[class]").each(function (index) {
       var classes = $(this)
         .attr('class')
         .split(" ");
@@ -43,7 +43,6 @@
           }
 
           if (d4p.ui[ui]['init'] != undefined) {
-            console.log(ui);
             d4p.ui[ui]['init'].call(d4p.ui[ui], $(this));
           }
         }

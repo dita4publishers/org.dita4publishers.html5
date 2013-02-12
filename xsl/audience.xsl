@@ -33,15 +33,13 @@
     <xsl:param name="uniqueTopicRefs" as="element()*" tunnel="yes"/>
     <xsl:param name="rootMapDocUrl" as="xs:string" tunnel="yes"/>
     <xsl:message> + [INFO] Generating audience select </xsl:message>
-    <span id="audience-widget">
-    	<h1>
-    		<xsl:value-of select="*[df:class(., 'map/topicmeta')]/*[contains(@class, ' topic/audience ')][@name=$activeAudience]/@othertype" />
+    <span id="audience-widget">   		
     		<button class="audienceBtn">
     			<span class="ui-icon ui-icon-carat-2-n-s"><xsl:call-template name="getString">
                     <xsl:with-param name="stringName" select="'chooseAudience'"/>
                 </xsl:call-template></span>
     		</button>
-    	</h1>
+
 		<ul id="audience-select">
     		<xsl:apply-templates select="*[df:class(., 'map/topicmeta')]" mode="generate-audience-select"/>
     	</ul>
@@ -58,9 +56,9 @@
   <xsl:message> + [INFO] Generating audience <xsl:value-of select="@name" /> entry </xsl:message>
   <xsl:if test="@name != $activeAudience">
 	<li>
-		<a href="{concat($relativePath, $indexUri, '/../../', @name, '/')}">
+		<a href="{concat($relativePath, $indexUri, '/../../', @name, '/')}" class="d4p-no-ajax">
 			<xsl:value-of select="@othertype" />
-			<span class="ligther"> <xsl:value-of select="upper-case(@name)" /></span>
+			<!--span class="ligther"> <xsl:value-of select="upper-case(@name)" /></span-->
 		</a>
 	</li>
 </xsl:if>

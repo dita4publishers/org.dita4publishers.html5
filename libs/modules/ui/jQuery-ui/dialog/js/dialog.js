@@ -23,9 +23,11 @@
     // Remove links on dialogs
     d4p.ajaxLoader.prototype.removeLinks = function () {
         var uri = d4p.hash.current;
-        this.content.find("a").each(function (index) {
-            $(this).replaceWith(this.childNodes);
-        });
+        //console.log(this.content.html());
+        this.content.find("a").each(function(index) {
+      		$(this).replaceWith(this.childNodes);
+    	});
+    	//console.log(this.content.html());
     };
 
     d4p.ui.dialog = {
@@ -41,13 +43,15 @@
             if (obj[0].tagName.toUpperCase() === "DFN") {
                 obj = obj.parent();
             }
-
-            uri = obj.attr('href').substring(1);
+	
+            uri = obj.attr('href');
+            uri = uri.substring(0, 1) === '#' ? uri.substring(1) : uri;
+            
             id = this.getId();
 
             // keep track of every external dialog loaded
             if (this.done[uri] == undefined) {
-                this.done[uri] =  this.done["#dialog-"+id] = {
+                this.done[uri] = {
                     'id': id,
                     'uri': uri,
                     'done': false
@@ -68,17 +72,18 @@
         },
 
         checkDialog: function (obj, uri) {
-
+			
+			console.log("done %s", this.done[uri].done);
             // avoid processing url twice
             if (this.done[uri].done == true) {
 
                 if (uri != "") {
-                    obj.attr('href', "#dialog-" + this.done[uri].id);
+                    obj.attr('href', "#");
 
                     // add click handler
                     obj.click(function (event) {
                      	event.preventDefault();
-                        $("#dialog-" + this.done[uri].id).dialog('open');
+                        $("#dialog-" + d4p.ui.dialog.done[uri].id).dialog('open');
                     });
                 }
                 return false;
@@ -94,7 +99,7 @@
 			dialog = $("<div />").attr("id", "dialog-" + id);
 			
             ajax.bind('ready', 'rewriteAttrSrc');
-            ajax.bind('ready', 'removeLinks');
+            ajax.bind('postFilter', 'removeLinks');
 
             $(d4p.ajax.loaderParentElement).append(dialog);
 
@@ -109,7 +114,7 @@
             dialog.dialog('close');
 
             // remove href
-            obj.attr('href', "#/dialog-" + id);
+            obj.attr('href', "#");
 
             // add click handler
             obj.click(function (event) {
@@ -118,7 +123,6 @@
             });
 
             this.done[uri].done = true;
-            this.done['#dialog-'+id].done = true;
         }
     };
 

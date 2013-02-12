@@ -39,6 +39,7 @@
         this._ready = [];
         this._live = [];
         this._failed = [];
+        this._postFilter = [];
 
         // store references
         this.collection = [],
@@ -100,43 +101,53 @@
     };
 
     // Add entry into the collection
-    d4p.ajaxLoader.prototype.collectionSet = function (id, uri, title) {
-        if (this.collection[id] == undefined) {
-            this.collection[id] = {
+    d4p.ajaxLoader.prototype.collectionSet = function (refpath, uri, id, refid, title) {
+        if (this.collection[refpath] == undefined) {
+            this.collection[refpath] = {
                 'cache': false,
-                'uri': uri,
-                'id': uri.replace(/\//g, '__'),
+                'uri':  uri,
+                'id': id,
+                'refid' : refid,
                 'title': title
             };
         }
     };
 
     // Add entry into the collection
-    d4p.ajaxLoader.prototype.setCacheStatus = function (id) {
-        this.collection[id].cache = true;
+    d4p.ajaxLoader.prototype.setCacheStatus = function (refpath) {
+        this.collection[refpath].cache = true;
     };
 
     // tell if id is cached
-    d4p.ajaxLoader.prototype.isCached = function (id) {
-        return this.collection[id] != undefined ? this.collection[id].cache : false;
+    d4p.ajaxLoader.prototype.isCached = function (refpath) {
+    	var ret = false;
+        if(this.inCollection(refpath)){
+            ret = this.collection[refpath].cache;
+        }
+        return ret;
     };
-
+    
     // Add entry into the collection
-    d4p.ajaxLoader.prototype.inCollection = function (id) {
-        return this.collection[id];
+    d4p.ajaxLoader.prototype.getCollection = function (refpath) {
+        return this.collection[refpath];
+    };
+    
+    // Add entry into the collection
+    d4p.ajaxLoader.prototype.inCollection = function (refpath) {
+        return this.collection[refpath] == undefined ? false : true;
     };
 
     // Set title of the page
     d4p.ajaxLoader.prototype.setTitle = function () {
         $('title').html(this.title);
         // replace title in collection, may be more accurate
-        this.collection[this.id]['title'] = this.title;
+        this.collection[this.refpath]['title'] = this.title;
     },
 
     // set content of the page
     // this function use the hash value as an ID
     d4p.ajaxLoader.prototype.setMainContent = function () {
-        var id = this.id.replace(/\//g, '__'),
+        var id = this.refpath.replace(/\//g, '__'),
             div = $("<div />").attr('id', id).attr('class', 'content-chunk').html(this.content),
             fn = {};
 
@@ -153,7 +164,7 @@
         if (this.mode == 'append') {
             // append new div, but hide it
             $(this.outputSelector).append(div);
-            this.setCacheStatus(this.id);
+            this.setCacheStatus(this.refpath);
         } else {
             $(this.outputSelector).html(div.html());
         }
@@ -170,7 +181,7 @@
             if(d4p.protocols.indexOf(parts[0]) !== -1) {
                 nhref = src;
             } else {
-                nhref = l.uri.substring(0, l.uri.lastIndexOf("/")) + "/" + src;   
+                nhref = l.uri.substring(1, l.uri.lastIndexOf("/")) + "/" + src;   
             }
             return attr + '="' + nhref + '"';
         });
@@ -211,7 +222,7 @@
 
                 // anchors on the same page
                 if (idx == 0) {
-                    newHref = href.substring(l.uri.length);
+                    newHref = '#' + href;
                 } else {
 
                     parts = href.split('/');
@@ -254,13 +265,13 @@
      * @todo: implement beforeSend, error callback
      */
     d4p.ajaxLoader.prototype.load = function (uri, hash) {
-        var fn = {}, i = 0;
-        this.id = uri.replace(d4p.ext, '');
-        this.uri = uri;
+        var fn = {}, i = 0;      
+        this.uri = this.collection[uri].uri;
+        this.refpath = uri;
         this.hash = hash;
 
         // todo: implement cache method
-        if (this.isCached(this.id)) {
+        if (this.isCached(uri)) {
             return true;
         }
 
@@ -287,7 +298,7 @@
 
             timeout: this.timeout,
 
-            url: uri,
+            url: this.uri,
 
             dataType: 'html',
 
@@ -309,9 +320,10 @@
                     document.location.hash = d4p.hash.previous;
 
                     // ajax failed callback
-                    for (fn in this._failed) {
-                        if (this._failed.hasOwnProperty(fn)) {
-                            this._failed[fn].call(this, status, responseText);
+                    for (i in this._failed) {
+                        if (this._failed.hasOwnProperty(i)) {
+                            fn = this._failed[i];
+                            this[fn].call(this, status, responseText);
                         }
                     }
 
@@ -344,6 +356,14 @@
                     this.content = this.html.find(this.externalContentElement);
 
                     this.title = this.html.find("title").html();
+                    
+                    // execute ajaxReady
+                    for (i in this._postFilter) {
+                        if (this._postFilter.hasOwnProperty(i)) {
+                            fn = this._postFilter[i];
+                            this[fn].call(this);
+                        }
+                    }
 
                     this.setMainContent();
 
@@ -358,10 +378,6 @@
                     this.contentIsLoaded();
 
                     $(this.outputSelector).attr('aria-busy', 'false');
-
-                    if (hash != undefined) {
-                        d4p.scrollToHash('#' + hash);
-                    }
 
                 }
             }

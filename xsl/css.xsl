@@ -48,7 +48,6 @@
   <!-- This template render ons script element per script element declared in the theme config.xml -->  
   <xsl:template match="*" mode="generate-d4p-uncompressed-css">
     <xsl:param name="relativePath" as="xs:string" select="''" tunnel="yes" />
-  	<xsl:message> + [INFO] Debug mode on, render individual script link </xsl:message>
     <xsl:for-each select="$HTML5THEMECONFIGDOC/html5/style">
     	<link 
     		rel="stylesheet" 

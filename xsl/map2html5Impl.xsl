@@ -231,6 +231,20 @@
         <xsl:sequence select="$collected-data"/>
       </xsl:result-document>
     </xsl:if>
+    
+    <xsl:variable name="documentation-title" as="xs:string">
+      	<xsl:apply-templates select="." mode="generate-root-page-header" />
+    </xsl:variable>
+    
+	<xsl:variable name="audienceSelect">
+       	<xsl:apply-templates select="." mode="generate-audience-select">
+      		<xsl:with-param name="collected-data" as="element()" select="$collected-data" tunnel="yes"/>
+      		<xsl:with-param name="uniqueTopicRefs" as="element()*" select="$uniqueTopicRefs" tunnel="yes"/>
+
+      		<xsl:with-param name="documentation-title" as="xs:string" select="$documentation-title" tunnel="yes"/>
+      		<xsl:with-param name="is-root" as="xs:boolean" select="true()" tunnel="yes"/>
+    </xsl:apply-templates>
+    </xsl:variable>
 
     <!-- NOTE: By default, this mode puts its output in the main output file
          produced by the transform.
@@ -239,22 +253,11 @@
       	<xsl:apply-templates select="." mode="choose-html5-nav-markup" >
       	 	<xsl:with-param name="collected-data" as="element()" select="$collected-data" tunnel="yes"/>
       		<xsl:with-param name="uniqueTopicRefs" as="element()*" select="$uniqueTopicRefs" tunnel="yes"/>
+      		<xsl:with-param name="documentation-title" select="$documentation-title" tunnel="yes"/>
+      		 <xsl:with-param name="audienceSelect"  select="$audienceSelect" tunnel="yes"/>
       	</xsl:apply-templates>
       </xsl:variable>
-      
-      <xsl:variable name="documentation-title" as="xs:string">
-      	<xsl:apply-templates select="." mode="generate-root-page-header" />
-      </xsl:variable>
-      
-      <xsl:variable name="audienceSelect">
-       	<xsl:apply-templates select="." mode="generate-audience-select">
-      		<xsl:with-param name="collected-data" as="element()" select="$collected-data" tunnel="yes"/>
-      		<xsl:with-param name="uniqueTopicRefs" as="element()*" select="$uniqueTopicRefs" tunnel="yes"/>
-      		<xsl:with-param name="navigation" as="element()*" select="$navigation" tunnel="yes"/>
-      		<xsl:with-param name="documentation-title" as="xs:string" select="$documentation-title" tunnel="yes"/>
-      		<xsl:with-param name="is-root" as="xs:boolean" select="true()" tunnel="yes"/>
-    </xsl:apply-templates>
-      </xsl:variable>
+    
 
 
     <xsl:apply-templates select="." mode="generate-root-pages">

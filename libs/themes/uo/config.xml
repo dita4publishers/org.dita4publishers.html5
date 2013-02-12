@@ -18,17 +18,17 @@
   <style path="modules/images/css/images.css" />  
   <style path="themes/uo/css/theme.css" /> 
   
+  <script path="core/jQuery/jquery-1.7.1.min.js" />
   <script path="core/d4p/js/array.prototype.js" />
   <script path="core/d4p/js/d4p.js" />
   
   <script path="core/module-prototype/js/module.js" />
-
+  <script path="core/message/js/message.js" />
   
   <!-- carefull in this order -->
   <script path="core/ajaxLoader/js/ajaxLoader.js" />
   <script path="core/ajaxLoader/js/ajaxnav.js" />  
-  <script path="core/message/js/message.js" />
-    
+  
   <script path="modules/ui/jQuery-ui/adapter/js/ui.js" />
   
   <script path="modules/ui/jQuery-ui/accordion/js/accordion.js" />  

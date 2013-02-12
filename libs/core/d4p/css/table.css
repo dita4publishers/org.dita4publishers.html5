@@ -20,11 +20,16 @@
 table { 
 	width: 100%; 
 	border-collapse: collapse; 
+	border:1px solid #dfdfdf;
 }
 /** Zebra striping **/
 
 tr:nth-of-type(odd) { 
 	background: #eee; 
+}
+
+tr:nth-of-type(even) { 
+	background: #fff; 
 }
 
 th { 

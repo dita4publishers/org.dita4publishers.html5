@@ -101,6 +101,26 @@
     	  <isset property="images.output.dir"></isset>
   		</not>
     </condition>
+    
+    <condition property="html5.copy.libs" value="yes">
+    	<and>
+    	<not>
+    	  <isset property="html5.copy.libs"></isset>
+  		</not>
+    	<isset property="args.debug"></isset>
+    	</and>
+    </condition>
+    
+    <condition property="html5.copy.assets" value="yes">
+    <and>
+    	<not>
+    	  <isset property="html5.copy.libs"></isset>
+  		</not>
+  		<not>
+    	  <isset property="args.debug"></isset>
+  		</not>
+  		</and>
+    </condition>  
 
   	<property name="html5.temp.dir" value="${dita.temp.dir}${file.separator}html5_temp"></property>
 
@@ -464,9 +484,6 @@
 <param name="DBG" expression="${args.debug}" if="args.debug"></param>
 
 
-	
-<param name="HTML5OUTPUTLOCALBREADCRUMB" expression="${html5.output.localbreadcrumb}"></param> 
-
     	
       <mapper type="glob" from="${user.input.file}" to="${args.xhtml.toc}${out.ext}"></mapper>
               
@@ -519,7 +536,7 @@
     <antcall target="html5-copy-javascript"></antcall>
   </target>
 
-  <target name="html5-copy-assets" description="Copy assets files for production" depends="dita.map.html5.init" unless="args.debug">
+  <target name="html5-copy-assets" description="Copy assets files for production" if="${html5.copy.assets}" depends="dita.map.html5.init">
 
     <mkdir dir="${output.dir}/${html5.themes.output.dir}/${html5.site.theme}"></mkdir>
     
@@ -543,7 +560,7 @@
     <echo> [WARNING] There is already a copy of the library directory in the ouput directory, delete it manually if you want a fresh copy. This is to avoid overriding your change during development.</echo>
   </target>
   
-  <target name="html5-copy-libs" description="Copy assets files for development" depends="dita.map.html5.init, check.libs.exists, confirm.libs.exists" if="args.debug" unless="html5.prevent.copy.libs">
+  <target name="html5-copy-libs" description="Copy assets files for development" depends="dita.map.html5.init, check.libs.exists, confirm.libs.exists" if="${html5.copy.libs}" unless="html5.prevent.copy.libs">
   
     <mkdir dir="${output.dir}/${lib.html5.dir.libs}"></mkdir>
     

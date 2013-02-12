@@ -44,13 +44,13 @@
   <script path="core/d4p/js/d4p.js" />
   
   <script path="core/module-prototype/js/module.js" />
-  <script path="core/message/js/message.js" />
+
   
   <!-- carefull in this order -->
   <script path="core/ajaxLoader/js/ajaxLoader.js" />
   <script path="core/ajaxLoader/js/ajaxnav.js" />  
   
-  
+  <script path="core/message/js/message.js" />
   <script path="modules/navigation/classic/js/navigation.js" />  
   <script path="modules/ui/jQuery-ui/adapter/js/ui.js" />
   <script path="modules/ui/jQuery-ui/jQuery-ui/ui/jquery.ui.core.js" />
@@ -88,7 +88,7 @@
   </search>
   
   <!-- uncomment the following line to build the theme at each time -->
-  <!--theme>
+  <theme>
   	<compile>true</compile>
-  </theme-->
+  </theme>
 </html5>

@@ -37,7 +37,7 @@
 
         'ext': '.html',
 
-        'timeout': 3000,
+        'timeout': 30000,
 
         // main output selectors
         'outputSelector': '#d4h5-main-content',
@@ -78,6 +78,9 @@
 
         // scrollElement
         'scrollElem': {},
+        
+        // document information
+        'document': {},
 
         //scroll duration in ms
         'scrollDuration': 400,
@@ -185,21 +188,24 @@
         },
 
         // check if a jQuery object has an id or create one
-        getIds: function (obj) {
-            var id = obj.attr('id');
-            var href = obj.attr('href');
-            var hrefID = href.substring(0, href.length - d4p.ext.length);
-            var attrs = {};
+        vlink: function (obj) {
+            var objId = obj.attr('id'),
+            objHref = obj.attr('href'),
+            href = objHref.substring(0, objHref.length - d4p.ext.length),
+            hrefID = "/"+ href,
+            id = hrefID.replace(/\//g, '__');
 
             // create an ID for future reference if not set
-            if (id === '' || id == undefined) {
-                id = d4p.ids.prefixLink + d4p.ids.n;
+            if (objId === '' || objId == undefined) {
+                objId = d4p.ids.prefixLink + d4p.ids.n;
                 d4p.ids.n++;
             };
 
             return {
-                linkID: id,
-                hrefID: hrefID
+                'linkID': objId,
+                'href': objHref,
+                'hrefID': hrefID,
+                'id': id
             };
 
         },
@@ -219,24 +225,34 @@
 
         // load initial content to avoid a blank page
         getInitialContent: function () {
-            if ($(d4p.outputSelector).length == 1 && d4p.loadInitialContent) {
-                var l = d4p.l();
-                if (l.uri !== '') {
-                    d4p.uriChanged(l.uri, l.hash);
-                } else {
-                    var el = $(d4p.navigationSelector + ' a:first-child');
-                    if (el.attr('href') == undefined) {
-                        return false;
-                    }
-                    url = $(d4p.navigationSelector + ' a:first-child')
-                        .attr('href')
-                        .replace(/^#/, '');
-                    document.location.hash = url;
-                }
-                d4p.loadInitialContent = false;
+            var l = d4p.l();
+           
+            if (l.uri !== '') {
+              d4p.uriChanged(l.uri, l.hash);
+              return true;
             }
+            
+            if ($(d4p.outputSelector).length == 1 && d4p.loadInitialContent) {
+               
+				var el = $(d4p.navigationSelector + ' a:first-child');
+                if (el.attr('href') == undefined) {
+                    return false;
+                }
+                url = $(d4p.navigationSelector + ' a:first-child')                         
+                	.attr('href')
+					.replace(/^#/, '');
+                    document.location.hash = url;
+                
+               	d4p.loadInitialContent = false;
+            }
+            
+          
         },
-
+        
+        getDocInfos: function () {
+        	this.document['title'] = $('title').html();
+        },
+        
         // execute callbacks function on uri changed
         uriChanged: function (uri, hash) {
             var l = d4p.l();
@@ -265,6 +281,10 @@
             // extend options
             this.setProps(options);
 
+			// get document information
+			 this.getDocInfos();
+
+			
             // redirect if not on the index page
             if (d4p.relativePath != "" && l.uri.indexOf(d4p.indexFilename) != 0) {
                 redirect = d4p.resolveRoot();
@@ -295,7 +315,7 @@
             });
 
             this.getInitialContent();
-
+            
             this.inited = true;
 
             return true;

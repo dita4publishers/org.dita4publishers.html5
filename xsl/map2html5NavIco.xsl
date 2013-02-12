@@ -47,7 +47,9 @@
   <xsl:template mode="generate-html5-nav-ico-markup" match="*[df:class(., 'map/map')]">
 
     <xsl:param name="collected-data" as="element()" tunnel="yes"/>
-
+	<xsl:param name="audienceSelect" tunnel="yes"/>
+	<xsl:param name="documentation-title" as="xs:string" select="''" tunnel="yes" />
+    
     <xsl:variable name="listItems" as="node()*">
       <xsl:apply-templates mode="generate-html5-ico-nav"
         select=".
@@ -73,8 +75,11 @@
 
     <div id="doc-content" class="{concat($GRIDPREFIX, '23 prepend-1 last')}">
      	<div id="{$IDLOCALNAV}">
-     		<!--h1><xsl:call-template name="map-title" /></h1>
-        	<xsl:sequence select="'&#x0a;'"/-->
+     		<div class="header">
+     			<h1><xsl:value-of select="$documentation-title" /></h1>
+     			<xsl:sequence select="$audienceSelect"/>
+     		</div>
+        	<xsl:sequence select="'&#x0a;'"/>
         	<xsl:sequence select="$listItems"/>
         	<div class="clear"/>
 		</div>
@@ -124,7 +129,8 @@
   			</xsl:choose>
   		</xsl:variable>
   		
-      	<div id="{concat('ico-', $id)}" class="{concat('box box-ico square ', $GRIDPREFIX, '3', $isLast)}"><span class="ico"> </span>
+      	<div id="{concat('ico-', $id)}" class="box box-ico square">
+      	<span class="ico"></span>
       		<a href="{concat('#', $tabId)}">
         		<xsl:apply-templates select="." mode="nav-point-title"/>
         	</a>
