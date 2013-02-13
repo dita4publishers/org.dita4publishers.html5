@@ -7,6 +7,7 @@
  <xsl:import href="map2html5Impl.xsl"></xsl:import>
 
   
+<xsl:import href="../../org.uottawa.html5/xsl/brand.xsl"/>
 
 
 </xsl:stylesheet>

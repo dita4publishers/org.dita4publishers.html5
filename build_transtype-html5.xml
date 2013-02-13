@@ -484,6 +484,9 @@
 <param name="DBG" expression="${args.debug}" if="args.debug"></param>
 
 
+	
+<param name="HTML5OUTPUTLOCALBREADCRUMB" expression="${html5.output.localbreadcrumb}"></param> 
+
     	
       <mapper type="glob" from="${user.input.file}" to="${args.xhtml.toc}${out.ext}"></mapper>
               

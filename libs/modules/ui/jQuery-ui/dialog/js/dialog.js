@@ -73,7 +73,6 @@
 
         checkDialog: function (obj, uri) {
 			
-			console.log("done %s", this.done[uri].done);
             // avoid processing url twice
             if (this.done[uri].done == true) {
 
@@ -98,6 +97,9 @@
             id = this.done[uri].id, 
 			dialog = $("<div />").attr("id", "dialog-" + id);
 			
+			ajax.name = 'dialog';
+			ajax.collectionSet(uri, uri, id, id, "");
+            
             ajax.bind('ready', 'rewriteAttrSrc');
             ajax.bind('postFilter', 'removeLinks');
 

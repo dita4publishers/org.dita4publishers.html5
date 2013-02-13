@@ -31,7 +31,7 @@
       }
       obj.accordion({
         header: cs,
-        autoHeight: false, // required for Safari
+        heightStyle: 'content',
         active: false,
         collapsible: true
         //,

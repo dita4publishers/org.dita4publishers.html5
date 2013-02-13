@@ -26,6 +26,7 @@
      */
     d4p.ajaxLoader = function (opts) {
 
+		this.name = '';
         this.outputSelector = d4p.outputSelector;
         this.title = '';
         this.content = '';
@@ -175,14 +176,17 @@
     // because there is no real path with AJAX call
     // from http://ejohn.org/blog/search-and-dont-replace/
     d4p.ajaxLoader.prototype.rewriteAttrSrc = function () {
-        var l = d4p.l();
+        var l = d4p.l(), uri = "";
         this.responseText = this.responseText.replace(/(src)\s*=\s*"([^<"]*)"/g, function (match, attr, src) {
             var parts = src.split("/"), nhref = '';
+            uri = uri.substring(1, uri.length);
+            console.log(uri);
             if(d4p.protocols.indexOf(parts[0]) !== -1) {
                 nhref = src;
             } else {
-                nhref = l.uri.substring(1, l.uri.lastIndexOf("/")) + "/" + src;   
+                nhref = uri.substring(1, uri.lastIndexOf("/")) + "/" + src;   
             }
+            console.log(nhref);
             return attr + '="' + nhref + '"';
         });
     },
@@ -311,7 +315,7 @@
             },
 
             complete: function (jqXHR, status, responseText) {
-
+			
                 // is status is an error, return an error dialog
                 if (status === 'error' || status === 'timeout') {
 
@@ -334,7 +338,7 @@
                 responseText = jqXHR.responseText;
 
                 // If successful, inject the HTML into all the matched elements
-                if (jqXHR.isResolved()) {
+                if (status == "success") {
 
                     // From jquery: #4825: Get the actual response in case
                     // a dataFilter is present in ajaxSettings

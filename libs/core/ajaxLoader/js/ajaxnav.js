@@ -88,6 +88,7 @@
     init: function () {
 
       d4p.ajax = new d4p.ajaxLoader();
+      d4p.ajax.name = 'main';
       
       d4p.ajax.addLoader();
       d4p.ajax.bind('filter', 'rewriteAttrHref');

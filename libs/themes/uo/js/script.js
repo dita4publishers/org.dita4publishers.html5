@@ -24,15 +24,20 @@
 		},
 		
 		load: function () {
-			var o = this;
+			var o = this,
+			l = d4p.l(),
+			ret = d4p.ajax.inCollection(l.uri),
+			id = '';
+			
 			this.hideAll();
-			var l = d4p.l();
+			
 						
-			if(l.uri !== '' && l.uri.substring(0,1) != '/')	{
-				//d4p.ajaxnav.load();
+						
+			if(ret)	{
 				$("#home").addClass('state-active');
-				this.show(l.id);
-			} else if(l.uri != '' && l.uri.substring(0,1) == '/')	{	
+				id = d4p.ajax.collection[l.uri].id;
+				this.show(id);
+			} else if(l.uri != '' && !ret)	{	
 				$("#home").addClass('state-active');
 				this.show(l.uri.substring(1));
 			} else if (l.uri == '') {
@@ -48,7 +53,7 @@
 				idx = $(this).parent().attr('id') == l.hash ? index : idx;
 			});
 			
-			$(".d4p-ui-accordion").accordion('activate', idx);
+			$(".d4p-ui-accordion").accordion( "option", "active", idx );
 			d4p.scrollToHash('#'+l.hash);
 
 		},

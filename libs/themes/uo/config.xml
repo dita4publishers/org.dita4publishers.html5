@@ -23,11 +23,11 @@
   <script path="core/d4p/js/d4p.js" />
   
   <script path="core/module-prototype/js/module.js" />
-  <script path="core/message/js/message.js" />
   
   <!-- carefull in this order -->
   <script path="core/ajaxLoader/js/ajaxLoader.js" />
   <script path="core/ajaxLoader/js/ajaxnav.js" />  
+    <script path="core/message/js/message.js" />
   
   <script path="modules/ui/jQuery-ui/adapter/js/ui.js" />
   
