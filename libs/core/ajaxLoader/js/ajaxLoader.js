@@ -56,6 +56,11 @@
         this.setAriaAttr();
 
     };
+	// Set outputSelector
+    d4p.ajaxLoader.prototype.focus = function () {
+        $(this.id).focus();
+    },
+
 
     // Set outputSelector
     d4p.ajaxLoader.prototype.setOutputSelector = function (selector) {
@@ -180,13 +185,11 @@
         this.responseText = this.responseText.replace(/(src)\s*=\s*"([^<"]*)"/g, function (match, attr, src) {
             var parts = src.split("/"), nhref = '';
             uri = uri.substring(1, uri.length);
-            console.log(uri);
             if(d4p.protocols.indexOf(parts[0]) !== -1) {
                 nhref = src;
             } else {
                 nhref = uri.substring(1, uri.lastIndexOf("/")) + "/" + src;   
             }
-            console.log(nhref);
             return attr + '="' + nhref + '"';
         });
     },
@@ -200,9 +203,10 @@
 			
             var l = d4p.l(),
                 newHref = '',
+                uri = l.uri.substring(1, l.uri.length),
                 list = href.split("/"),
-                dir = d4p.basename(l.uri),
-                idx = href.indexOf(l.uri),
+                dir = d4p.basename(uri),
+                idx = href.indexOf(uri),
                 base = dir.split("/"),
                 i = 0,
                 parts = '',
@@ -226,7 +230,7 @@
 
                 // anchors on the same page
                 if (idx == 0) {
-                    newHref = '#' + href;
+                    newHref = '#/' + href;
                 } else {
 
                     parts = href.split('/');
@@ -251,8 +255,8 @@
 
                     pathC = dir != '' ? base.concat(nPath) : Array.concat(nPath);
                     pId = o.collection[l.uri].id;
-                    o.collectionSet(pathC.join('/'), pId, o.title);
-                    newHref = '#' + pathC.join('/');
+                    o.collectionSet("/"+pathC.join('/'), pathC.join('/') + d4p.ext, '', o.title);
+                    newHref = '#/' + pathC.join('/');
                 }
             }
 			
@@ -382,6 +386,10 @@
                     this.contentIsLoaded();
 
                     $(this.outputSelector).attr('aria-busy', 'false');
+                    
+                    if (this.hash != undefined) {
+                      d4p.scrollToHash('#' + this.hash);
+                    }
 
                 }
             }
