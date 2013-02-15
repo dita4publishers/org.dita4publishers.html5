@@ -18,16 +18,15 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  *
- */ (function (d4p) {
+ */ 
+(function (d4p) {
 
     // Remove links on dialogs
     d4p.ajaxLoader.prototype.removeLinks = function () {
         var uri = d4p.hash.current;
-        //console.log(this.content.html());
         this.content.find("a").each(function(index) {
       		$(this).replaceWith(this.childNodes);
     	});
-    	//console.log(this.content.html());
     };
 
     d4p.ui.dialog = {
@@ -38,15 +37,16 @@
 
         init: function (obj) {
         
-        	var uri = '', id = '';
+        	var uri = '', id = '', href='';
 
             if (obj[0].tagName.toUpperCase() === "DFN") {
                 obj = obj.parent();
             }
-	
-            uri = obj.attr('href');
-            uri = uri.substring(0, 1) === '#' ? uri.substring(1) : uri;
-            
+		
+			href = obj.attr('href');
+			href = href.substring(0,1) == '#' ? href.substring(1) : href;
+            uri = d4p.ajax.collection[href].uri;
+                      
             id = this.getId();
 
             // keep track of every external dialog loaded
@@ -61,8 +61,6 @@
             if (this.checkDialog(obj, uri)) {
                 this.dialog(obj, uri);
             }
-
-
 
         },
 
