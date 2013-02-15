@@ -37,36 +37,6 @@
 	font-family: "Vegur Light";
     src: url("../fonts/Vegur-L.otf"), url('Vegur-Light.woff');
 }/**
- *  @file typography.css
- *
- *  Typography declaration for Vegur
- *
- *  Copyright 2012 DITA For Publishers  
- * 
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *  http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- */ 
-html, body {
-	font-family: 'Vegur Regular','Lucida Grande',Helvetica,Arial,Verdana,sans-serif;
-}
-
-b {
-	font-family: 'Vegur Bold','Lucida Grande',Helvetica,Arial,Verdana,sans-serif;
-}
-
-header h1 {
-	font-family: 'Vegur Light','Lucida Grande',Helvetica,Arial,Verdana,sans-serif;
-}/**
  *  @file d4p.css
  *
  *  d4p class to be used with dita
@@ -791,7 +761,19 @@ span.figcap {
 
 .d4p-ui-cycle img {
 	display:block;
-}body.theme-01 .section .title { background-color: #FFF; }
+}#main-content h1, #main-content h2, #main-content h3, #main-content h4, #main-content h5, #main-content h6 {
+	font-family: 'Vegur Bold','Lucida Grande',Helvetica,Arial,Verdana,sans-serif;
+}
+
+
+header h1 {
+	font-family: 'Vegur Light','Lucida Grande',Helvetica,Arial,Verdana,sans-serif;
+}
+
+#main-content h5 {
+    font-weight: normal;
+}
+body.theme-01 .section .title { background-color: #FFF; }
 
 body dfn
 {
@@ -891,7 +873,11 @@ div.nested2 h3
 }
 
 #toolbar #homeToolBar { }
-
+#home {
+	border-bottom: 1px solid #DFDFDF;
+    margin: 0 0 30px;
+    padding-bottom: 30px;
+}
 #home .header h1
 {
 	margin: 17px 0 0 0px;
@@ -922,8 +908,7 @@ div.nested2 h3
 
 #home button.audienceBtn .ui-icon
 {
-	position:relative;
-	left:-9px;
+	display:none;
 }
 
 #audience-widget

@@ -1,3 +1,15 @@
+#main-content h1, #main-content h2, #main-content h3, #main-content h4, #main-content h5, #main-content h6 {
+	font-family: 'Vegur Bold','Lucida Grande',Helvetica,Arial,Verdana,sans-serif;
+}
+
+
+header h1 {
+	font-family: 'Vegur Light','Lucida Grande',Helvetica,Arial,Verdana,sans-serif;
+}
+
+#main-content h5 {
+    font-weight: normal;
+}
 body.theme-01 .section .title { background-color: #FFF; }
 
 body dfn
@@ -98,7 +110,11 @@ div.nested2 h3
 }
 
 #toolbar #homeToolBar { }
-
+#home {
+	border-bottom: 1px solid #DFDFDF;
+    margin: 0 0 30px;
+    padding-bottom: 30px;
+}
 #home .header h1
 {
 	margin: 17px 0 0 0px;
@@ -129,8 +145,7 @@ div.nested2 h3
 
 #home button.audienceBtn .ui-icon
 {
-	position:relative;
-	left:-9px;
+	display:none;
 }
 
 #audience-widget

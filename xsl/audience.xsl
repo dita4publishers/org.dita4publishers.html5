@@ -35,7 +35,7 @@
     <xsl:message> + [INFO] Generating audience select </xsl:message>
     <span id="audience-widget">   		
     		<button class="audienceBtn">
-    			<span class="ui-icon ui-icon-carat-2-n-s"><xsl:call-template name="getString">
+    			<span class="hidden"><xsl:call-template name="getString">
                     <xsl:with-param name="stringName" select="'chooseAudience'"/>
                 </xsl:call-template></span>
     		</button>

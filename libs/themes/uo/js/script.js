@@ -17,6 +17,7 @@
 		
 		show: function (id) {
 			$("#"+id).show();
+			$("#"+id).focus();
 		},
 		
 		setAria: function () {
@@ -30,9 +31,7 @@
 			id = '';
 			
 			this.hideAll();
-			
-						
-						
+									
 			if(ret)	{
 				$("#home").addClass('state-active');
 				id = d4p.ajax.collection[l.uri].id;
@@ -43,6 +42,8 @@
 			} else if (l.uri == '') {
 				$("#home").removeClass('state-active');
 			}
+			
+			return true;
 			
 		},
 		goToHash: function () {
@@ -87,12 +88,10 @@
  	var audience = new d4p.module('audience', {
  	
  		onClick: function() {
- 		//  add on click event on header
- 		//$("#audienceBtn").unbind('click');
- 		
-		$("#audience-widget").click(function(e){
-			$("#audience-widget").toggleClass('active');
-		});
+     				
+    		$(".audienceBtn").click(function(e){
+    			$("#audience-widget").toggleClass('active');
+    		});
 
  		},
  		
