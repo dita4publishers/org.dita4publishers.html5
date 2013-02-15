@@ -80,9 +80,7 @@
       if (o != undefined && o.cache == false) {
         d4p.ajax.load(l.uri, l.hash);
       }
-      if (l.hash != undefined) {
-         d4p.scrollToHash('#' + l.hash);
-      }
+     
     },
 
     init: function () {
@@ -91,11 +89,14 @@
       d4p.ajax.name = 'main';
       
       d4p.ajax.addLoader();
+      
       d4p.ajax.bind('filter', 'rewriteAttrHref');
       d4p.ajax.bind('filter', 'rewriteAttrSrc');
       d4p.ajax.bind('ready', 'setTitle');
       
+      d4p.ajax.bind('ready', 'focus');
       this.bind('uriChange', 'load');
+
       this.traverse();
       
     }
