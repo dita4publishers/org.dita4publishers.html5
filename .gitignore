@@ -42,3 +42,4 @@ Thumbs.db
 ######################
 .svn
 *.svn
+xsl/map2html5.xsl

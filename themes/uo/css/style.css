@@ -761,19 +761,7 @@ span.figcap {
 
 .d4p-ui-cycle img {
 	display:block;
-}#main-content h1, #main-content h2, #main-content h3, #main-content h4, #main-content h5, #main-content h6 {
-	font-family: 'Vegur Bold','Lucida Grande',Helvetica,Arial,Verdana,sans-serif;
-}
-
-
-header h1 {
-	font-family: 'Vegur Light','Lucida Grande',Helvetica,Arial,Verdana,sans-serif;
-}
-
-#main-content h5 {
-    font-weight: normal;
-}
-body.theme-01 .section .title { background-color: #FFF; }
+}body.theme-01 .section .title { background-color: #FFF; }
 
 body dfn
 {
@@ -873,25 +861,21 @@ div.nested2 h3
 }
 
 #toolbar #homeToolBar { }
-#home {
-	border-bottom: 1px solid #DFDFDF;
-    margin: 0 0 30px;
-    padding-bottom: 30px;
-}
+
 #home .header h1
 {
 	margin: 17px 0 0 0px;
 	font-size: 22px;
 	color: #741026;
-	top: 12px;
+	top: 16px;
 	display:inline
 
 }
 
 #home.state-active .header h1
 {
-	font-size: 15px;
-	margin: 17px 0 0 10px;
+	font-size: 20px;
+	margin: 17px 0 0 20px;
 }
 
 #home .header { position: relative; top:20px;}
@@ -908,7 +892,8 @@ div.nested2 h3
 
 #home button.audienceBtn .ui-icon
 {
-	display:none;
+	position:relative;
+	left:-9px;
 }
 
 #audience-widget
@@ -918,7 +903,12 @@ div.nested2 h3
 	margin-top: 0px;
 	display: inline;
 }
-
+#audience-widget button {
+	display: inline;
+	font-size:12px;
+	padding:2px 3px;
+	margin-left:0.8em;
+}
 #audience-widget .ligther
 {
 	padding-left: 10px;
@@ -1129,3 +1119,5 @@ span.ph.num
  	padding-left:20px;
  	margin-bottom: 2em;
  }
+ 
+ 

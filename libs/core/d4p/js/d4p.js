@@ -93,6 +93,8 @@
         // I added this feature to allow user to set options
         // before their module are called.
         'edocReady': [],
+        
+        'tabIndex': 10,
 
         docIsReady: function () {
             var i = {}, fn = {};

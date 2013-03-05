@@ -124,6 +124,8 @@ Array.prototype.clean = function (s) {
         // I added this feature to allow user to set options
         // before their module are called.
         'edocReady': [],
+        
+        'tabIndex': 10,
 
         docIsReady: function () {
             var i = {}, fn = {};
@@ -589,6 +591,7 @@ Array.prototype.clean = function (s) {
         var id = this.refpath.replace(/\//g, '__'),
             div = $("<div />").attr('id', id).attr('class', 'content-chunk').html(this.content),
             fn = {};
+
 
         // execute ajaxLive
         // perform all tasks which may require
@@ -1288,7 +1291,6 @@ Array.prototype.clean = function (s) {
 		
 		show: function (id) {
 			$("#"+id).show();
-			$("#"+id).focus();
 		},
 		
 		setAria: function () {
@@ -1335,14 +1337,16 @@ Array.prototype.clean = function (s) {
             d4p.ajax.mode = 'append';
             $('#home').find('.box-ico a').each(function(){
             	var hash = $(this).attr('href').substring(1, $(this).attr('href').length);
+            	$(this).attr('role', 'button');
             	$(this).attr('href', '#/' + hash);
             	$(this).click(function(){
             	    $(this).parent().siblings().removeClass('active');
-            	    $(this).parent().addClass('active');
-        
-            		$('#'+hash).focus();
+            	    $(this).parent().addClass('active');   
+            	    $('#content-container').attr('tabindex', -1).focus();     
             	});
             });
+            
+            
         	this.hideAll();
         	this.setAria();
         	this.bind('uriChange', 'load');
@@ -1359,17 +1363,29 @@ Array.prototype.clean = function (s) {
  	var audience = new d4p.module('audience', {
  	
  		onClick: function() {
-     				
-    		$(".audienceBtn").click(function(e){
-    			$("#audience-widget").toggleClass('active');
-    		});
+ 		//  add on click event on header
+ 		//$("#audienceBtn").unbind('click');
+ 		
+		$("#audienceBtn").click(function(e){
+		    if($("#audience-widget").hasClass('active')) {
+		    	$("#audience-widget").toggleClass('active');
+		    	$("#audience-list").slideUp();
+		    	$("#home").attr("tabindex",-1).focus();
+		    } else {
+				$("#audience-widget").toggleClass('active');
+				$("#audience-list").slideDown().attr("tabindex",-1).focus();
+			}
+		});
 
  		},
+ 	
+ 	
  		
  		init: function() {
- 			
- 		this.onClick();
  		
+ 		window.group.init();
+ 		this.onClick();
+
  		$("#audience-widget").addClass('no-select');
  		
  		
@@ -1381,8 +1397,7 @@ Array.prototype.clean = function (s) {
 				$("#audience-widget").toggleClass('active');
 			}
 		});
- 		}	
- 	
+	
+ 	 }
  	 });
 })(d4p);
-

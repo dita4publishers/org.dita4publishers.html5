@@ -1578,6 +1578,7 @@ Array.prototype.clean = function (s) {
      */
     d4p.ajaxLoader = function (opts) {
 
+		this.name = '';
         this.outputSelector = d4p.outputSelector;
         this.title = '';
         this.content = '';
@@ -1607,6 +1608,11 @@ Array.prototype.clean = function (s) {
         this.setAriaAttr();
 
     };
+	// Set outputSelector
+    d4p.ajaxLoader.prototype.focus = function () {
+        $(this.id).focus();
+    },
+
 
     // Set outputSelector
     d4p.ajaxLoader.prototype.setOutputSelector = function (selector) {
@@ -1727,13 +1733,14 @@ Array.prototype.clean = function (s) {
     // because there is no real path with AJAX call
     // from http://ejohn.org/blog/search-and-dont-replace/
     d4p.ajaxLoader.prototype.rewriteAttrSrc = function () {
-        var l = d4p.l();
+        var l = d4p.l(), uri = "";
         this.responseText = this.responseText.replace(/(src)\s*=\s*"([^<"]*)"/g, function (match, attr, src) {
             var parts = src.split("/"), nhref = '';
+            uri = uri.substring(1, uri.length);
             if(d4p.protocols.indexOf(parts[0]) !== -1) {
                 nhref = src;
             } else {
-                nhref = l.uri.substring(1, l.uri.lastIndexOf("/")) + "/" + src;   
+                nhref = uri.substring(1, uri.lastIndexOf("/")) + "/" + src;   
             }
             return attr + '="' + nhref + '"';
         });
@@ -1748,9 +1755,10 @@ Array.prototype.clean = function (s) {
 			
             var l = d4p.l(),
                 newHref = '',
+                uri = l.uri.substring(1, l.uri.length),
                 list = href.split("/"),
-                dir = d4p.basename(l.uri),
-                idx = href.indexOf(l.uri),
+                dir = d4p.basename(uri),
+                idx = href.indexOf(uri),
                 base = dir.split("/"),
                 i = 0,
                 parts = '',
@@ -1774,7 +1782,7 @@ Array.prototype.clean = function (s) {
 
                 // anchors on the same page
                 if (idx == 0) {
-                    newHref = '#' + href;
+                    newHref = '#/' + href;
                 } else {
 
                     parts = href.split('/');
@@ -1799,8 +1807,8 @@ Array.prototype.clean = function (s) {
 
                     pathC = dir != '' ? base.concat(nPath) : Array.concat(nPath);
                     pId = o.collection[l.uri].id;
-                    o.collectionSet(pathC.join('/'), pId, o.title);
-                    newHref = '#' + pathC.join('/');
+                    o.collectionSet("/"+pathC.join('/'), pathC.join('/') + d4p.ext, '', o.title);
+                    newHref = '#/' + pathC.join('/');
                 }
             }
 			
@@ -1863,7 +1871,7 @@ Array.prototype.clean = function (s) {
             },
 
             complete: function (jqXHR, status, responseText) {
-
+			
                 // is status is an error, return an error dialog
                 if (status === 'error' || status === 'timeout') {
 
@@ -1886,7 +1894,7 @@ Array.prototype.clean = function (s) {
                 responseText = jqXHR.responseText;
 
                 // If successful, inject the HTML into all the matched elements
-                if (jqXHR.isResolved()) {
+                if (status == "success") {
 
                     // From jquery: #4825: Get the actual response in case
                     // a dataFilter is present in ajaxSettings
@@ -1930,6 +1938,10 @@ Array.prototype.clean = function (s) {
                     this.contentIsLoaded();
 
                     $(this.outputSelector).attr('aria-busy', 'false');
+                    
+                    if (this.hash != undefined) {
+                      d4p.scrollToHash('#' + this.hash);
+                    }
 
                 }
             }
@@ -2018,21 +2030,23 @@ Array.prototype.clean = function (s) {
       if (o != undefined && o.cache == false) {
         d4p.ajax.load(l.uri, l.hash);
       }
-      if (l.hash != undefined) {
-         d4p.scrollToHash('#' + l.hash);
-      }
+     
     },
 
     init: function () {
 
       d4p.ajax = new d4p.ajaxLoader();
+      d4p.ajax.name = 'main';
       
       d4p.ajax.addLoader();
+      
       d4p.ajax.bind('filter', 'rewriteAttrHref');
       d4p.ajax.bind('filter', 'rewriteAttrSrc');
       d4p.ajax.bind('ready', 'setTitle');
       
+      d4p.ajax.bind('ready', 'focus');
       this.bind('uriChange', 'load');
+
       this.traverse();
       
     }
@@ -3060,7 +3074,7 @@ $.Widget.prototype = {
       }
       obj.accordion({
         header: cs,
-        autoHeight: false, // required for Safari
+        heightStyle: 'content',
         active: false,
         collapsible: true
         //,
