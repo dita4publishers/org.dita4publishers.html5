@@ -174,9 +174,10 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
       <xsl:sequence select="'&#x0a;'"/>
       
-      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+      <meta http-equiv="X-UA-Compatible" value="IE=8"/>
+	  <meta http-equiv="X-UA-Compatible" content="IE=9"/>
       <xsl:sequence select="'&#x0a;'"/>
-
+      
       <!-- Dublin core metadata -->
       <!-- Provide schema -->
       <link rel="schema.DC" href="http://purl.org/dc/terms/" />
