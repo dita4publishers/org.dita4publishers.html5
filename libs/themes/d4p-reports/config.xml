@@ -14,19 +14,19 @@
 
   <style path="core/layout/css/ui-icons.css" />  
   
-  
   <style path="modules/images/css/images.css" />  
   <style path="modules/notes/css/notes.css" /> 
 
   <style path="modules/ui/jQuery-ui/scale2fit/css/scale2fit.css" /> 
   <style path="modules/reltable/css/reltable.css" /> 
   
+
   <style path="themes/d4p-reports/css/theme.css" /> 
 
-  <script path="core/modernizr/modernizr.dev.2.0.6.js" /> 
-  <script path="core/jQuery/jquery-1.7.1.min.js" />
   <script path="core/d4p/js/array.prototype.js" />
-   
+  <script path="modules/table-fixed-header/table-fixed-header.js" />
+  <script path="themes/d4p-reports/js/script.js" /> 
+ 
   <d4p>
   	<init>false</init>
   </d4p>

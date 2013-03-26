@@ -89,7 +89,7 @@
    	</xsl:choose>
    </xsl:variable>
    
-	<xsl:if test="$HTML5THEMECONFIGDOC/html5/d4p/init">
+	<xsl:if test="$HTML5THEMECONFIGDOC/html5/d4p/init='true'">
     	<script type="text/javascript"><xsl:sequence select="'&#x0a;'"/>
    		  		
    		<xsl:if test="$json != ''">
