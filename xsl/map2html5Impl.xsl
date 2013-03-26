@@ -279,6 +279,7 @@
        <xsl:with-param name="baseUri" as="xs:string" select="@xtrf" tunnel="yes"/>
        <xsl:with-param name="documentation-title" select="$documentation-title" tunnel="yes"/>
         <xsl:with-param name="is-root" as="xs:boolean" select="false()" tunnel="yes"/>
+        <xsl:with-param name="audienceSelect"  select="$audienceSelect" tunnel="yes"/>
     </xsl:apply-templates>
     
     

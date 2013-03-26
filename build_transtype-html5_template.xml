@@ -25,6 +25,11 @@
     </target>
     
   <target name="html5.theme.init" depends="load.settings" description="Init HTML5 theme properties">
+  
+  <condition property="html5.site.theme" value="${args.cssroot}">
+        <isset property="args.cssroot" />
+	</condition>
+	
      <condition property="html5.site.theme" value="d4p-classic">
 		  <not>
         <isset property="html5.site.theme" />
