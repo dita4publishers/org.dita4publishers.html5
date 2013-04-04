@@ -99,10 +99,11 @@
 
    		<xsl:text>$(function(){d4p.init({</xsl:text>
    		<xsl:text>relativePath:'</xsl:text><xsl:value-of select="$relativePath"/><xsl:text>'</xsl:text>
-   	
-   			<xsl:text>, </xsl:text>
-			<xsl:value-of select="$jsoptions" />
-	
+     			
+   			<xsl:if test="$jsoptions != ''">
+   				<xsl:text>, </xsl:text>
+				<xsl:value-of select="$jsoptions" />
+			</xsl:if>
 		<xsl:text>});});</xsl:text>
 		</script><xsl:sequence select="'&#x0a;'"/>
  	</xsl:if>
