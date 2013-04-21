@@ -68,9 +68,11 @@
             	$(this).attr('role', 'button');
             	$(this).attr('href', '#/' + hash);
             	$(this).click(function(){
+            	    var lang = $('html').attr('lang') == 'fr' ? 'en/my-info/' : 'fr/mon-info/';
+            	                	    
             	    $(this).parent().siblings().removeClass('active');
-            	    $(this).parent().addClass('active');   
-            	    $('#content-container').attr('tabindex', -1).focus();     
+            	    $(this).parent().addClass('active');
+            	    $("#ch-lang-url").attr('href', "/"+lang+document.location.hash);  
             	});
             });
             
