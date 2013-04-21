@@ -1000,8 +1000,7 @@ div.nested2 h3
 	display: block;
 	width: 97px;
 	height: 77px;
-	position: relative;
-	left: 10px;
+	margin: 0 auto;
 }
 
 .state-active .box-ico  span.ico
@@ -1016,7 +1015,7 @@ div.nested2 h3
 {
 	padding-top: 90px;
 	position: relative;
-	top: -90px;
+	top: -80px;
 	width: 120px;
 	font-weight: bold;
 	line-height: 1.2;
@@ -1032,10 +1031,10 @@ div.nested2 h3
 .state-active .box-ico a, .state-active .box-ico a:link
 {
 	height: 60px;
-	width: 80px;
+	width: 85px;
 	padding-top: 60px;
 	position: relative;
-	top: -60px;
+	top: -55px;
 	font-weight: bold;
 	font-size: 12px;
 	line-height: 1.2;
@@ -1079,14 +1078,15 @@ div.nested2 h3
 #ico-pension span.ico, #ico-regime-retraite span.ico { background-position: -97px -77px; }
 #ico-awards span.ico, #ico-prix span.ico { background-position: -97px -154px; }
 #ico-bookshelf span.ico { background-position: -194px -154px; }
+
 .state-active #ico-life-events span.ico { background-position: 0px -232px; }
 .state-active #ico-policies span.ico, .state-active #ico-politiques span.ico { background-position: 0px -336px; }
-.state-active #ico-conges span.ico, .state-active #ico-leaves span.ico { background-position: -122px -232px; }
-.state-active #ico-benefits span.ico, .state-active  #ico-avantages span.ico { background-position: -61px -232px; }
+.state-active #ico-conges span.ico, .state-active #ico-leaves span.ico { background-position: -127px -232px; }
+.state-active #ico-benefits span.ico, .state-active  #ico-avantages span.ico { background-position: -63px -232px; }
 .state-active #ico-remuneration span.ico, .state-active  #ico-compensation span.ico { background-position: 0px -284px; }
-.state-active #ico-performance span.ico { background-position: -122px -284px; }
-.state-active #ico-pension span.ico, .state-active #ico-regime-retraite span.ico { background-position: -61px -284px; }
-.state-active #ico-awards span.ico, .state-active #ico-prix span.ico { background-position: -61px -336px; }
+.state-active #ico-performance span.ico { background-position: -127px -284px; }
+.state-active #ico-pension span.ico, .state-active #ico-regime-retraite span.ico { background-position: -62px -284px; }
+.state-active #ico-awards span.ico, .state-active #ico-prix span.ico { background-position: -66px -336px; }
 .state-active #ico-bookshelf span.ico { background-position: 2px -94px; }
 body.theme-01 .section .title { background-color: #FFF; }
 
@@ -1119,5 +1119,11 @@ span.ph.num
  	padding-left:20px;
  	margin-bottom: 2em;
  }
+ 
+.named-anchor {
+	position:absolute;
+	top:0px;
+	left:0px;
+}
  
  
