@@ -371,28 +371,19 @@ if (!Array.prototype.indexOf) {
                     this[fn].init.call(this[fn]);
                 }
             }
-
-
-            
+           
             //var event = 'hashchange';
             // Bind an event to window.onhashchange that, when the history state changes
             // will implament onpopsate event and history if the feature is implemented
             // but now, few browsers support it
-            // detect it with Modernizr.history 
-            
+            // detect it with Modernizr.history           
             if (!("onhashchange" in window) || (document.documentMode == 7 )) {
     			setInterval("d4p.uriChanged()", 250);
 			} else if (window.addEventListener) {
-    			window.addEventListener("hashchange", d4p.uriChanged, false);
-    			    console.log("addEventListene");
+    			window.addEventListener("hashchange", d4p.uriChanged, false);    			   
 			} else if (window.attachEvent) {
-    			window.attachEvent("onhashchange", d4p.uriChanged);   
-    				    console.log("attachEvent"); 
+    			window.attachEvent("onhashchange", d4p.uriChanged);       				   
 			}
-
-            /**$(window).bind(event, function (e) {
-                d4p.uriChanged();
-            });**/
 
             this.getInitialContent();
             
