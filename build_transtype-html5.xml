@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?><project name="dita2html5" default="dita2html5">
 
+  <import file="build-theme.xml"></import>
 
   <!-- test to see where the plugin is located, plugins or demo -->
   <dirname property="html5.dir" file="${ant.file.dita2html5}"></dirname>
@@ -30,37 +31,19 @@
       </not>
 	</condition>
 	
-	<condition property="html5.dir.libs" value="libs">
-		  <not>
-        <isset property="html5.dir.libs"></isset>
-      </not>
-	</condition>
-	
-	
-	 <condition property="html5.site.config" value="${html5.dir}/${html5.dir.libs}/themes/${html5.site.theme}/config.xml">
+	 <condition property="html5.build.theme.dir" value="yes">
 		  <not>
         <isset property="html5.site.config"></isset>
       </not>
 	</condition>
+
 	
-		<xmlproperty file="${html5.site.config}" collapseAttributes="true" semanticAttributes="true"></xmlproperty>
-		
-		<echoproperties>
-    		<propertyset>
-      			<propertyref prefix="html5."></propertyref>
-    		</propertyset>
-  		</echoproperties>
   </target>
 
-  <target name="html5.theme.build" if="html5.theme.compile" depends="html5.theme.init" description="Compile HTML5 theme">
-    <ant dir="${html5.dir}/${html5.dir.libs}/" antfile="build.xml">
-  		<property name="properties" value="${html5.site.theme}"></property>
-	</ant>  
-  </target>
-
-  <target name="dita.map.html5.init" depends="html5.theme.build" description="Init properties for HTML5">
+ 
+  <target name="dita.map.html5.init" depends="package.compress" description="Init properties for HTML5">
 	
-	<condition property="html5.site.js.vars" value="${html5.dir}/${html5.dir.libs}/themes/${html5.site.theme}/vars.xml">
+    <condition property="html5.site.js.vars" value="${html5.compression.temp.dir.name}/themes/${html5.site.theme}/vars.xml">
 		  <not>
         <isset property="html5.site.js.vars"></isset>
       </not>
@@ -216,12 +199,6 @@
     <condition property="css.output.dir" value="css">
       <not>
         <isset property="args.css.output.dir"></isset>
-      </not>
-    </condition>
-    
-	<condition property="lib.html5.dir.libs" value="libs">
-      <not>
-        <isset property="lib.html5.dir.libs"></isset>
       </not>
     </condition>
     
@@ -492,10 +469,17 @@
 	
 <param name="JQUERYMOBILEPAGETHEME" expression="jquery.mobile.page.theme"></param>
 
+	<!-- add here all params you ant to pass to the xslt -->
 	
 <param name="HTML5OUTPUTLOCALBREADCRUMB" expression="${html5.output.localbreadcrumb}"></param> 
 
 	
+
+	<!-- add here all params you ant to pass to the xslt -->
+	<!--param name="MY.PARAM" expression="my.param.ant.property"/-->
+
+	<!-- add here all params you ant to pass to the xslt -->
+	<!--param name="MY.PARAM" expression="my.param.ant.property"/-->
 
     	
       <mapper type="glob" from="${user.input.file}" to="${args.xhtml.toc}${out.ext}"></mapper>
@@ -561,7 +545,7 @@
   
   <target name="check.libs.exists" description="Check if the library directory exists in the output directory">
     <condition property="html5.themes.output.dir.exists">
-    	<available file="${output.dir}/${lib.html5.dir.libs}" type="dir"></available>
+      <available file="${output.dir}/${html5.compression.temp.dir.name}" type="dir"></available>
     </condition>
     
     <condition property="html5.prevent.copy.libs">
@@ -575,10 +559,10 @@
   
   <target name="html5-copy-libs" description="Copy assets files for development" depends="dita.map.html5.init, check.libs.exists, confirm.libs.exists" if="${html5.copy.libs}" unless="html5.prevent.copy.libs">
   
-    <mkdir dir="${output.dir}/${lib.html5.dir.libs}"></mkdir>
+    <mkdir dir="${output.dir}/${html5.libs.dir}"></mkdir>
     
-    <copy todir="${output.dir}/${lib.html5.dir.libs}">
-      <fileset dir="${html5.dir}/${lib.html5.dir.libs}"></fileset>
+    <copy todir="${output.dir}/${html5.libs.dir}">
+      <fileset dir="${html5.dir}/${html5.compression.temp.dir.name}"></fileset>
     </copy>
 
   </target>

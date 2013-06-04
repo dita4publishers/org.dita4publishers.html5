@@ -39,7 +39,14 @@ Thumbs.db
 
 
 # SVN #
-######################
+#######
 .svn
 *.svn
+
+
+# External libraries (not under Apache licence #
+######################################
+yuicompressor-2.4.7
+
+# html5 plugin #
 xsl/map2html5.xsl
