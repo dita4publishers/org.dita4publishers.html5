@@ -49,7 +49,7 @@
  
   <target name="dita.map.html5.init" depends="package.compress" description="Init properties for HTML5">
 	
-    <condition property="html5.site.js.vars" value="${html5.compression.temp.dir.name}/themes/${html5.site.theme}/vars.xml">
+    <condition property="html5.site.js.vars" value="${html5.dir}/${html5.compression.temp.dir.name}/themes/${html5.site.theme}/vars.xml">
 		  <not>
         <isset property="html5.site.js.vars" />
       </not>
@@ -449,7 +449,7 @@
     <mkdir dir="${output.dir}/${html5.libs.dir}"/>
     
     <copy todir="${output.dir}/${html5.libs.dir}">
-      <fileset dir="${html5.dir}/${html5.compression.temp.dir.name}"/>
+      <fileset dir="${html5.compression.temp.dir}"/>
     </copy>
 
   </target>
