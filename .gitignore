@@ -50,3 +50,7 @@ yuicompressor-2.4.7
 
 # html5 plugin #
 xsl/map2html5.xsl
+
+build-theme.xml
+
+build_transtype-html5.xml
