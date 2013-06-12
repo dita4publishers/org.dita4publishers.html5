@@ -163,21 +163,11 @@
       <head>
 
       <xsl:apply-templates select="." mode="gen-head-title" />
-       
-      <xsl:sequence select="'&#x0a;'"/>
-
 	  <xsl:apply-templates select="." mode="gen-user-top-head" />
-	  
+     
       <meta charset="utf-8" />
-      <xsl:sequence select="'&#x0a;'"/>
-
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-      <xsl:sequence select="'&#x0a;'"/>
-      
-      <meta http-equiv="X-UA-Compatible" value="IE=8"/>
-	  <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-      <xsl:sequence select="'&#x0a;'"/>
-      
+   
       <!-- Dublin core metadata -->
       <!-- Provide schema -->
       <link rel="schema.DC" href="http://purl.org/dc/terms/" />
@@ -287,6 +277,10 @@
         			<div id="topic-content">	
         				<xsl:sequence select="$content"/>
         			</div>
+        			<xsl:apply-templates select="*/*[contains(@class, 'related-links')]" mode="topic.related-links"/>
+        			<xsl:message>
+        				<xsl:sequence select="*/*[contains(@class, 'related-links')]" />
+        			</xsl:message>
         		</section>
         	</xsl:otherwise>
         
