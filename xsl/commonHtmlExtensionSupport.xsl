@@ -183,14 +183,7 @@
     </xsl:attribute>
     
     <xsl:call-template name="setid"/>
-    <xsl:choose>
-      <xsl:when test="*[contains(@class, ' topic/longdescref ')]">
-        <xsl:apply-templates select="*[contains(@class, ' topic/longdescref ')]"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:apply-templates select="@longdescref"/>
-      </xsl:otherwise>
-    </xsl:choose>
+   
     <xsl:apply-templates select="@href|@height|@width"/>
     <!-- Add by Alan for Bug:#2900417 on Date: 2009-11-23 begin -->
     <xsl:apply-templates select="@scale"/>

@@ -4,23 +4,9 @@
 	<dirname property="ant.file.html5compressor.dir" file="${ant.file.html5compressor}"/>	
 	<dirname property="dita.plugins.dir" file="${ant.file.html5compressor.dir}"/>
 		
-	<condition property="dita.dir" value="${dita.plugins.dir}/../">
-		<not>
-			<isset property="dita.dir"/>
-		</not>
-	</condition>
-	
-	<condition property="tempdir" value="${dita.dir}/temp/">
-		<not>
-			<isset property="tempdir"/>
-		</not>
-	</condition>
-	
-	<mkdir dir="${tempdir}" />
-	
 	<loadproperties srcFile="${ant.file.html5compressor.dir}/shared.properties"/>
 	
-	<target name="package.compress" depends="compressor.check, compressor.install, init.build.theme, prepare.html5.theme.dir, load.properties, package.concat.js, package.concat.css, package.compress.css, package.compress.js, package.copy.assets, clean.temp.libs" />
+	<target name="package.compress" depends="compressor.check, compressor.install, init.build.theme, load.html5.properties, package.concat.js, package.concat.css, package.compress.css, package.compress.js, package.copy.assets, clean.temp.libs" />
 	
 	<target name="compressor.check" description="check compressor availability">
 		<available file="${ant.file.html5compressor.dir}/${compressor.path}" property="html5.compressor.available"/>
@@ -32,7 +18,28 @@
 		<delete file="${ant.file.html5compressor.dir}/yuicompressor-2.4.7.zip"/>
 	</target>
 	
-	<target name="prepare.html5.theme.dir" description="Copy main libs directory and grab all theme directory inside plugins to create one">
+	
+	<target name="clean.temp.libs">
+		
+	</target>
+	
+	<target name="check.html5.config.exists">
+		<property name="html5.site.config" location="${html5.compression.temp.dir}/${html5.themes.dir}/${html5.site.theme}/config.xml"/>
+		<available file="${html5.site.config}" property="html5.config.exists"/>
+	</target>
+	
+	<target name="load.html5.properties" depends="check.html5.config.exists" description="load theme properties if not already loaded" unless="html5.style" if="html5.config.exists">
+		<echo>Loading property file: ${html5.site.config} </echo>
+		<xmlproperty file="${html5.site.config}" collapseAttributes="true" semanticAttributes="true" />
+		<echoproperties>
+			<propertyset>
+				<propertyref prefix="html5."/>
+			</propertyset>
+		</echoproperties>
+	</target>
+	
+	<target name="init.build.theme" description="Set default properties and build a full library in a temp directory">
+		
 		<!-- this is the current theme builded -->
 		<condition property="html5.site.theme" value="d4p-classic">
 			<not>
@@ -40,11 +47,28 @@
 			</not>
 		</condition>
 		
-		<property name="html5.compressor.build.dir" location="${ant.file.html5compressor.dir}/${html5.themes.dir}/${html5.site.theme}" />
+		<!-- added in case the ant file is called directly -->
+		<condition property="dita.dir" value="${dita.plugins.dir}/../">
+			<not>
+				<isset property="dita.dir"/>
+			</not>
+		</condition>
+		
+		<!-- added in case the ant file is called directly -->
+		<condition property="tempdir" value="${dita.dir}/temp/">
+			<not>
+				<isset property="tempdir"/>
+			</not>
+		</condition>
+		
+		<property name="html5.compressor.build.dir" location="${tempdir}/${html5.themes.dir}/${html5.site.theme}" />
 		<property name="html5.compression.temp.dir" location="${tempdir}/${html5.compression.temp.dir.name}"/>
 		
 		<delete dir="${html5.compression.temp.dir}"/>		
 		
+		<mkdir dir="${tempdir}" />	
+		<delete dir="${html5.compressor.build.dir}"/>		
+		<mkdir dir="${html5.compressor.build.dir}"/>
 		<mkdir dir="${html5.compression.temp.dir}" />	
 		<mkdir dir="${html5.compression.temp.dir}/${html5.themes.dir}/"/>
 		
@@ -68,32 +92,6 @@
 			<regexpmapper from=".*/theme/(.*)" to="\1" />				
 		</copy>
 		
-	</target>
-	
-	<target name="clean.temp.libs">
-		
-	</target>
-	
-	<target name="check.html5.config.exists">
-		<property name="html5.site.config" location="${html5.compression.temp.dir}/${html5.themes.dir}/${html5.site.theme}/config.xml"/>
-		<available file="${html5.site.config}" property="html5.config.exists"/>
-	</target>
-	
-	<target name="load.properties" depends="check.html5.config.exists" description="load theme properties if not already loaded" unless="html5.style" if="html5.config.exists">
-		<echo>Loading property file: ${html5.site.config} </echo>
-		<xmlproperty file="${html5.site.config}" collapseAttributes="true" semanticAttributes="true" />
-		<echoproperties>
-			<propertyset>
-				<propertyref prefix="html5."/>
-			</propertyset>
-		</echoproperties>
-	</target>
-	
-	<target name="init.build.theme" depends="prepare.html5.theme.dir">
-		<echo>Buidling assets</echo>
-		
-		<delete dir="${html5.compressor.build.dir}"/>
-		<mkdir dir="${html5.compressor.build.dir}"/>
 	</target>	
 	
 	<target name="package.compress.js" if="html5.script">
