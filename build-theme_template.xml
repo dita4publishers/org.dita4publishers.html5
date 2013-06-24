@@ -55,21 +55,23 @@
 		</condition>
 		
 		<!-- added in case the ant file is called directly -->
-		<condition property="tempdir" value="${dita.dir}/temp/">
+		<condition property="dita.temp.dir" value="${dita.dir}/temp/">
 			<not>
-				<isset property="tempdir"/>
+				<isset property="dita.temp.dir"/>
 			</not>
 		</condition>
 		
-		<property name="html5.compressor.build.dir" location="${tempdir}/${html5.themes.dir}/${html5.site.theme}" />
-		<property name="html5.compression.temp.dir" location="${tempdir}/${html5.compression.temp.dir.name}"/>
+		<mkdir dir="${dita.temp.dir}" />	
 		
-		<delete dir="${html5.compression.temp.dir}"/>		
+		<property name="html5.compressor.build.dir" location="${dita.temp.dir}/${html5.themes.dir}/${html5.site.theme}" />
+		<property name="html5.compression.temp.dir" location="${dita.temp.dir}/${html5.compression.temp.dir.name}"/>
 		
-		<mkdir dir="${tempdir}" />	
-		<delete dir="${html5.compressor.build.dir}"/>		
+		<delete dir="${html5.compression.temp.dir}"/>				
+		<delete dir="${html5.compressor.build.dir}"/>	
+		
 		<mkdir dir="${html5.compressor.build.dir}"/>
 		<mkdir dir="${html5.compression.temp.dir}" />	
+		
 		<mkdir dir="${html5.compression.temp.dir}/${html5.themes.dir}/"/>
 		
 		<!-- copy main library -->
