@@ -76,7 +76,7 @@
 
 
 
-        <xsl:apply-templates select="$tempTopic" mode="#current">
+        <xsl:apply-templates select="$topic" mode="#current">
           <xsl:with-param name="topicref" as="element()*" select="." tunnel="yes"/>
           <xsl:with-param name="collected-data" select="$collected-data" as="element()" tunnel="yes"/>
           <xsl:with-param name="resultUri" select="$topicResultUri" tunnel="yes"/>
@@ -142,8 +142,10 @@
     </xsl:if>
 
     <xsl:variable name="topic-content">
-      <xsl:apply-templates mode="child.topic" select=".">
-      </xsl:apply-templates>
+    	<!--xsl:call-template name="renderDefaultHTML" /-->
+    	 <xsl:apply-templates select="." mode="chapterBody"/>
+      <!--xsl:apply-templates mode="child.topic" select=".">
+      </xsl:apply-templates-->
     </xsl:variable>
 
     <xsl:result-document format="html5" href="{$resultUri}">

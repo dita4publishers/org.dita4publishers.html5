@@ -332,7 +332,7 @@
       style="${map2html5.style}"
       filenameparameter="inputFileNameParam"
     >
-
+    
        <dita:extension id="dita.html5.map" behavior="org.dita.dost.platform.InsertAction" />
 
        <mapper 
@@ -456,8 +456,9 @@
       out="${d4p.html5.json.vars.file}"
       extension=".json"
       style="${xml2json.style}">
+
       <param name="jsonp" expression="d4p.setProps"/>
-            
+
   </xslt>
 
   </target>

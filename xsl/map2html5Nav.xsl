@@ -23,15 +23,8 @@
     The intent of this license is for this material to be licensed in a way that is
     consistent with and compatible with the license of the DITA Open Toolkit.
 
-    This transform requires XSLT 2.
     ================================================================= -->
-<!--
-  <xsl:import href="../../net.sourceforge.dita4publishers.common.xslt/xsl/lib/dita-support-lib.xsl"/>
-  <xsl:import href="../../net.sourceforge.dita4publishers.common.xslt/xsl/lib/relpath_util.xsl"/>
 
-  <xsl:import href="../../net.sourceforge.dita4publishers.common.xslt/xsl/lib/html-generation-utils.xsl"/>
--->
-  <xsl:output indent="yes" name="javascript" method="text"/>
 
  <!-- choose navigation markup type 
         will be used later to offer alternate markup for navigation
@@ -118,6 +111,8 @@
 
   <xsl:template mode="generate-html5-nav" match="*[df:class(., 'topic/title')][not(@toc = 'no')]"/>
 
+  
+  
   <!-- Convert each topicref to a ToC entry. -->
   <xsl:template match="*[df:isTopicRef(.)][not(@toc = 'no')]" mode="generate-html5-nav">
     <xsl:param name="tocDepth" as="xs:integer" tunnel="yes" select="0"/>

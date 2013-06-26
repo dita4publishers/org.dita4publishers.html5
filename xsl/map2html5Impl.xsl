@@ -25,13 +25,35 @@
 
 
        ============================================================== -->
-  <!-- These two libraries end up getting imported via the dita2xhtml.xsl from the main toolkit
-     because the base XSL support lib is integrated into that file. So these inclusions are redundant.
+ <!--  These two imports are provided by the commonHtmlExtensionSupport.xsl module from the common.html
+       plugin. These imports are integrated into the dita2html-base.xsl in the base Toolkit transform:
+       
   <xsl:import href="../../net.sourceforge.dita4publishers.common.xslt/xsl/lib/dita-support-lib.xsl"/>
   <xsl:import href="../../net.sourceforge.dita4publishers.common.xslt/xsl/lib/relpath_util.xsl"/>
-  -->
+-->  
+  <xsl:import href="../../net.sourceforge.dita4publishers.common.xslt/xsl/reportParametersBase.xsl"/>
+  <xsl:import href="../../net.sourceforge.dita4publishers.common.xslt/xsl/lib/html-generation-utils.xsl"/>
+  <xsl:import href="../../net.sourceforge.dita4publishers.common.mapdriven/xsl/dataCollection.xsl"/>
+  <!-- Import the base HTML output generation transform. -->
+  <xsl:import href="plugin:org.dita.base:xsl/dita2xhtml.xsl"/>
   
-  <xsl:import href="../../net.sourceforge.dita4publishers.html2/xsl/map2html2Impl.xsl"/>
+  
+  <xsl:import href="../../net.sourceforge.dita4publishers.common.xslt/xsl/graphicMap2AntCopyScript.xsl"/>
+  <xsl:import href="../../net.sourceforge.dita4publishers.common.xslt/xsl/map2graphicMap.xsl"/>
+  <xsl:import href="../../net.sourceforge.dita4publishers.common.xslt/xsl/topicHrefFixup.xsl"/>
+  
+  <!-- FIXME: This URL syntax is local to me: I hacked catalog-dita_template.xml
+              to add this entry:
+              
+              <rewriteURI uriStartString="plugin:base-xsl:" rewritePrefix="xsl/"></rewriteURI>
+       
+        see https://github.com/dita-ot/dita-ot/issues/1405       
+    -->
+  <xsl:import href="plugin:org.dita.base:xsl/common/dita-utilities.xsl"/>
+  
+  <xsl:include href="../../net.sourceforge.dita4publishers.common.html/xsl/commonHtmlOverrides.xsl"/>
+  <xsl:include href="../../net.sourceforge.dita4publishers.common.html/xsl/commonHtmlEnumeration.xsl"/>
+  <xsl:include href="../../net.sourceforge.dita4publishers.common.html/xsl/commonHtmlBookmapEnumeration.xsl"/>
 
   <xsl:include href="map2html5Nav.xsl"/>
   <xsl:include href="map2html5NavTabbed.xsl"/>
@@ -45,6 +67,86 @@
   <xsl:include href="css.xsl"/>    
   <xsl:include href="i18n.xsl"/>  
   <xsl:include href="audience.xsl"/>  
+  <!-- -->
+   <xsl:param name="inputFileNameParam"/>
+  
+  <!-- Directory into which the generated output is put.
+
+       -->
+  <xsl:param name="outdir" select="./html2"/>
+  <!-- NOTE: Case of OUTEXT parameter matches case used in base HTML
+       transformation type.
+    -->
+  <xsl:param name="OUTEXT" select="'.html'"/>
+  <xsl:param name="tempdir" select="./temp"/>
+  
+ <!-- The path of the directory, relative the $outdir parameter,
+    to hold the graphics in the result HTML package. Should not have
+    a leading "/". 
+  -->  
+  <xsl:param name="imagesOutputDir" select="'images'" as="xs:string"/>
+  <!-- The path of the directory, relative the $outdir parameter,
+    to hold the topics in the HTML package. Should not have
+    a leading "/". 
+  -->  
+  <xsl:param name="topicsOutputDir" select="'topics'" as="xs:string"/>
+
+  <!-- The path of the directory, relative the $outdir parameter,
+    to hold the CSS files in the HTML package. Should not have
+    a leading "/". 
+  -->  
+  <xsl:param name="cssOutputDir" select="'css'" as="xs:string"/>
+  
+  <xsl:param name="debug" select="'false'" as="xs:string"/>
+  
+  <xsl:param name="rawPlatformString" select="'unknown'" as="xs:string"/><!-- As provided by Ant -->
+  
+  <xsl:param name="titleOnlyTopicClassSpec" select="'- topic/topic '" as="xs:string"/>
+
+  <xsl:param name="titleOnlyTopicTitleClassSpec" select="'- topic/title '" as="xs:string"/>
+  
+  <!-- The strategy to use when constructing output files. Default is "as-authored", meaning
+       reflect the directory structure of the topics as authored relative to the root map,
+       possibly as reworked by earlier Toolkit steps.
+    -->       
+  <xsl:param name="fileOrganizationStrategy" as="xs:string" select="'as-authored'"/>
+  
+  
+  <!-- Maxminum depth of the generated ToC -->
+  <xsl:param name="maxTocDepth" as="xs:string" select="'5'"/>
+  
+  <!-- Include back-of-the-book-index if any index entries in source 
+  
+       For now default to no since index generation is still under development.
+  -->  
+  <xsl:param name="generateIndex" as="xs:string" select="'no'"/>
+  <xsl:variable name="generateIndexBoolean" 
+    select="matches($generateIndex, 'yes|true|on|1', 'i')"
+  />
+  
+  <!-- Generate the glossary dynamically using all glossary entry
+       topics included in the map.
+    -->
+  <xsl:param name="generateGlossary" as="xs:string" select="'no'"/>
+  <xsl:variable name="generateGlossaryBoolean" 
+    select="matches($generateGlossary, 'yes|true|on|1', 'i')"
+  />
+  
+  
+  <!-- value for @class on <body> of the generated static TOC HTML document -->
+  <xsl:param name="staticTocBodyOutputclass" select="''" as="xs:string"/>
+  
+  <xsl:param name="contenttarget" select="'contentwin'"/>
+  
+  <xsl:param name="generateDynamicToc" select="'true'"/>
+  <xsl:param name="generateDynamicTocBoolean" select="matches($generateDynamicToc, 'yes|true|on|1', 'i')"/>
+  
+  <xsl:param name="generateFrameset" select="'true'"/>
+  <xsl:param name="generateFramesetBoolean" select="matches($generateFrameset, 'yes|true|on|1', 'i')"/>
+  
+  <xsl:param name="generateStaticToc" select="'false'"/>
+  <xsl:param name="generateStaticTocBoolean" select="matches($generateStaticToc, 'yes|true|on|1', 'i')"/>
+  <!-- -->
     
   <xsl:param name="dita-css" select="'css/topic-html5.css'" as="xs:string"/>
   <xsl:param name="TRANSTYPE" select="'html5'" />
@@ -100,6 +202,55 @@
   
   <!-- Parameter used in commonHtmlExtensionSupport.xsl -->
   <xsl:param name="include.roles" as="xs:string" select="''"/>
+  
+  <xsl:variable name="maxTocDepthInt" select="xs:integer($maxTocDepth)" as="xs:integer"/>
+  
+  
+  <xsl:variable name="platform" as="xs:string"
+    select="
+    if (starts-with($rawPlatformString, 'Win') or 
+        starts-with($rawPlatformString, 'Win'))
+       then 'windows'
+       else 'nx'
+    "
+  />
+  
+  <xsl:variable name="debugBinary" select="$debug = 'true'" as="xs:boolean"/>
+  
+  <xsl:variable name="topicsOutputPath">
+      <xsl:choose>
+        <xsl:when test="$topicsOutputDir != ''">
+          <xsl:sequence select="concat($outdir, $topicsOutputDir)"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:sequence select="$outdir"/>
+        </xsl:otherwise>
+      </xsl:choose>    
+  </xsl:variable>
+
+  <xsl:variable name="imagesOutputPath">
+      <xsl:choose>
+        <xsl:when test="$imagesOutputDir != ''">
+          <xsl:sequence select="concat($outdir, 
+            if (ends-with($outdir, '/')) then '' else '/', 
+            $imagesOutputDir)"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:sequence select="$outdir"/>
+        </xsl:otherwise>
+      </xsl:choose>    
+  </xsl:variable>  
+  
+  <xsl:variable name="cssOutputPath">
+      <xsl:choose>
+        <xsl:when test="$cssOutputDir != ''">
+          <xsl:sequence select="concat($outdir, $cssOutputDir)"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:sequence select="$outdir"/>
+        </xsl:otherwise>
+      </xsl:choose>    
+  </xsl:variable>  
   
   <xsl:variable name="indexUri" select="concat('index', $OUTEXT)"/>
   
@@ -282,21 +433,22 @@
         <xsl:with-param name="audienceSelect"  select="$audienceSelect" tunnel="yes"/>
     </xsl:apply-templates>
     
-    
-    <xsl:apply-templates select="." mode="generate-index">
+    <!-- add index support -->
+    <!--xsl:apply-templates select="." mode="generate-index">
       <xsl:with-param name="collected-data" as="element()" select="$collected-data" tunnel="yes"/>
       <xsl:with-param name="uniqueTopicRefs" as="element()*" select="$uniqueTopicRefs" tunnel="yes"/>
       <xsl:with-param name="navigation" as="element()*" select="$navigation" tunnel="yes"/>
        <xsl:with-param name="baseUri" as="xs:string" select="@xtrf" tunnel="yes"/>
        <xsl:with-param name="documentation-title" select="$documentation-title" tunnel="yes"/>
          <xsl:with-param name="is-root" as="xs:boolean" select="false()" tunnel="yes"/>
-    </xsl:apply-templates>
+    </xsl:apply-templates-->
     <!--    <xsl:apply-templates select="." mode="generate-glossary">
       <xsl:with-param name="collected-data" as="element()" select="$collected-data" tunnel="yes"/>
     </xsl:apply-templates>
--->    <xsl:apply-templates select="." mode="generate-graphic-copy-ant-script">
+-->    <!--xsl:apply-templates select="." mode="generate-graphic-copy-ant-script">
       <xsl:with-param name="graphicMap" as="element()" tunnel="yes" select="$graphicMap"/>
-    </xsl:apply-templates>
+    </xsl:apply-templates-->
+     
   </xsl:template>
 
   
@@ -332,5 +484,64 @@
   
   </xsl:template>
  
+ 
+ <xsl:template match="*" mode="html5topic">
 
+    <div>
+      <!-- Already put xml:lang on <html>; do not copy to body with commonattributes -->
+      <xsl:apply-templates select="*[contains(@class,' ditaot-d/ditaval-startprop ')]/@outputclass" mode="add-ditaval-style"/>
+      <!--output parent or first "topic" tag's outputclass as class -->
+      <xsl:if test="@outputclass">
+       <xsl:attribute name="class"><xsl:value-of select="@outputclass" /></xsl:attribute>
+      </xsl:if>
+      <xsl:if test="self::dita">
+          <xsl:if test="*[contains(@class,' topic/topic ')][1]/@outputclass">
+           <xsl:attribute name="class"><xsl:value-of select="*[contains(@class,' topic/topic ')][1]/@outputclass" /></xsl:attribute>
+          </xsl:if>
+      </xsl:if>
+      <xsl:apply-templates select="." mode="addAttributesToBody"/>
+      <xsl:call-template name="setidaname"/>
+      <xsl:value-of select="$newline"/>
+      <xsl:apply-templates select="*[contains(@class,' ditaot-d/ditaval-startprop ')]" mode="out-of-line"/>
+      <xsl:call-template name="generateBreadcrumbs"/>
+      
+      <xsl:if test="$INDEXSHOW='yes'">
+        <xsl:apply-templates select="/*/*[contains(@class,' topic/prolog ')]/*[contains(@class,' topic/metadata ')]/*[contains(@class,' topic/keywords ')]/*[contains(@class,' topic/indexterm ')] |
+                                     /dita/*[1]/*[contains(@class,' topic/prolog ')]/*[contains(@class,' topic/metadata ')]/*[contains(@class,' topic/keywords ')]/*[contains(@class,' topic/indexterm ')]"/>
+      </xsl:if>
+      <!-- Include a user's XSL call here to generate a toc based on what's a child of topic -->
+      <xsl:call-template name="gen-user-sidetoc"/>
+      
+      <xsl:apply-templates/> 
+      <!-- this will include all things within topic; therefore, -->
+      <!-- title content will appear here by fall-through -->
+      <!-- followed by prolog (but no fall-through is permitted for it) -->
+      <!-- followed by body content, again by fall-through in document order -->
+      <!-- followed by related links -->
+      <!-- followed by child topics by fall-through -->
+      
+      <xsl:call-template name="gen-endnotes"/>    <!-- include footnote-endnotes -->
+     
+      <xsl:apply-templates select="*[contains(@class,' ditaot-d/ditaval-endprop ')]" mode="out-of-line"/>
+    </div>
+    <xsl:value-of select="$newline"/>
+  </xsl:template>
+  
+
+  
+  <xsl:template match="*[df:isTopicGroup(.)]" mode="nav-point-title">
+    <!-- Per the 1.2 spec, topic group navtitles are always ignored -->
+  </xsl:template>
+  
+  
+  <xsl:template mode="nav-point-title" match="*[df:class(., 'topic/fn')]" priority="10">
+    <!-- Suppress footnotes in titles -->
+  </xsl:template>
+  
+  <!-- Enumeration mode manages generating numbers from topicrefs -->
+  <xsl:template match="* | text()" mode="enumeration">
+    <xsl:if test="false() and $debugBoolean">
+      <xsl:message> + [DEBUG] enumeration: catch-all template. Element="<xsl:sequence select="name(.)"/></xsl:message>
+    </xsl:if>
+  </xsl:template>
 </xsl:stylesheet>

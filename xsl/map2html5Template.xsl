@@ -277,10 +277,10 @@
         			<div id="topic-content">	
         				<xsl:sequence select="$content"/>
         			</div>
-        			<xsl:apply-templates select="*/*[contains(@class, 'related-links')]" mode="topic.related-links"/>
-        			<xsl:message>
-        				<xsl:sequence select="*/*[contains(@class, 'related-links')]" />
-        			</xsl:message>
+        			
+        			<!--xsl:apply-templates select="./*[contains(@class, 'related-links')]" mode="topic.related-links"/-->
+        
+        			
         		</section>
         	</xsl:otherwise>
         

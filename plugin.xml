@@ -1,7 +1,9 @@
 <plugin id="net.sourceforge.dita4publishers.html5">
 
 	<require plugin="net.sourceforge.dita4publishers.html2"/> 
-    
+    <require plugin="net.sourceforge.dita4publishers.common.mapdriven"/> 
+    <require plugin="net.sourceforge.dita4publishers.common.xslt"/> 
+  
 	<extension-point id="dita.html5.map" name="HTML5 xslt parameters" />
 	<extension-point id="xsl.transtype-html5" name="HTML5 XSLT extension" />
 
