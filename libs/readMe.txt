@@ -4,13 +4,12 @@ This information is intented to developpers
 
 How to build the the css and javascripts
 ****************************************
-The build.xml file contains information to assemble all the javascripts and css of the differents library into :
-
-- css/style.css: concatenated and compressed css
-- js/script.js: concatenated and compressed javascripts
+The build.xml file contains information to assemble all the javascripts and css of the differents library into css and js compressed files.
 
 
-1. Download and unpack in the libs directory
+The plugin will attemps to install the yuicompressor. If it does not work, you will have to install a copy at the root directory of this plugin.
+
+1. The Download and unpack in the libs directory
    a version of Yahoo YUI compressor
 
    http://yuilibrary.com/download/yuicompressor/
