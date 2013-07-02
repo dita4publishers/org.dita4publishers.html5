@@ -180,7 +180,7 @@
   <xsl:param name="GRIDPREFIX" select="'grid_'" />
   
   <xsl:param name="HTTPABSOLUTEURI" select="''" />
-
+  <xsl:param name="OUTPUTDEFAULTNAVIGATION" select="true()" />
       
   <xsl:param name="mathJaxInclude" select="'false'"/>
   <xsl:param name="mathJaxIncludeBoolean" 
@@ -421,8 +421,7 @@
     
     </xsl:apply-templates>
     
-    
-    
+   
     <xsl:apply-templates select="." mode="generate-content">
       <xsl:with-param name="collected-data" as="element()" select="$collected-data" tunnel="yes"/>
       <xsl:with-param name="uniqueTopicRefs" as="element()*" select="$uniqueTopicRefs" tunnel="yes"/>

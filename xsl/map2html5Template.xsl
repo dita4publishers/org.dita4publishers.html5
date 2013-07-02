@@ -233,19 +233,22 @@
    
      <div id="{$IDSECTIONCONTAINER}" class="{$CLASSSECTIONCONTAINER}">
 
-        <xsl:choose>
-        	<xsl:when test="$is-root">
-        		<xsl:sequence select="$navigation"/>
-        	</xsl:when>
-        	<xsl:otherwise>
-        		<xsl:variable name="navigation-fixed">
-         			<xsl:apply-templates select="$navigation" mode="fix-navigation-href"/>
-         		</xsl:variable>
+		<xsl:if test="$OUTPUTDEFAULTNAVIGATION">
+            <xsl:choose>
+        	    <xsl:when test="$is-root">
+        		    <xsl:sequence select="$navigation"/>
+        	    </xsl:when>
+        	    <xsl:otherwise>
+        	
+        		    <xsl:variable name="navigation-fixed">
+         			    <xsl:apply-templates select="$navigation" mode="fix-navigation-href"/>
+         		    </xsl:variable>
          
-         		<xsl:sequence select="$navigation-fixed"/>
-        	</xsl:otherwise>
+         		    <xsl:sequence select="$navigation-fixed"/>
+        	    </xsl:otherwise>
         
-        </xsl:choose>
+            </xsl:choose>
+        </xsl:if>
         
         <xsl:apply-templates select="." mode="generate-main-content"/>
         <div class="clearfix"></div>
