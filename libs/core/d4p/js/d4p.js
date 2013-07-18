@@ -288,14 +288,6 @@
 			// get document information
 			 this.getDocInfos();
 
-			
-            // redirect if not on the index page
-            if (d4p.relativePath != "" && l.uri.indexOf(d4p.indexFilename) != 0) {
-                redirect = d4p.resolveRoot();
-                document.location = redirect;
-                return true;
-            }
-
             //
             this.scrollElem = this.scrollableElement('html', 'body');
 
@@ -328,6 +320,13 @@
 
         },
 
+        redirectToRoot: function (redirect, relativePath) {
+            if (redirect) {
+                document.location = d4p.resolveRoot(relativePath);
+                return true;
+            }       
+        },
+        
         filename: function (uri) {
             return uri.substring(uri.lastIndexOf('/') + 1);
         },
@@ -336,10 +335,16 @@
             return uri.substring(0, uri.length - this.filename(uri).length);
         },
 
-        resolveRoot: function () {
+        resolveRoot: function (relativePath) {
 
-            var url = document.location.toString(), basename = d4p.basename(url), s = basename.split("/"), c = d4p.relativePath.match(/\.\./g), a = s.splice(0, s.length - 1 - c.length), furl = a.join("/"), filename = url.substring(furl.length + 1).replace(d4p.ext, '');
-            return location.protocol == 'file:' ? a.join("/") + "/" + d4p.indexFilename + "#" + filename : a.join("/") + "/" + "#" + filename;
+            var url = document.location.toString(), 
+            basename = d4p.basename(url), 
+            s = basename.split("/"), 
+            c = relativePath != "" ? relativePath.match(/\.\./g) : "", 
+            a = s.splice(0, s.length - 1 - c.length), 
+            furl = a.join("/"), 
+            filename = url.substring(furl.length + 1).replace(d4p.ext, '');
+            return location.protocol == 'file:' ? a.join("/") + "/" + d4p.indexFilename + "#/" + filename : a.join("/") + "/#/" + filename;
 
         }
 

@@ -78,6 +78,7 @@
   
  <xsl:template match="*" mode="generate-d4p-javascript-initializer">
    <xsl:param name="relativePath" as="xs:string" select="''" tunnel="yes" />
+   <xsl:param name="is-root" as="xs:boolean"  tunnel="yes" />
    <xsl:variable name="json" as="xs:string">
    
    
@@ -96,14 +97,24 @@
 			<xsl:value-of select="$json" /><xsl:text>;</xsl:text>
 			<xsl:sequence select="'&#x0a;'"/>
 		</xsl:if>	
-
+		
+		<xsl:text>d4p.redirectToRoot(</xsl:text>
+		<xsl:choose>
+    	    <xsl:when test="$is-root">
+    	      <xsl:value-of select="'false'"/>
+    	    </xsl:when>
+    	    <xsl:otherwise>
+    	      <xsl:value-of select="'true'"/>
+    	    </xsl:otherwise>
+    	  </xsl:choose>
+    	<xsl:text>, '</xsl:text>
+    	<xsl:value-of select="$relativePath"/>
+		<xsl:text>');</xsl:text>
+		
    		<xsl:text>$(function(){d4p.init({</xsl:text>
-   		<xsl:text>relativePath:'</xsl:text><xsl:value-of select="$relativePath"/><xsl:text>'</xsl:text>
-     			
-   			<xsl:if test="$jsoptions != ''">
-   				<xsl:text>, </xsl:text>
-				<xsl:value-of select="$jsoptions" />
-			</xsl:if>
+   		<xsl:if test="$jsoptions != ''">
+			<xsl:value-of select="$jsoptions" />
+		</xsl:if>
 		<xsl:text>});});</xsl:text>
 		</script><xsl:sequence select="'&#x0a;'"/>
  	</xsl:if>
