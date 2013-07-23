@@ -35,35 +35,6 @@
     <xsl:apply-templates select="." mode="generate-root-nav-page"/>
   </xsl:template>
 
-  <!-- generate root pages -->
-<xsl:template match="*[df:class(., 'map/map')]" mode="generate-root-nav-page">
-  <!-- Generate the root output page. By default this page contains the root
-       navigation elements. The direct output of this template goes to the
-       default output target of the XSLT transform.
-    -->
-  <xsl:param name="uniqueTopicRefs" as="element()*" tunnel="yes"/>
-  <xsl:param name="collected-data" as="element()" tunnel="yes"/>
-  <xsl:param name="firstTopicUri" as="xs:string?" tunnel="yes"/>
-  <xsl:param name="rootMapDocUrl" as="xs:string" tunnel="yes"/>
-
-  <xsl:variable name="initialTopicUri"
-    as="xs:string"
-    select="
-    if ($firstTopicUri != '')
-       then $firstTopicUri
-       else htmlutil:getInitialTopicrefUri($uniqueTopicRefs, $topicsOutputPath, $outdir, $rootMapDocUrl)
-       "
-  />
-
-
-  <xsl:message> + [INFO] Generating index document <xsl:sequence select="$indexUri"/>...</xsl:message>
-  
-  <xsl:result-document href="{$indexUri}" format="indented-xml">
-      <xsl:text disable-output-escaping="yes">&lt;!DOCTYPE html&gt;</xsl:text>  
-      <xsl:apply-templates select="." mode="generate-html5-page"/> 
-  </xsl:result-document>
-</xsl:template>
-
 
   <xsl:template mode="toc-title" match="*[df:isTopicRef(.)] | *[df:isTopicHead(.)]">
     <xsl:variable name="titleValue" select="df:getNavtitleForTopicref(.)"/>
@@ -229,7 +200,7 @@
    <xsl:template match="*" mode="generate-section-container">
    		<xsl:param name="navigation" as="element()*"  tunnel="yes" />
    		<xsl:param name="is-root" as="xs:boolean"  tunnel="yes" select="false()" />
-   
+   		<xsl:param name="resultUri" as="xs:string" tunnel="yes" select="''" />
    
      <div id="{$IDSECTIONCONTAINER}" class="{$CLASSSECTIONCONTAINER}">
 
@@ -241,7 +212,9 @@
         	    <xsl:otherwise>
         	
         		    <xsl:variable name="navigation-fixed">
-         			    <xsl:apply-templates select="$navigation" mode="fix-navigation-href"/>
+         			    <xsl:apply-templates select="$navigation" mode="fix-navigation-href">
+         			    	<xsl:with-param name="resultUri" select="$resultUri" />
+         			    </xsl:apply-templates>
          		    </xsl:variable>
          
          		    <xsl:sequence select="$navigation-fixed"/>

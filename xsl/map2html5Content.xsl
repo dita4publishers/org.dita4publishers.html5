@@ -23,6 +23,38 @@
     with the generated topics.
     
     =============================================================  -->
+  <!-- generate root pages -->
+<xsl:template match="*[df:class(., 'map/map')]" mode="generate-root-nav-page">
+  <!-- Generate the root output page. By default this page contains the root
+       navigation elements. The direct output of this template goes to the
+       default output target of the XSLT transform.
+    -->
+  <xsl:param name="uniqueTopicRefs" as="element()*" tunnel="yes"/>
+  <xsl:param name="collected-data" as="element()" tunnel="yes"/>
+  <xsl:param name="firstTopicUri" as="xs:string?" tunnel="yes"/>
+  <xsl:param name="rootMapDocUrl" as="xs:string" tunnel="yes"/>
+
+  <xsl:variable name="initialTopicUri"
+    as="xs:string"
+    select="
+    if ($firstTopicUri != '')
+       then $firstTopicUri
+       else htmlutil:getInitialTopicrefUri($uniqueTopicRefs, $topicsOutputPath, $outdir, $rootMapDocUrl)
+       "
+  />
+
+
+  <xsl:message> + [INFO] Generating index document <xsl:sequence select="$indexUri"/>...</xsl:message>
+  
+  <xsl:result-document href="{$indexUri}" format="indented-xml">
+      <xsl:text disable-output-escaping="yes">&lt;!DOCTYPE html&gt;</xsl:text>  
+      
+      <xsl:apply-templates mode="generate-html5-page" select=".">
+        <xsl:with-param name="resultUri" as="xs:string" select="$indexUri" tunnel="yes"/>
+      </xsl:apply-templates>
+    
+  </xsl:result-document>
+</xsl:template>
 
   <xsl:template match="*[df:class(., 'map/map')]" mode="generate-content">
     <xsl:param name="uniqueTopicRefs" as="element()*" tunnel="yes"/>
@@ -153,7 +185,7 @@
         <xsl:with-param name="relativePath" select="$relativePath" as="xs:string" tunnel="yes"/>
         <xsl:with-param name="content" select="$topic-content" tunnel="yes"/>
         <xsl:with-param name="topic-title" select="$topic-title" tunnel="yes"/>
-        <xsl:with-param name="result-uri" select="$resultUri" tunnel="yes"/>
+        <xsl:with-param name="resultUri" as="xs:string" select="$resultUri" tunnel="yes"/>
       </xsl:apply-templates>
     </xsl:result-document>
   </xsl:template>
