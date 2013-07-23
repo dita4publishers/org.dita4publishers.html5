@@ -197,7 +197,7 @@
             objHref = obj.attr('href'),
             href = objHref.substring(0, objHref.length - d4p.ext.length),
             hrefID = "/"+ href,
-            id = hrefID.replace(/\//g, '__');
+            id = hrefID.replace(/(\/|\.)/g, '__');
 
             // create an ID for future reference if not set
             if (objId === '' || objId == undefined) {
