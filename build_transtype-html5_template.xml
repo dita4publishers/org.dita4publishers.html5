@@ -289,6 +289,12 @@
         <isset property="d4p.html5.json.vars.file" />
       </not>
     </condition>
+    
+    <condition property="generateIndex" value="yes">
+      <not>
+        <isset property="generateIndex" />
+      </not>
+    </condition>
 
   </target>
   

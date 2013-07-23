@@ -67,6 +67,7 @@
   <xsl:include href="css.xsl"/>    
   <xsl:include href="i18n.xsl"/>  
   <xsl:include href="audience.xsl"/>  
+  <xsl:include href="map2html5Index.xsl"/>
   <!-- -->
    <xsl:param name="inputFileNameParam"/>
   
@@ -433,14 +434,14 @@
     </xsl:apply-templates>
     
     <!-- add index support -->
-    <!--xsl:apply-templates select="." mode="generate-index">
+    <xsl:apply-templates select="." mode="generate-index">
       <xsl:with-param name="collected-data" as="element()" select="$collected-data" tunnel="yes"/>
       <xsl:with-param name="uniqueTopicRefs" as="element()*" select="$uniqueTopicRefs" tunnel="yes"/>
       <xsl:with-param name="navigation" as="element()*" select="$navigation" tunnel="yes"/>
        <xsl:with-param name="baseUri" as="xs:string" select="@xtrf" tunnel="yes"/>
        <xsl:with-param name="documentation-title" select="$documentation-title" tunnel="yes"/>
          <xsl:with-param name="is-root" as="xs:boolean" select="false()" tunnel="yes"/>
-    </xsl:apply-templates-->
+    </xsl:apply-templates>
     <!--    <xsl:apply-templates select="." mode="generate-glossary">
       <xsl:with-param name="collected-data" as="element()" select="$collected-data" tunnel="yes"/>
     </xsl:apply-templates>

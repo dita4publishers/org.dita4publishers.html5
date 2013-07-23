@@ -59,5 +59,6 @@
     <param name="FILTERFILE" expression="${dita.input.valfile.url}" if="dita.input.valfile" />
     <param name="HTTPABSOLUTEURI" expression="${http.absolute.uri}" if="http.absolute.uri" />
     <param name="DBG" expression="${args.debug}" if="args.debug" />
+    <param name="generateIndex" expression="${generateIndex}" />
 
 </params>
