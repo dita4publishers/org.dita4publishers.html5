@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>   
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html5 SYSTEM "file:/Users/blefort/DITA-OT1.7.5/plugins/net.sourceforge.dita4publishers.html5/libs/config.dtd">
 <!--   
        Licensed to the Apache Software Foundation (ASF) under one
        or more contributor license agreements.  See the NOTICE file
@@ -17,52 +18,67 @@
        specific language governing permissions and limitations
        under the License.
 -->
-
 <html5>
-
-  <!-- 
+    <!-- 
       
       Every CSS below this marker should be easely reusable
   
-  -->
-  
-  <!-- 960 js grid -->
-  <style path="modules/960js/code/css/reset.css" />
-  <style path="modules/960js/code/css/960_12_col.css" />
-  <style path="modules/960js/code/css/text.css" />
-  
-  <!-- Vegur font -->
-  <style path="misc/fonts/vegur/css/vegur.css" /> 
-  <style path="misc/fonts/vegur/css/typography.css" />
-  
-  <!-- D4P specific -->
-  <style path="modules/features/layout/css/ui-icons.css" /> 
-  <style path="modules/features/d4p/css/d4p.css" />
-  <style path="modules/features/d4p/css/tools.css" />
-  <style path="modules/features/columns/css/columns.css" />
-  <style path="modules/DITA/notes/css/notes.css" /> 
+    -->
+    <!-- Core -->
+    <tag>
+        <name>link</name>
+        <output>style</output>
+        <prefix></prefix>
+        <suffix></suffix>
+        <attributes>
+            <rel>stylesheet</rel>
+            <type>text/css</type>
+            <media>screen, projection, print</media>
+        </attributes>
+        <value></value>
+        <source>
+            <!-- 960 js grid -->
+            <file path="modules/960js/code/css/reset.css" />
+            <file path="modules/960js/code/css/960_12_col.css" />
+            <file path="modules/960js/code/css/text.css" />
+            
+            <!-- Vegur font -->
+            <file path="misc/fonts/vegur/css/vegur.css" /> 
+            <file path="misc/fonts/vegur/css/typography.css" />
+            
+            <!-- D4P specific -->
+            <file path="modules/features/layout/css/ui-icons.css" /> 
+            <file path="modules/features/d4p/css/d4p.css" />
+            <file path="modules/features/d4p/css/tools.css" />
+            <file path="modules/features/columns/css/columns.css" />
+            <file path="modules/DITA/notes/css/notes.css" /> 
+            
+            <!-- DITA sepecific -->
+            <file path="modules/DITA/css/dita.css" />  
+            <file path="modules/DITA/tables/css/table.css" />
+            <file path="modules/DITA/list/css/list.css" />
+            <file path="modules/DITA/buttons/css/buttons.css" />  
+            <file path="modules/DITA/images/css/images.css" />  
+            <file path="modules/DITA/pre/css/pre.css" />  
+            <file path="modules/DITA/reltable/css/reltable.css" /> 
+            
+            <!-- jQuery UI -->
+            <file path="modules/jQuery-ui/themes/d4p-default/jquery.ui.accordion.css" />     
+            <file path="modules/jQuery-ui/themes/d4p-default/jquery.ui.core.css" />
+            <file path="modules/jQuery-ui/themes/d4p-default/jquery.ui.theme.css" />
+            <file path="modules/jQuery-ui/themes/d4p-default/jquery.ui.accordion.css" />
+            
+            <!-- Custom jQuery widgets -->
+            <file path="modules/jQuery-widgets/navigation/classic/css/collapsible-navigation.css" />
+            
+            <!-- external -->
+            <file path="themes/d4p-classic/css/theme.css" /> 
+        </source>
+    </tag>
     
-  <!-- DITA sepecific -->
-  <style path="modules/DITA/css/dita.css" />  
-  <style path="modules/DITA/tables/css/table.css" />
-  <style path="modules/DITA/list/css/list.css" />
-  <style path="modules/DITA/buttons/css/buttons.css" />  
-  <style path="modules/DITA/images/css/images.css" />  
-  <style path="modules/DITA/pre/css/pre.css" />  
-  <style path="modules/DITA/reltable/css/reltable.css" /> 
   
-  <!-- jQuery UI -->
-  <style path="modules/jQuery-ui/themes/d4p-default/jquery.ui.accordion.css" />     
-  <style path="modules/jQuery-ui/themes/d4p-default/jquery.ui.core.css" />
-  <style path="modules/jQuery-ui/themes/d4p-default/jquery.ui.theme.css" />
-  <style path="modules/jQuery-ui/themes/d4p-default/jquery.ui.accordion.css" />
   
-  <!-- Custom jQuery widgets -->
-  <style path="modules/jQuery-widgets/navigation/classic/css/collapsible-navigation.css" />
-  
-  <!-- external -->
-  <style path="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"/>
-  
+    <file path="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"/>
 
   <!-- 
       
@@ -71,7 +87,7 @@
   -->
   
   <!-- theme specific css -->
-  <style path="themes/d4p-classic/css/theme.css" /> 
+
 
 
   <!-- 
