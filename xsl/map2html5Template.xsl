@@ -27,7 +27,7 @@
     This transform requires XSLT 2.
     ================================================================= -->
 
-  <xsl:output name="indented-xml" method="html" indent="yes" omit-xml-declaration="yes"/>
+  <xsl:output name="indented-xml" method="xml" indent="yes" omit-xml-declaration="yes"/>
   
   <xsl:template match="*[df:class(., 'map/map')]" mode="generate-root-pages">
     <xsl:param name="uniqueTopicRefs" as="element()*" tunnel="yes"/>
