@@ -270,17 +270,9 @@
     <xsl:copy/>
   </xsl:template>
 
-  <xsl:template match="*[df:class(., 'map/map')]" mode="generate-html5-nav-script-includes">
-      <!-- FIXME: Put includes of supporting javascript here. -->
-      <script type="text/javascript" src="xxxx.js" >&#xa0;</script><xsl:sequence select="'&#x0a;'"/>
-  </xsl:template>
+  <xsl:template match="*[df:class(., 'map/map')]" mode="generate-html5-nav-script-includes" />
 
-  <xsl:template match="text()" mode="generate-html5-nav"/>
-  
-  
-    <!--
-  
-  -->
+  <xsl:template match="text()" mode="generate-html5-nav" />
    
  	<xsl:template match="@*|node()" mode="fix-navigation-href">
 		<xsl:copy>

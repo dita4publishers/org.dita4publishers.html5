@@ -41,7 +41,14 @@
       
       <xsl:variable name="pubTitle" as="xs:string*">
         <xsl:apply-templates select="*[df:class(., 'topic/title')] | @title" mode="pubtitle"/>
-      </xsl:variable>           
+      </xsl:variable>    
+      
+      <xsl:variable name="topic-content">
+        <h1>Index</h1>
+      	<div class="index-list">
+              <xsl:apply-templates select="$collected-data/index-terms:index-terms/index-terms:grouped-and-sorted" mode="#current"/>
+        </div>
+      </xsl:variable>
       <xsl:variable name="resultUri" 
         select="relpath:newFile($outdir, concat('generated-index', $OUTEXT))" 
         as="xs:string"/>
@@ -51,17 +58,14 @@
       <xsl:result-document href="{$resultUri}" format="indented-xml"
         exclude-result-prefixes="index-terms"
         >
-        <html>
-          <head>
-            <title>Index</title>
-          </head>
-          <body>
-            <h1>Index</h1>
-            <div class="index-list">
-              <xsl:apply-templates select="$collected-data/index-terms:index-terms/index-terms:grouped-and-sorted" mode="#current"/>
-            </div>
-          </body>
-        </html>
+        
+        <xsl:apply-templates mode="generate-html5-page" select=".">
+        <xsl:with-param name="relativePath" select="''" as="xs:string" tunnel="yes"/>
+        <xsl:with-param name="content" select="$topic-content" tunnel="yes"/>
+        <xsl:with-param name="topic-title" select="'Index'" tunnel="yes"/>
+        <xsl:with-param name="result-uri" select="$resultUri" tunnel="yes"/>
+      </xsl:apply-templates>
+      
       </xsl:result-document>  
       <xsl:message> + [INFO] Index generation done.</xsl:message>
       
