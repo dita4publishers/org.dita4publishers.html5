@@ -98,6 +98,8 @@
   -->  
   <xsl:param name="cssOutputDir" select="'css'" as="xs:string"/>
   
+  <xsl:param name="html5CSSPath" select="'css'" as="xs:string"/>
+  
   <xsl:param name="debug" select="'false'" as="xs:string"/>
   
   <xsl:param name="rawPlatformString" select="'unknown'" as="xs:string"/><!-- As provided by Ant -->

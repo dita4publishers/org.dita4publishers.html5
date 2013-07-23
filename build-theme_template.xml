@@ -45,7 +45,7 @@
 		<available file="${html5.site.config}" property="html5.config.exists"/>
 	</target>
 	
-	<target name="load.html5.properties" depends="check.html5.config.exists" description="load theme properties if not already loaded" unless="html5.style" if="html5.config.exists">
+	<target name="load.html5.properties" depends="check.html5.config.exists" description="load theme properties if not already loaded" unless="html5.tag" if="html5.config.exists">
 		<echo>Loading property file: ${html5.site.config} </echo>
 		<xmlproperty file="${html5.site.config}" collapseAttributes="true" semanticAttributes="true" />
 		<echoproperties>
@@ -126,7 +126,7 @@
 		<echo>javascript package compressed</echo>
 	</target>
 	
-	<target name="package.compress.css" if="html5.style">
+	<target name="package.compress.css" if="html5.tag.source.file">
 		<apply executable="java" parallel="false" dest="${html5.compressor.build.dir}">
 			<fileset dir="${html5.compressor.build.dir}">
 				<include name="**/**"/>
@@ -151,10 +151,10 @@
 		</concat>
 	</target>
 	
-	<target name="package.concat.css" if="html5.style">
+	<target name="package.concat.css" if="html5.tag.source.file">
 		<mkdir dir="${html5.compressor.build.dir}/${html5.css.dir}"/>
-		<concat destfile="${html5.compressor.build.dir}/${html5.css.dir}/style.css">
-			<filelist dir="${html5.compression.temp.dir}" files = "${html5.style}" />
+		<concat destfile="${html5.compressor.build.dir}/${html5.css.dir}/${html5.tag.output}.css">
+			<filelist dir="${html5.compression.temp.dir}" files = "${html5.tag.source.file}" />
 			<fileset dir="${html5.compression.temp.dir}" >
 				<include name="${html5.themes.dir}/${html5.site.theme}/${html5.css.dir}/${html5.default.style}"/>
 			</fileset>
@@ -166,7 +166,7 @@
 		<mkdir dir="${html5.compressor.build.dir}/${html5.img.dir}"/>
 		<mkdir dir="${html5.compressor.build.dir}/${html5.fonts.dir}"/>
 		
-		<filelist id="html5.style.css.path" dir="." files="${html5.style}"/> 		
+		<filelist id="html5.style.css.path" dir="." files="${html5.tag.source.file}"/> 		
 		
 		<!-- 
 			pathconvert should calculate path using the basedir directory

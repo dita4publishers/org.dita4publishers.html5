@@ -190,6 +190,12 @@
       </not>
     </condition>
     
+    <condition property="html5.args.css.path" value="themes/${html5.site.theme}/${html5.css.dir}/">
+      <not>
+        <isset property="html5.args.css.path" />
+      </not>
+    </condition>
+    
     <condition property="html5.args.theme.file" value="themes/${html5.site.theme}/${html5.css.dir}/${args.css.filename}${args.compression.suffix}${args.css.extension}">
       <not>
         <isset property="html5.args.theme.file" />

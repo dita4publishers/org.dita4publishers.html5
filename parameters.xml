@@ -22,6 +22,7 @@
     <param name="BODYCLASS" expression="${html5.class.body}"/>
     <param name="jsoptions" expression="${html5.js.options}"/>
     <param name="cssOutputDir" expression="${css.output.dir}"/>
+    <param name="html5CSSPath" expression="${html5.args.css.path}" />
     <param name="debug" expression="${debug}"/>
     <param name="fileOrganizationStrategy" expression="${html2.file.organization.strategy}" if="html2.file.organization.strategy"/>
     <param name="generateDynamicToc" expression="${html5.generate.dynamic.toc}" if="html5.generate.dynamic.toc"/>

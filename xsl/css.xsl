@@ -67,7 +67,7 @@
   <!-- This template render ons script element per script element declared in the theme config.xml -->  
   <xsl:template match="*" mode="generate-d4p-uncompressed-css">
     <xsl:param name="relativePath" as="xs:string" select="''" tunnel="yes" />
-    <xsl:for-each select="$HTML5THEMECONFIGDOC/html5/style">
+    <xsl:for-each select="$HTML5THEMECONFIGDOC/html5/tag/source/file">
     	<link 
     		rel="stylesheet" 
     		type="text/css" 
@@ -106,7 +106,7 @@
     
     <xsl:sequence select="'&#x0a;'"/>
     
-    <link rel="stylesheet" type="text/css" href="{relpath:fixRelativePath($relativePath, $CSSTHEME)}" />
+    <link rel="stylesheet" type="text/css" href="{relpath:fixRelativePath($relativePath, concat($html5CSSPath, $HTML5THEMECONFIGDOC/html5/tag/output, '-min.css'))}" />
     	<xsl:sequence select="'&#x0a;'"/>
     
   </xsl:template>
