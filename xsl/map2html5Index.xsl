@@ -1,3 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>   
+<!--   
+       Licensed to the Apache Software Foundation (ASF) under one
+       or more contributor license agreements.  See the NOTICE file
+       distributed with this work for additional information
+       regarding copyright ownership.  The ASF licenses this file
+       to you under the Apache License, Version 2.0 (the
+       "License"); you may not use this file except in compliance
+       with the License.  You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing,
+       software distributed under the License is distributed on an
+       "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+       KIND, either express or implied.  See the License for the
+       specific language governing permissions and limitations
+       under the License.
+-->
+
 <xsl:stylesheet version="2.0"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:df="http://dita2indesign.org/dita/functions"
@@ -9,31 +29,7 @@
                 xmlns="http://www.w3.org/1999/xhtml"
                 exclude-result-prefixes="local xs df xsl relpath index-terms htmlutil"
   >
-  <!-- =============================================================
-    
-    DITA Map to HTML Transformation
-    
-    Back-of-the-book index generation. This transform generates the HTML markup
-    for a back-of-the-book index reflecting the index entries in the map and
-    topic set.
-    
-    NOTE: This functionality is not completely implemented.
-    
-    Copyright (c) 2010, 2011 DITA For Publishers
-    
-    Licensed under Common Public License v1.0 or the Apache Software Foundation License v2.0.
-    The intent of this license is for this material to be licensed in a way that is
-    consistent with and compatible with the license of the DITA Open Toolkit.
-    
-    This transform requires XSLT 2.
-    ================================================================= -->    
 
-<!--  
-  <xsl:import href="../../net.sf.dita4publishers.common.xslt/xsl/lib/dita-support-lib.xsl"/>
-  <xsl:import href="../../net.sf.dita4publishers.common.xslt/xsl/lib/relpath_util.xsl"/>
-  
-  <xsl:import href="../../net.sf.dita4publishers.common.xslt/xsl/lib/html-generation-utils.xsl"/>
--->
   <xsl:template match="*[df:class(., 'map/map')]" mode="generate-index">
     <xsl:param name="collected-data" as="element()" tunnel="yes"/>
 

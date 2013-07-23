@@ -1,76 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>   
+<!--   
+       Licensed to the Apache Software Foundation (ASF) under one
+       or more contributor license agreements.  See the NOTICE file
+       distributed with this work for additional information
+       regarding copyright ownership.  The ASF licenses this file
+       to you under the Apache License, Version 2.0 (the
+       "License"); you may not use this file except in compliance
+       with the License.  You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing,
+       software distributed under the License is distributed on an
+       "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+       KIND, either express or implied.  See the License for the
+       specific language governing permissions and limitations
+       under the License.
+-->
+
 <html5>
-  <!-- if you use a grid, load it first -->
+
+  <!-- 
+      
+      Every CSS below this marker should be easely reusable
+  
+  -->
+  
+  <!-- 960 js grid -->
   <style path="modules/960js/code/css/reset.css" />
   <style path="modules/960js/code/css/960_12_col.css" />
   <style path="modules/960js/code/css/text.css" />
   
+  <!-- Vegur font -->
   <style path="misc/fonts/vegur/css/vegur.css" /> 
   <style path="misc/fonts/vegur/css/typography.css" />
   
-  <style path="core/d4p/css/d4p.css" />
-  <style path="core/d4p/css/tools.css" />  
-  <style path="core/d4p/css/dita.css" />
-  <style path="core/d4p/css/table.css" />
-  <style path="core/d4p/css/list.css" />  
-
-
-  <style path="core/ajaxLoader/css/loader.css" />  
-  <style path="core/message/css/message.css" />
-  <style path="core/d4p/css/buttons.css" />  
-
-  <style path="core/layout/css/ui-icons.css" />  
+  <!-- D4P specific -->
+  <style path="modules/features/layout/css/ui-icons.css" /> 
+  <style path="modules/features/d4p/css/d4p.css" />
+  <style path="modules/features/d4p/css/tools.css" />
+  <style path="modules/features/columns/css/columns.css" />
+  <style path="modules/DITA/notes/css/notes.css" /> 
+    
+  <!-- DITA sepecific -->
+  <style path="modules/DITA/css/dita.css" />  
+  <style path="modules/DITA/tables/css/table.css" />
+  <style path="modules/DITA/list/css/list.css" />
+  <style path="modules/DITA/buttons/css/buttons.css" />  
+  <style path="modules/DITA/images/css/images.css" />  
+  <style path="modules/DITA/pre/css/pre.css" />  
+  <style path="modules/DITA/reltable/css/reltable.css" /> 
   
-  <style path="modules/images/css/images.css" />  
-  <style path="modules/pre/css/pre.css" /> 
+  <!-- jQuery UI -->
+  <style path="modules/jQuery-ui/themes/d4p-default/jquery.ui.accordion.css" />     
+  <style path="modules/jQuery-ui/themes/d4p-default/jquery.ui.core.css" />
+  <style path="modules/jQuery-ui/themes/d4p-default/jquery.ui.theme.css" />
+  <style path="modules/jQuery-ui/themes/d4p-default/jquery.ui.accordion.css" />
   
-  <style path="modules/ui/jQuery-ui/jQuery-ui/themes/d4p-default/jquery.ui.accordion.css" />     
-  <style path="modules/ui/jQuery-ui/jQuery-ui/themes/d4p-default/jquery.ui.core.css" />
-  <style path="modules/ui/jQuery-ui/jQuery-ui/themes/d4p-default/jquery.ui.theme.css" />
-  <style path="modules/ui/jQuery-ui/jQuery-ui/themes/d4p-default/jquery.ui.accordion.css" />
- 
-  <style path="modules/navigation/classic/css/navigation.css" />
-  <style path="modules/navigation/classic/css/collapsible-navigation.css" />
-
-  <style path="modules/columns/css/columns.css" />
-
-  <style path="modules/notes/css/notes.css" /> 
-
-  <style path="modules/ui/jQuery-ui/scale2fit/css/scale2fit.css" /> 
-  <style path="modules/reltable/css/reltable.css" /> 
+  <!-- Custom jQuery widgets -->
+  <style path="modules/jQuery-widgets/navigation/classic/css/collapsible-navigation.css" />
   
+  <!-- external -->
+  <style path="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"/>
+  
+
+  <!-- 
+      
+      Every CSS above this marker should be easely reusable
+  
+  -->
+  
+  <!-- theme specific css -->
   <style path="themes/d4p-classic/css/theme.css" /> 
 
-  <script path="core/modernizr/modernizr.dev.2.0.6.js" /> 
-  <script path="core/jQuery/jquery-1.7.1.min.js" />
-  <script path="core/d4p/js/array.prototype.js" />
-  <script path="core/d4p/js/d4p.js" />
-  
-  <script path="core/module-prototype/js/module.js" />
 
+  <!-- 
+      
+      Every javascripts below this marker should be easely reusable
   
-  <!-- carefull in this order -->
-  <script path="core/ajaxLoader/js/ajaxLoader.js" />
-  <script path="core/ajaxLoader/js/ajaxnav.js" />  
+  -->
   
-  <script path="core/message/js/message.js" />
-  <script path="modules/navigation/classic/js/navigation.js" />  
+  <!-- 
+    external libraries, stored locally 
+    you could use the latest CDN instead
+  -->
+  <script path="modules/modernizr/modernizr.dev.2.0.6.js" /> 
+  <script path="modules/prefixFree/prefixFree.js" />
+  <script path="modules/jQuery/jquery-1.7.1.min.js" />
   
-  <script path="modules/pre/js/pre.js" />  
+  <!-- navigation -->
+  <script path="modules/jQuery-widgets/navigation/classic/js/navigation.js" />  
 
-  <script path="modules/ui/jQuery-ui/adapter/js/ui.js" />
-  <script path="modules/ui/jQuery-ui/jQuery-ui/ui/jquery.ui.core.js" />
-  <script path="modules/ui/jQuery-ui/jQuery-ui/ui/jquery.ui.widget.js" />
+  <!-- jquery ui -->
+  <script path="modules/jQuery-ui/ui/jquery.ui.core.js" />
+  <script path="modules/jQuery-ui/ui/jquery.ui.widget.js" />
+  <script path="modules/jQuery-ui/ui/jquery.ui.accordion.js" /> 
   
-  <script path="modules/ui/jQuery-ui/accordion/js/accordion.js" /> 
-  <script path="modules/ui/jQuery-ui/jQuery-ui/ui/jquery.ui.accordion.js" /> 
+  <!-- code to instantiate jQuery UI -->
+  <script path="modules/jQuery-widgets-init/accordion/accordion.js" />
   
-  <script path="modules/ui/jQuery-ui/cycle/js/cycle.js" /> 
-  <script path="modules/ui/jQuery-ui/cycle/js/jquery.cycle.js" /> 
+   <!-- jQuery Cycle -->
+  <script path="modules/jQuery-widgets/cycle/js/cycle.js" /> 
+  <script path="modules/jQuery-widgets/cycle/js/jquery.cycle.js" /> 
 
-  <script path="modules/ui/jQuery-ui/scale2fit/js/scale2fit.js" /> 
-  
   <d4p>
-  	<init>true</init>
+  	<init>false</init>
   </d4p>
 
   <class>
@@ -91,9 +125,5 @@
   		<!-- add all inputs elements you want in the search form -->
   	</inputs>
   </search>
-  
-  <!-- uncomment the following line to build the theme at each time -->
-  <theme>
-  	<compile>true</compile>
-  </theme>
+
 </html5>
