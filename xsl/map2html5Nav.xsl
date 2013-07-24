@@ -272,7 +272,7 @@
       <xsl:apply-templates select="@*|node()" mode="fix-navigation-href"/>
     </xsl:copy>
   </xsl:template>
-
+  
   <xsl:template match="li" mode="fix-navigation-href">
     <xsl:param name="topicRelativeUri" as="xs:string" select="''" tunnel="yes"/>
     <xsl:variable name="isActiveTrail" select="descendant-or-self::*[@href=$topicRelativeUri]"/>
@@ -305,6 +305,11 @@
 
     <li>
       <xsl:attribute name="class" select="concat(@class, $hasChildClass, $activeTrailClass)"/>
+      <xsl:if test="text()[1]">
+        <span class="navtitle">
+        <xsl:value-of select="text()[1]" />
+        </span>
+      </xsl:if>
       <xsl:apply-templates select="*" mode="fix-navigation-href"/>
     </li>
   </xsl:template>
