@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html5 SYSTEM "file:/Users/blefort/DITA-OT1.7.5/plugins/net.sourceforge.dita4publishers.html5/libs/config.dtd">
 <!--   
        Licensed to the Apache Software Foundation (ASF) under one
        or more contributor license agreements.  See the NOTICE file
@@ -75,6 +74,7 @@
             <file path="themes/d4p-classic/css/theme.css" /> 
         </source>
     </tag>
+
     
   
   
@@ -113,11 +113,11 @@
   <script path="modules/jQuery-ui/ui/jquery.ui.accordion.js" /> 
   
   <!-- code to instantiate jQuery UI -->
-  <script path="modules/jQuery-widgets-init/accordion/accordion.js" />
+  <!--script path="modules/jQuery-widgets-init/accordion/accordion.js" /-->
   
    <!-- jQuery Cycle -->
-  <script path="modules/jQuery-widgets/cycle/js/cycle.js" /> 
-  <script path="modules/jQuery-widgets/cycle/js/jquery.cycle.js" /> 
+  <!--script path="modules/jQuery-widgets/cycle/js/cycle.js" /--> 
+  <!--script path="modules/jQuery-widgets/cycle/js/jquery.cycle.js" /--> 
 
   <d4p>
   	<init>false</init>
