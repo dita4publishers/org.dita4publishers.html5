@@ -17,7 +17,17 @@ aside.normal, aside.low {
 	border-left:9px solid #ccc;
 	padding:9px 0px 9px 9px;
 }
+aside.important {
+	background-color: rgba(255, 0, 0, 0.1);
+    border-left: 10px solid red;
+    padding-bottom: 12px;
+    padding-left: 21px;
+    padding-top: 10px;
+}
 
+aside.important  span.title {
+	color:red;
+}
 
 aside.low {
 	color:#bbb;
