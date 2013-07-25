@@ -175,7 +175,7 @@
 
     <xsl:variable name="topic-content">
     	<!--xsl:call-template name="renderDefaultHTML" /-->
-    	 <xsl:apply-templates select="." mode="chapterBody"/>
+    	 <xsl:apply-templates select="." mode="html5topic"/>
       <!--xsl:apply-templates mode="child.topic" select=".">
       </xsl:apply-templates-->
     </xsl:variable>
