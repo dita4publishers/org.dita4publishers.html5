@@ -102,7 +102,7 @@
 				<xsl:value-of select="'ui-icon-triangle-1-e'" />
 			</xsl:when>
 			<xsl:when test="$direction = 'previous'">
-				<xsl:value-of select="'ui-icon-triangle-1-o'" />
+				<xsl:value-of select="'ui-icon-triangle-1-w'" />
 			</xsl:when>
 		</xsl:choose>
 	</xsl:variable>
