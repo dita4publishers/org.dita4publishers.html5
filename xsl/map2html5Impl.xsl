@@ -68,14 +68,13 @@
   <xsl:include href="i18n.xsl"/>  
   <xsl:include href="audience.xsl"/>  
   <xsl:include href="map2html5Index.xsl"/>
-  
+  <xsl:include href="reltable.xsl"/>
+   
   <xsl:variable name="include.roles" select="concat(' ', normalize-space($include.rellinks), ' ')"/>
   <!-- -->
    <xsl:param name="inputFileNameParam"/>
   
-  <!-- Directory into which the generated output is put.
-
-       -->
+  <!-- Directory into which the generated output is put. -->
   <xsl:param name="outdir" select="./html2"/>
   <!-- NOTE: Case of OUTEXT parameter matches case used in base HTML
        transformation type.

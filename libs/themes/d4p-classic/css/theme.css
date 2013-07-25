@@ -175,6 +175,14 @@ section h1 {
 	background-color: #F6F6F6;
 }
 
+#local-navigation ul li {
+	margin:0.4em 0;
+}
+
+#local-navigation ul li ul li{
+	margin-left: 10px;
+}
+
 #local-navigation a, #local-navigation a:link {
 	text-decoration: none;
 	opacity: 1;
@@ -221,7 +229,7 @@ span.navtitle, li.collapsible a:link {
 }
 
 #footer-container {
-	display: block;
+	display: none;
 	background-color: #dfdfdf;
 	border: 1px solid #dfdfdf;
 	border-radius: 5px;

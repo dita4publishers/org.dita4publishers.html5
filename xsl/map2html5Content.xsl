@@ -85,8 +85,6 @@
 
     <xsl:variable name="topic" select="df:resolveTopicRef(.)" as="element()*"/>
 
-
-
     <xsl:choose>
       <xsl:when test="not($topic)">
         <xsl:message> + [WARNING] generate-content: Failed to resolve topic reference to href "<xsl:sequence
@@ -173,17 +171,9 @@
       > </xsl:result-document>
     </xsl:if>
 
-    <xsl:variable name="topic-content">
-    	<!--xsl:call-template name="renderDefaultHTML" /-->
-    	 <xsl:apply-templates select="." mode="html5topic"/>
-      <!--xsl:apply-templates mode="child.topic" select=".">
-      </xsl:apply-templates-->
-    </xsl:variable>
-
     <xsl:result-document format="html5" href="{$resultUri}">
       <xsl:apply-templates mode="generate-html5-page" select=".">
         <xsl:with-param name="relativePath" select="$relativePath" as="xs:string" tunnel="yes"/>
-        <xsl:with-param name="content" select="$topic-content" tunnel="yes"/>
         <xsl:with-param name="topic-title" select="$topic-title" tunnel="yes"/>
         <xsl:with-param name="resultUri" as="xs:string" select="$resultUri" tunnel="yes"/>
       </xsl:apply-templates>

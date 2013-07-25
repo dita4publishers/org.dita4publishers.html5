@@ -33,7 +33,6 @@
   
   <xsl:template match="*[df:class(., 'map/map')]" mode="generate-root-pages">
     <xsl:param name="uniqueTopicRefs" as="element()*" tunnel="yes"/>
-
     <xsl:apply-templates select="." mode="generate-root-nav-page"/>
   </xsl:template>
 
@@ -151,11 +150,11 @@
       
       <xsl:call-template name="copyright"/>   
 
-		<xsl:apply-templates select="." mode="generate-css-includes"/>
+	  <xsl:apply-templates select="." mode="generate-css-includes"/>
 						 
-        <xsl:apply-templates select="." mode="generate-javascript-includes"/>
+      <xsl:apply-templates select="." mode="generate-javascript-includes"/>
         
-	    <xsl:apply-templates select="." mode="gen-user-bottom-head" />
+	  <xsl:apply-templates select="." mode="gen-user-bottom-head" />
 	    
     </head>
     <xsl:sequence select="'&#x0a;'"/>
@@ -181,10 +180,11 @@
   </xsl:template>
   
   <!-- main content -->
-  <xsl:template match="*" mode="html5topic">
+  <xsl:template match="*" mode="generate-main">
 
-    <div>
+    <div id="topic-content">
       <!-- Already put xml:lang on <html>; do not copy to body with commonattributes -->
+      
       <xsl:apply-templates select="*[contains(@class,' ditaot-d/ditaval-startprop ')]/@outputclass" mode="add-ditaval-style"/>
       
       <!--output parent or first "topic" tag's outputclass as class -->
@@ -198,7 +198,6 @@
           </xsl:if>
       </xsl:if>
       
-      <xsl:call-template name="setidaname"/>
       
       <xsl:value-of select="$newline"/>
       
@@ -278,6 +277,7 @@
         </xsl:if>
         
         <xsl:apply-templates select="." mode="generate-main-content"/>
+        
         <div class="clearfix"></div>
       </div>
    </xsl:template>
@@ -288,7 +288,6 @@
    <!-- generate main content -->
   <xsl:template match="*" mode="generate-main-content"> 
    	<xsl:param name="is-root" as="xs:boolean"  tunnel="yes" select="false()" />
-   	<xsl:param name="content" tunnel="yes" as="node()*" />
    	
     <div id="{$IDMAINCONTENT}" class="{$CLASSMAINCONTENT}">    
       
@@ -304,13 +303,7 @@
         		-->      		
         		<section>
         			<xsl:apply-templates select="." mode="generate-breadcrumb"/>
-        			<div id="topic-content">	
-        				<xsl:sequence select="$content"/>
-        			</div>
-        			
-        			<!--xsl:apply-templates select="./*[contains(@class, 'related-links')]" mode="topic.related-links"/-->
-        
-        			
+        			<xsl:apply-templates select="." mode="generate-main"/>
         		</section>
         	</xsl:otherwise>
         
@@ -324,8 +317,9 @@
  <!-- generate html5 footer -->
   <xsl:template match="*" mode="generate-breadcrumb">  
     <div id="content-toolbar" class="toolbar">
-    	
-		
+    	<xsl:if test="contains($include.roles, ' next ') or contains($include.roles, ' previous ') or contains($include.roles, ' parent ')">
+   			<xsl:call-template name="next-prev-parent-links"/><!--handle next and previous links-->
+        </xsl:if>		
 	</div>
   </xsl:template>
   
