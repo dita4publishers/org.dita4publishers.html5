@@ -68,6 +68,8 @@
   <xsl:include href="i18n.xsl"/>  
   <xsl:include href="audience.xsl"/>  
   <xsl:include href="map2html5Index.xsl"/>
+  
+  <xsl:variable name="include.roles" select="concat(' ', normalize-space($include.rellinks), ' ')"/>
   <!-- -->
    <xsl:param name="inputFileNameParam"/>
   
@@ -202,9 +204,7 @@
   
   <!-- FIXME: Parameterize the location of the JavaScript directory -->
   <xsl:param name="mathJaxLocalJavascriptUri" select="'js/mathjax/MathJax.js'"/>
-  
-  <!-- Parameter used in commonHtmlExtensionSupport.xsl -->
-  <xsl:param name="include.roles" as="xs:string" select="''"/>
+
   
   <xsl:variable name="maxTocDepthInt" select="xs:integer($maxTocDepth)" as="xs:integer"/>
   
@@ -487,49 +487,6 @@
   </xsl:template>
  
  
- <xsl:template match="*" mode="html5topic">
-
-    <div>
-      <!-- Already put xml:lang on <html>; do not copy to body with commonattributes -->
-      <xsl:apply-templates select="*[contains(@class,' ditaot-d/ditaval-startprop ')]/@outputclass" mode="add-ditaval-style"/>
-      <!--output parent or first "topic" tag's outputclass as class -->
-      <xsl:if test="@outputclass">
-       <xsl:attribute name="class"><xsl:value-of select="@outputclass" /></xsl:attribute>
-      </xsl:if>
-      <xsl:if test="self::dita">
-          <xsl:if test="*[contains(@class,' topic/topic ')][1]/@outputclass">
-           <xsl:attribute name="class"><xsl:value-of select="*[contains(@class,' topic/topic ')][1]/@outputclass" /></xsl:attribute>
-          </xsl:if>
-      </xsl:if>
-      <xsl:apply-templates select="." mode="addAttributesToBody"/>
-      <xsl:call-template name="setidaname"/>
-      <xsl:value-of select="$newline"/>
-      <xsl:apply-templates select="*[contains(@class,' ditaot-d/ditaval-startprop ')]" mode="out-of-line"/>
-      <xsl:call-template name="generateBreadcrumbs"/>
-      
-      <xsl:if test="$INDEXSHOW='yes'">
-        <xsl:apply-templates select="/*/*[contains(@class,' topic/prolog ')]/*[contains(@class,' topic/metadata ')]/*[contains(@class,' topic/keywords ')]/*[contains(@class,' topic/indexterm ')] |
-                                     /dita/*[1]/*[contains(@class,' topic/prolog ')]/*[contains(@class,' topic/metadata ')]/*[contains(@class,' topic/keywords ')]/*[contains(@class,' topic/indexterm ')]"/>
-      </xsl:if>
-      <!-- Include a user's XSL call here to generate a toc based on what's a child of topic -->
-      <xsl:call-template name="gen-user-sidetoc"/>
-      
-      <xsl:apply-templates/> 
-      <!-- this will include all things within topic; therefore, -->
-      <!-- title content will appear here by fall-through -->
-      <!-- followed by prolog (but no fall-through is permitted for it) -->
-      <!-- followed by body content, again by fall-through in document order -->
-      <!-- followed by related links -->
-      <!-- followed by child topics by fall-through -->
-      
-      <xsl:call-template name="gen-endnotes"/>    <!-- include footnote-endnotes -->
-     
-      <xsl:apply-templates select="*[contains(@class,' ditaot-d/ditaval-endprop ')]" mode="out-of-line"/>
-    </div>
-    <xsl:value-of select="$newline"/>
-  </xsl:template>
-  
-
   
   <xsl:template match="*[df:isTopicGroup(.)]" mode="nav-point-title">
     <!-- Per the 1.2 spec, topic group navtitles are always ignored -->
