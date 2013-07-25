@@ -12,7 +12,14 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  *
- */ 
+ */
+ 
+.related-links {
+  display: block;
+  left: -29px;
+  position: relative;
+}
+
 #familylinks {
 	display: block;
 	height: 32px;
