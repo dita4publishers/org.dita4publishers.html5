@@ -23,6 +23,7 @@
 	height: 32px;
 	position: relative;
 	margin: 2px 10px 0 0;
+	float:right;
 }
 
 .familylinks {
@@ -33,11 +34,7 @@
 	display:inline-block;
 }
 
-.familylinks .previouslink {
-	display:inline;
-}
-
-.familylinks .nextlink {
+.familylinks .previouslink, .familylinks .nextlink, .familylinks .parentlink {
 	display:inline;
 }
 
