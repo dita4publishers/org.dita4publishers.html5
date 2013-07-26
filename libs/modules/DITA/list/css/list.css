@@ -17,7 +17,7 @@ ol, ul {
 	margin-left:0px;
 }
 
-ul li {
+ul li, ol li {
 	margin:1em 0 1em 1em;
 	list-style-position: outside;
 }
