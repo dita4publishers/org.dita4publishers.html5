@@ -49,8 +49,8 @@
   	
   	<xsl:variable name="title">
   		<xsl:choose>
-  			<xsl:when test="$topic-title != ''">
-  				<xsl:value-of select="concat($documentation-title, ' - ', $topic-title)" />
+  			<xsl:when test="*[df:class(., 'topic/title')][1]">
+  				<xsl:value-of select="*[df:class(., 'topic/title')][1]" />
   			</xsl:when> 
   			<xsl:otherwise>
   				<xsl:value-of select="$documentation-title" />
@@ -288,7 +288,7 @@
    <!-- generate main content -->
   <xsl:template match="*" mode="generate-main-content"> 
    	<xsl:param name="is-root" as="xs:boolean"  tunnel="yes" select="false()" />
-   	
+   	<xsl:param name="content" tunnel="yes" />
     <div id="{$IDMAINCONTENT}" class="{$CLASSMAINCONTENT}">    
       
       <xsl:choose>
@@ -303,7 +303,16 @@
         		-->      		
         		<section>
         			<xsl:apply-templates select="." mode="generate-breadcrumb"/>
-        			<xsl:apply-templates select="." mode="generate-main"/>
+        			<xsl:choose>
+        			<xsl:when test="$content">
+        				<div id="topic-content">
+        					<xsl:sequence select="$content" />
+        				</div>
+        			</xsl:when>
+        			<xsl:otherwise>
+        				<xsl:apply-templates select="." mode="generate-main"/>
+        			</xsl:otherwise>
+        			</xsl:choose>
         		</section>
         	</xsl:otherwise>
         
