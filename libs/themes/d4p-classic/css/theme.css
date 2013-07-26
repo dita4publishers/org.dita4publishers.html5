@@ -179,6 +179,11 @@ section h1 {
 	margin:0.4em 0;
 }
 
+#local-navigation a.selected, #local-navigation a.selected:link {
+	font-weight:bold;
+}
+
+
 #local-navigation ul li ul li{
 	margin-left: 10px;
 }
