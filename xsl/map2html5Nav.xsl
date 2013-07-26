@@ -313,18 +313,20 @@
       <xsl:apply-templates select="*" mode="fix-navigation-href"/>
     </li>
   </xsl:template>
+  
 
-  <xsl:template match="@href" mode="fix-navigation-href">
-
+  <xsl:template match="a" mode="fix-navigation-href">
+ 	<xsl:param name="topicRelativeUri" as="xs:string" select="''" tunnel="yes"/>
     <xsl:param name="relativePath" as="xs:string" select="''" tunnel="yes"/>
 
-
+ 	<xsl:variable name="isSelected" select="@href=$topicRelativeUri"/>
+ 	
     <xsl:variable name="prefix">
       <xsl:choose>
-        <xsl:when test="substring(., 1, 1) = '#'">
+        <xsl:when test="substring(@href, 1, 1) = '#'">
           <xsl:value-of select="''"/>
         </xsl:when>
-        <xsl:when test="substring(., 1, 1) = '/'">
+        <xsl:when test="substring(@href, 1, 1) = '/'">
           <xsl:value-of select="''"/>
         </xsl:when>
         <xsl:otherwise>
@@ -333,9 +335,13 @@
 
       </xsl:choose>
     </xsl:variable>
-
-
-    <xsl:attribute name="href" select="concat($prefix, .)"/>
+	<a>
+		<xsl:if test="$isSelected">
+			<xsl:attribute name="class" select="'selected'" />
+		</xsl:if>
+    	<xsl:attribute name="href" select="concat($prefix, @href)"/>
+    	<xsl:value-of select="text()" />
+    </a>
   </xsl:template>
 
   <xsl:template match="mapdriven:collected-data" mode="generate-html5-nav">
