@@ -17,12 +17,22 @@ aside.normal, aside.low {
 	border-left:9px solid #ccc;
 	padding:9px 0px 9px 9px;
 }
+
+aside.note {
+	background-color: #eee;
+    border-left: 10px solid #ccc;
+    padding:10px 10px 12px 21px;
+}
+
+aside.note span.title {
+	text-indent:-10000px;
+	position:absolute;
+}
+
 aside.important {
 	background-color: rgba(255, 0, 0, 0.1);
     border-left: 10px solid red;
-    padding-bottom: 12px;
-    padding-left: 21px;
-    padding-top: 10px;
+    padding:10px 10px 12px 21px;
 }
 
 aside.important  span.title {
