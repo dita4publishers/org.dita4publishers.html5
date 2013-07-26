@@ -52,9 +52,10 @@
             <file path="modules/features/columns/css/columns.css" />
             <file path="modules/DITA/notes/css/notes.css" /> 
             
-            <!-- DITA sepecific -->
+            <!-- DITA specific -->
             <file path="modules/DITA/css/dita.css" />  
             <file path="modules/DITA/tables/css/table.css" />
+            <file path="modules/DITA/example/css/example.css" />
             <file path="modules/DITA/list/css/list.css" />
             <file path="modules/DITA/buttons/css/buttons.css" />  
             <file path="modules/DITA/images/css/images.css" />  
