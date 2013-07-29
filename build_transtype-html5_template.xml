@@ -53,14 +53,6 @@
       </not>
     </condition>
 
-    <condition property="html5.site.js.vars" value="${html5.compression.temp.dir}/themes/${html5.site.theme}/vars.xml">
-      <not>
-        <isset property="html5.site.js.vars" />
-      </not>
-    </condition>
-
-    <available file="${html5.site.js.vars}" property="html5.site.js.vars.exists"/>
-
     <condition property="html5.themes.output.dir" value="themes">
       <not>
         <isset property="args.debug" />
@@ -336,7 +328,7 @@
 
   <target 
     name="dita.map.html5" 
-    depends="dita.map.html5.init, dita.map.html5.echo, html5-copy-assets, html5-copy-libs, xmltojsonvars, check-html5-json-vars-urls"
+    depends="dita.map.html5.init, dita.map.html5.echo, html5-copy-assets, html5-copy-libs, theme-xml-preprocess, check-html5-json-vars-urls"
     description="Generate html5 components from input map and topics"
   >
 
@@ -477,18 +469,19 @@
   </target>
   
    <!-- FIXME: Move to xsl code directly -->
-  <target name="xmltojsonvars" description="Convert XML variables to a json feed" if="html5.site.js.vars.exists">
+  <target name="theme-xml-preprocess" description="Process theme">
   
-  <property name="xml2json.style" location="${html5.dir}/xsl/xml2json/xml-to-json.xsl"/>
+  <property name="theme.preprocess.style" location="${html5.dir}/xsl/theme/theme-preprocess.xsl"/>
   
-    <mkdir dir="${d4p.html5.json.vars.dir}" />
+    <mkdir dir="${output.dir}/ant/" />
     
   <xslt processor="trax"
-      in="${html5.site.js.vars}"
-      out="${d4p.html5.json.vars.file}"
-      extension=".json"
-      style="${xml2json.style}">
-
+      in="${html5.site.config}"
+      out="${output.dir}/ant/compressor.xml"
+      extension=".xml"
+      style="${theme.preprocess.style}">
+      
+      <param name="html5dir" expression="${html5.dir}"/>
       <param name="jsonp" expression="d4p.setProps"/>
 
   </xslt>

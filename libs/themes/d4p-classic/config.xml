@@ -26,7 +26,8 @@
     <!-- Core -->
     <tag>
         <name>link</name>
-        <output>style</output>
+        <output>yes</output>
+        <filename>style</filename>
         <prefix></prefix>
         <suffix></suffix>
         <attributes>
@@ -35,7 +36,7 @@
             <media>screen, projection, print</media>
         </attributes>
         <value></value>
-        <source>
+        <source type="css">
             <!-- 960 js grid -->
             <file path="modules/960js/code/css/reset.css" />
             <file path="modules/960js/code/css/960_12_col.css" />
