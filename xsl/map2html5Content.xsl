@@ -147,6 +147,7 @@
     </xsl:variable>
 
     <xsl:result-document format="html5" href="{$resultUri}">
+     <xsl:text disable-output-escaping="yes">&lt;!DOCTYPE html&gt;</xsl:text>  
       <xsl:apply-templates mode="generate-html5-page" select=".">
         <xsl:with-param name="relativePath" select="$relativePath" as="xs:string" tunnel="yes"/>
         <xsl:with-param name="content" select="$topic-content" tunnel="yes"/>

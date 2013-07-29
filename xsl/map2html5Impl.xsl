@@ -179,7 +179,7 @@
 
 
 
-	<xsl:output name="html5" method="xml" indent="yes" encoding="utf-8" omit-xml-declaration="yes"/>
+	<xsl:output name="html5" method="html" indent="yes" encoding="utf-8" omit-xml-declaration="yes"/>
 
 
   <xsl:template match="/">
