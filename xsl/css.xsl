@@ -52,8 +52,7 @@
     	<link 
     		rel="stylesheet" 
     		type="text/css" 
-    		href="{relpath:assets-uri($relativePath, @path)}" />
-    	<xsl:sequence select="'&#x0a;'"/>
+    		href="{relpath:assets-uri($relativePath, @path)}" ><xsl:sequence select="' '"/></link>
     </xsl:for-each>
   </xsl:template>
 
@@ -82,12 +81,12 @@
   	<xsl:param name="relativePath" as="xs:string" select="''" tunnel="yes" />
     	
   	<xsl:if test="$CSS!=''">
-     	<link rel="stylesheet" type="text/css" href="{relpath:fixRelativePath($relativePath, $CSS)}" />
+     	<link rel="stylesheet" type="text/css" href="{relpath:fixRelativePath($relativePath, $CSS)}" ><xsl:sequence select="' '"/></link>
     </xsl:if>
     
     <xsl:sequence select="'&#x0a;'"/>
     
-    <link rel="stylesheet" type="text/css" href="{relpath:fixRelativePath($relativePath, $CSSTHEME)}" />
+    <link rel="stylesheet" type="text/css" href="{relpath:fixRelativePath($relativePath, $CSSTHEME)}" ><xsl:sequence select="' '"/></link>
     	<xsl:sequence select="'&#x0a;'"/>
     
   </xsl:template>

@@ -27,8 +27,6 @@
     This transform requires XSLT 2.
     ================================================================= -->
 
-  <xsl:output name="indented-xml" method="xml" indent="yes" omit-xml-declaration="yes"/>
-  
   <xsl:template match="*[df:class(., 'map/map')]" mode="generate-root-pages">
     <xsl:param name="uniqueTopicRefs" as="element()*" tunnel="yes"/>
 
@@ -58,7 +56,7 @@
 
   <xsl:message> + [INFO] Generating index document <xsl:sequence select="$indexUri"/>...</xsl:message>
   
-  <xsl:result-document href="{$indexUri}" format="indented-xml">
+  <xsl:result-document href="{$indexUri}" format="html5">
       <xsl:text disable-output-escaping="yes">&lt;!DOCTYPE html&gt;</xsl:text>  
       <xsl:apply-templates select="." mode="generate-html5-page"/> 
   </xsl:result-document>
