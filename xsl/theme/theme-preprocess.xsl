@@ -28,6 +28,17 @@
   exclude-result-prefixes="df xs relpath htmlutil xd" 
   version="2.0"
  >
+  
+  <xsl:include href="../function.xsl"/>
+ 
+  <xsl:param name="html5dir" select="''" />
+  <xsl:param name="html5sitetheme" select="''" />
+  <xsl:param name="script" select="''" />
+  <xsl:param name="libsdir" select="''" />
+  <xsl:param name="outputdir" select="''" /> 
+  <xsl:param name="themedir" select="''" /> 
+ 
+  
   <xsl:output name="ant" method="xml" indent="yes"/>
    
   <xsl:template match="/">
@@ -35,23 +46,74 @@
   </xsl:template>
   
   <xsl:template match="html5" mode="tag-preprocess">
-    <project name="compressfiles" basedir=".">
-      <xsl:apply-templates select="*" mode="#current" />
+    <project name="package" basedir="." default="packager.package">
+       <xsl:comment>
+          This file has been created by the Dita4Publishers Project.
+          The html5 plugin is required in order to run this script.
+       </xsl:comment>
+       
+       <import file="{concat($html5dir, '/', $script)}" />
+       
+        <target name="packager.package">     
+        	<prepare theme="{$html5sitetheme}" />        
+      		<xsl:apply-templates select="*" mode="#current" />      	
+      	</target>
+      	
     </project>
   </xsl:template>
   
-  <xsl:template match="tag" mode="tag-preprocess">
-    <xsl:variable name="type" select="source/@type"/>
-    <xsl:variable name="filename" select="filename"/>
+  <xsl:template match="tag[count(source/file) &gt; 0]" mode="tag-preprocess">
+      <xsl:variable name="filename" select="filename"/>
+      <xsl:variable name="extension">
+       <xsl:call-template name="get-file-extension">
+         <xsl:with-param name="path" select="$filename" />
+      </xsl:call-template>
+      </xsl:variable>
+      
+    <xsl:variable name="type">
+    	<xsl:choose>
+    		<xsl:when test="$extension = 'js'">
+    			<xsl:value-of select="'js'" />
+    		</xsl:when>
+    		<xsl:otherwise>
+    			<xsl:value-of select="'css'" />
+    		</xsl:otherwise>
+    	</xsl:choose>
+    </xsl:variable>
+
     <xsl:variable name="filelist">
       <xsl:for-each select="source/file">
-        <xsl:value-of select="concat(',',./@path)"/>
+      
+      	<xsl:variable name="fileExtension">
+      		<xsl:call-template name="get-file-extension">
+               <xsl:with-param name="path" select="@path" />
+            </xsl:call-template>
+      	</xsl:variable>
+          
+      	<xsl:choose>
+      	    <xsl:when test="$extension = $fileExtension">
+      		    <xsl:choose>
+      			    <xsl:when test="position() = last()" >
+      			        <xsl:value-of select="@path"/>
+        		    </xsl:when>
+       			    <xsl:otherwise>
+        			    <xsl:value-of select="concat(./@path, ',')"/>
+        		    </xsl:otherwise>  
+        	    </xsl:choose>
+        	</xsl:when>
+        	<xsl:otherwise>
+        		<xsl:message> + [WARNING]: <xsl:value-of select="@path" /> has not a valid extension</xsl:message>
+        	</xsl:otherwise>
+        </xsl:choose>
+          
       </xsl:for-each>
     </xsl:variable>  
-    
-    <package type="{$type}" filelist="{$filelist}" to="{$filename}" />
+
+  
+    <package type="{$type}" filelist="{$filelist}" to="{concat($themedir,  '/', $html5sitetheme, '/', substring-before($filename, concat('.', $extension)))}" />
      
   </xsl:template>
+  
   
   <xsl:template match="*"/>
   <xsl:template match="*"  mode="tag-preprocess"/>

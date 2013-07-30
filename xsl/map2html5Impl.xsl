@@ -69,7 +69,8 @@
   <xsl:include href="audience.xsl"/>  
   <xsl:include href="map2html5Index.xsl"/>
   <xsl:include href="reltable.xsl"/>
-   
+  <xsl:include href="function.xsl"/>
+  
   <xsl:variable name="include.roles" select="concat(' ', normalize-space($include.rellinks), ' ')"/>
   <!-- -->
    <xsl:param name="inputFileNameParam"/>

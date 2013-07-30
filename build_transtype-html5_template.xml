@@ -37,6 +37,14 @@
   />
   <target name="dita.map.html5.init" depends="package.compress" description="Initialize  HTML5 plugin properties">
 
+    
+    <condition property="compressor.script.filename" value="compressor-build.xml">
+      <not>
+        <isset property="compressor.script.filename" />
+      </not>
+    </condition>
+    
+    
     <condition property="html5.site.theme" value="${args.cssroot}">
       <isset property="args.cssroot" />
     </condition>
@@ -328,7 +336,7 @@
 
   <target 
     name="dita.map.html5" 
-    depends="dita.map.html5.init, dita.map.html5.echo, html5-copy-assets, html5-copy-libs, theme-xml-preprocess, check-html5-json-vars-urls"
+    depends="dita.map.html5.init, dita.map.html5.echo, html5-copy-assets, html5-copy-libs, theme-xml-preprocess"
     description="Generate html5 components from input map and topics"
   >
 
@@ -482,8 +490,11 @@
       style="${theme.preprocess.style}">
       
       <param name="html5dir" expression="${html5.dir}"/>
-      <param name="jsonp" expression="d4p.setProps"/>
-
+      <param name="script" expression="${compressor.script.filename}"/>
+      <param name="html5sitetheme" expression="${html5.site.theme}"/>
+      <param name="themedir" expression="${html5.themes.dir}"/>
+      <param name="libsdir" expression="${html5.compression.temp.dir}"/>
+      <param name="ouputdir" expression="${output.dir}"/>
   </xslt>
 
   </target>

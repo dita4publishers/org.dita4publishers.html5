@@ -56,18 +56,18 @@
   <xsl:template match="*" mode="generate-d4p-css">
   	<xsl:choose>
   		<xsl:when test="$DBG='yes'">
-  			<xsl:apply-templates select="." mode="generate-d4p-uncompressed-css" />
+  			<xsl:apply-templates select="$HTML5THEMECONFIGDOC/html5/tag" mode="generate-d4p-uncompressed-css" />
   		</xsl:when>  		
   		<xsl:otherwise>
-  			<xsl:apply-templates select="." mode="generate-d4p-compressed-css" />		
+  			<xsl:apply-templates select="$HTML5THEMECONFIGDOC/html5/tag" mode="generate-d4p-compressed-css" />		
   		</xsl:otherwise> 	
   	</xsl:choose>		
   </xsl:template>
   
   <!-- This template render ons script element per script element declared in the theme config.xml -->  
-  <xsl:template match="*" mode="generate-d4p-uncompressed-css">
+  <xsl:template match="tag" mode="generate-d4p-uncompressed-css">
     <xsl:param name="relativePath" as="xs:string" select="''" tunnel="yes" />
-    <xsl:for-each select="$HTML5THEMECONFIGDOC/html5/tag/source/file">
+    <xsl:for-each select="./source/file">
     	<link 
     		rel="stylesheet" 
     		type="text/css" 
@@ -76,7 +76,34 @@
     </xsl:for-each>
   </xsl:template>
 
-   <xsl:function name="relpath:assets-uri" as="xs:string">
+  
+   <xsl:template match="tag" mode="generate-d4p-compressed-css"> 
+  	  <xsl:param name="relativePath" as="xs:string" select="''" tunnel="yes" />
+      <xsl:variable name="extension">
+        <xsl:call-template name="get-file-extension">
+        	<xsl:with-param name="path" select="filename" />
+        </xsl:call-template>
+      </xsl:variable>
+      <xsl:variable name="name">
+      	<xsl:choose>
+    	    	<xsl:when test="$extension = 'css'">link</xsl:when>
+    	    	<xsl:when test="$extension = 'js'">script</xsl:when>
+    	    	<xsl:otherwise>meta</xsl:otherwise>
+    	    </xsl:choose>
+    	</xsl:variable>
+    	<xsl:element name="{$name}"> 
+ 	    
+    	    <xsl:for-each select="attributes">
+    	    	<xsl:attribute name="{name(.)}" select="relpath:fixRelativePath($relativePath, concat($html5CSSPath, filename))" />
+    	    </xsl:for-each>
+    	        	
+    	</xsl:element>
+ 		<xsl:sequence select="'&#x0a;'"/>
+  </xsl:template>
+  
+
+
+<xsl:function name="relpath:assets-uri" as="xs:string">
     <xsl:param name="relativePath" as="xs:string*"/> 
     <xsl:param name="path" as="xs:string*"/>
     
@@ -95,23 +122,4 @@
     <xsl:sequence select="$pathwithdir" />   
   </xsl:function>
    
-  
-   <xsl:template match="*" mode="generate-d4p-compressed-css">
-  <!-- prevent aboslute path to be rewritten -->
-  	<xsl:param name="relativePath" as="xs:string" select="''" tunnel="yes" />
-    	
-  	<xsl:if test="$CSS!=''">
-     	<link rel="stylesheet" type="text/css" href="{relpath:fixRelativePath($relativePath, $CSS)}" />
-    </xsl:if>
-    
-    <xsl:sequence select="'&#x0a;'"/>
-    
-    <link rel="stylesheet" type="text/css" href="{relpath:fixRelativePath($relativePath, concat($html5CSSPath, $HTML5THEMECONFIGDOC/html5/tag/output, '-min.css'))}" />
-    	<xsl:sequence select="'&#x0a;'"/>
-    
-  </xsl:template>
-  
-
-
-
 </xsl:stylesheet>

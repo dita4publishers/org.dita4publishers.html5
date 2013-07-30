@@ -27,7 +27,7 @@
     <tag>
         <name>link</name>
         <output>yes</output>
-        <filename>style</filename>
+        <filename>style.css</filename>
         <prefix></prefix>
         <suffix></suffix>
         <attributes>
@@ -36,7 +36,7 @@
             <media>screen, projection, print</media>
         </attributes>
         <value></value>
-        <source type="css">
+        <source>
             <!-- 960 js grid -->
             <file path="modules/960js/code/css/reset.css" />
             <file path="modules/960js/code/css/960_12_col.css" />
@@ -76,50 +76,64 @@
             <file path="themes/d4p-classic/css/theme.css" /> 
         </source>
     </tag>
-
     
-  
-  
-    <file path="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"/>
+    
+    <tag>
+        <name>link</name>
+        <output>yes</output>
+        <prefix></prefix>
+        <suffix></suffix>
+        <attributes>
+            <rel>stylesheet</rel>
+            <type>text/css</type>
+            <media>screen, projection, print</media>
+            <href>http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML</href>
+        </attributes>
+        <value></value>
+       
+    </tag>
 
-  <!-- 
-      
-      Every CSS above this marker should be easely reusable
-  
-  -->
-  
-  <!-- theme specific css -->
 
-
-
-  <!-- 
-      
       Every javascripts below this marker should be easely reusable
   
   -->
+   <tag>
+        <name>script</name>
+        <output>yes</output>
+        <filename>script.js</filename>
+        <prefix></prefix>
+        <suffix></suffix>
+        <attributes>
+            <type>text/javascript</type>
+        </attributes>
+        <value></value>
+        <source>
+            <!-- 960 js grid -->
+            <file path="modules/modernizr/modernizr.dev.2.0.6.js" /> 
+            <file path="modules/prefixFree/prefixFree.js" />
+            <file path="modules/jQuery/jquery-1.7.1.min.js" />
   
+            <!-- navigation -->
+            <file path="modules/jQuery-widgets/navigation/classic/js/navigation.js" />  
+
+            <!-- jquery ui -->
+            <file path="modules/jQuery-ui/ui/jquery.ui.core.js" />
+            <file path="modules/jQuery-ui/ui/jquery.ui.widget.js" />
+            <file path="modules/jQuery-ui/ui/jquery.ui.accordion.js" /> 
+  
+            <!-- code to instantiate jQuery UI -->
+            <!--file path="modules/jQuery-widgets-init/accordion/accordion.js" /-->
+  
+            <!-- jQuery Cycle -->
+            <!--file path="modules/jQuery-widgets/cycle/js/cycle.js" /--> 
+            <!--file path="modules/jQuery-widgets/cycle/js/jquery.cycle.js" /--> 
+        </source>
+    </tag>
   <!-- 
     external libraries, stored locally 
     you could use the latest CDN instead
   -->
-  <script path="modules/modernizr/modernizr.dev.2.0.6.js" /> 
-  <script path="modules/prefixFree/prefixFree.js" />
-  <script path="modules/jQuery/jquery-1.7.1.min.js" />
-  
-  <!-- navigation -->
-  <script path="modules/jQuery-widgets/navigation/classic/js/navigation.js" />  
-
-  <!-- jquery ui -->
-  <script path="modules/jQuery-ui/ui/jquery.ui.core.js" />
-  <script path="modules/jQuery-ui/ui/jquery.ui.widget.js" />
-  <script path="modules/jQuery-ui/ui/jquery.ui.accordion.js" /> 
-  
-  <!-- code to instantiate jQuery UI -->
-  <!--script path="modules/jQuery-widgets-init/accordion/accordion.js" /-->
-  
-   <!-- jQuery Cycle -->
-  <!--script path="modules/jQuery-widgets/cycle/js/cycle.js" /--> 
-  <!--script path="modules/jQuery-widgets/cycle/js/jquery.cycle.js" /--> 
+ 
 
   <d4p>
   	<init>false</init>
