@@ -46,7 +46,7 @@
 
   <xsl:message> + [INFO] Generating index document <xsl:sequence select="$indexUri"/>...</xsl:message>
   
-  <xsl:result-document href="{$indexUri}" format="indented-xml">
+  <xsl:result-document href="{$indexUri}" format="html5">
       <xsl:text disable-output-escaping="yes">&lt;!DOCTYPE html&gt;</xsl:text>  
       
       <xsl:apply-templates mode="generate-html5-page" select=".">
