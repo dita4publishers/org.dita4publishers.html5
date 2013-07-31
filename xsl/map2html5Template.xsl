@@ -150,10 +150,8 @@
       
       <xsl:call-template name="copyright"/>   
 
-	  <xsl:apply-templates select="." mode="generate-css-includes"/>
-						 
-      <xsl:apply-templates select="." mode="generate-javascript-includes"/>
-        
+	  <xsl:apply-templates select="." mode="generate-css-js"/>
+		        
 	  <xsl:apply-templates select="." mode="gen-user-bottom-head" />
 	    
     </head>

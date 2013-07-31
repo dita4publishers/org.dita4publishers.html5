@@ -63,8 +63,7 @@
   <xsl:include href="map2html5Template.xsl"/>
   <xsl:include href="nav-point-title.xsl"/>
   <xsl:include href="commonHtmlExtensionSupport.xsl"/>     
-  <xsl:include href="javascripts.xsl"/>
-  <xsl:include href="css.xsl"/>    
+  <xsl:include href="jsAndCss.xsl"/>
   <xsl:include href="i18n.xsl"/>  
   <xsl:include href="audience.xsl"/>  
   <xsl:include href="map2html5Index.xsl"/>
