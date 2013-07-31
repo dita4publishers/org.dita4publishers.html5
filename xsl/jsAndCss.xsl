@@ -74,9 +74,7 @@
 				</xsl:if>
 			</xsl:for-each>
 		</xsl:variable>
-		
-		
-			<xsl:message><xsl:sequence select="$attributes" /></xsl:message>
+	
 		
 		<xsl:for-each select="./source/file">
 			
@@ -118,6 +116,61 @@
 			</xsl:element>   <xsl:sequence select="'&#x0a;'"/>
 
 		</xsl:for-each>
+
+	</xsl:template>
+	
+	<!-- This template render ons script element per script element declared in the theme config.xml -->
+	<xsl:template match="tag[count(source/file) = 0 ]" mode="generate-d4p-uncompressed-css">
+		
+		<xsl:param name="relativePath" as="xs:string" select="''" tunnel="yes"/>
+		
+		<xsl:variable name="attributes">
+			<xsl:for-each select="attributes/*">
+					<attribute name="{name(.)}" value="{.}"/>
+			</xsl:for-each>
+		</xsl:variable>
+
+			<xsl:variable name="extension">
+			  <xsl:choose>
+				<xsl:when test="attributes/href">
+				  <xsl:call-template name="get-file-extension">
+					<xsl:with-param name="path" select="attributes/href"/>
+				  </xsl:call-template>
+				</xsl:when>
+				<xsl:when test="attributes/src">
+				  <xsl:call-template name="get-file-extension">
+					<xsl:with-param name="path" select="attributes/src"/>
+				  </xsl:call-template>
+				</xsl:when>
+				<xsl:otherwise>
+					  <xsl:call-template name="get-file-extension">
+						<xsl:with-param name="path" select="filemane"/>
+					  </xsl:call-template>
+				</xsl:otherwise>
+				</xsl:choose>
+			</xsl:variable>
+			
+			<xsl:variable name="name">
+				<xsl:choose>
+					<xsl:when test="$extension = 'css'">link</xsl:when>
+					<xsl:when test="$extension = 'js'">script</xsl:when>
+					<xsl:when test="attributes/src">script</xsl:when>
+					<xsl:when test="attributes/href">link</xsl:when>
+					<xsl:otherwise>meta</xsl:otherwise>
+				</xsl:choose>
+			</xsl:variable>			
+			
+
+			<xsl:element name="{$name}">
+
+				<xsl:for-each select="$attributes/*">
+					<xsl:attribute name="{@name}" select="@value"/>
+				</xsl:for-each>
+				
+
+			</xsl:element> 
+
+
 
 	</xsl:template>
 
