@@ -56,7 +56,8 @@
        
         <target name="packager.package">     
         	<prepare theme="{$html5sitetheme}" />        
-      		<xsl:apply-templates select="*" mode="#current" />      	
+      		<xsl:apply-templates select="*" mode="#current" /> 
+      		<get theme="{$html5sitetheme}" dir="${basedir}/../" /> 
       	</target>
       	
     </project>
@@ -110,7 +111,7 @@
     </xsl:variable>  
 
   
-    <package type="{$type}" filelist="{$filelist}" to="{concat($themedir,  '/', $html5sitetheme, '/', substring-before($filename, concat('.', $extension)))}" />
+    <package type="{$type}" theme="{$html5sitetheme}" filelist="{$filelist}" to="{substring-before($filename, concat('.', $extension))}" />
      
   </xsl:template>
   

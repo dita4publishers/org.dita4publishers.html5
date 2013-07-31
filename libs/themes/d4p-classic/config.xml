@@ -87,7 +87,7 @@
             <rel>stylesheet</rel>
             <type>text/css</type>
             <media>screen, projection, print</media>
-            <href>http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML</href>
+            <src>http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML</src>
         </attributes>
         <value></value>
        

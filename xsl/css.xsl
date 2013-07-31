@@ -79,26 +79,48 @@
   
    <xsl:template match="tag" mode="generate-d4p-compressed-css"> 
   	  <xsl:param name="relativePath" as="xs:string" select="''" tunnel="yes" />
+  	  
       <xsl:variable name="extension">
         <xsl:call-template name="get-file-extension">
         	<xsl:with-param name="path" select="filename" />
         </xsl:call-template>
       </xsl:variable>
+      
       <xsl:variable name="name">
       	<xsl:choose>
     	    	<xsl:when test="$extension = 'css'">link</xsl:when>
     	    	<xsl:when test="$extension = 'js'">script</xsl:when>
+    	    	<xsl:when test="attributes/src">script</xsl:when>
+    	    	<xsl:when test="attributes/href">link</xsl:when>
     	    	<xsl:otherwise>meta</xsl:otherwise>
     	    </xsl:choose>
     	</xsl:variable>
+    	
+    	<xsl:variable name="dir">
+      		<xsl:choose>
+    	    	<xsl:when test="$extension = 'css'">css</xsl:when>
+    	    	<xsl:when test="$extension = 'js'">js</xsl:when>
+    	    	<xsl:otherwise>unknown</xsl:otherwise>
+    	    </xsl:choose>
+    	</xsl:variable>
+    	
     	<xsl:element name="{$name}"> 
  	    
-    	    <xsl:for-each select="attributes">
-    	    	<xsl:attribute name="{name(.)}" select="relpath:fixRelativePath($relativePath, concat($html5CSSPath, filename))" />
+    	    <xsl:for-each select="attributes/*">
+    	    	<xsl:attribute name="{name(.)}" select="." />
     	    </xsl:for-each>
-    	        	
+    	    
+    	    <xsl:if test="not(attributes/href) and $extension = 'css'">
+    	      <xsl:attribute name="href" select="relpath:fixRelativePath($relativePath, concat($HTML5THEMEDIR, '/', $siteTheme, '/', $extension, '/', filename))" />
+    	    </xsl:if>
+    	    
+    	    <xsl:if test="not(attributes/src) and $extension = 'js'">
+    	      <xsl:attribute name="src" select="relpath:fixRelativePath($relativePath, concat($HTML5THEMEDIR, '/', $siteTheme, '/', $extension, '/', filename))" />
+    	    </xsl:if>	
+    	    
     	</xsl:element>
- 		<xsl:sequence select="'&#x0a;'"/>
+    	
+ 		
   </xsl:template>
   
 
