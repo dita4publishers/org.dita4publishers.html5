@@ -34,11 +34,9 @@
   <xsl:param name="html5dir" select="''" />
   <xsl:param name="html5sitetheme" select="''" />
   <xsl:param name="script" select="''" />
-  <xsl:param name="libsdir" select="''" />
   <xsl:param name="outputdir" select="''" /> 
   <xsl:param name="themedir" select="''" /> 
- 
-  
+
   <xsl:output name="ant" method="xml" indent="yes"/>
    
   <xsl:template match="/">
@@ -55,9 +53,9 @@
        <import file="{concat($html5dir, '/', $script)}" />
        
         <target name="packager.package">     
-        	<prepare theme="{$html5sitetheme}" />        
+        	<package-prepare theme="{$html5sitetheme}" />        
       		<xsl:apply-templates select="*" mode="#current" /> 
-      		<get theme="{$html5sitetheme}" dir="${basedir}/../" /> 
+      		<package-get theme="{$html5sitetheme}" dir="{concat('${basedir}', '/../')}" /> 
       	</target>
       	
     </project>
