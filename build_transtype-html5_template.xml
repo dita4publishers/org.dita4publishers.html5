@@ -20,9 +20,16 @@
 
 <project name="dita2html5" default="dita2html5" xmlns:dita="http://dita-ot.sourceforge.net">
 
-  <import file="build-theme.xml"/>
-
   <dirname property="html5.dir" file="${ant.file.dita2html5}"/>
+  
+  <condition property="compressor.script.filename" value="build-theme.xml">
+    <not>
+      <isset property="compressor.script.filename" />
+    </not>
+  </condition>
+  
+  <import file="${compressor.script.filename}" />
+    
 
   <target name="dita2html5"
     unless="noMap"
@@ -35,16 +42,9 @@
     unless="noMap"
     depends="dita.map.html5"
   />
-  <target name="dita.map.html5.init" depends="package.compress" description="Initialize  HTML5 plugin properties">
+  
+  <target name="dita.map.html5.init" description="Initialize  HTML5 plugin properties">
 
-    
-    <condition property="compressor.script.filename" value="compressor-build.xml">
-      <not>
-        <isset property="compressor.script.filename" />
-      </not>
-    </condition>
-    
-    
     <condition property="html5.site.theme" value="${args.cssroot}">
       <isset property="args.cssroot" />
     </condition>
@@ -261,7 +261,7 @@
       </not>
     </condition>
 
-     <condition property="html5.class.section.container" value="">
+     <condition property="html5.class.section.container" value="grid_12">
       <not>
         <isset property="html5.class.section.container"/>
       </not>
@@ -279,13 +279,13 @@
       </not>
     </condition>
 
-    <condition property="html5.class.main.content" value="grid_8">
+    <condition property="html5.class.main.content" value="grid_8 alpha omega">
       <not>
         <isset property="html5.class.main.content"/>
       </not>
     </condition>
 
-    <condition property="html5.class.navigation" value="grid_4">
+    <condition property="html5.class.navigation" value="grid_4 alpha omega">
       <not>
         <isset property="html5.class.navigation" />
       </not>
@@ -298,7 +298,7 @@
       </not>
   </condition>
 
-  <condition property="html5.class.body" value="centered img-with-shadow paged  ${html5.navigation.markup}">
+  <condition property="html5.class.body" value="centered img-with-shadow ${html5.navigation.markup}">
       <not>
         <isset property="html5.class.body" />
       </not>
@@ -321,7 +321,11 @@
         <isset property="generateIndex" />
       </not>
     </condition>
-
+    
+    <loadproperties srcFile="${html5.dir}/shared.properties"/>
+    
+    <xmlproperty file="${html5.site.config}" collapseAttributes="true" semanticAttributes="true" />
+    
   </target>
   
   <target name="dita.map.html5.echo" description="Echo HTML5 plugin properties" unless="html5.echo.done">
@@ -336,7 +340,7 @@
 
   <target 
     name="dita.map.html5" 
-    depends="dita.map.html5.init, dita.map.html5.echo, html5-copy-assets, html5-copy-libs, theme-xml-preprocess"
+    depends="dita.map.html5.init, dita.map.html5.echo, package.prepare, theme-xml-preprocess, package.get"
     description="Generate html5 components from input map and topics"
   >
 
@@ -390,91 +394,7 @@
     </ant>
     </target>
 
-  <target name="html5-copy-dyntoc-javascript"  description="Copy JavaScript files"
-    depends="dita.map.html5.init"
-    if="html5.doDynTocFileCopy">
-    <copy todir="${output.dir}">
-      <fileset dir="${html5.dir}/dynamic-toc-support">
-        <include name="**/*"/>
-      </fileset>
-    </copy>
-
-  </target>
-
-  <target name="html5-copy-css"  description="Copy CSS files" depends="dita.map.html5.init" >
-    <condition property="user.copycss.yes">
-      <isset property="args.css.present"/>
-    </condition>
-    <property name="user.csspath.real" value="${output.dir}${file.separator}${css.output.dir}"/>
-    <mkdir dir="${user.csspath.real}"/>
-    <!-- Always copy system default css files -->
-    <copy todir="${user.csspath.real}">
-      <fileset dir="${dita.resource.dir}" includes="*.css"/>
-    </copy>
-    <copy todir="${output.dir}">
-      <fileset dir="${dita.resource.dir}" includes="*.css"/>
-    </copy>
-    <copy todir="${user.csspath.real}">
-      <fileset dir="${html5.dir}/css">
-        <include name="**/*"/>
-      </fileset>
-    </copy>
-    <!-- Copy user specify css file when required -->
-    <antcall target="html5-copy-css-user"/>
-    <antcall target="html5-copy-javascript"/>
-  </target>
-
-  <target name="html5-copy-assets"  description="Copy assets files for production" if="${html5.copy.assets}" depends="dita.map.html5.init">
-
-    <mkdir dir="${output.dir}/${html5.themes.output.dir}/${html5.site.theme}"/>
-    
-    <copy todir="${output.dir}/${html5.themes.output.dir}/${html5.site.theme}">
-      <fileset dir="${html5.compressor.build.dir}"/>
-    </copy>
-
-  </target>
   
-  <target name="check.libs.exists"  description="Check if the library directory exists in the output directory">
-    <condition property="html5.themes.output.dir.exists">
-      <available file="${output.dir}/${html5.compression.temp.dir.name}" type="dir"/>
-    </condition>
-    
-    <condition property="html5.prevent.copy.libs">
-       <isset property="html5.themes.output.dir.exists" />
-    </condition>
-</target>
-  
-  <target name="confirm.libs.exists"  description="Output confirmation message if the library directory exists in the output directory" if="html5.themes.output.dir.exists">
-    <echo> [WARNING] There is already a copy of the library directory in the ouput directory, delete it manually if you want a fresh copy. This is to avoid overriding your change during development.</echo>
-  </target>
-  
-  <target name="html5-copy-libs"  description="Copy assets files for development" depends="dita.map.html5.init, check.libs.exists, confirm.libs.exists" if="${html5.copy.libs}" unless="html5.prevent.copy.libs">
-  
-    <mkdir dir="${output.dir}/${html5.libs.dir}"/>
-    
-    <copy todir="${output.dir}/${html5.libs.dir}">
-      <fileset dir="${html5.compression.temp.dir}"/>
-    </copy>
-
-  </target>
-  
-  <target name="html5-copy-css-user" if="user.copycss.yes">
-    <copy file="${args.css.real}" todir="${user.csspath.real}"/>
-  </target>
-
-
-  <target name="html5-copy-javascript"  description="Copy JavaScript files"
-    depends="dita.map.html5.init"
-    if="html5.doJavaScriptFileCopy">
-    <!-- FIXME: Parameterize the location of the JavaScript files -->
-    <mkdir dir="${output.dir}/js"/>
-    <copy todir="${output.dir}/js">
-      <fileset dir="${html5.dir}/js">
-        <include name="**/*"/>
-      </fileset>
-    </copy>
-
-  </target>
   
    <!-- FIXME: Move to xsl code directly -->
   <target name="theme-xml-preprocess" description="Process theme">
@@ -493,7 +413,6 @@
       <param name="script" expression="${compressor.script.filename}"/>
       <param name="html5sitetheme" expression="${html5.site.theme}"/>
       <param name="themedir" expression="${html5.themes.dir}"/>
-      <param name="libsdir" expression="${html5.compression.temp.dir}"/>
       <param name="ouputdir" expression="${output.dir}"/>
   </xslt>
 
