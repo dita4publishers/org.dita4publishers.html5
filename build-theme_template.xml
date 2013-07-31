@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--   
+<?xml version="1.0" encoding="utf-8"?><!--   
     Licensed to the Apache Software Foundation (ASF) under one
     or more contributor license agreements.  See the NOTICE file
     distributed with this work for additional information
@@ -16,172 +15,157 @@
     KIND, either express or implied.  See the License for the
     specific language governing permissions and limitations
     under the License.
--->	
-<project name="html5compressor" default="package.compress" basedir="." xmlns:dita="http://dita-ot.sourceforge.net">
+-->
 
-	<dirname property="ant.file.html5compressor.dir" file="${ant.file.html5compressor}"/>	
-	<dirname property="dita.plugins.dir" file="${ant.file.html5compressor.dir}"/>
-		
-	<loadproperties srcFile="${ant.file.html5compressor.dir}/shared.properties"/>
-	
-	<target name="package.compress" depends="compressor.check, compressor.install, init.build.theme, load.html5.properties, package.concat.js, package.concat.css, package.compress.css, package.compress.js, package.copy.assets, clean.temp.libs" />
-	
-	<target name="compressor.check" description="check compressor availability">
-		<available file="${ant.file.html5compressor.dir}/${compressor.path}" property="html5.compressor.available"/>
-	</target>
-	
-	<target name="compressor.install" unless="html5.compressor.available" description="Install compressor if not available">
-		<get src="${compressor.repo}" dest="${ant.file.html5compressor.dir}/"/>
-		<unzip src="${ant.file.html5compressor.dir}/yuicompressor-2.4.7.zip" dest="${ant.file.html5compressor.dir}/"/>
-		<delete file="${ant.file.html5compressor.dir}/yuicompressor-2.4.7.zip"/>
-	</target>
-		
-	<target name="clean.temp.libs">
-		
-	</target>
-	
-	<target name="check.html5.config.exists">
-		<property name="html5.site.config" location="${html5.compression.temp.dir}/${html5.themes.dir}/${html5.site.theme}/config.xml"/>
-		<available file="${html5.site.config}" property="html5.config.exists"/>
-	</target>
-	
-	<target name="load.html5.properties" depends="check.html5.config.exists" description="load theme properties if not already loaded" unless="html5.tag" if="html5.config.exists">
-		<echo>Loading property file: ${html5.site.config} </echo>
-		<xmlproperty file="${html5.site.config}" collapseAttributes="true" semanticAttributes="true" />
-		<echoproperties>
-			<propertyset>
-				<propertyref prefix="html5."/>
-			</propertyset>
-		</echoproperties>
-	</target>
-	
-	<target name="init.build.theme" description="Set default properties and build a full library in a temp directory">
-		
-		<!-- this is the current theme builded -->
-		<condition property="html5.site.theme" value="d4p-classic">
-			<not>
-				<isset property="html5.site.theme"/>
-			</not>
-		</condition>
-		
-		<!-- added in case the ant file is called directly -->
-		<condition property="dita.dir" value="${dita.plugins.dir}/../">
-			<not>
-				<isset property="dita.dir"/>
-			</not>
-		</condition>
-		
-		<!-- added in case the ant file is called directly -->
-		<condition property="dita.temp.dir" value="${dita.dir}/temp/">
-			<not>
-				<isset property="dita.temp.dir"/>
-			</not>
-		</condition>
-		
-		<mkdir dir="${dita.temp.dir}" />	
-		
-		<property name="html5.compressor.build.dir" location="${dita.temp.dir}/${html5.themes.dir}/${html5.site.theme}" />
-		<property name="html5.compression.temp.dir" location="${dita.temp.dir}/${html5.compression.temp.dir.name}"/>
-		
-		<delete dir="${html5.compression.temp.dir}"/>				
-		<delete dir="${html5.compressor.build.dir}"/>	
-		
-		<mkdir dir="${html5.compressor.build.dir}"/>
-		<mkdir dir="${html5.compression.temp.dir}" />	
-		
-		<mkdir dir="${html5.compression.temp.dir}/${html5.themes.dir}/"/>
-		
-		<!-- copy main library -->
-		<copy todir="${html5.compression.temp.dir}" >	
-			<fileset dir="${ant.file.html5compressor.dir}/${html5.libs.dir}"/>
-		</copy>
-		
-		<!-- copy all themes dir -->
-		<copy todir="${html5.compression.temp.dir}/${html5.themes.dir}/">			
-			
-			<fileset dir="${ant.file.html5compressor.dir}/${html5.libs.dir}/${html5.themes.dir}">
-				<include name="**"/>
-			</fileset>
-		</copy>
-		
-		<copy todir="${html5.compression.temp.dir}/${html5.themes.dir}/">	
-			<fileset dir="${dita.plugins.dir}">
-				<include name="*/theme/${html5.site.theme}/**"/>
-			</fileset>
-			<regexpmapper from=".*/theme/(.*)" to="\1" />				
-		</copy>
-		
-	</target>	
-	
-	<target name="package.compress.js" if="html5.script">
-		<apply executable="java" parallel="false" dest="${html5.compressor.build.dir}/${html5.js.dir}">
-			<fileset dir="${html5.compressor.build.dir}/${html5.js.dir}" includes="*"/>
-			<arg line="-jar"/>
-			<arg path="${ant.file.html5compressor.dir}/${compressor.path}"/>
-			<srcfile/>
-			<arg line="-o"/>
-			<mapper type="glob" from="*.js" to="*-min.js"/>
-			<targetfile/>
-		</apply>
-		<echo>javascript package compressed</echo>
-	</target>
-	
-	<target name="package.compress.css" if="html5.tag.source.file">
-		<apply executable="java" parallel="false" dest="${html5.compressor.build.dir}">
-			<fileset dir="${html5.compressor.build.dir}">
+<project name="assets-packager" basedir=".">
+
+  <dirname property="ant.assets-packager.dir" file="${ant.file.assets-packager}"/>
+  <dirname property="dita.plugins.dir" file="${ant.assets-packager.dir}"/>
+  <property name="dita.dir" location="${dita.plugins.dir}/../"/>
+  <property name="dita.temp.dir" location="${dita.dir}/temp/"/>
+   		
+  <loadproperties srcFile="${ant.assets-packager.dir}/shared.properties"/>
+  
+  <macrodef name="package">
+     <attribute name="type" />
+     <attribute name="filelist"/>
+     <attribute name="to"/>
+     <attribute name="theme" />
+     <sequential>
+        <mkdir dir="@{to}"/>
+        
+        <antcall target="package.compress">
+          <param name="type" value="@{type}"/>
+          <param name="filelist" value="@{filelist}"/>
+          <param name="to" value="@{to}"/>
+          <param name="html5.site.theme" value="@{theme}"/>
+        </antcall>
+        
+    </sequential>
+  </macrodef>
+  
+   <macrodef name="package-prepare">
+    <attribute name="theme" />
+     <sequential>
+        <antcall target="package.prepare" >
+           <param name="html5.site.theme" value="@{theme}"/>
+        </antcall>
+    </sequential>
+  </macrodef>
+  
+  <macrodef name="package-get">
+    <attribute name="dir" />
+     <attribute name="theme" />
+     <sequential>
+        <antcall target="package.get" >
+           <param name="output.dir" value="@{dir}"/>
+           <param name="html5.site.theme" value="@{theme}"/>
+        </antcall>
+    </sequential>
+  </macrodef>
+  
+  <target name="package.get">
+  
+ 	 <echo>Sending assets to the output directory</echo>
+ 	 <property name="output.theme" location="${output.dir}/${html5.themes.dir}/${html5.site.theme}" />
+ 	 <mkdir dir="${output.theme}" />
+     <copy todir="${output.theme}">
+     	<fileset dir="${dita.temp.dir}/${html5.themes.dir}/${html5.site.theme}/${html5.themes.dir}"/>
+     </copy>
+  </target>
+  
+  <target name="package.compress" depends="package.concatenate, package.copy-assets">
+    <echo> +++ compressing package </echo>
+    
+        <apply executable="java" parallel="false" dest="${html5.package.dir}">
+			<fileset dir="${html5.package.dir}">
 				<include name="**/**"/>
 			</fileset>
 			<arg line="-jar"/>
-			<arg path="${ant.file.html5compressor.dir}/${compressor.path}"/>
+			<arg path="${ant.assets-packager.dir}/${compressor.path}"/>
 			<srcfile/>
 			<arg line="-o"/>
-			<mapper type="glob" from="*.css" to="*-min.css"/>
+			<mapper type="glob" from="*.${html5.concatenation.prefix}.${type}" to="*.${type}"/>
 			<targetfile/>
 		</apply>
-		<echo>css packaged compressed</echo>
-	</target>
+		
+  </target>
+   
+   <target name="package.concatenate">
+    <echo> +++ Concatenating file before compression </echo>
+    
+    <property name="html5.package.dir"  location="${dita.temp.dir}/${html5.themes.dir}/${html5.site.theme}/${html5.themes.dir}" />
+   
+   <echo> to: ${html5.package.dir}/${type}/${to}.${html5.concatenation.prefix}.${type} </echo>
+   <condition property="package.css">
+		<equals arg1="${type}" arg2="css" />
+    </condition>
+    
+    <mkdir dir="${html5.package.dir}"/>
+    
+	<concat destfile="${html5.package.dir}/${type}/${to}.${html5.concatenation.prefix}.${type}">
+		<filelist dir="${dita.temp.dir}/${html5.themes.dir}/${html5.site.theme}/${html5.libs.dir}" files="${filelist}"></filelist>
+	</concat>	
 	
-	<target name="package.concat.js" if="html5.script">
-		<mkdir dir="${html5.compressor.build.dir}/${html5.js.dir}"/>
-		<concat destfile="${html5.compressor.build.dir}/${html5.js.dir}/script.js">
-			<filelist dir="${html5.compression.temp.dir}" files = "${html5.script}" />
-			<fileset dir="${html5.compression.temp.dir}"  >
-				<include name="${html5.themes.dir}/${html5.site.theme}/${html5.js.dir}/${html5.default.script}"/>
-			</fileset>
-		</concat>
-	</target>
-	
-	<target name="package.concat.css" if="html5.tag.source.file">
-		<mkdir dir="${html5.compressor.build.dir}/${html5.css.dir}"/>
-		<concat destfile="${html5.compressor.build.dir}/${html5.css.dir}/${html5.tag.output}.css">
-			<filelist dir="${html5.compression.temp.dir}" files = "${html5.tag.source.file}" />
-			<fileset dir="${html5.compression.temp.dir}" >
-				<include name="${html5.themes.dir}/${html5.site.theme}/${html5.css.dir}/${html5.default.style}"/>
-			</fileset>
-		</concat>
-	</target>
-	
-	<target name="package.copy.assets" description="List and copy all assets to copy (images, fonts) into the compressed theme directory" unless="package.copy.assets.done">
-			
-		<mkdir dir="${html5.compressor.build.dir}/${html5.img.dir}"/>
-		<mkdir dir="${html5.compressor.build.dir}/${html5.fonts.dir}"/>
+  </target>
+  
+  <target name="package.prepare" unless="package.prepared">
+       
+     <!-- this is the current theme builded -->
+    <condition property="html5.site.theme" value="d4p-classic">
+      <not>
+        <isset property="html5.site.theme"/>
+      </not>
+    </condition>
+    
+     <property name="dita.theme.temp.dir" location="${dita.temp.dir}/${html5.themes.dir}/${html5.site.theme}" />
+     
+     <mkdir dir="${dita.theme.temp.dir}" />
+   
+    
+    <!-- copy main library -->
+    <mkdir dir="${dita.theme.temp.dir}/${html5.libs.dir}" />
+    <copy todir="${dita.theme.temp.dir}/${html5.libs.dir}" >  
+      <fileset dir="${ant.assets-packager.dir}/${html5.libs.dir}"/>
+    </copy>
+    
+    <!-- copy other library -->
+    <copy todir="${dita.theme.temp.dir}/${html5.libs.dir}">  
+      <fileset dir="${dita.plugins.dir}">
+        <include name="*/${html5.libs.dir}/**"/>
+      </fileset> 
+      <regexpmapper from=".*/${html5.libs.dir}/(.*)" to="\1" />   
+    </copy>
+    
+    <!-- copy theme directory -->
+    <mkdir dir="${dita.theme.temp.dir}/${html5.libs.dir}/${html5.themes.dir}" />
+    <copy todir="${dita.theme.temp.dir}/${html5.libs.dir}/${html5.themes.dir}/">  
+      <fileset dir="${dita.plugins.dir}">
+        <include name="*/theme/${html5.site.theme}/**"/>
+      </fileset>
+      <regexpmapper from=".*/theme/(.*)" to="\1" />        
+    </copy>
+    
+    <property name="package.prepare" value="yes" />
+    <property name="html5.site.config" location="${dita.theme.temp.dir}/${html5.libs.dir}/${html5.themes.dir}/${html5.site.theme}/config.xml" />
+     
+  </target>
+  
+  <target name="package.copy-assets" if="package.css">
+  	<echo> +++ Getting assets from css files location</echo>
+  	<property name="basedir" location="${dita.temp.dir}/${html5.themes.dir}/${html5.site.theme}/${html5.libs.dir}" />
+  	
+    <filelist id="html5.style.css.path" dir="${basedir}" files="${filelist}"/> 	
+  
+ 	<pathconvert property="img.path.converted" pathsep="," refid="html5.style.css.path">
+		<mapper type="regexp" from="^${basedir}/(.*)/(.*)/css/.*.css"  to="\1/\2/img/"/>
+	 </pathconvert> 
 		
-		<filelist id="html5.style.css.path" dir="." files="${html5.tag.source.file}"/> 		
+	 <pathconvert property="font.path.converted" pathsep="," refid="html5.style.css.path">
+		<mapper type="regexp" from="^${basedir}/(.*)/(.*)/css/.*.css"  to="\1/\2/fonts/"/>
+	</pathconvert>
 		
-		<!-- 
-			pathconvert should calculate path using the basedir directory
-			the regex replace the basedir path by the html5.compression.temp.dir path
-		-->
-		
-		<pathconvert property="img.path.converted" pathsep="," refid="html5.style.css.path">
-			<mapper type="regexp" from="^${basedir}/(.*)/(.*)/css/.*.css"  to="\1/\2/img/"/>
-		</pathconvert> 
-		
-		<pathconvert property="font.path.converted" pathsep="," refid="html5.style.css.path">
-			<mapper type="regexp" from="^${basedir}/(.*)/(.*)/css/.*.css"  to="\1/\2/fonts/"/>
-		</pathconvert>
-		
-		<fileset id="html5.imgs.path" dir="${html5.compression.temp.dir}">
+		<fileset id="html5.imgs.path" dir="${dita.temp.dir}/${html5.themes.dir}/${html5.site.theme}/${html5.libs.dir}">
 			<patternset includes="${img.path.converted}">
 				<exclude name="*.css" />
 				<exclude name="*.js" />	
@@ -189,7 +173,7 @@
 			</patternset>
 		</fileset>
 		
-		<fileset id="html5.fonts.path" dir="${html5.compression.temp.dir}">
+		<fileset id="html5.fonts.path" dir="${dita.temp.dir}/${html5.themes.dir}/${html5.site.theme}/${html5.libs.dir}">
 			<type type="file"/>
 			<patternset includes="${font.path.converted}">		
 				<exclude name="*.css" />
@@ -200,17 +184,12 @@
 			</patternset>
 		</fileset>      
 		
-		<copy todir="${html5.compressor.build.dir}/${html5.img.dir}" failonerror="false" force="true" flatten="true">
+		<copy todir="${html5.package.dir}/${html5.img.dir}" failonerror="false" force="true" flatten="true">
 			<fileset refid="html5.imgs.path" />
 		</copy>
 		
-		<copy todir="${html5.compressor.build.dir}/${html5.fonts.dir}" failonerror="false" force="true" flatten="true">
+		<copy todir="${html5.package.dir}/${html5.fonts.dir}" failonerror="false" force="true" flatten="true">
 			<fileset refid="html5.fonts.path" />
 		</copy>
-		
-		<property name="html5.package.assets.copied" value="true" />
-		
-	</target>
-	
-	
+  </target>
 </project>
