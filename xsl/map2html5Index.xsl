@@ -51,7 +51,7 @@
 
       <xsl:message> + [INFO] Generating index file "<xsl:sequence select="$resultUri"/>"...</xsl:message>
 
-      <xsl:result-document href="{$resultUri}" format="indented-xml"
+      <xsl:result-document href="{$resultUri}" format="html5"
         exclude-result-prefixes="index-terms"
         >
         
