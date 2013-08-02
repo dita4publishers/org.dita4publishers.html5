@@ -411,17 +411,14 @@
       	</xsl:apply-templates>
       </xsl:variable>
     
-
-
-    <xsl:apply-templates select="." mode="generate-root-pages">
+    <!--xsl:apply-templates select="." mode="generate-root-pages">
       <xsl:with-param name="collected-data" as="element()" select="$collected-data" tunnel="yes"/>
       <xsl:with-param name="uniqueTopicRefs" as="element()*" select="$uniqueTopicRefs" tunnel="yes"/>
       <xsl:with-param name="navigation" as="element()*" select="$navigation" tunnel="yes"/>
       <xsl:with-param name="documentation-title" select="$documentation-title" tunnel="yes"/>
       <xsl:with-param name="is-root" as="xs:boolean" select="true()" tunnel="yes"/>
-      <xsl:with-param name="audienceSelect"  select="$audienceSelect" tunnel="yes"/>
-    
-    </xsl:apply-templates>
+      <xsl:with-param name="audienceSelect"  select="$audienceSelect" tunnel="yes"/>   
+    </xsl:apply-templates-->
     
    
     <xsl:apply-templates select="." mode="generate-content">
