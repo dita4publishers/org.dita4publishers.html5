@@ -41,7 +41,10 @@
             <file path="modules/960js/code/css/reset.css" />
             <file path="modules/960js/code/css/960_12_col.css" />
             <file path="modules/960js/code/css/text.css" />
-            
+
+	    <!-- 960 gs responsive grid -->
+            <file path="modules/960-Responsive-Grid/960-responsive.css" />            
+
             <!-- Vegur font -->
             <file path="misc/fonts/vegur/css/vegur.css" /> 
             <file path="misc/fonts/vegur/css/typography.css" />
