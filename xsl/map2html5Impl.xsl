@@ -443,9 +443,10 @@
     <!--    <xsl:apply-templates select="." mode="generate-glossary">
       <xsl:with-param name="collected-data" as="element()" select="$collected-data" tunnel="yes"/>
     </xsl:apply-templates>
--->    <!--xsl:apply-templates select="." mode="generate-graphic-copy-ant-script">
+-->    
+    <xsl:apply-templates select="." mode="generate-graphic-copy-ant-script">
       <xsl:with-param name="graphicMap" as="element()" tunnel="yes" select="$graphicMap"/>
-    </xsl:apply-templates-->
+    </xsl:apply-templates>
      
   </xsl:template>
 
