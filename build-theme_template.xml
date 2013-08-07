@@ -21,8 +21,8 @@
 
   <dirname property="ant.assets-packager.dir" file="${ant.file.assets-packager}"/>
   <dirname property="dita.plugins.dir" file="${ant.assets-packager.dir}"/>
+  
   <property name="dita.dir" location="${dita.plugins.dir}/../"/>
-  <property name="dita.temp.dir" location="${dita.dir}/temp/"/>
    		
   <loadproperties srcFile="${ant.assets-packager.dir}/shared.properties"/>
   
@@ -117,6 +117,13 @@
         <isset property="html5.site.theme"/>
       </not>
     </condition>
+    
+    <condition property="dita.temp.dir" value="${dita.dir}/temp/">
+      <not>
+        <isset property="dita.temp.dir"/>
+      </not>
+    </condition>
+
     
      <property name="dita.theme.temp.dir" location="${dita.temp.dir}/${html5.themes.dir}/${html5.site.theme}" />
      
