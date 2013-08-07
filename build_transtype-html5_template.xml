@@ -415,6 +415,8 @@
       <param name="themedir" expression="${html5.themes.dir}"/>
       <param name="ouputdir" expression="${output.dir}"/>
   </xslt>
+  
+  <ant antfile="${output.dir}/ant/compressor.xml"/>
 
   </target>
 
