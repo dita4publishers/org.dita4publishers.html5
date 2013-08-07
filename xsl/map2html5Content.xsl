@@ -106,7 +106,7 @@
 
 
 
-        <xsl:apply-templates select="$topic" mode="#current">
+        <xsl:apply-templates select="$tempTopic" mode="#current">
           <xsl:with-param name="topicref" as="element()*" select="." tunnel="yes"/>
           <xsl:with-param name="collected-data" select="$collected-data" as="element()" tunnel="yes"/>
           <xsl:with-param name="resultUri" select="$topicResultUri" tunnel="yes"/>
