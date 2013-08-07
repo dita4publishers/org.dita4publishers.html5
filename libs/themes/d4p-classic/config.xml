@@ -62,6 +62,7 @@
             <file path="modules/DITA/images/css/images.css" />  
             <file path="modules/DITA/pre/css/pre.css" />  
             <file path="modules/DITA/reltable/css/reltable.css" /> 
+            <file path="modules/DITA/tasks/css/task.css" /> 
             
             <!-- jQuery UI -->
             <file path="modules/jQuery-ui/themes/d4p-default/jquery.ui.accordion.css" />     
