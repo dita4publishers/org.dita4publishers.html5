@@ -143,11 +143,6 @@ img {
   -ms-interpolation-mode: bicubic;
 }
 
-ol,
-ul {
-  list-style: none;
-}
-
 li {
 /*
   For IE6 + IE7:
@@ -156,6 +151,7 @@ li {
   disappearing if hasLayout is triggered.
 */
   display: list-item;
+  list-style: none;
 }
 
 table {

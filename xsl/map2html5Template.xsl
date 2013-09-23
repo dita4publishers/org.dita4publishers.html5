@@ -112,10 +112,15 @@
   <xsl:template match="*" mode="generate-header">
   	<xsl:param name="documentation-title" as="xs:string" select="''" tunnel="yes" />
     <header role="banner" aria-labelledby="publication-title">
+      <div class="grid_8">
      	<h1 id="publication-title">
     		<xsl:value-of select="$documentation-title"/>
     	</h1>
+      </div>
+      <div class="grid_4">
     	<xsl:apply-templates select="." mode="gen-search-box" />
+      </div>
+      <div class="clearfix" />
     </header>
     
   </xsl:template>

@@ -12,11 +12,6 @@ body {
   font: 13px/1.5 'Helvetica Neue', Arial, 'Liberation Sans', FreeSans, sans-serif;
 }
 
-pre,
-code {
-  font-family: 'DejaVu Sans Mono', Menlo, Consolas, monospace;
-}
-
 hr {
   border: 0 #ccc solid;
   border-top-width: 1px;

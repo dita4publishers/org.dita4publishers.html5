@@ -33,13 +33,11 @@
         <attributes>
             <rel>stylesheet</rel>
             <type>text/css</type>
-            <media>screen, projection, print</media>
+            <media>screen, projection</media>
         </attributes>
         <value></value>
         <source>
-            <!-- 960 js grid -->
             <file path="modules/960js/code/css/reset.css" />
-            <file path="modules/960js/code/css/960_12_col.css" />
             <file path="modules/960js/code/css/text.css" />
 
 	    <!-- 960 gs responsive grid -->
@@ -82,6 +80,133 @@
     </tag>
     
     
+    <!-- tag for mobile version -->
+    <tag>
+        <name>link</name>
+        <output>no</output>
+        <filename>mobile.min.css</filename>
+        <prefix></prefix>
+        <suffix></suffix>
+        <attributes>
+            <rel>stylesheet</rel>
+            <type>text/css</type>
+            <media>screen, projection</media>
+        </attributes>
+        <value></value>
+        <source>
+            <file path="modules/960-Responsive-Grid/css/mobile.css" />
+        </source>
+    </tag>
+    
+    <!-- tag for 720 px grid -->
+    <tag>
+        <name>link</name>
+        <output>no</output>
+        <filename>720.min.css</filename>
+        <prefix></prefix>
+        <suffix></suffix>
+        <attributes>
+            <rel>stylesheet</rel>
+            <type>text/css</type>
+            <media>screen, projection</media>
+        </attributes>
+        <value></value>
+        <source>
+            <file path="modules/960-Responsive-Grid/css/720.css" />
+        </source>
+    </tag>
+    
+    <!-- tag for 960 px grid -->
+    <tag>
+        <name>link</name>
+        <output>no</output>
+        <filename>960.min.css</filename>
+        <prefix></prefix>
+        <suffix></suffix>
+        <attributes>
+            <rel>stylesheet</rel>
+            <type>text/css</type>
+            <media>screen, projection</media>
+        </attributes>
+        <value></value>
+        <source>
+            <file path="modules/960-Responsive-Grid/css/960.css" />
+        </source>
+    </tag>
+    
+    <!-- tag for 1200 px grid -->
+    <tag>
+        <name>link</name>
+        <output>no</output>
+        <filename>1200.min.css</filename>
+        <prefix></prefix>
+        <suffix></suffix>
+        <attributes>
+            <rel>stylesheet</rel>
+            <type>text/css</type>
+            <media>screen, projection</media>
+        </attributes>
+        <value></value>
+        <source>
+            <file path="modules/960-Responsive-Grid/css/1200.css" />
+        </source>
+    </tag>
+    
+    <!-- tag for 1600 px grid -->
+    <tag>
+        <name>link</name>
+        <output>no</output>
+        <filename>1560.min.css</filename>
+        <prefix></prefix>
+        <suffix></suffix>
+        <attributes>
+            <rel>stylesheet</rel>
+            <type>text/css</type>
+            <media>screen, projection</media>
+        </attributes>
+        <value></value>
+        <source>
+            <file path="modules/960-Responsive-Grid/css/1560.css" />
+        </source>
+    </tag>
+    
+    <!-- tag for 1920 px grid -->
+    <tag>
+        <name>link</name>
+        <output>no</output>
+        <filename>1920.min.css</filename>
+        <prefix></prefix>
+        <suffix></suffix>
+        <attributes>
+            <rel>stylesheet</rel>
+            <type>text/css</type>
+            <media>screen, projection</media>
+        </attributes>
+        <value></value>
+        <source>
+            <file path="modules/960-Responsive-Grid/css/1920.css" />
+        </source>
+    </tag>
+    
+    <!-- tag for > 2500 px grid -->
+    <tag>
+        <name>link</name>
+        <output>no</output>
+        <filename>2520.min.css</filename>
+        <prefix></prefix>
+        <suffix></suffix>
+        <attributes>
+            <rel>stylesheet</rel>
+            <type>text/css</type>
+            <media>screen, projection</media>
+        </attributes>
+        <value></value>
+        <source>
+            <file path="modules/960-Responsive-Grid/css/2520.css" />
+        </source>
+    </tag>
+    
+    
     <tag>
         <name>link</name>
         <output>yes</output>
@@ -97,6 +222,40 @@
        
     </tag>
 
+   <tag>
+     	<name>script</name>
+        <output>yes</output>
+        <prefix></prefix>
+        <suffix></suffix>
+        <attributes>
+            <type>text/javascript</type>
+        </attributes>
+        <value>
+        <![CDATA[
+          var ADAPT_CONFIG = {
+            // Where is your CSS?
+            path: d4p.relativePath + '/themes/d4p-classic/css/',
+  
+            // false = Only run once, when page first loads.
+            // true = Change on window resize and page tilt.
+            dynamic: true,
+
+            // First range entry is the minimum.
+            // Last range entry is the maximum.
+            // Separate ranges by "to" keyword.
+            range: [
+              '0px    to 760px  = mobile.min.css',
+              '760px  to 980px  = 720.min.css',
+              '980px  to 1270px = 960.min.css',
+              '1270px to 1600px = 1200.min.css',
+              '1600px to 1940px = 1560.min.css',
+              '1940px to 2540px = 1920.min.css',
+              '2540px           = 2520.min.css'
+            ]
+          };
+          ]]>
+        </value>
+    </tag>
 
       Every javascripts below this marker should be easely reusable
   
@@ -112,9 +271,14 @@
         </attributes>
         <value></value>
         <source>
-            <!-- 960 js grid -->
+         
+            
             <file path="modules/modernizr/modernizr.dev.2.0.6.js" /> 
-            <file path="modules/prefixFree/prefixFree.js" />
+            
+            <!-- The adapt.js for responsive tools -->
+            <file path="modules/960-Responsive-Grid/js/adapt.js" />
+            
+            <!--file path="modules/prefixFree/prefixFree.js" /-->
             <file path="modules/jQuery/jquery-1.7.1.min.js" />
   
             <!-- navigation -->
@@ -133,6 +297,9 @@
             <!--file path="modules/jQuery-widgets/cycle/js/jquery.cycle.js" /--> 
         </source>
     </tag>
+    
+    
+  
   <!-- 
     external libraries, stored locally 
     you could use the latest CDN instead

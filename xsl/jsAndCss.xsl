@@ -45,6 +45,7 @@
 
 	<!-- used to generate the css links -->
 	<xsl:template match="*" mode="generate-css-js">
+	    <xsl:call-template name="d4p-variables"/>
 		<xsl:apply-templates select="." mode="generate-d4p-css-js"/>
 	</xsl:template>
 
@@ -63,7 +64,7 @@
 	</xsl:template>
 
 	<!-- This template render ons script element per script element declared in the theme config.xml -->
-	<xsl:template match="tag[count(source/file) &gt; 0 ]" mode="generate-d4p-uncompressed-css">
+	<xsl:template match="tag[count(source/file) &gt; 0 ][output != 'no']" mode="generate-d4p-uncompressed-css">
 		
 		<xsl:param name="relativePath" as="xs:string" select="''" tunnel="yes"/>
 		
@@ -85,13 +86,7 @@
 			</xsl:variable>
 			
 			<xsl:variable name="name">
-				<xsl:choose>
-					<xsl:when test="$extension = 'css'">link</xsl:when>
-					<xsl:when test="$extension = 'js'">script</xsl:when>
-					<xsl:when test="attributes/src">script</xsl:when>
-					<xsl:when test="attributes/href">link</xsl:when>
-					<xsl:otherwise>meta</xsl:otherwise>
-				</xsl:choose>
+				<xsl:call-template name="theme-get-tag-name" />
 			</xsl:variable>			
 			
 
@@ -120,7 +115,7 @@
 	</xsl:template>
 	
 	<!-- This template render ons script element per script element declared in the theme config.xml -->
-	<xsl:template match="tag[count(source/file) = 0 ]" mode="generate-d4p-uncompressed-css">
+	<xsl:template match="tag[count(source/file) = 0 ][output != 'no']" mode="generate-d4p-uncompressed-css">
 		
 		<xsl:param name="relativePath" as="xs:string" select="''" tunnel="yes"/>
 		
@@ -151,21 +146,17 @@
 			</xsl:variable>
 			
 			<xsl:variable name="name">
-				<xsl:choose>
-					<xsl:when test="$extension = 'css'">link</xsl:when>
-					<xsl:when test="$extension = 'js'">script</xsl:when>
-					<xsl:when test="attributes/src">script</xsl:when>
-					<xsl:when test="attributes/href">link</xsl:when>
-					<xsl:otherwise>meta</xsl:otherwise>
-				</xsl:choose>
-			</xsl:variable>			
+				<xsl:call-template name="theme-get-tag-name" />
+			</xsl:variable>		
 			
-
+			<xsl:comment>Output element with value</xsl:comment>
 			<xsl:element name="{$name}">
 
 				<xsl:for-each select="$attributes/*">
 					<xsl:attribute name="{@name}" select="@value"/>
 				</xsl:for-each>
+				
+				<xsl:sequence select="value" />
 				
 
 			</xsl:element> 
@@ -175,8 +166,7 @@
 	</xsl:template>
 
 
-
-	<xsl:template match="tag" mode="generate-d4p-compressed-css">
+	<xsl:template match="tag[output != 'no']" mode="generate-d4p-compressed-css">
 		<xsl:param name="relativePath" as="xs:string" select="''" tunnel="yes"/>
 
 		<xsl:variable name="extension">
@@ -186,13 +176,7 @@
 		</xsl:variable>
 
 		<xsl:variable name="name">
-			<xsl:choose>
-				<xsl:when test="$extension = 'css'">link</xsl:when>
-				<xsl:when test="$extension = 'js'">script</xsl:when>
-				<xsl:when test="attributes/src">script</xsl:when>
-				<xsl:when test="attributes/href">link</xsl:when>
-				<xsl:otherwise>meta</xsl:otherwise>
-			</xsl:choose>
+			<xsl:call-template name="theme-get-tag-name" />
 		</xsl:variable>
 
 		<xsl:variable name="dir">
@@ -220,6 +204,8 @@
 					select="relpath:fixRelativePath($relativePath, concat($HTML5THEMEDIR, '/', $siteTheme, '/', $extension, '/', filename))"
 				/>
 			</xsl:if>
+			
+			<xsl:value-of select="value" />
 
 		</xsl:element>   <xsl:sequence select="'&#x0a;'"/>
 
@@ -228,6 +214,22 @@
 
 	<xsl:template match="*" mode="generate-d4p-compressed-css"/>
 
+	<xsl:template name="theme-get-tag-name">
+	  <xsl:choose>
+	    <xsl:when test="name = 'link'">link</xsl:when>
+	    <xsl:when test="name = 'script'">script</xsl:when>
+	    <xsl:otherwise>meta</xsl:otherwise>
+	  </xsl:choose>
+	</xsl:template>
+	
+	<xsl:template name="d4p-variables">
+	<xsl:param name="relativePath" tunnel="yes" as="xs:string*"/>
+	  <script type="text/javascript">
+	  	<xsl:text>
+	  		var d4p = {};
+	  		d4p.relativePath = '</xsl:text><xsl:value-of select="$relativePath" /><xsl:text>';</xsl:text>
+	  </script>
+	</xsl:template>
 
 
 	<xsl:function name="relpath:assets-uri" as="xs:string">
