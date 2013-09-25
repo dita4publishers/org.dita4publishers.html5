@@ -12,6 +12,8 @@
 .grid_12 {
   margin-left: 10px;
   margin-right: 10px;
+  width: 100%;
+  box-sizing:border-box;
 }
 
 .alpha,
