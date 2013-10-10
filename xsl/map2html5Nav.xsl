@@ -288,7 +288,7 @@
     </xsl:template>
     
     <xsl:template match="@href" mode="fix-navigation-href">
-
+		
     	<xsl:param name="relativePath" as="xs:string" select="''" tunnel="yes" />
     	<xsl:variable name="prefix">
   	    	<xsl:choose>
@@ -305,7 +305,8 @@
   	    	</xsl:choose>
   	    	</xsl:variable>
     		
-    		
+    
+		
 		<xsl:attribute name="href" select="concat($prefix, .)"/>
     </xsl:template>
 

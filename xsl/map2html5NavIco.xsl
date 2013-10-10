@@ -56,7 +56,7 @@
             except (
             *[df:class(., 'topic/title')],
             *[df:class(., 'map/topicmeta')],
-            *[df:class(., 'map/relicole')]    
+            *[df:class(., 'map/relicole')]          
             )"
       />
     </xsl:variable>
@@ -181,7 +181,9 @@
   <xsl:template mode="generate-html5-ico-nav" match="*[df:isTopicGroup(.)]" priority="20">
     <xsl:apply-templates select="." mode="ico-toc"/>
   </xsl:template>
-
+  
+  <xsl:template mode="generate-html5-ico-nav" match="*[df:isTopicGroup(.)][@toc = 'no']" priority="30" />
+  
   <xsl:template mode="generate-html5-ico-nav" match="*[df:class(., 'topic/topic')][not(@toc = 'no')]">
     <xsl:apply-templates select="." mode="ico-toc"/>
   </xsl:template>
@@ -211,6 +213,9 @@
   <xsl:template mode="generate-html5-ico-nav" match="glossdata:glossary-entries" /> 
 
   <xsl:template mode="generate-html5-ico-nav" match="index-terms:index-terms" />
+  
+
+   
 
 
   

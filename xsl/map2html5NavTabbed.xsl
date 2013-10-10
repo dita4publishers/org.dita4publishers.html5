@@ -337,8 +337,10 @@
       as="xs:string"/>
 
     <xsl:variable name="fixedTopic">
-      <xsl:apply-templates select="$topic" mode="href-fixup">
+      <xsl:apply-templates select="$topic" mode="fix-merged-navigation-href">
         <xsl:with-param name="topicResultUri" select="$topicResultUri" tunnel="yes"/>
+        <xsl:with-param name="filePath" select="@href" tunnel="yes"/>
+        
       </xsl:apply-templates>
     </xsl:variable>
 
@@ -346,12 +348,81 @@
       <xsl:with-param name="nestlevel" select="3"/>
       <xsl:with-param name="headinglevel" select="3"/>
     </xsl:apply-templates>
-
-
-
-
-
   </xsl:template>
+  
+  <xsl:template match="@*|node()" mode="fix-merged-navigation-href">
+		<xsl:copy>
+			<xsl:apply-templates select="@*|node()" mode="fix-merged-navigation-href"/>
+		</xsl:copy>
+    </xsl:template>
+    
+   <xsl:template match="@href" mode="fix-merged-navigation-href">
+		<xsl:param name="rootMapDocUrl" as="xs:string" tunnel="yes"/>
+    	<xsl:param name="relativePath" as="xs:string" select="''" tunnel="yes" />
+    	<xsl:param name="filePath" as="xs:string" select="''" tunnel="yes" />
+    	
+    	<xsl:variable name="extension">
+    	  <xsl:call-template name="get-file-extension">
+            <xsl:with-param name="path" select="." />
+          </xsl:call-template>
+        </xsl:variable>
+        
+        <xsl:variable name="path">
+    	  <xsl:call-template name="basename">
+            <xsl:with-param name="path" select="$filePath" />
+          </xsl:call-template>
+        </xsl:variable>
+                
+    	<xsl:variable name="filename" select="substring-before(., concat('.', $extension))" />
+
+        
+        <xsl:variable name="finalfilename">
+    	  <xsl:value-of select="concat($path, '/', $filename, $OUTEXT)" />
+        </xsl:variable>
+        
+		<xsl:attribute name="href">
+		
+		  <xsl:choose>
+		    <xsl:when test="substring(., 1, 4) = 'http'">
+		      <xsl:value-of select="." />
+		    </xsl:when>
+		    <xsl:when test="substring(., 1, 4) = 'mail'">
+		      <xsl:value-of select="." />
+		    </xsl:when>
+		     <xsl:when test="substring(., 1, 4) = 'ftp'">
+		      <xsl:value-of select="." />
+		    </xsl:when>
+		    <xsl:otherwise>
+		      <xsl:value-of select="$finalfilename" />
+		    </xsl:otherwise>
+		  </xsl:choose>		
+		
+		</xsl:attribute>
+    </xsl:template>
+    
+   <xsl:template name="get-file-extension">
+        <xsl:param name="path"/>
+        <xsl:choose>
+            <xsl:when test="contains($path, '/')">
+                <xsl:call-template name="get-file-extension">
+                    <xsl:with-param name="path" select="substring-after($path, '/')"/>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test="contains($path, '.')">
+                <xsl:call-template name="get-file-extension">
+                    <xsl:with-param name="path" select="substring-after($path, '.')"/>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="$path"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+    
+    <xsl:template name="basename">
+        <xsl:param name="path"/>
+        <xsl:value-of select="concat(substring-before($path, '/'), '/', substring-before(substring-after($path, '/'), '/'))" />
+    </xsl:template>
 
   <xsl:template mode="merge-content" match="*[df:isTopicHead(.)][not(@toc = 'no')]">
     <xsl:param name="depth" as="xs:integer" tunnel="yes" select="1"/>
