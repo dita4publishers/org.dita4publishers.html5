@@ -356,6 +356,16 @@
 		</xsl:copy>
     </xsl:template>
     
+
+    <xsl:template match="image/@href" mode="fix-merged-navigation-href">
+    	<xsl:param name="rootMapDocUrl" as="xs:string" tunnel="yes"/>
+    	<xsl:param name="relativePath" as="xs:string" select="''" tunnel="yes" />
+    	<xsl:param name="filePath" as="xs:string" select="''" tunnel="yes" />    	
+    	<xsl:attribute name="href">
+    		<xsl:value-of select="." />
+    	</xsl:attribute>
+    </xsl:template>
+    
    <xsl:template match="@href" mode="fix-merged-navigation-href">
 		<xsl:param name="rootMapDocUrl" as="xs:string" tunnel="yes"/>
     	<xsl:param name="relativePath" as="xs:string" select="''" tunnel="yes" />
