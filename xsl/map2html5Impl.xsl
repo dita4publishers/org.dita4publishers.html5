@@ -259,11 +259,11 @@
   <xsl:variable name="HTML5THEMECONFIGDOC" select="document($HTML5THEMECONFIG)" /> 
   
   <xsl:variable name="TEMPLATELANG">
- 	<xsl:apply-templates select="/map" mode="mapAttributes" />
+   <xsl:apply-templates select="/map" mode="mapAttributes" />
   </xsl:variable>
   
   <xsl:template match="*" mode="mapAttributes" >
-  	<xsl:call-template name="getLowerCaseLang"/>
+    <xsl:call-template name="getLowerCaseLang"/>
   </xsl:template>
   
   <xsl:template name="report-parameters" match="*" mode="report-parameters">
@@ -332,7 +332,7 @@
 
 
 
-	<xsl:output name="html5" method="html" indent="yes" encoding="utf-8" omit-xml-declaration="yes"/>
+  <xsl:output name="html5" method="html" indent="yes" encoding="utf-8" omit-xml-declaration="yes"/>
 
 
   <xsl:template match="/">
@@ -360,7 +360,7 @@
       <xsl:sequence select="$chunkRootTopicrefs"/>
     </xsl:message>
 
-	<!-- graphic map -->
+  <!-- graphic map -->
     <xsl:variable name="graphicMap" as="element()">
       <xsl:apply-templates select="." mode="generate-graphic-map">
       </xsl:apply-templates>
@@ -371,7 +371,7 @@
 
     <xsl:message> + [INFO] Collecting data for index generation, enumeration, etc....</xsl:message>
 
-	<!-- collected data -->
+  <!-- collected data -->
     <xsl:variable name="collected-data" as="element()">
       <xsl:call-template name="mapdriven:collect-data"/>
     </xsl:variable>
@@ -386,16 +386,16 @@
     </xsl:if>
     
     <xsl:variable name="documentation-title" as="xs:string">
-      	<xsl:apply-templates select="." mode="generate-root-page-header" />
+        <xsl:apply-templates select="." mode="generate-root-page-header" />
     </xsl:variable>
     
-	<xsl:variable name="audienceSelect">
-       	<xsl:apply-templates select="." mode="generate-audience-select">
-      		<xsl:with-param name="collected-data" as="element()" select="$collected-data" tunnel="yes"/>
-      		<xsl:with-param name="uniqueTopicRefs" as="element()*" select="$uniqueTopicRefs" tunnel="yes"/>
+  <xsl:variable name="audienceSelect">
+         <xsl:apply-templates select="." mode="generate-audience-select">
+          <xsl:with-param name="collected-data" as="element()" select="$collected-data" tunnel="yes"/>
+          <xsl:with-param name="uniqueTopicRefs" as="element()*" select="$uniqueTopicRefs" tunnel="yes"/>
 
-      		<xsl:with-param name="documentation-title" as="xs:string" select="$documentation-title" tunnel="yes"/>
-      		<xsl:with-param name="is-root" as="xs:boolean" select="true()" tunnel="yes"/>
+          <xsl:with-param name="documentation-title" as="xs:string" select="$documentation-title" tunnel="yes"/>
+          <xsl:with-param name="is-root" as="xs:boolean" select="true()" tunnel="yes"/>
     </xsl:apply-templates>
     </xsl:variable>
 
@@ -403,12 +403,12 @@
          produced by the transform.
       -->
       <xsl:variable name="navigation" as="element()*">
-      	<xsl:apply-templates select="." mode="choose-html5-nav-markup" >
-      	 	<xsl:with-param name="collected-data" as="element()" select="$collected-data" tunnel="yes"/>
-      		<xsl:with-param name="uniqueTopicRefs" as="element()*" select="$uniqueTopicRefs" tunnel="yes"/>
-      		<xsl:with-param name="documentation-title" select="$documentation-title" tunnel="yes"/>
-      		 <xsl:with-param name="audienceSelect"  select="$audienceSelect" tunnel="yes"/>
-      	</xsl:apply-templates>
+        <xsl:apply-templates select="." mode="choose-html5-nav-markup" >
+           <xsl:with-param name="collected-data" as="element()" select="$collected-data" tunnel="yes"/>
+          <xsl:with-param name="uniqueTopicRefs" as="element()*" select="$uniqueTopicRefs" tunnel="yes"/>
+          <xsl:with-param name="documentation-title" select="$documentation-title" tunnel="yes"/>
+           <xsl:with-param name="audienceSelect"  select="$audienceSelect" tunnel="yes"/>
+        </xsl:apply-templates>
       </xsl:variable>
     
     <!--xsl:apply-templates select="." mode="generate-root-pages">
@@ -454,13 +454,13 @@
   
   
     <xsl:template mode="generate-root-page-header" match="*[df:class(., 'map/map')]">
-  	  <!-- hook for a user-XSL title prefix -->
+      <!-- hook for a user-XSL title prefix -->
       <xsl:call-template name="gen-user-panel-title-pfx"/> 
       <xsl:apply-templates select="." mode="generate-map-title-tree" />
   </xsl:template>
   
   <xsl:template name="map-title" match="*" mode="generate-map-title-tree">
-  	<xsl:choose>
+    <xsl:choose>
         <xsl:when test="/*[contains(@class,' map/map ')]/*[contains(@class,' topic/title ')]">
           <xsl:apply-templates select="/*[contains(@class,' map/map ')]/*[contains(@class,' topic/title ')]" mode="generate-map-title" />
         </xsl:when>
@@ -468,14 +468,14 @@
           <xsl:value-of select="/*[contains(@class,' map/map ')]/@title" />
         </xsl:when>
         <xsl:otherwise>
-        	<xsl:value-of select="''" />
+          <xsl:value-of select="''" />
         </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
 
   
   <xsl:template match="*[contains(@class,' topic/title ')]" mode="generate-map-title">
-	<xsl:sequence select="." />
+  <xsl:sequence select="." />
   </xsl:template>
   
  

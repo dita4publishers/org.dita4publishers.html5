@@ -158,7 +158,7 @@
 
 
   <!-- 
-  		Templates for tab headers -->
+      Templates for tab headers -->
   <xsl:template mode="generate-html5-tabbed-nav" match="*[df:class(., 'topic/title')][not(@toc = 'no')]"> </xsl:template>
 
   <xsl:template mode="generate-html5-tabbed-nav" match="*[df:class(., 'topic/meta')]"/>

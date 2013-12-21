@@ -97,11 +97,11 @@
           as="xs:string"/>
 
         <xsl:variable name="tempTopic" as="document-node()">
-	      <xsl:document>
+        <xsl:document>
           <xsl:apply-templates select="$topic" mode="href-fixup">
             <xsl:with-param name="topicResultUri" select="$topicResultUri" tunnel="yes"/>
           </xsl:apply-templates>
-		 </xsl:document>
+     </xsl:document>
         </xsl:variable>
 
 
@@ -148,11 +148,11 @@
 
 
     <!--xsl:message>docUri is: <xsl:value-of select="$docUri"/></xsl:message>
-    	<xsl:message>resultUri is: <xsl:value-of select="$resultUri"/></xsl:message>
-     	<xsl:message>map:  <xsl:value-of select="$baseUri"/></xsl:message>
-    	<xsl:message>parentPath is: <xsl:value-of select="$parentPath"/></xsl:message>
-    	<xsl:message>relativePath is: <xsl:value-of select="$relativePath"/></xsl:message>
-		<xsl:message>topic-title is: <xsl:value-of select="$topic-title"/></xsl:message-->
+      <xsl:message>resultUri is: <xsl:value-of select="$resultUri"/></xsl:message>
+       <xsl:message>map:  <xsl:value-of select="$baseUri"/></xsl:message>
+      <xsl:message>parentPath is: <xsl:value-of select="$parentPath"/></xsl:message>
+      <xsl:message>relativePath is: <xsl:value-of select="$relativePath"/></xsl:message>
+    <xsl:message>topic-title is: <xsl:value-of select="$topic-title"/></xsl:message-->
 
     <xsl:message> + [INFO] Writing topic <xsl:sequence select="document-uri(root(.))"/> to HTML file "<xsl:sequence
         select="$resultUri"/>"...</xsl:message>

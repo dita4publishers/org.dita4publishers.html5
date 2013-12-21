@@ -36,34 +36,34 @@
     <xsl:param name="uniqueTopicRefs" as="element()*" tunnel="yes"/>
     <xsl:param name="rootMapDocUrl" as="xs:string" tunnel="yes"/>
     <xsl:message> + [INFO] Generating audience select </xsl:message>
-    <span id="audience-widget">   		
-    		<button class="audienceBtn">
-    			<span class="hidden"><xsl:call-template name="getString">
+    <span id="audience-widget">       
+        <button class="audienceBtn">
+          <span class="hidden"><xsl:call-template name="getString">
                     <xsl:with-param name="stringName" select="'chooseAudience'"/>
                 </xsl:call-template></span>
-    		</button>
+        </button>
 
-		<ul id="audience-select">
-    		<xsl:apply-templates select="*[df:class(., 'map/topicmeta')]" mode="generate-audience-select"/>
-    	</ul>
+    <ul id="audience-select">
+        <xsl:apply-templates select="*[df:class(., 'map/topicmeta')]" mode="generate-audience-select"/>
+      </ul>
     </span>
    
   </xsl:template>
   
 <xsl:template match="*" mode="generate-audience-select">
-	<xsl:apply-templates select="*" mode="generate-audience-select"/>
+  <xsl:apply-templates select="*" mode="generate-audience-select"/>
   </xsl:template>
 
  <xsl:template match="*[contains(@class, ' topic/audience ')]" mode="generate-audience-select">
   <xsl:param name="relativePath" as="xs:string" select="''" tunnel="yes"/>
   <xsl:message> + [INFO] Generating audience <xsl:value-of select="@name" /> entry </xsl:message>
   <xsl:if test="@name != $activeAudience">
-	<li>
-		<a href="{concat($relativePath, $indexUri, '/../../', @name, '/')}" class="d4p-no-ajax">
-			<xsl:value-of select="@othertype" />
-			<!--span class="ligther"> <xsl:value-of select="upper-case(@name)" /></span-->
-		</a>
-	</li>
+  <li>
+    <a href="{concat($relativePath, $indexUri, '/../../', @name, '/')}" class="d4p-no-ajax">
+      <xsl:value-of select="@othertype" />
+      <!--span class="ligther"> <xsl:value-of select="upper-case(@name)" /></span-->
+    </a>
+  </li>
 </xsl:if>
   </xsl:template>
 

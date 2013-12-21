@@ -20,22 +20,22 @@
     under the License.
 -->
 
-	<require plugin="net.sourceforge.dita4publishers.html2"/> 
+  <require plugin="net.sourceforge.dita4publishers.html2"/> 
     <require plugin="net.sourceforge.dita4publishers.common.mapdriven"/> 
     <require plugin="net.sourceforge.dita4publishers.common.xslt"/> 
   
-	<extension-point id="dita.html5.map" name="HTML5 xslt parameters" />
-	<extension-point id="xsl.transtype-html5" name="HTML5 XSLT extension" />
+  <extension-point id="dita.html5.map" name="HTML5 xslt parameters" />
+  <extension-point id="xsl.transtype-html5" name="HTML5 XSLT extension" />
 
-	<template file="build_transtype-html5_template.xml"/>  
-	<template file="build-theme_template.xml"/>
-	<template file="xsl/map2html5_template.xsl"/>
-	
+  <template file="build_transtype-html5_template.xml"/>  
+  <template file="build-theme_template.xml"/>
+  <template file="xsl/map2html5_template.xsl"/>
+  
 
-	<feature extension="dita.conductor.transtype.check" value="html5" type="txt"/>
-	<feature extension="dita.conductor.target.relative" value="build.xml" type="file"/>
-	<feature extension="dita.xsl.xhtml" file="xsl/map2html5flagging.xsl"/>
-	<feature extension="dita.xsl.strings" value="strings/strings.xml" type="file"/>
-	<feature extension="dita.html5.map" value="parameters.xml" type="file" />
-  	
+  <feature extension="dita.conductor.transtype.check" value="html5" type="txt"/>
+  <feature extension="dita.conductor.target.relative" value="build.xml" type="file"/>
+  <feature extension="dita.xsl.xhtml" file="xsl/map2html5flagging.xsl"/>
+  <feature extension="dita.xsl.strings" value="strings/strings.xml" type="file"/>
+  <feature extension="dita.html5.map" value="parameters.xml" type="file" />
+    
 </plugin>

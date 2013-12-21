@@ -43,9 +43,9 @@
 
 
     <div id="doc-content" class="{concat($GRIDPREFIX, '23 prepend-1 last')}">
-     	<div id="content-container">
-        	<xsl:sequence select="$listItemsContent"/>
-     	</div>
+       <div id="content-container">
+          <xsl:sequence select="$listItemsContent"/>
+       </div>
     </div>
     <div class="clear"/>
   </xsl:template>
@@ -53,8 +53,8 @@
   <xsl:template mode="generate-html5-nav-ico-markup" match="*[df:class(., 'map/map')]">
 
     <xsl:param name="collected-data" as="element()" tunnel="yes"/>
-	<xsl:param name="audienceSelect" tunnel="yes"/>
-	<xsl:param name="documentation-title" as="xs:string" select="''" tunnel="yes" />
+  <xsl:param name="audienceSelect" tunnel="yes"/>
+  <xsl:param name="documentation-title" as="xs:string" select="''" tunnel="yes" />
     
     <xsl:variable name="listItems" as="node()*">
       <xsl:apply-templates mode="generate-html5-ico-nav"
@@ -80,15 +80,15 @@
 
 
     <div id="doc-content" class="{concat($GRIDPREFIX, '23 prepend-1 last')}">
-     	<div id="{$IDLOCALNAV}">
-     		<div class="header">
-     			<h1><xsl:value-of select="$documentation-title" /></h1>
-     			<xsl:sequence select="$audienceSelect"/>
-     		</div>
-        	<xsl:sequence select="'&#x0a;'"/>
-        	<xsl:sequence select="$listItems"/>
-        	<div class="clear"/>
-		</div>
+       <div id="{$IDLOCALNAV}">
+         <div class="header">
+           <h1><xsl:value-of select="$documentation-title" /></h1>
+           <xsl:sequence select="$audienceSelect"/>
+         </div>
+          <xsl:sequence select="'&#x0a;'"/>
+          <xsl:sequence select="$listItems"/>
+          <div class="clear"/>
+    </div>
       <div id="content-container">
         <xsl:sequence select="$listItemsContent"/>
       </div>
@@ -98,48 +98,48 @@
 
   <!-- icos header -->
   <xsl:template match="*" mode="ico-toc">
-     	<xsl:variable name="id">
-  			<xsl:choose>
-  				<xsl:when test="@id!=''">
-  					<xsl:value-of select="@id"/>
-  				</xsl:when>
-  				<xsl:otherwise>
-  					<xsl:value-of select="generate-id(.)"/>
-  				</xsl:otherwise>
-  			</xsl:choose>
-  		</xsl:variable>
-  		
-  		<xsl:variable name="count" as="xs:integer"><xsl:number count="topichead"/></xsl:variable>
-  		
+       <xsl:variable name="id">
+        <xsl:choose>
+          <xsl:when test="@id!=''">
+            <xsl:value-of select="@id"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="generate-id(.)"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:variable>
+      
+      <xsl:variable name="count" as="xs:integer"><xsl:number count="topichead"/></xsl:variable>
+      
 
-  		
-  		<xsl:variable name="isLast">
-  			<xsl:choose>
-  				<xsl:when test="$count mod 6 = 0">
-  					<xsl:value-of select="' last'"/>
-  				</xsl:when>
-  				<xsl:otherwise>
-  					<xsl:value-of select="' append-1'"/>
-  				</xsl:otherwise>
-  			</xsl:choose>
-  		</xsl:variable>
-  		
-  		<xsl:variable name="tabId">
-  			<xsl:choose>
-  				<xsl:when test="@id!=''">
-  					<xsl:value-of select="@id"/>
-  				</xsl:when>
-  				<xsl:otherwise>
-  					<xsl:value-of select="concat('#tab-', $count)"/>
-  				</xsl:otherwise>
-  			</xsl:choose>
-  		</xsl:variable>
-  		
-      	<div id="{concat('ico-', $id)}" class="box box-ico square">
-      	<span class="ico"></span>
-      		<a href="{concat('#', $tabId)}">
-        		<xsl:apply-templates select="." mode="nav-point-title"/>
-        	</a>
+      
+      <xsl:variable name="isLast">
+        <xsl:choose>
+          <xsl:when test="$count mod 6 = 0">
+            <xsl:value-of select="' last'"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="' append-1'"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:variable>
+      
+      <xsl:variable name="tabId">
+        <xsl:choose>
+          <xsl:when test="@id!=''">
+            <xsl:value-of select="@id"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="concat('#tab-', $count)"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:variable>
+      
+        <div id="{concat('ico-', $id)}" class="box box-ico square">
+        <span class="ico"></span>
+          <a href="{concat('#', $tabId)}">
+            <xsl:apply-templates select="." mode="nav-point-title"/>
+          </a>
         </div>
      
   </xsl:template>

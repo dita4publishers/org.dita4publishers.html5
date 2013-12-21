@@ -44,20 +44,20 @@
 
   <!-- FIXME: Replace this with a separate mode that will handle markup within titles -->
   <xsl:template mode="gen-head-title" match="*">
-  	<xsl:param name="documentation-title" as="xs:string" select="''" tunnel="yes" />
-  	<xsl:param name="topic-title" as="xs:string" select="''" tunnel="yes" />
-  	
-  	<xsl:variable name="title">
-  		<xsl:choose>
-  			<xsl:when test="*[df:class(., 'topic/title')][1]">
-  				<xsl:value-of select="*[df:class(., 'topic/title')][1]" />
-  			</xsl:when> 
-  			<xsl:otherwise>
-  				<xsl:value-of select="$documentation-title" />
-  			</xsl:otherwise>  
-  		</xsl:choose>
-  	</xsl:variable>
-  	
+    <xsl:param name="documentation-title" as="xs:string" select="''" tunnel="yes" />
+    <xsl:param name="topic-title" as="xs:string" select="''" tunnel="yes" />
+    
+    <xsl:variable name="title">
+      <xsl:choose>
+        <xsl:when test="*[df:class(., 'topic/title')][1]">
+          <xsl:value-of select="*[df:class(., 'topic/title')][1]" />
+        </xsl:when> 
+        <xsl:otherwise>
+          <xsl:value-of select="$documentation-title" />
+        </xsl:otherwise>  
+      </xsl:choose>
+    </xsl:variable>
+    
     <title><xsl:value-of select="normalize-space($title)" /></title>
   </xsl:template>
 
@@ -74,10 +74,10 @@
   <!-- page links are intented to be used for screen reader -->
   <xsl:template name="gen-page-links">
      <ul id="page-links" class="hidden">
-		<li><a id="skip-to-content" href="#{$IDMAINCONTENT}"><xsl:call-template name="getString">
+    <li><a id="skip-to-content" href="#{$IDMAINCONTENT}"><xsl:call-template name="getString">
                     <xsl:with-param name="stringName" select="'SkipToContent'"/>
                 </xsl:call-template></a></li>
-		<li><a id="skip-to-localnav" href="#local-navigation"><xsl:call-template name="getString">
+    <li><a id="skip-to-localnav" href="#local-navigation"><xsl:call-template name="getString">
                     <xsl:with-param name="stringName" select="'SkipToLocalNav'"/>
                 </xsl:call-template></a></li>
         <li><a id="skip-to-footer" href="#footer"><xsl:call-template name="getString">
@@ -100,25 +100,25 @@
 
   <!-- used to defined initial content if javascript is off -->
   <xsl:template match="*" mode="set-initial-content">
-		<noscript>
-			<p><xsl:call-template name="getString">
+    <noscript>
+      <p><xsl:call-template name="getString">
                     <xsl:with-param name="stringName" select="'turnJavascriptOn'"/>
                 </xsl:call-template>
-			</p>
-		</noscript>
+      </p>
+    </noscript>
   </xsl:template>
   
   <!-- used to output the html5 header -->
   <xsl:template match="*" mode="generate-header">
-  	<xsl:param name="documentation-title" as="xs:string" select="''" tunnel="yes" />
+    <xsl:param name="documentation-title" as="xs:string" select="''" tunnel="yes" />
     <header role="banner" aria-labelledby="publication-title">
       <div class="grid_8">
-     	<h1 id="publication-title">
-    		<xsl:value-of select="$documentation-title"/>
-    	</h1>
+       <h1 id="publication-title">
+        <xsl:value-of select="$documentation-title"/>
+      </h1>
       </div>
       <div class="grid_4">
-    	<xsl:apply-templates select="." mode="gen-search-box" />
+      <xsl:apply-templates select="." mode="gen-search-box" />
       </div>
       <div class="clearfix" />
     </header>
@@ -126,8 +126,8 @@
   </xsl:template>
   
   <xsl:template match="*" mode="gen-search-box">
-  	<xsl:variable name="placeholder" select="$HTML5THEMECONFIGDOC/html5/search/placeholder" />
-  	<xsl:variable name="action" select="$HTML5THEMECONFIGDOC/html5/search/action" />
+    <xsl:variable name="placeholder" select="$HTML5THEMECONFIGDOC/html5/search/placeholder" />
+    <xsl:variable name="action" select="$HTML5THEMECONFIGDOC/html5/search/action" />
     <form id="search" action="{$action}">
       <input id="search-text" type="text" autocomplete="off" placeholder="{$placeholder}" name="search" />
       <xsl:sequence select="$HTML5THEMECONFIGDOC/html5/search/inputs/*" />
@@ -140,7 +140,7 @@
       <head>
 
       <xsl:apply-templates select="." mode="gen-head-title" />
-	  <xsl:apply-templates select="." mode="gen-user-top-head" />
+    <xsl:apply-templates select="." mode="gen-user-top-head" />
      
       <meta charset="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -155,10 +155,10 @@
       
       <xsl:call-template name="copyright"/>   
 
-	  <xsl:apply-templates select="." mode="generate-css-js"/>
-		        
-	  <xsl:apply-templates select="." mode="gen-user-bottom-head" />
-	    
+    <xsl:apply-templates select="." mode="generate-css-js"/>
+            
+    <xsl:apply-templates select="." mode="gen-user-bottom-head" />
+      
     </head>
     <xsl:sequence select="'&#x0a;'"/>
   </xsl:template>
@@ -173,9 +173,9 @@
       <xsl:apply-templates select="." mode="gen-user-body-top" />
              
       <xsl:apply-templates select="." mode="generate-main-container"/>
-	
-	  <xsl:apply-templates select="." mode="gen-user-body-bottom" />
-	  
+  
+    <xsl:apply-templates select="." mode="gen-user-body-bottom" />
+    
     </body>
     
     <xsl:sequence select="'&#x0a;'"/>
@@ -208,7 +208,7 @@
       
       <!-- not yet developped -->
       <!--nav class="breadcrumb">
-      	<xsl:call-template name="generateBreadcrumbs"/>
+        <xsl:call-template name="generateBreadcrumbs"/>
       </nav-->
       
       <xsl:if test="$INDEXSHOW='yes'">
@@ -242,7 +242,7 @@
       <xsl:sequence select="'&#x0a;'"/>
       
       <xsl:call-template name="gen-page-links" />
-    		
+        
       <xsl:apply-templates select="." mode="generate-header"/>
       
       <xsl:apply-templates select="." mode="generate-section-container"/>
@@ -254,27 +254,27 @@
   
   <!-- generate section container -->
    <xsl:template match="*" mode="generate-section-container">
-   		<xsl:param name="navigation" as="element()*"  tunnel="yes" />
-   		<xsl:param name="is-root" as="xs:boolean"  tunnel="yes" select="false()" />
-   		<xsl:param name="resultUri" as="xs:string" tunnel="yes" select="''" />
+       <xsl:param name="navigation" as="element()*"  tunnel="yes" />
+       <xsl:param name="is-root" as="xs:boolean"  tunnel="yes" select="false()" />
+       <xsl:param name="resultUri" as="xs:string" tunnel="yes" select="''" />
    
      <div id="{$IDSECTIONCONTAINER}" class="{$CLASSSECTIONCONTAINER}">
 
-		<xsl:if test="$OUTPUTDEFAULTNAVIGATION">
+    <xsl:if test="$OUTPUTDEFAULTNAVIGATION">
             <xsl:choose>
-        	    <xsl:when test="$is-root">
-        		    <xsl:sequence select="$navigation"/>
-        	    </xsl:when>
-        	    <xsl:otherwise>
-        	
-        		    <xsl:variable name="navigation-fixed">
-         			    <xsl:apply-templates select="$navigation" mode="fix-navigation-href">
-         			    	<xsl:with-param name="resultUri" select="$resultUri" />
-         			    </xsl:apply-templates>
-         		    </xsl:variable>
+              <xsl:when test="$is-root">
+                <xsl:sequence select="$navigation"/>
+              </xsl:when>
+              <xsl:otherwise>
+          
+                <xsl:variable name="navigation-fixed">
+                   <xsl:apply-templates select="$navigation" mode="fix-navigation-href">
+                     <xsl:with-param name="resultUri" select="$resultUri" />
+                   </xsl:apply-templates>
+                 </xsl:variable>
          
-         		    <xsl:sequence select="$navigation-fixed"/>
-        	    </xsl:otherwise>
+                 <xsl:sequence select="$navigation-fixed"/>
+              </xsl:otherwise>
         
             </xsl:choose>
         </xsl:if>
@@ -290,34 +290,34 @@
   
    <!-- generate main content -->
   <xsl:template match="*" mode="generate-main-content"> 
-   	<xsl:param name="is-root" as="xs:boolean"  tunnel="yes" select="false()" />
-   	<xsl:param name="content" tunnel="yes" />
+     <xsl:param name="is-root" as="xs:boolean"  tunnel="yes" select="false()" />
+     <xsl:param name="content" tunnel="yes" />
     <div id="{$IDMAINCONTENT}" class="{$CLASSMAINCONTENT}">    
       
       <xsl:choose>
       
-        	<xsl:when test="$is-root">
-        		<xsl:apply-templates select="." mode="set-initial-content"/>
-        	</xsl:when>
-        	<xsl:otherwise>
-        		<!-- !important
-        		     if you remove section, you will need to change
-        		     the d4p.property externalContentElement
-        		-->      		
-        		<section>
-        			<xsl:apply-templates select="." mode="generate-breadcrumb"/>
-        			<xsl:choose>
-        			<xsl:when test="$content">
-        				<div id="topic-content">
-        					<xsl:sequence select="$content" />
-        				</div>
-        			</xsl:when>
-        			<xsl:otherwise>
-        				<xsl:apply-templates select="." mode="generate-main"/>
-        			</xsl:otherwise>
-        			</xsl:choose>
-        		</section>
-        	</xsl:otherwise>
+          <xsl:when test="$is-root">
+            <xsl:apply-templates select="." mode="set-initial-content"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <!-- !important
+                 if you remove section, you will need to change
+                 the d4p.property externalContentElement
+            -->          
+            <section>
+              <xsl:apply-templates select="." mode="generate-breadcrumb"/>
+              <xsl:choose>
+              <xsl:when test="$content">
+                <div id="topic-content">
+                  <xsl:sequence select="$content" />
+                </div>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:apply-templates select="." mode="generate-main"/>
+              </xsl:otherwise>
+              </xsl:choose>
+            </section>
+          </xsl:otherwise>
         
         </xsl:choose>  
                   
@@ -329,23 +329,23 @@
  <!-- generate html5 footer -->
   <xsl:template match="*" mode="generate-breadcrumb">  
     <div id="content-toolbar" class="toolbar">
-    	<xsl:if test="contains($include.roles, ' next ') or contains($include.roles, ' previous ') or contains($include.roles, ' parent ')">
-   			<xsl:call-template name="next-prev-parent-links"/><!--handle next and previous links-->
-        </xsl:if>		
-	</div>
+      <xsl:if test="contains($include.roles, ' next ') or contains($include.roles, ' previous ') or contains($include.roles, ' parent ')">
+         <xsl:call-template name="next-prev-parent-links"/><!--handle next and previous links-->
+        </xsl:if>    
+  </div>
   </xsl:template>
   
   <!-- generate html5 footer -->
   <xsl:template match="*" mode="generate-footer">  
-    <div class="clearfix"></div>	
+    <div class="clearfix"></div>  
     <div id="footer-container" class="grid_12">
-		<xsl:call-template name="gen-user-footer"/>
-		<xsl:call-template name="processFTR"/>
-		<xsl:sequence select="'&#x0a;'"/>
-	</div>
+    <xsl:call-template name="gen-user-footer"/>
+    <xsl:call-template name="processFTR"/>
+    <xsl:sequence select="'&#x0a;'"/>
+  </div>
   </xsl:template>    
 
-  		
+      
   <!-- 
       template declared for extention point purpose 
    -->

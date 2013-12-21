@@ -38,7 +38,7 @@
       ...</xsl:message>
     <xsl:choose>
       <!-- 
-        	Experimental
+          Experimental
         -->
       <xsl:when test="$NAVIGATIONMARKUP='navigation-tabbed'">
         <xsl:message> + [WARNING] This code is experimental !</xsl:message>
@@ -295,7 +295,7 @@
           <xsl:value-of select="' active'"/>
         </xsl:when>
         <xsl:when test="not($isActiveTrail) and $hasChild">
-        	<xsl:value-of select="' collapsed'"/>
+          <xsl:value-of select="' collapsed'"/>
         </xsl:when>
         <xsl:otherwise>
           <xsl:value-of select="''"/>
@@ -316,11 +316,11 @@
   
 
   <xsl:template match="a" mode="fix-navigation-href">
- 	<xsl:param name="topicRelativeUri" as="xs:string" select="''" tunnel="yes"/>
+   <xsl:param name="topicRelativeUri" as="xs:string" select="''" tunnel="yes"/>
     <xsl:param name="relativePath" as="xs:string" select="''" tunnel="yes"/>
 
- 	<xsl:variable name="isSelected" select="@href=$topicRelativeUri"/>
- 	
+   <xsl:variable name="isSelected" select="@href=$topicRelativeUri"/>
+   
     <xsl:variable name="prefix">
       <xsl:choose>
         <xsl:when test="substring(@href, 1, 1) = '#'">
@@ -335,12 +335,12 @@
 
       </xsl:choose>
     </xsl:variable>
-	<a>
-		<xsl:if test="$isSelected">
-			<xsl:attribute name="class" select="'selected'" />
-		</xsl:if>
-    	<xsl:attribute name="href" select="concat($prefix, @href)"/>
-    	<xsl:value-of select="text()" />
+  <a>
+    <xsl:if test="$isSelected">
+      <xsl:attribute name="class" select="'selected'" />
+    </xsl:if>
+      <xsl:attribute name="href" select="concat($prefix, @href)"/>
+      <xsl:value-of select="text()" />
     </a>
   </xsl:template>
 

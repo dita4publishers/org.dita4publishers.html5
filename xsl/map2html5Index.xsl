@@ -41,7 +41,7 @@
       
       <xsl:variable name="topic-content">
         <h1>Index</h1>
-      	<div class="index-list two-columns">
+        <div class="index-list two-columns">
               <xsl:apply-templates select="$collected-data/index-terms:index-terms/index-terms:grouped-and-sorted" mode="#current"/>
         </div>
       </xsl:variable>

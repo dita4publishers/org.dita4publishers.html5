@@ -56,16 +56,16 @@
      <xsl:choose>
        <xsl:when test="*[@href][@role='parent']">
          <xsl:for-each select="*[@href][@role='parent']">
-          		<xsl:call-template name="compas">
-			<xsl:with-param name="direction" select="'parent'" />
-		</xsl:call-template>
+              <xsl:call-template name="compas">
+      <xsl:with-param name="direction" select="'parent'" />
+    </xsl:call-template>
          </xsl:for-each>
        </xsl:when>
        <xsl:otherwise>
           <xsl:for-each select="*[@href][@role='ancestor'][last()]">
-		<xsl:call-template name="compas">
-			<xsl:with-param name="direction" select="'parent'" />
-		</xsl:call-template>
+    <xsl:call-template name="compas">
+      <xsl:with-param name="direction" select="'parent'" />
+    </xsl:call-template>
           </xsl:for-each>
        </xsl:otherwise>
      </xsl:choose>
@@ -74,16 +74,16 @@
 
   <xsl:if test="contains($include.roles, ' previous ')">
      <xsl:for-each select="*[@href][@role='previous']">
-		<xsl:call-template name="compas">
-			<xsl:with-param name="direction" select="'previous'" />
-		</xsl:call-template>
+    <xsl:call-template name="compas">
+      <xsl:with-param name="direction" select="'previous'" />
+    </xsl:call-template>
      </xsl:for-each>
   </xsl:if>
   <xsl:if test="contains($include.roles, ' next ')">
      <xsl:for-each select="*[@href][@role='next']">
-		<xsl:call-template name="compas">
-			<xsl:with-param name="direction" select="'next'" />
-		</xsl:call-template>
+    <xsl:call-template name="compas">
+      <xsl:with-param name="direction" select="'next'" />
+    </xsl:call-template>
      </xsl:for-each>
   </xsl:if>
        </div><xsl:value-of select="$newline"/>
@@ -91,24 +91,24 @@
 </xsl:template>
 
 <xsl:template name="compas">
-	<xsl:param name="direction" select="''" />
-	
-	<xsl:variable name="uiicon">
-		<xsl:choose>
-			<xsl:when test="$direction = 'parent'">
-				<xsl:value-of select="'ui-icon-triangle-1-n'" />
-			</xsl:when>
-			<xsl:when test="$direction = 'next'">
-				<xsl:value-of select="'ui-icon-triangle-1-e'" />
-			</xsl:when>
-			<xsl:when test="$direction = 'previous'">
-				<xsl:value-of select="'ui-icon-triangle-1-w'" />
-			</xsl:when>
-		</xsl:choose>
-	</xsl:variable>
+  <xsl:param name="direction" select="''" />
+  
+  <xsl:variable name="uiicon">
+    <xsl:choose>
+      <xsl:when test="$direction = 'parent'">
+        <xsl:value-of select="'ui-icon-triangle-1-n'" />
+      </xsl:when>
+      <xsl:when test="$direction = 'next'">
+        <xsl:value-of select="'ui-icon-triangle-1-e'" />
+      </xsl:when>
+      <xsl:when test="$direction = 'previous'">
+        <xsl:value-of select="'ui-icon-triangle-1-w'" />
+      </xsl:when>
+    </xsl:choose>
+  </xsl:variable>
 
    <xsl:variable name="href">
-     	<xsl:call-template name="href" />
+       <xsl:call-template name="href" />
   </xsl:variable>
           <div class="{concat($direction, 'link')}"><a href="{$href}" title="{linktext}"><span class="{concat('ui-icon ', $uiicon)}"><xsl:value-of select="linktext" /></span></a></div><xsl:value-of select="$newline"/>
 </xsl:template>

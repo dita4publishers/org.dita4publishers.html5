@@ -53,14 +53,14 @@
     </xsl:variable>
     <!-- note, attention, caution, fastpath, important, notice, remember, restriction, tip, warning, other -->
     <xsl:variable name="html5NoteElement">
-    	<xsl:choose>
-    		<xsl:when test="@importance='low' or @importance='obsolete'">
-    			<xsl:value-of select="'details'" />
-    		</xsl:when>
-    		<xsl:otherwise>
-    		  <xsl:value-of select="'aside'" />
-    		</xsl:otherwise>
-    	</xsl:choose>
+      <xsl:choose>
+        <xsl:when test="@importance='low' or @importance='obsolete'">
+          <xsl:value-of select="'details'" />
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="'aside'" />
+        </xsl:otherwise>
+      </xsl:choose>
     </xsl:variable>
     
 
@@ -161,11 +161,11 @@
   </xsl:variable>
   
   <xsl:variable name="scale-to-fit">
-	<xsl:choose>
-		<xsl:when test="@scalefit='yes'">
-			<xsl:value-of select="'d4p-ui-scale2fit'" />
-		</xsl:when>
-	</xsl:choose>
+  <xsl:choose>
+    <xsl:when test="@scalefit='yes'">
+      <xsl:value-of select="'d4p-ui-scale2fit'" />
+    </xsl:when>
+  </xsl:choose>
   </xsl:variable>
   
   <xsl:variable name="isSVG" select="$ends-with-svg = 'true' or $ends-with-svgz = 'true'"/>
@@ -176,7 +176,7 @@
             http://e.metaclarity.org/52/cross-browser-svg-issues/ 
         -->
         <object type="image/svg+xml" data="{@href}">
-			<xsl:call-template name="commonattributes">
+      <xsl:call-template name="commonattributes">
             <xsl:with-param name="default-output-class">
               <xsl:if test="@placement='break'">
                 <!--Align only works for break-->
@@ -189,12 +189,12 @@
             </xsl:with-param>
           </xsl:call-template>
            <xsl:apply-templates select="@height|@width"/>
-		</object>
+    </object>
       </xsl:when>
 <xsl:otherwise>
   <img>
     <xsl:attribute name="class">
-		<xsl:value-of select="concat(@placement, ' ', @align, ' ', $scale-to-fit)" />
+    <xsl:value-of select="concat(@placement, ' ', @align, ' ', $scale-to-fit)" />
     </xsl:attribute>
     
     <xsl:call-template name="setid"/>
