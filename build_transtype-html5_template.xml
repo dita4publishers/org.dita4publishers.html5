@@ -79,6 +79,17 @@
       </and>
     </condition>
 
+    <condition property="dita.map.html5.do.package" value="yes">
+      <and>
+        <not>
+          <isset property="html5.theme.exists" />
+        </not>
+        <not>
+          <isset property="args.debug" />
+        </not>
+      </and>
+    </condition>
+
     <condition property="html5.copy.assets" value="yes">
       <and>
         <not>
@@ -158,12 +169,13 @@
       </not>
     </condition>
 
-     <condition property="args.js.filename" value="script">
+    <condition property="args.js.filename" value="script">
       <not>
         <isset property="args.js.filename" />
       </not>
     </condition>
-  <!-- check the role of the next 3 lines -->
+
+    <!-- check the role of the next 3 lines -->
     <condition property="html5.args.css.path" value="themes/${html5.site.theme}/${html5.css.dir}/">
       <not>
         <isset property="html5.args.css.path" />
@@ -266,15 +278,15 @@
 
     <!-- used to pass parameter to the javascript d4p obj -->
     <condition property="html5.js.options" value="">
-        <not>
-            <isset property="html5.js.options" />
-        </not>
+      <not>
+        <isset property="html5.js.options" />
+      </not>
     </condition>
 
     <condition property="html5.class.body" value="centered ${html5.navigation.markup}">
-        <not>
-          <isset property="html5.class.body" />
-        </not>
+      <not>
+        <isset property="html5.class.body" />
+      </not>
     </condition>
 
     <condition property="generateIndex" value="yes">
@@ -289,30 +301,36 @@
 
   <target name="dita.map.html5.echo" description="Echo HTML5 plugin properties" unless="html5.echo.done">
     <echo message="+++ html5-specific properties:"/>
-    <echoproperties format="text" regex="^(html5|html2|css|user|out\.)" taskname="echo"/>
+    <echoproperties format="text" regex="^(html5|css|user|out\.)" taskname="echo"/>
     <property name="html5.echo.done" value="yes"/>
   </target>
 
   <target name="check-html5-json-vars-urls" if="html5.site.js.vars.exists">
-      <makeurl file="${d4p.html5.json.vars.file}" property="d4p.html5.json.vars.file.url"/>
+    <makeurl file="${d4p.html5.json.vars.file}" property="d4p.html5.json.vars.file.url"/>
   </target>
 
-  <target name="dita.map.html5.package" unless="html5.theme.exists">
+  <target name="dita.map.html5.package" if="dita.map.html5.do.package">
    <echo>Theme ${html5.site.theme} not found in ${html5.theme.dir}, building it</echo>
-   <antcall target="package.prepare" inheritAll="yes" />
    <antcall target="theme-xml-preprocess" inheritAll="yes" />
   </target>
 
-  <target name="dita.map.html5.get.package">
+  <target name="dita.map.html5.get.package" unless="dita.map.html5.do.package">
    <echo>Theme ${html5.site.theme} not found in ${html5.theme.dir}, building it</echo>
    <antcall target="package.get" inheritAll="yes" />
   </target>
 
-
+  <target name="dita.map.html5.get.libs" if="args.debug">
+   <echo>Args debug is on, sending copy of library</echo>
+   <antcall target="package.prepare" inheritAll="yes" />
+   <mkdir dir="${output.dir}/${html5.libs.dir}"/>
+    <copy todir="${output.dir}/${html5.libs.dir}/" >
+      <fileset dir="${html5.theme.dir}/${html5.libs.dir}"/>
+    </copy>
+  </target>
 
   <target
     name="dita.map.html5"
-    depends="dita.map.html5.init, dita.map.html5.echo, dita.map.html5.package, dita.map.html5.get.package"
+    depends="dita.map.html5.init, dita.map.html5.echo, dita.map.html5.package, dita.map.html5.get.package, dita.map.html5.get.libs"
     description="Generate html5 components from input map and topics"
   >
 
