@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>   
-<!--   
+<?xml version="1.0" encoding="utf-8"?>
+<!--
        Licensed to the Apache Software Foundation (ASF) under one
        or more contributor license agreements.  See the NOTICE file
        distributed with this work for additional information
@@ -18,26 +18,28 @@
        under the License.
 -->
 
-<xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+<xsl:stylesheet
+  version="2.0"
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:df="http://dita2indesign.org/dita/functions" xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:relpath="http://dita2indesign/functions/relpath"
   xmlns:htmlutil="http://dita4publishers.org/functions/htmlutil"
   xmlns:index-terms="http://dita4publishers.org/index-terms"
   xmlns:glossdata="http://dita4publishers.org/glossdata"
   xmlns:mapdriven="http://dita4publishers.org/mapdriven"
-  xmlns:enum="http://dita4publishers.org/enumerables" 
+  xmlns:enum="http://dita4publishers.org/enumerables"
   xmlns:local="urn:functions:local"
   exclude-result-prefixes="local xs df xsl relpath htmlutil index-terms mapdriven glossdata enum">
- 
-  <!-- choose navigation markup type 
-        will be used later to offer alternate markup for navigation
-   -->
 
+  <!--
+    choose navigation markup type
+    will be used later to offer alternate markup for navigation
+   -->
   <xsl:template match="*" mode="choose-html5-nav-markup">
-    <xsl:message> + [INFO] Generating HTML5 <xsl:value-of select="$NAVIGATIONMARKUP"/>navigation
-      ...</xsl:message>
+    <xsl:message> + [INFO] Generating HTML5 <xsl:value-of select="$NAVIGATIONMARKUP"/> navigation</xsl:message>
+
     <xsl:choose>
-      <!-- 
+      <!--
           Experimental
         -->
       <xsl:when test="$NAVIGATIONMARKUP='navigation-tabbed'">
@@ -67,7 +69,6 @@
   <xsl:template match="*[df:class(., 'map/map')]" mode="generate-html5-nav">
     <xsl:param name="collected-data" as="element()" tunnel="yes"/>
 
-
     <xsl:message> + [INFO] Generating HTML5 navigation structure...</xsl:message>
 
     <xsl:apply-templates mode="generate-html5-nav"/>
@@ -83,15 +84,28 @@
 
   <xsl:template mode="generate-html5-nav-page-markup" match="*[df:class(., 'map/map')]">
     <xsl:param name="collected-data" as="element()" tunnel="yes"/>
+    <xsl:param name="documentation-title" tunnel="yes" />
+
+    <nav class="mobile-nav">
+      <ul>
+        <li class="toggle-topbar menu-icon">
+          <a href="#nav-content">
+              <xsl:call-template name="getString">
+                <xsl:with-param name="stringName" select="'menu'"/>
+              </xsl:call-template>
+          </a>
+        </li>
+      </ul>
+
+      <section class="nav-pub-title">
+        <xsl:value-of select="$documentation-title" />
+      </section>
+    </nav>
 
     <nav id="{$IDLOCALNAV}" role="navigation" aria-label="Main navigation">
       <xsl:attribute name="class" select="$CLASSNAVIGATION"/>
+
       <div id="nav-content">
-        <div class="nav-pub-title">
-          <xsl:apply-templates select="*[df:class(., 'topic/title')]"
-            mode="generate-html5-nav-page-markup"/>
-          <xsl:sequence select="'&#x0a;'"/>
-        </div>
 
         <xsl:variable name="listItems" as="node()*">
           <xsl:apply-templates mode="generate-html5-nav"
@@ -109,15 +123,11 @@
             <xsl:sequence select="$listItems"/>
           </ul>
         </xsl:if>
-
       </div>
     </nav>
-
-
   </xsl:template>
 
-  <xsl:template mode="generate-html5-nav-page-markup"
-    match="*[df:class(., 'topic/title')][not(@toc = 'no')]">
+  <xsl:template mode="generate-html5-nav-page-markup" match="*[df:class(., 'topic/title')][not(@toc = 'no')]">
     <h2 class="nav-pub-title">
       <xsl:apply-templates/>
     </h2>
@@ -125,13 +135,10 @@
 
   <xsl:template mode="generate-html5-nav" match="*[df:class(., 'topic/title')][not(@toc = 'no')]"/>
 
-
-
   <!-- Convert each topicref to a ToC entry. -->
   <xsl:template match="*[df:isTopicRef(.)][not(@toc = 'no')]" mode="generate-html5-nav">
     <xsl:param name="tocDepth" as="xs:integer" tunnel="yes" select="0"/>
     <xsl:param name="rootMapDocUrl" as="xs:string" tunnel="yes"/>
-
 
     <xsl:if test="$tocDepth le $maxTocDepthInt">
       <xsl:variable name="topic" select="df:resolveTopicRef(.)" as="element()*"/>
@@ -272,7 +279,7 @@
       <xsl:apply-templates select="@*|node()" mode="fix-navigation-href"/>
     </xsl:copy>
   </xsl:template>
-  
+
   <xsl:template match="li" mode="fix-navigation-href">
     <xsl:param name="topicRelativeUri" as="xs:string" select="''" tunnel="yes"/>
     <xsl:variable name="isActiveTrail" select="descendant-or-self::*[@href=$topicRelativeUri]"/>
@@ -313,14 +320,14 @@
       <xsl:apply-templates select="*" mode="fix-navigation-href"/>
     </li>
   </xsl:template>
-  
+
 
   <xsl:template match="a" mode="fix-navigation-href">
    <xsl:param name="topicRelativeUri" as="xs:string" select="''" tunnel="yes"/>
     <xsl:param name="relativePath" as="xs:string" select="''" tunnel="yes"/>
 
    <xsl:variable name="isSelected" select="@href=$topicRelativeUri"/>
-   
+
     <xsl:variable name="prefix">
       <xsl:choose>
         <xsl:when test="substring(@href, 1, 1) = '#'">
@@ -368,7 +375,7 @@
     <xsl:param name="parentId" as="xs:string" tunnel="yes"/>
 
     <xsl:apply-templates
-      select="index-terms:index-term | 
+      select="index-terms:index-term |
               index-terms:index-group |
               index-terms:targets |
               index-terms:see-alsos |
@@ -379,7 +386,7 @@
     </xsl:apply-templates>
   </xsl:template>
 
-  <xsl:template match="index-terms:index-group | 
+  <xsl:template match="index-terms:index-group |
            index-terms:index-term"
     mode="generate-html5-nav">
     <xsl:param name="parentId" as="xs:string" tunnel="yes"/>
