@@ -219,44 +219,6 @@
     <value></value>
   </tag>
 
- <tag>
-    <name>script</name>
-      <output>yes</output>
-      <prefix></prefix>
-      <suffix></suffix>
-      <attributes>
-          <type>text/javascript</type>
-      </attributes>
-      <value>
-      <![CDATA[
-        var ADAPT_CONFIG = {
-          // Where is your CSS?
-          path: d4p.relativePath + '/themes/dita-d4p-classic/css/',
-
-          // false = Only run once, when page first loads.
-          // true = Change on window resize and page tilt.
-          dynamic: true,
-
-          // First range entry is the minimum.
-          // Last range entry is the maximum.
-          // Separate ranges by "to" keyword.
-          range: [
-            '0px    to 760px  = mobile.min.css',
-            '760px  to 980px  = 720.min.css',
-            '980px  to 1270px = 960.min.css',
-            '1270px to 1600px = 1200.min.css',
-            '1600px to 1940px = 1560.min.css',
-            '1940px to 2540px = 1920.min.css',
-            '2540px           = 2520.min.css'
-          ]
-        };
-        ]]>
-      </value>
-  </tag>
-
-    Every javascripts below this marker should be easely reusable
-
--->
   <tag>
     <name>script</name>
     <output>yes</output>
@@ -270,9 +232,6 @@
     <source>
 
       <file path="modules/modernizr/modernizr.dev.2.0.6.js" />
-
-      <!-- The adapt.js for responsive tools -->
-      <file path="modules/960-Responsive-Grid/js/adapt.js" />
 
       <!--file path="modules/prefixFree/prefixFree.js" /-->
       <file path="modules/jQuery/jquery-1.7.1.min.js" />
@@ -291,6 +250,88 @@
       <!-- jQuery Cycle -->
       <!--file path="modules/jQuery-widgets/cycle/js/cycle.js" /-->
       <!--file path="modules/jQuery-widgets/cycle/js/jquery.cycle.js" /-->
+    </source>
+  </tag>
+
+ <tag>
+    <name>script</name>
+      <output>yes</output>
+      <prefix></prefix>
+      <suffix></suffix>
+      <attributes>
+          <type>text/javascript</type>
+      </attributes>
+      <value>
+      <![CDATA[
+        d4p.cssGridPath = d4p.dev ? 'libs/modules/960-Responsive-Grid/css/' : 'themes/dita-d4p-classic/css/';
+        var ADAPT_CONFIG = {
+          // Where is your CSS?
+          path: d4p.relativePath + d4p.cssGridPath,
+
+          // false = Only run once, when page first loads.
+          // true = Change on window resize and page tilt.
+          dynamic: true,
+
+          // Optional callback... myCallback(i, width)
+          callback: function (i, width) {
+            var cs = '';
+            $("body").removeClass (function (index, css) {
+              return (css.match (/size-[a-z]+/g) || []).join(' ');
+            });
+
+            switch(i)
+            {
+            case 0:
+              cs = 'size-small';
+              break;
+            case 1:
+            case 2:
+              cs = 'size-medium';
+              break;
+            case 3:
+            case 4:
+              cs = 'size-large';
+              break;
+            default:
+               cs = 'size-x-large';
+            }
+            $("body").addClass(cs);
+          },
+
+          // First range entry is the minimum.
+          // Last range entry is the maximum.
+          // Separate ranges by "to" keyword.
+          range: [
+             // small (size-0)
+            '0px    to 760px  = mobile.min.css',
+             // medium (size-1, size-2)
+            '760px  to 980px  = 720.min.css',
+            '980px  to 1270px = 960.min.css',
+             // large (size-3, size-5)
+            '1270px to 1600px = 1200.min.css',
+            '1600px to 1940px = 1560.min.css',
+             // extra large (size-6)
+            '1940px to 2540px = 1920.min.css',
+            '2540px           = 2520.min.css'
+          ]
+        };
+        ]]>
+      </value>
+  </tag>
+
+  <tag>
+    <name>script</name>
+    <output>yes</output>
+    <filename>adapt.js</filename>
+    <prefix></prefix>
+    <suffix></suffix>
+    <attributes>
+        <type>text/javascript</type>
+    </attributes>
+    <value></value>
+    <source>
+      <!-- The adapt.js for responsive tools -->
+      <file path="modules/960-Responsive-Grid/js/adapt.js" />
     </source>
   </tag>
 
