@@ -13,7 +13,6 @@
 
 // Closure.
 (function(w, d, config, undefined) {
-  "w:nomunge, d:nomunge, config:nomunge";
   // If no config, exit.
   if (!config) {
     return;

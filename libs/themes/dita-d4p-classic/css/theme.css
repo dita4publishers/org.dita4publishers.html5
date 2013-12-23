@@ -24,6 +24,10 @@ body
   background: #EFEFEF url(../img/subtle-pattern-1.jpg) repeat;
 }
 
+.size-small body {
+  background: #FFFFFF;
+}
+
 h1, h2, h3, h4, h5, h6 { color: #3887b0; }
 
 /** header **/
@@ -38,8 +42,14 @@ header h1
   padding-left: 12px;
   margin-top: 20px;
   text-shadow: 0 2px 1px #CCC;
-  font-family: 'Vegur Light','Lucida Grande',Helvetica,Arial,Verdana,sans-serif;
   letter-spacing: 2px;
+}
+
+h1, .nav-pub-title  {
+  font-family: 'Vegur Light','Lucida Grande',Helvetica,Arial,Verdana,sans-serif;
+}
+.nav-pub-title {
+  font-weight: bold;
 }
 
 form#search
@@ -61,8 +71,6 @@ form#search input
 }
 
 /** section container **/
-#d4h5-section-container { }
-
 .d4p-cover-page
 {
   display: block;
@@ -217,7 +225,9 @@ footer h2, address strong
   margin-bottom: 1em;
 }
 
-.mobile-nav { display: none; }
+.mobile-nav {
+  display: none;
+}
 
 .mobile-nav ul, .mobile-nav ul li, .mobile-nav a, .mobile-nav section
 {
@@ -228,6 +238,7 @@ footer h2, address strong
 .mobile-nav ul, .mobile-nav section
 {
   display: block;
+  margin-right:10px;
   float: left;
 }
 
@@ -237,7 +248,20 @@ footer h2, address strong
  * size-large
  * size-x-large
  */
-.size-small .mobile-nav { display: block; }
+.size-small .mobile-nav {
+  display: block;
+  height:25px;
+  color: #504F4F;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  background: #EFEFEF url(../img/subtle-pattern-1.jpg) repeat;
+  border-bottom:1px solid #dfdfdf;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+  -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+  -webkit-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+}
 
 /** show-for-small **/
 .size-small .show-for-small { display:block; }
@@ -269,3 +293,38 @@ footer h2, address strong
 .size-large .hide-for-large { display:none; }
 .size-x-large .hide-for-x-large { display:none; }
 
+.size-small #topic-content {
+  background-color: #FFFFFF;
+  border: none;
+  border-radius: 0px;
+  box-shadow: none;
+  display: block;
+  margin: 25px 0 0 0;
+  min-height: 500px;
+  padding: 15px;
+}
+
+.size-small #nav-content.active {
+  display:block;
+}
+
+.size-small #local-navigation {
+  display:block;
+  position:fixed;
+  top: 30px;
+  left:-80%;
+  width:80%;
+  background-color: #fff;
+  border-top:1px solid #ccc;
+  border-bottom:1px solid #ccc;
+  border-right:1px solid #ccc;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+   box-shadow: 1px 1px 1px #dfdfdf;
+  -moz-box-shadow: 1px 1px 1px #dfdfdf;
+  -webkit-box-shadow: 1px 1px 1px #dfdfdf;
+}
+
+.size-small #d4h5-main-content {
+  clear:both;
+}

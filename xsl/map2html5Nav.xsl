@@ -89,7 +89,7 @@
     <nav class="mobile-nav">
       <ul>
         <li class="toggle-topbar menu-icon">
-          <a href="#nav-content">
+          <a id="toggle-nav-content" href="#{$IDLOCALNAV}">
               <xsl:call-template name="getString">
                 <xsl:with-param name="stringName" select="'menu'"/>
               </xsl:call-template>

@@ -125,9 +125,9 @@
     <echo> +++ Concatenating file before compression </echo>
 
 
-   <echo> to: ${html5.theme.dir}/${type}/${to}.${html5.concatenation.prefix}.${type} </echo>
-   <condition property="package.css">
-    <equals arg1="${type}" arg2="css" />
+    <echo> to: ${html5.theme.dir}/${type}/${to}.${html5.concatenation.prefix}.${type} </echo>
+    <condition property="package.css">
+      <equals arg1="${type}" arg2="css" />
     </condition>
 
     <mkdir dir="${html5.theme.dir}"/>

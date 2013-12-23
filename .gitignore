@@ -45,12 +45,14 @@ Thumbs.db
 
 
 # External libraries (not under Apache licence #
-######################################
+################################################
 yuicompressor-2.4.7
 
 # html5 plugin #
 xsl/map2html5.xsl
 
+# Plugin specific #
+##################
 build-theme.xml
-
 build_transtype-html5.xml
+themes/*/libs

@@ -243,6 +243,7 @@
       <file path="modules/jQuery-ui/ui/jquery.ui.core.js" />
       <file path="modules/jQuery-ui/ui/jquery.ui.widget.js" />
       <file path="modules/jQuery-ui/ui/jquery.ui.accordion.js" />
+      <file path="themes/dita-d4p-classic/js/script.js" />
 
       <!-- code to instantiate jQuery UI -->
       <!--file path="modules/jQuery-widgets-init/accordion/accordion.js" /-->
@@ -273,9 +274,29 @@
           dynamic: true,
 
           // Optional callback... myCallback(i, width)
-          callback: function (i, width) {
+          callback: setBodyClassfunction,
+
+          // First range entry is the minimum.
+          // Last range entry is the maximum.
+          // Separate ranges by "to" keyword.
+          range: [
+             // small (size-0)
+            '0px    to 760px  = mobile.min.css',
+             // medium (size-1, size-2)
+            '760px  to 980px  = 720.min.css',
+            '980px  to 1270px = 960.min.css',
+             // large (size-3, size-5)
+            '1270px to 1600px = 1200.min.css',
+            '1600px to 1940px = 1560.min.css',
+             // extra large (size-6)
+            '1940px to 2540px = 1920.min.css',
+            '2540px           = 2520.min.css'
+          ]
+        };
+
+        function setBodyClassfunction (i, width) {
             var cs = '';
-            $("body").removeClass (function (index, css) {
+            $("html").removeClass (function (index, css) {
               return (css.match (/size-[a-z]+/g) || []).join(' ');
             });
 
@@ -295,26 +316,8 @@
             default:
                cs = 'size-x-large';
             }
-            $("body").addClass(cs);
-          },
-
-          // First range entry is the minimum.
-          // Last range entry is the maximum.
-          // Separate ranges by "to" keyword.
-          range: [
-             // small (size-0)
-            '0px    to 760px  = mobile.min.css',
-             // medium (size-1, size-2)
-            '760px  to 980px  = 720.min.css',
-            '980px  to 1270px = 960.min.css',
-             // large (size-3, size-5)
-            '1270px to 1600px = 1200.min.css',
-            '1600px to 1940px = 1560.min.css',
-             // extra large (size-6)
-            '1940px to 2540px = 1920.min.css',
-            '2540px           = 2520.min.css'
-          ]
-        };
+            $("html").addClass(cs);
+         }
         ]]>
       </value>
   </tag>
