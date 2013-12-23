@@ -386,6 +386,23 @@
       </xsl:apply-templates>
     </xsl:variable>
 
+    <xsl:variable name="index-content">
+        <xsl:apply-templates select="." mode="generate-index" >
+         <xsl:with-param name="collected-data" as="element()" select="$collected-data" tunnel="yes"/>
+        </xsl:apply-templates>
+      </xsl:variable>
+
+      <xsl:variable name="has-index">
+        <xsl:choose>
+          <xsl:when test = "$index-content = ''">
+            <xsl:value-of select="false()"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="true()"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:variable>
+
     <!-- NOTE: By default, this mode puts its output in the main output file
          produced by the transform.
     -->
@@ -393,6 +410,7 @@
       <xsl:apply-templates select="." mode="choose-html5-nav-markup" >
         <xsl:with-param name="collected-data" as="element()" select="$collected-data" tunnel="yes"/>
         <xsl:with-param name="uniqueTopicRefs" as="element()*" select="$uniqueTopicRefs" tunnel="yes"/>
+        <xsl:with-param name="has-index" as="xs:boolean" select="$has-index" tunnel="yes" />
         <xsl:with-param name="documentation-title" select="$documentation-title" tunnel="yes"/>
         <xsl:with-param name="audienceSelect"  select="$audienceSelect" tunnel="yes"/>
       </xsl:apply-templates>
@@ -407,30 +425,34 @@
         <xsl:with-param name="audienceSelect"  select="$audienceSelect" tunnel="yes"/>
     </xsl:apply-templates-->
 
-
     <xsl:apply-templates select="." mode="generate-content">
       <xsl:with-param name="collected-data" as="element()" select="$collected-data" tunnel="yes"/>
       <xsl:with-param name="uniqueTopicRefs" as="element()*" select="$uniqueTopicRefs" tunnel="yes"/>
       <xsl:with-param name="navigation" as="element()*" select="$navigation" tunnel="yes"/>
       <xsl:with-param name="baseUri" as="xs:string" select="@xtrf" tunnel="yes"/>
       <xsl:with-param name="documentation-title" select="$documentation-title" tunnel="yes"/>
+      <xsl:with-param name="has-index" as="xs:boolean" select="$has-index" tunnel="yes" />
       <xsl:with-param name="is-root" as="xs:boolean" select="false()" tunnel="yes"/>
       <xsl:with-param name="audienceSelect"  select="$audienceSelect" tunnel="yes"/>
     </xsl:apply-templates>
 
     <!-- add index support -->
-    <xsl:apply-templates select="." mode="generate-index">
+
+      <xsl:if test="$has-index">
+        <xsl:apply-templates select="." mode="generate-index-page">
+          <xsl:with-param name="collected-data" as="element()" select="$collected-data" tunnel="yes"/>
+          <xsl:with-param name="uniqueTopicRefs" as="element()*" select="$uniqueTopicRefs" tunnel="yes"/>
+          <xsl:with-param name="navigation" as="element()*" select="$navigation" tunnel="yes"/>
+          <xsl:with-param name="baseUri" as="xs:string" select="@xtrf" tunnel="yes"/>
+          <xsl:with-param name="documentation-title" select="$documentation-title" tunnel="yes"/>
+          <xsl:with-param name="index-content" select="$index-content" tunnel="yes" />
+          <xsl:with-param name="is-root" as="xs:boolean" select="false()" tunnel="yes"/>
+        </xsl:apply-templates>
+    </xsl:if>
+    <!--xsl:apply-templates select="." mode="generate-glossary">
       <xsl:with-param name="collected-data" as="element()" select="$collected-data" tunnel="yes"/>
-      <xsl:with-param name="uniqueTopicRefs" as="element()*" select="$uniqueTopicRefs" tunnel="yes"/>
-      <xsl:with-param name="navigation" as="element()*" select="$navigation" tunnel="yes"/>
-      <xsl:with-param name="baseUri" as="xs:string" select="@xtrf" tunnel="yes"/>
-      <xsl:with-param name="documentation-title" select="$documentation-title" tunnel="yes"/>
-      <xsl:with-param name="is-root" as="xs:boolean" select="false()" tunnel="yes"/>
-    </xsl:apply-templates>
-    <!--    <xsl:apply-templates select="." mode="generate-glossary">
-      <xsl:with-param name="collected-data" as="element()" select="$collected-data" tunnel="yes"/>
-    </xsl:apply-templates>
--->
+    </xsl:apply-templates-->
+
     <xsl:apply-templates select="." mode="generate-graphic-copy-ant-script">
       <xsl:with-param name="graphicMap" as="element()" tunnel="yes" select="$graphicMap"/>
     </xsl:apply-templates>

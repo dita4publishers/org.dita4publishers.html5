@@ -365,10 +365,13 @@
   </xsl:template>
 
   <xsl:template match="index-terms:index-terms" mode="generate-html5-nav">
-    <li>
-      <a href="generated-index.html">Index</a>
-    </li>
-    <xsl:apply-templates select="index-terms:grouped-and-sorted" mode="#current"/>
+    <xsl:param name="has-index" as="xs:boolean" tunnel="yes" />
+    <xsl:if test="$has-index">
+      <li>
+        <a href="generated-index.html">Index</a>
+      </li>
+      <xsl:apply-templates select="index-terms:grouped-and-sorted" mode="#current"/>
+    </xsl:if>
   </xsl:template>
 
   <xsl:template match="index-terms:grouped-and-sorted" mode="generate-html5-nav">

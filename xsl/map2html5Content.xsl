@@ -1,60 +1,64 @@
-<?xml version="1.0" encoding="utf-8"?>   
-<!--   
-       Licensed to the Apache Software Foundation (ASF) under one
-       or more contributor license agreements.  See the NOTICE file
-       distributed with this work for additional information
-       regarding copyright ownership.  The ASF licenses this file
-       to you under the Apache License, Version 2.0 (the
-       "License"); you may not use this file except in compliance
-       with the License.  You may obtain a copy of the License at
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one
+  or more contributor license agreements.  See the NOTICE file
+  distributed with this work for additional information
+  regarding copyright ownership.  The ASF licenses this file
+  to you under the Apache License, Version 2.0 (the
+  "License"); you may not use this file except in compliance
+  with the License.  You may obtain a copy of the License at
 
-         http://www.apache.org/licenses/LICENSE-2.0
+    http://www.apache.org/licenses/LICENSE-2.0
 
-       Unless required by applicable law or agreed to in writing,
-       software distributed under the License is distributed on an
-       "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-       KIND, either express or implied.  See the License for the
-       specific language governing permissions and limitations
-       under the License.
+  Unless required by applicable law or agreed to in writing,
+  software distributed under the License is distributed on an
+  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  KIND, either express or implied.  See the License for the
+  specific language governing permissions and limitations
+  under the License.
 -->
+<xsl:stylesheet
+  xmlns:df="http://dita2indesign.org/dita/functions"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:relpath="http://dita2indesign/functions/relpath"
+  xmlns:htmlutil="http://dita4publishers.org/functions/htmlutil"
+  xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl"
+  exclude-result-prefixes="df xs relpath htmlutil xd"
+  version="2.0"
+>
 
-<xsl:stylesheet xmlns:df="http://dita2indesign.org/dita/functions" xmlns:xs="http://www.w3.org/2001/XMLSchema"
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:relpath="http://dita2indesign/functions/relpath"
-  xmlns:htmlutil="http://dita4publishers.org/functions/htmlutil" xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl"
-  exclude-result-prefixes="df xs relpath htmlutil xd" version="2.0">
- 
   <!-- generate root pages -->
-<xsl:template match="*[df:class(., 'map/map')]" mode="generate-root-nav-page">
-  <!-- Generate the root output page. By default this page contains the root
-       navigation elements. The direct output of this template goes to the
-       default output target of the XSLT transform.
+  <xsl:template match="*[df:class(., 'map/map')]" mode="generate-root-nav-page">
+    <!-- Generate the root output page. By default this page contains the root
+         navigation elements. The direct output of this template goes to the
+         default output target of the XSLT transform.
     -->
-  <xsl:param name="uniqueTopicRefs" as="element()*" tunnel="yes"/>
-  <xsl:param name="collected-data" as="element()" tunnel="yes"/>
-  <xsl:param name="firstTopicUri" as="xs:string?" tunnel="yes"/>
-  <xsl:param name="rootMapDocUrl" as="xs:string" tunnel="yes"/>
+    <xsl:param name="uniqueTopicRefs" as="element()*" tunnel="yes"/>
+    <xsl:param name="collected-data" as="element()" tunnel="yes"/>
+    <xsl:param name="firstTopicUri" as="xs:string?" tunnel="yes"/>
+    <xsl:param name="rootMapDocUrl" as="xs:string" tunnel="yes"/>
 
-  <xsl:variable name="initialTopicUri"
-    as="xs:string"
-    select="
-    if ($firstTopicUri != '')
+    <xsl:variable name="initialTopicUri"
+      as="xs:string"
+      select="
+      if ($firstTopicUri != '')
        then $firstTopicUri
        else htmlutil:getInitialTopicrefUri($uniqueTopicRefs, $topicsOutputPath, $outdir, $rootMapDocUrl)
        "
-  />
+    />
 
 
-  <xsl:message> + [INFO] Generating index document <xsl:sequence select="$indexUri"/>...</xsl:message>
-  
-  <xsl:result-document href="{$indexUri}" format="html5">
-      <xsl:text disable-output-escaping="yes">&lt;!DOCTYPE html&gt;</xsl:text>  
-      
+    <xsl:message> + [INFO] Generating index document <xsl:sequence select="$indexUri"/>...</xsl:message>
+
+    <xsl:result-document href="{$indexUri}" format="html5">
+      <xsl:text disable-output-escaping="yes">&lt;!DOCTYPE html&gt;</xsl:text>
+
       <xsl:apply-templates mode="generate-html5-page" select=".">
         <xsl:with-param name="resultUri" as="xs:string" select="$indexUri" tunnel="yes"/>
       </xsl:apply-templates>
-    
-  </xsl:result-document>
-</xsl:template>
+    </xsl:result-document>
+  </xsl:template>
 
   <xsl:template match="*[df:class(., 'map/map')]" mode="generate-content">
     <xsl:param name="uniqueTopicRefs" as="element()*" tunnel="yes"/>
@@ -104,8 +108,6 @@
      </xsl:document>
         </xsl:variable>
 
-
-
         <xsl:apply-templates select="$tempTopic" mode="#current">
           <xsl:with-param name="topicref" as="element()*" select="." tunnel="yes"/>
           <xsl:with-param name="collected-data" select="$collected-data" as="element()" tunnel="yes"/>
@@ -117,7 +119,7 @@
   </xsl:template>
 
   <!--xsl:template match="*" mode="generate-content" priority="-1">
-    <xsl:message> + [DEBUG] In catchall for generate-content, got 
+    <xsl:message> + [DEBUG] In catchall for generate-content, got
       <xsl:sequence select="."/></xsl:message>
   </xsl:template-->
 
@@ -141,7 +143,7 @@
     <!--xsl:variable name="parentPath" select="relpath:getParent($baseUri)" as="xs:string"/-->
     <xsl:variable name="relativePath" select="concat(relpath:getRelativePath($parentDocUri, $parentPath), '')"
       as="xs:string"/>
-      
+
     <xsl:variable name="topic-title">
       <xsl:apply-templates select="." mode="nav-point-title"/>
     </xsl:variable>
@@ -222,7 +224,7 @@
     <xsl:for-each select="$topic">
       <!-- Process the topic in the default mode, meaning the base Toolkit-provided
         HTML output processing.
-        
+
         By providing the topicref as a tunneled parameter it makes it available
         to custom extensions to the base Toolkit processing.
       -->
