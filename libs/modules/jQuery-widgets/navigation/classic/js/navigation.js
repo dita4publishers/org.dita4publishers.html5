@@ -1,5 +1,5 @@
 /**
- * 
+ *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
@@ -12,65 +12,57 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  *
- */ 
+ */
+var navigation = {
 
+  'icon': 'ui-icon',
 
-  var navigation = {
-  
-    'icon': 'ui-icon',
-  
-    'leaf': 'ui-icon-triangle-1-e',
-    
-    'leafActive': 'ui-icon-triangle-1-s',
-    
-    'toolbar': {
-      'id': 'navToolBar',
-      'position': 'top'
-    },
-    
-    'buttons': false,
+  'leaf': 'ui-icon-triangle-1-e',
 
-    traverse: function () {
-    
-      var o = this;
-      
-      $("#local-navigation" + ' li')
-        .each(function (index) {
-        
-            var span = {}, span2 = {};
+  'leafActive': 'ui-icon-triangle-1-s',
 
-        $(this)
-          .attr('role', 'treeitem');
+  'toolbar': {
+    'id': 'navToolBar',
+    'position': 'top'
+  },
 
-        //if li has ul children add class collapsible
-        if ($(this).hasClass('collapsible')) {
+  'buttons': false,
 
-          // create span for icone
-          span = $("<span/>");
-          span.addClass(o.icon);
-          
-          span.addClass($(this).hasClass('active') ? o.leafActive : o.leaf);
-      
-      $(this).prepend(span);
-      
-          // wrap text node with a span if exists
-          $(this).find("span.navtitle").on('click', function() {
+  traverse: function () {
+
+    var o = this;
+
+    $("#local-navigation" + ' li')
+      .each(function (index) {
+
+         var span = {}, span2 = {};
+
+         $(this).attr('role', 'treeitem');
+
+         //if li has ul children add class collapsible
+         if ($(this).hasClass('collapsible')) {
+
+            // create span for icone
+            span = $("<span/>");
+            span.addClass(o.icon);
+            span.addClass($(this).hasClass('active') ? o.leafActive : o.leaf);
+            span.on('click', function() {
               $(this).parent().toggleClass('active').toggleClass('collapsed');
-          });
-           
-
-        } 
-      });
+            });
+            $(this).prepend(span);
+          }
+        }
+      );
     },
-    
+
     addToolbar: function () {
       if(this.toolbar.position == 'top') {
          $("#local-navigation").parent().prepend($("<div />").attr('id', this.toolbar.id).attr('class', 'toolbar top'));
       } else {
         $("#local-navigation").parent().append($("<div />").attr('id', this.toolbar.id).attr('class', 'toolbar bottom'));
-      }    
+      }
     },
-    
+
     addButtons: function () {
       var o = this,
       expandIco = $("<span/>").attr("class", "ui-icon ui-icon-carat-2-n-s"),
@@ -82,8 +74,8 @@
           .addClass('selected')
           .removeClass('collapsed')
           .attr('aria-expanded', 'true');
-               
-           $(this).hide(); 
+
+           $(this).hide();
            $('#collapseBtn').show();
 
         }),
@@ -93,12 +85,12 @@
           .removeClass('selected')
           .addClass('collapsed')
           .removeAttr('aria-expanded');
-          
+
            o.select();
-           $(this).hide(); 
+           $(this).hide();
            $('#expandBtn').show();
       });
-      
+
       $('#'+this.toolbar.id).append(btnExpand);
       $('#'+this.toolbar.id).append(btnCollapse);
     },
@@ -107,9 +99,9 @@
 
       $("#local-navigation" + " > ul").attr('role', 'tree');
       $("#local-navigation" + " li ul").attr('role', 'group');
-      
+
       this.traverse();
-      
+
       if(this.buttons) {
         this.addToolbar();
         this.addButtons();
@@ -117,7 +109,7 @@
 
     }
     };
-    
+
     $(function() {
       navigation.init();
     });

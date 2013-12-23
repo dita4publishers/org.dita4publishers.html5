@@ -227,12 +227,14 @@ footer h2, address strong
 
 .mobile-nav {
   display: none;
+  padding-top:2px;
 }
 
 .mobile-nav ul, .mobile-nav ul li, .mobile-nav a, .mobile-nav section
 {
   padding: 0;
   margin: 0;
+  list-style-type: none;
 }
 
 .mobile-nav ul, .mobile-nav section
@@ -250,6 +252,7 @@ footer h2, address strong
  */
 .size-small .mobile-nav {
   display: block;
+  padding-left:10px;
   height:25px;
   color: #504F4F;
   position:fixed;
@@ -327,6 +330,31 @@ footer h2, address strong
 
 .size-small #d4h5-main-content {
   clear:both;
+}
+
+.size-small #local-navigation ul li
+{
+  margin-top:0;
+  margin-bottom:0;
+}
+
+.size-small #local-navigation ul li a
+{
+  padding-top:5px;
+  padding-bottom:5px;
+  border-bottom:1px dotted #dfdfdf;
+  font-size:1.2em;
+  display:block;
+}
+.size-small #local-navigation ul li a:hover
+{
+  background-color:#EFEFEF;
+}
+.size-small #local-navigation ul li.collapsible a:first-child
+{
+  padding-top:0px;
+  padding-bottom:5px;
+
 }
 /* `XHTML, HTML4, HTML5 Reset
 ----------------------------------------------------------------------------------------------------*/
