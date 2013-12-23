@@ -135,10 +135,10 @@
   <xsl:template match="*" mode="gen-search-box">
     <xsl:variable name="placeholder" select="$HTML5THEMECONFIGDOC/html5/search/placeholder" />
     <xsl:variable name="action" select="$HTML5THEMECONFIGDOC/html5/search/action" />
-    <form id="search" action="{$action}">
+    <!--form id="search" action="{$action}">
       <input id="search-text" type="text" autocomplete="off" placeholder="{$placeholder}" name="search" />
       <xsl:sequence select="$HTML5THEMECONFIGDOC/html5/search/inputs/*" />
-    </form>
+    </form-->
   </xsl:template>
 
   <!-- used to output the head -->
@@ -187,7 +187,6 @@
           </xsl:if>
       </xsl:if>
 
-
       <xsl:value-of select="$newline"/>
 
       <xsl:apply-templates select="*[contains(@class,' ditaot-d/ditaval-startprop ')]" mode="out-of-line"/>
@@ -199,7 +198,7 @@
 
       <xsl:if test="$INDEXSHOW='yes'">
         <xsl:apply-templates select="/*/*[contains(@class,' topic/prolog ')]/*[contains(@class,' topic/metadata ')]/*[contains(@class,' topic/keywords ')]/*[contains(@class,' topic/indexterm ')] |
-                                     /dita/*[1]/*[contains(@class,' topic/prolog ')]/*[contains(@class,' topic/metadata ')]/*[contains(@class,' topic/keywords ')]/*[contains(@class,' topic/indexterm ')]"/>
+          /dita/*[1]/*[contains(@class,' topic/prolog ')]/*[contains(@class,' topic/metadata ')]/*[contains(@class,' topic/keywords ')]/*[contains(@class,' topic/indexterm ')]"/>
       </xsl:if>
 
       <!-- Include a user's XSL call here to generate a toc based on what's a child of topic -->
