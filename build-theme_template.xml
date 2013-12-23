@@ -22,8 +22,10 @@
   <dirname property="theme.builder.dir" file="${ant.file.theme.builder}"/>
   <property name="dita.plugins.dir" location="${theme.builder.dir}/../" />
   <property name="ditaot.dir" location="${theme.builder.dir}/../../"/>
-  <property name="ditaot.temp.dir" location="${theme.builder.dir}/../../"/>
+  <property name="ditaot.temp.dir" location="${theme.builder.dir}/../../temp"/>
   <property name="d4p.html5.dir" location="${theme.builder.dir}" />
+
+  <mkdir dir="${ditaot.temp.dir}" />
 
   <loadproperties srcFile="${theme.builder.dir}/shared.properties" />
 
@@ -51,6 +53,7 @@
 
   <property name="html5.temp.theme.dir" location="${ditaot.temp.dir}/${html5.themes.dir}/${html5.site.theme}" />
   <property name="html5.theme.output.dir" location="${output.dir}/${html5.themes.dir}/${html5.site.theme}" />
+
   <available file="${html5.theme.dir}" type="dir" property="html5.theme.exists"/>
 
   <!-- Default location of the configuration file -->
@@ -98,7 +101,6 @@
   </macrodef>
 
   <target name="package.get">
-
     <echo>Sending assets to the output directory</echo>
     <mkdir dir="${html5.theme.output.dir}" />
      <copy todir="${html5.theme.output.dir}">
@@ -107,8 +109,8 @@
   </target>
 
   <target name="package.compress" depends="package.concatenate, package.copy-assets">
-    <apply executable="java" parallel="true" dest="${html5.theme.dir}">
-      <fileset dir="${html5.theme.dir}">
+    <apply executable="java" parallel="true" dest="${html5.temp.theme.dir}">
+      <fileset dir="${html5.temp.theme.dir}">
         <include name="**/**"/>
       </fileset>
       <arg line="-jar"/>
@@ -118,47 +120,43 @@
       <mapper type="glob" from="*.${html5.concatenation.prefix}.${type}" to="*.${type}"/>
       <targetfile/>
     </apply>
-
   </target>
 
    <target name="package.concatenate">
     <echo> +++ Concatenating file before compression </echo>
+    <echo>     ${html5.temp.theme.dir}/${type}/${to}.${html5.concatenation.prefix}.${type} </echo>
 
-
-    <echo> to: ${html5.theme.dir}/${type}/${to}.${html5.concatenation.prefix}.${type} </echo>
-    <condition property="package.css">
+   <condition property="package.css">
       <equals arg1="${type}" arg2="css" />
     </condition>
 
-    <mkdir dir="${html5.theme.dir}"/>
-
-  <concat destfile="${html5.theme.dir}/${type}/${to}.${html5.concatenation.prefix}.${type}">
-    <filelist dir="${html5.theme.dir}/${html5.libs.dir}" files="${filelist}"></filelist>
-  </concat>
+    <concat destfile="${html5.temp.theme.dir}/${type}/${to}.${html5.concatenation.prefix}.${type}">
+      <filelist dir="${html5.temp.theme.dir}/${html5.libs.dir}" files="${filelist}"></filelist>
+    </concat>
 
   </target>
 
   <target name="package.prepare" unless="package.prepared">
 
-     <mkdir dir="${html5.theme.dir}" />
+    <mkdir dir="${html5.temp.theme.dir}" />
 
     <!-- copy main library -->
-    <mkdir dir="${html5.theme.dir}/${html5.libs.dir}" />
-    <copy todir="${html5.theme.dir}/${html5.libs.dir}" >
+    <mkdir dir="${html5.temp.theme.dir}/${html5.libs.dir}" />
+    <copy todir="${html5.temp.theme.dir}/${html5.libs.dir}" >
       <fileset dir="${theme.builder.dir}/${html5.libs.dir}"/>
     </copy>
 
     <!-- copy other library -->
-    <copy todir="${html5.theme.dir}/${html5.libs.dir}">
-      <fileset dir="${html5.theme.dir}">
+    <copy todir="${html5.temp.theme.dir}/${html5.libs.dir}">
+      <fileset dir="${dita.plugins.dir}">
         <include name="*/${html5.libs.dir}/**"/>
       </fileset>
       <regexpmapper from=".*/${html5.libs.dir}/(.*)" to="\1" />
     </copy>
 
     <!-- copy theme directory -->
-    <mkdir dir="${html5.theme.dir}/${html5.libs.dir}/${html5.themes.dir}" />
-    <copy todir="${html5.theme.dir}/${html5.libs.dir}/${html5.themes.dir}/">
+    <mkdir dir="${html5.temp.theme.dir}/${html5.libs.dir}/${html5.themes.dir}" />
+    <copy todir="${html5.temp.theme.dir}/${html5.libs.dir}/${html5.themes.dir}/">
       <fileset dir="${dita.plugins.dir}">
         <include name="*/theme/${html5.site.theme}/**"/>
       </fileset>
@@ -172,42 +170,47 @@
   <target name="package.copy-assets" if="package.css">
     <echo> +++ Getting assets from css files location</echo>
 
-
     <filelist id="html5.style.css.path" dir="${basedir}" files="${filelist}"/>
 
-   <pathconvert property="img.path.converted" pathsep="," refid="html5.style.css.path">
-    <mapper type="regexp" from="^${basedir}/(.*)/(.*)/css/.*.css"  to="\1/\2/img/"/>
-   </pathconvert>
+    <pathconvert property="img.path.converted" pathsep="," refid="html5.style.css.path">
+      <mapper type="regexp" from="^${basedir}/(.*)/(.*)/css/.*.css"  to="\1/\2/img/"/>
+    </pathconvert>
 
-   <pathconvert property="font.path.converted" pathsep="," refid="html5.style.css.path">
-    <mapper type="regexp" from="^${basedir}/(.*)/(.*)/css/.*.css"  to="\1/\2/fonts/"/>
-  </pathconvert>
+    <pathconvert property="font.path.converted" pathsep="," refid="html5.style.css.path">
+      <mapper type="regexp" from="^${basedir}/(.*)/(.*)/css/.*.css"  to="\1/\2/fonts/"/>
+    </pathconvert>
 
-  <fileset id="html5.imgs.path" dir="${html5.theme.dir}/${html5.libs.dir}">
-    <patternset includes="${img.path.converted}">
-      <exclude name="*.css" />
-      <exclude name="*.js" />
-      <exclude name="*.psd" />
-    </patternset>
-  </fileset>
+    <fileset id="html5.imgs.path" dir="${html5.temp.theme.dir}/${html5.libs.dir}">
+      <patternset includes="${img.path.converted}">
+        <exclude name="*.css" />
+        <exclude name="*.js" />
+        <exclude name="*.psd" />
+      </patternset>
+    </fileset>
 
-  <fileset id="html5.fonts.path" dir="${html5.theme.dir}/${html5.libs.dir}">
-    <type type="file"/>
-    <patternset includes="${font.path.converted}">
-      <exclude name="*.css" />
-      <exclude name="*.js" />
-      <include name="*.otf" />
-      <include name="*.woff" />
-      <include name="*.ttf" />
-    </patternset>
-  </fileset>
+    <fileset id="html5.fonts.path" dir="${html5.temp.theme.dir}/${html5.libs.dir}">
+      <type type="file"/>
+      <patternset includes="${font.path.converted}">
+        <exclude name="*.css" />
+        <exclude name="*.js" />
+        <include name="*.otf" />
+        <include name="*.woff" />
+        <include name="*.ttf" />
+      </patternset>
+    </fileset>
 
-  <copy todir="${html5.theme.dir}/${html5.img.dir}" failonerror="false" force="true" flatten="true">
-    <fileset refid="html5.imgs.path" />
-  </copy>
+    <copy todir="${html5.temp.theme.dir}/${html5.img.dir}" failonerror="false" force="true" flatten="true">
+      <fileset refid="html5.imgs.path" />
+    </copy>
 
-  <copy todir="${html5.theme.dir}/${html5.fonts.dir}" failonerror="false" force="true" flatten="true">
-    <fileset refid="html5.fonts.path" />
-  </copy>
+    <copy todir="${html5.temp.theme.dir}/${html5.fonts.dir}" failonerror="false" force="true" flatten="true">
+      <fileset refid="html5.fonts.path" />
+    </copy>
+
+    <echo>Sending assets to the theme and output directory</echo>
+    <mkdir dir="${html5.theme.dir}" />
+     <copy todir="${html5.theme.dir}">
+       <fileset dir="${html5.temp.theme.dir}"/>
+     </copy>
   </target>
 </project>

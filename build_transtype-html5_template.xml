@@ -28,13 +28,15 @@
   </condition>
 
   <import file="${compressor.script.filename}" />
+  <import file="compressor-install.xml" />
 
   <target name="dita2html5"
     unless="noMap"
     xmlns:dita="http://dita-ot.sourceforge.net"
-    dita:depends="d4p.map-driven-build-init, build-init, preprocess, html5"
+    dita:depends="compressor.install, d4p.map-driven-build-init, build-init, preprocess, html5"
     dita:extension="depends org.dita.dost.platform.InsertDependsAction">
   </target>
+
 
   <target name="html5"
     unless="noMap"
@@ -378,9 +380,8 @@
 
   <target name="html5.copy.graphics" unless="skip.copy.graphics"
     description="Copies graphics from input to the output directory based on the graphic map generated during html5 generation">
-    <ant antfile="${output.dir}/copy-graphics.xml">
-    </ant>
-    </target>
+    <ant antfile="${output.dir}/copy-graphics.xml"/>
+  </target>
 
 
 
