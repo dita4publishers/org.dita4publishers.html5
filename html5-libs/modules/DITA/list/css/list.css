@@ -22,13 +22,19 @@ ul li, ol li {
   list-style-position: outside;
 }
 
-/**
- * ol li:before{
- *     content: counters(item,".") ". ";
- *     counter-increment: item;
- *     display:marker;
- * }
- */
+/** full scope support
+ *
+ * nested ol lishould render
+ * 1. abc
+ * 1.1 def.
+ **/
+
+ol.full-scope { counter-reset: item }
+
+ol.full-scope li:before {
+  content: counters(item, ".") " ";
+  counter-increment: item
+}
 
 li p:first-child {
   display:inline;
