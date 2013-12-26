@@ -52,6 +52,7 @@
   </condition>
 
   <property name="html5.temp.theme.dir" location="${ditaot.temp.dir}/${html5.themes.dir}/${html5.site.theme}" />
+  <property name="html5.temp.libs.dir" location="${ditaot.temp.dir}/${html5.libs.dir}" />
   <property name="html5.theme.output.dir" location="${output.dir}/${html5.themes.dir}/${html5.site.theme}" />
 
   <available file="${html5.theme.dir}" type="dir" property="html5.theme.exists"/>
@@ -100,7 +101,7 @@
     </sequential>
   </macrodef>
 
-  <target name="package.get">
+  <target name="package.get" depends="store.builded.theme.dir">
     <echo>Sending assets to the output directory</echo>
     <mkdir dir="${html5.theme.output.dir}" />
      <copy todir="${html5.theme.output.dir}">
@@ -109,7 +110,7 @@
   </target>
 
   <target name="package.compress" depends="package.concatenate, package.copy-assets">
-    <apply executable="java" parallel="true" dest="${html5.temp.theme.dir}">
+    <apply executable="java" parallel="false" dest="${html5.temp.theme.dir}">
       <fileset dir="${html5.temp.theme.dir}">
         <include name="**/**"/>
       </fileset>
@@ -131,23 +132,23 @@
     </condition>
 
     <concat destfile="${html5.temp.theme.dir}/${type}/${to}.${html5.concatenation.prefix}.${type}">
-      <filelist dir="${html5.temp.theme.dir}/${html5.libs.dir}" files="${filelist}"></filelist>
+      <filelist dir="${html5.temp.libs.dir}" files="${filelist}"></filelist>
     </concat>
 
   </target>
 
   <target name="package.prepare" unless="package.prepared">
 
-    <mkdir dir="${html5.temp.theme.dir}" />
+    <mkdir dir="${html5.temp.libs.dir}" />
 
     <!-- copy main library -->
-    <mkdir dir="${html5.temp.theme.dir}/${html5.libs.dir}" />
-    <copy todir="${html5.temp.theme.dir}/${html5.libs.dir}" >
+    <mkdir dir="${html5.temp.libs.dir}" />
+    <copy todir="${html5.temp.libs.dir}" >
       <fileset dir="${theme.builder.dir}/${html5.libs.dir}"/>
     </copy>
 
     <!-- copy other library -->
-    <copy todir="${html5.temp.theme.dir}/${html5.libs.dir}">
+    <copy todir="${html5.temp.libs.dir}">
       <fileset dir="${dita.plugins.dir}">
         <include name="*/${html5.libs.dir}/**"/>
       </fileset>
@@ -155,8 +156,8 @@
     </copy>
 
     <!-- copy theme directory -->
-    <mkdir dir="${html5.temp.theme.dir}/${html5.libs.dir}/${html5.themes.dir}" />
-    <copy todir="${html5.temp.theme.dir}/${html5.libs.dir}/${html5.themes.dir}/">
+    <mkdir dir="${html5.temp.libs.dir}/${html5.themes.dir}" />
+    <copy todir="${html5.temp.libs.dir}/${html5.themes.dir}/">
       <fileset dir="${dita.plugins.dir}">
         <include name="*/theme/${html5.site.theme}/**"/>
       </fileset>
@@ -180,7 +181,7 @@
       <mapper type="regexp" from="^${basedir}/(.*)/(.*)/css/.*.css"  to="\1/\2/fonts/"/>
     </pathconvert>
 
-    <fileset id="html5.imgs.path" dir="${html5.temp.theme.dir}/${html5.libs.dir}">
+    <fileset id="html5.imgs.path" dir="${html5.temp.libs.dir}">
       <patternset includes="${img.path.converted}">
         <exclude name="*.css" />
         <exclude name="*.js" />
@@ -188,7 +189,7 @@
       </patternset>
     </fileset>
 
-    <fileset id="html5.fonts.path" dir="${html5.temp.theme.dir}/${html5.libs.dir}">
+    <fileset id="html5.fonts.path" dir="${html5.temp.libs.dir}">
       <type type="file"/>
       <patternset includes="${font.path.converted}">
         <exclude name="*.css" />
@@ -207,7 +208,9 @@
       <fileset refid="html5.fonts.path" />
     </copy>
 
-    <echo>Sending assets to the theme and output directory</echo>
+  </target>
+
+  <target name="store.builded.theme.dir" unless="html5.theme.exists">
     <mkdir dir="${html5.theme.dir}" />
      <copy todir="${html5.theme.dir}">
        <fileset dir="${html5.temp.theme.dir}"/>

@@ -107,7 +107,7 @@
         </xsl:if>
 
       </xsl:element>
-
+      <xsl:value-of select="$newline"/>
     </xsl:for-each>
 
   </xsl:template>
@@ -203,6 +203,7 @@
       <xsl:value-of select="value" />
 
     </xsl:element>
+    <xsl:value-of select="$newline"/>
 
 
   </xsl:template>
@@ -230,6 +231,7 @@
         </xsl:text>
       </xsl:if>
     </script>
+    <xsl:value-of select="$newline"/>
   </xsl:template>
 
   <xsl:function name="relpath:assets-uri" as="xs:string">
