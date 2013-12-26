@@ -284,7 +284,7 @@ footer h2, address strong
   -moz-box-shadow: 3px 3px 4px #ccc;
   -webkit-box-shadow: 3px 3px 4px #ccc;
   box-shadow: 3px 3px 4px #ccc;
-  min-height: 500px;
+  min-height: 800px;
   margin: 20px 0;
 }
 
@@ -295,7 +295,6 @@ footer h2, address strong
   box-shadow: none;
   display: block;
   margin: 25px 0 0 0;
-  min-height: 500px;
   padding: 15px;
 }
 
@@ -1334,13 +1333,19 @@ ul li, ol li {
   list-style-position: outside;
 }
 
-/**
- * ol li:before{
- *     content: counters(item,".") ". ";
- *     counter-increment: item;
- *     display:marker;
- * }
- */
+/** full scope support
+ *
+ * nested ol lishould render
+ * 1. abc
+ * 1.1 def.
+ **/
+
+ol.full-scope { counter-reset: item }
+
+ol.full-scope li:before {
+  content: counters(item, ".") " ";
+  counter-increment: item
+}
 
 li p:first-child {
   display:inline;

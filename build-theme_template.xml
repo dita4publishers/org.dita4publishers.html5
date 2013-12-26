@@ -29,43 +29,6 @@
 
   <loadproperties srcFile="${theme.builder.dir}/shared.properties" />
 
-  <!--
-    html5 site theme can ne set by
-     * args.cssroot
-     * setting the property in a previous ant script
-  -->
-  <condition property="html5.site.theme" value="${args.cssroot}">
-    <isset property="args.cssroot" />
-  </condition>
-
-  <condition property="html5.site.theme" value="dita-d4p-classic">
-    <not>
-      <isset property="html5.site.theme" />
-    </not>
-  </condition>
-
-  <!-- theme dir definition -->
-  <condition property="html5.theme.dir" value="${d4p.html5.dir}/${html5.themes.dir}/${html5.site.theme}">
-    <not>
-      <isset property="html5.theme.dir" />
-    </not>
-  </condition>
-
-  <property name="html5.temp.theme.dir" location="${ditaot.temp.dir}/${html5.themes.dir}/${html5.site.theme}" />
-  <property name="html5.temp.libs.dir" location="${ditaot.temp.dir}/${html5.libs.dir}" />
-  <property name="html5.theme.output.dir" location="${output.dir}/${html5.themes.dir}/${html5.site.theme}" />
-
-  <available file="${html5.theme.dir}" type="dir" property="html5.theme.exists"/>
-
-  <!-- Default location of the configuration file -->
-  <condition property="html5.site.config" value="${d4p.html5.dir}/${html5.libs.dir}/${html5.themes.dir}/${html5.site.theme}/config.xml">
-    <not>
-      <isset property="html5.site.config" />
-    </not>
-  </condition>
-
-  <property name="basedir" location="${dita.temp.dir}/${html5.themes.dir}/${html5.site.theme}/${html5.libs.dir}" />
-
   <macrodef name="package">
     <attribute name="type" />
     <attribute name="filelist"/>
@@ -100,6 +63,51 @@
         </antcall>
     </sequential>
   </macrodef>
+
+    <target name="set.properties">
+  <!--
+    html5 site theme can ne set by
+     * args.cssroot
+     * setting the property in a previous ant script
+  -->
+  <condition property="html5.site.theme" value="${args.cssroot}">
+    <isset property="args.cssroot" />
+  </condition>
+
+  <condition property="html5.site.theme" value="dita-d4p-classic">
+    <not>
+      <isset property="html5.site.theme" />
+    </not>
+  </condition>
+
+  <!-- theme dir definition -->
+  <condition property="html5.theme.dir" value="${d4p.html5.dir}/${html5.themes.dir}/${html5.site.theme}">
+    <not>
+      <isset property="html5.theme.dir" />
+    </not>
+  </condition>
+
+  <condition property="html5.theme.config.dir" value="${d4p.html5.dir}/${html5.libs.dir}/${html5.themes.dir}">
+    <not>
+      <isset property="html5.theme.config.dir" />
+    </not>
+  </condition>
+
+  <property name="html5.temp.theme.dir" location="${ditaot.temp.dir}/${html5.themes.dir}/${html5.site.theme}" />
+  <property name="html5.temp.libs.dir" location="${ditaot.temp.dir}/${html5.libs.dir}" />
+  <property name="html5.theme.output.dir" location="${output.dir}/${html5.themes.dir}/${html5.site.theme}" />
+
+  <available file="${html5.theme.dir}" type="dir" property="html5.theme.exists"/>
+
+  <!-- Default location of the configuration file -->
+  <condition property="html5.site.config" value="${html5.theme.config.dir}/${html5.site.theme}/config.xml">
+    <not>
+      <isset property="html5.site.config" />
+    </not>
+  </condition>
+
+  <property name="basedir" location="${dita.temp.dir}/${html5.themes.dir}/${html5.site.theme}/${html5.libs.dir}" />
+</target>
 
   <target name="package.get" depends="store.builded.theme.dir">
     <echo>Sending assets to the output directory</echo>

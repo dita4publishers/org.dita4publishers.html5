@@ -33,7 +33,7 @@
   <target name="dita2html5"
     unless="noMap"
     xmlns:dita="http://dita-ot.sourceforge.net"
-    dita:depends="compressor.install, d4p.map-driven-build-init, build-init, preprocess, html5"
+    dita:depends="set.properties, compressor.install, d4p.map-driven-build-init, build-init, preprocess, html5"
     dita:extension="depends org.dita.dost.platform.InsertDependsAction">
   </target>
 
