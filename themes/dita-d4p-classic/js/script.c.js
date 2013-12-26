@@ -2455,6 +2455,7 @@ $(function() {
       container.animate({
         left: parseInt(container.css('left'),10) < 0 ? 0 : '-'+ container.outerWidth()
       });
+
     }
   });
 

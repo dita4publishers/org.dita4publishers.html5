@@ -171,22 +171,15 @@
   <!-- main content -->
   <xsl:template match="*" mode="generate-main">
 
-    <div id="topic-content">
+    <div>
+      <xsl:attribute name="class"><xsl:value-of select="concat('page', ' ', name(.), ' ', @outputclass, ' ', replace(replace(@class, '/', '-'), ' - ', ' '))" /></xsl:attribute>
+
+      <xsl:if test="@id">
+        <xsl:attribute name="id"><xsl:value-of select="@id" /></xsl:attribute>
+      </xsl:if>
+
       <!-- Already put xml:lang on <html>; do not copy to body with commonattributes -->
-
       <xsl:apply-templates select="*[contains(@class,' ditaot-d/ditaval-startprop ')]/@outputclass" mode="add-ditaval-style"/>
-
-      <!--output parent or first "topic" tag's outputclass as class -->
-      <xsl:if test="@outputclass">
-       <xsl:attribute name="class"><xsl:value-of select="@outputclass" /></xsl:attribute>
-      </xsl:if>
-
-      <xsl:if test="self::dita">
-          <xsl:if test="*[contains(@class,' topic/topic ')][1]/@outputclass">
-           <xsl:attribute name="class"><xsl:value-of select="*[contains(@class,' topic/topic ')][1]/@outputclass" /></xsl:attribute>
-          </xsl:if>
-      </xsl:if>
-
       <xsl:value-of select="$newline"/>
 
       <xsl:apply-templates select="*[contains(@class,' ditaot-d/ditaval-startprop ')]" mode="out-of-line"/>

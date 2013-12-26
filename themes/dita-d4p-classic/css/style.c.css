@@ -70,17 +70,7 @@ form#search input
   height: 25px;
 }
 
-/** section container **/
-.d4p-cover-page
-{
-  display: block;
-  position: relative;
-  width: 80%;
-  height: 80%;
-  overflow: hidden;
-}
 
-.d4p-cover-page img { margin: 20px; }
 
 div.nav-pub-title h2 { font-size: 0.9em; }
 
@@ -137,22 +127,6 @@ div.nav-pub-title h2 { font-size: 0.9em; }
 
 .toolbar button:hover { cursor: pointer; }
 #d4h5-main-content { display: block; }
-
-#topic-content
-{
-  display: block;
-  background-color: #FFFFFF;
-  border: 1px solid #dfdfdf;
-  border-radius: 5px;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  -moz-box-shadow: 3px 3px 4px #ccc;
-  -webkit-box-shadow: 3px 3px 4px #ccc;
-  box-shadow: 3px 3px 4px #ccc;
-  min-height: 500px;
-  padding: 40px 60px 20px 80px;
-  margin: 20px 0;
-}
 
 section h1 { margin: 0 0 1.5em 0; }
 #d4h5-main-content h1 { margin-top: 0px; }
@@ -296,8 +270,26 @@ footer h2, address strong
 .size-large .hide-for-large { display:none; }
 .size-x-large .hide-for-x-large { display:none; }
 
-.size-small #topic-content {
+.page
+{
+  box-sizing:border-box;
+  -moz-box-sizing:border-box; /* Firefox */
+  width: 100%;
+  display: block;
   background-color: #FFFFFF;
+  border: 1px solid #dfdfdf;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -moz-box-shadow: 3px 3px 4px #ccc;
+  -webkit-box-shadow: 3px 3px 4px #ccc;
+  box-shadow: 3px 3px 4px #ccc;
+  min-height: 500px;
+  margin: 20px 0;
+}
+
+/** padding is proportinal to grid column a columns, except for small size **/
+.size-small .page {
   border: none;
   border-radius: 0px;
   box-shadow: none;
@@ -307,14 +299,38 @@ footer h2, address strong
   padding: 15px;
 }
 
+/** column size is 40px **/
+.size-medium .page {
+  padding: 40px 40px 20px 80px;
+}
+
+/** column size is 60px **/
+.size-large .page {
+  padding: 60px 60px 20px 120px;
+}
+.size-x-large .page{
+  padding: 60px 40px 20px 120px;
+}
+
+.page.d4p-cover-page {
+  margin: 20px 0;
+  padding:0;
+}
+
+.page.d4p-cover-page img {
+  width:100%;
+  height:auto;
+  margin:0;
+}
+
 .size-small #nav-content.active {
   display:block;
 }
 
 .size-small #local-navigation {
   display:block;
-  position:fixed;
-  top: 30px;
+  position:absolute;
+  top: 0px;
   left:-80%;
   width:80%;
   background-color: #fff;
@@ -326,6 +342,8 @@ footer h2, address strong
    box-shadow: 1px 1px 1px #dfdfdf;
   -moz-box-shadow: 1px 1px 1px #dfdfdf;
   -webkit-box-shadow: 1px 1px 1px #dfdfdf;
+  overflow:scroll;
+  height:100%;
 }
 
 .size-small #d4h5-main-content {
@@ -773,7 +791,7 @@ button.ui-icon {
     width: 24px;
 }
 /**
- * 
+ *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
@@ -786,15 +804,11 @@ button.ui-icon {
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  *
- */ 
+ */
 .d4p-hidden {
   display:none;
 }
-
-.d4p-cover-page {
-  padding:0 !important;
-  margin:0 !important;
-}/**
+/**
  * 
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -1297,7 +1311,7 @@ div.example {
     margin: 1em 0;
     padding: 10px;
 }/**
- * 
+ *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
@@ -1310,7 +1324,7 @@ div.example {
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  *
- */ 
+ */
 ol, ul {
   margin-left:0px;
 }
@@ -1319,6 +1333,14 @@ ul li, ol li {
   margin:1em 0 1em 1em;
   list-style-position: outside;
 }
+
+/**
+ * ol li:before{
+ *     content: counters(item,".") ". ";
+ *     counter-increment: item;
+ *     display:marker;
+ * }
+ */
 
 li p:first-child {
   display:inline;
@@ -1342,7 +1364,8 @@ ul.ullinks {
 
 ul.ullinks li.ulchildlink {
   margin:10px 0;
-}/**
+}
+/**
  * 
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -1560,7 +1583,7 @@ span.figcap {
 .link .olchildlink a {
   margin-bottom:0.2em;
 }/**
- * 
+ *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
@@ -1573,7 +1596,7 @@ span.figcap {
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  *
- */ 
+ */
 span.ph.cmd {
   margin:1.5em 0;
   display:block;
@@ -1581,13 +1604,14 @@ span.ph.cmd {
 }
 
 .taskbody .itemgroup.info {
-    background-color: #eee;
-    padding:10px;
+  border-left: 3px dotted #DFDFDF;
+  padding-left: 32px;
 }
 
 .taskbody ul li.step {
   font-size:1.1em;
-}/*!
+}
+/*!
  * jQuery UI Accordion 1.8.21
  *
  * Copyright 2012, AUTHORS.txt (http://jqueryui.com/about)

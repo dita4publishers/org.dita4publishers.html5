@@ -1,5 +1,5 @@
 /**
- * 
+ *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
@@ -12,7 +12,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  *
- */ 
+ */
 span.ph.cmd {
   margin:1.5em 0;
   display:block;
@@ -20,8 +20,8 @@ span.ph.cmd {
 }
 
 .taskbody .itemgroup.info {
-    background-color: #eee;
-    padding:10px;
+  border-left: 3px dotted #DFDFDF;
+  padding-left: 32px;
 }
 
 .taskbody ul li.step {
