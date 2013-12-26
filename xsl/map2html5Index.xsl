@@ -50,12 +50,16 @@
       <xsl:apply-templates select="*[df:class(., 'topic/title')] | @title" mode="pubtitle"/>
     </xsl:variable>
 
-    <xsl:variable name="topic-content">
-      <h1>Index</h1>
-      <div class="index-list two-columns">
-        <xsl:sequence select="$index-content"/>
+
+   <xsl:variable name="topic-content">
+      <div id="index-page" class="page index">
+        <h1>Index</h1>
+        <div class="index-list two-columns">
+          <xsl:sequence select="$index-content"/>
+        </div>
       </div>
     </xsl:variable>
+
 
     <xsl:variable name="resultUri"
       select="relpath:newFile($outdir, concat('generated-index', $OUTEXT))"
