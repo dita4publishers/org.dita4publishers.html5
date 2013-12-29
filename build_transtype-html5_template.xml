@@ -43,7 +43,7 @@
     depends="dita.map.html5"
   />
 
-  <target name="dita.map.html5.init" description="Initialize  HTML5 plugin properties">
+  <target name="dita.map.html5.init" description="Initialize HTML5 plugin properties">
 
     <condition property="http.absolute.uri" value="">
       <not>
@@ -317,16 +317,17 @@
   </target>
 
   <target name="dita.map.html5.get.package" unless="dita.map.html5.do.package">
-   <echo>Theme ${html5.site.theme} not found in ${html5.theme.dir}, building it</echo>
    <antcall target="package.get" inheritAll="yes" />
   </target>
 
   <target name="dita.map.html5.get.libs" if="args.debug">
    <echo>Args debug is on, sending copy of library</echo>
+
    <antcall target="package.prepare" inheritAll="yes" />
+
    <mkdir dir="${output.dir}/${html5.libs.dir}"/>
     <copy todir="${output.dir}/${html5.libs.dir}/" >
-      <fileset dir="${html5.theme.dir}/${html5.libs.dir}"/>
+      <fileset dir="${html5.temp.libs.dir}"/>
     </copy>
   </target>
 

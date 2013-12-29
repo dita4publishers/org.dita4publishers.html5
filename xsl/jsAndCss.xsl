@@ -248,7 +248,6 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-
     <xsl:sequence select="$pathwithdir"/>
   </xsl:function>
 
