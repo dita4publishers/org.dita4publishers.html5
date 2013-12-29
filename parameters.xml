@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <params>
-<!--   
+<!--
     Licensed to the Apache Software Foundation (ASF) under one
     or more contributor license agreements.  See the NOTICE file
     distributed with this work for additional information
@@ -36,7 +36,7 @@
     <param name="outdir" expression="${html5.xslt.outdir}"/>
 
     <!-- configuration file -->
-    <param name="HTML5THEMECONFIG" expression="${html5.xml.theme.config}"/>   
+    <param name="HTML5THEMECONFIG" expression="${html5.xml.theme.config}"/>
 
     <!-- NOTE: Case of OUTEXT matches parameter used in base HTML transform type -->
     <param name="OUTEXT" expression="${out.ext}"/><!-- Extension to use for result files, e.g., ".html" -->
@@ -49,20 +49,20 @@
 
     <!-- Parameters from dita2xhtml and similar transtypes: -->
     <param name="WORKDIR" expression="${workdir}" if="workdir"/>
-    <param name="CSS" expression="${args.css.file}" if="args.css.file" />     
-    <param name="HTML5THEMEDIR" expression="${html5.themes.output.dir}" if="html5.args.theme.file" /> 
-    <param name="CSSTHEME" expression="${html5.args.theme.file}" if="html5.args.theme.file" /> 
+    <param name="CSS" expression="${args.css.file}" if="args.css.file" />
+    <param name="HTML5THEMEDIR" expression="${html5.themes.output.dir}" if="html5.args.theme.file" />
+    <param name="CSSTHEME" expression="${html5.args.theme.file}" if="html5.args.theme.file" />
     <param name="HTML5D4PINIT" expression="$html5.d4p.init}" />
     <param name="JSONVARFILE" expression="${d4p.html5.json.vars.file.url}" if="d4p.html5.json.vars.file.url" />
     <param name="NAVIGATIONMARKUP" expression="${html5.navigation.markup}" if="html5.navigation.markup" />
     <param name="IDMAINCONTAINER" expression="${html5.id.main.container}" if="html5.id.main.container" />
-    <param name="IDSECTIONCONTAINER" expression="${html5.id.section.container}" if="html5.id.section.container" />  
+    <param name="IDSECTIONCONTAINER" expression="${html5.id.section.container}" if="html5.id.section.container" />
     <param name="IDMAINCONTENT" expression="${html5.id.main.content}" if="html5.id.main.content" />
     <param name="CLASSMAINCONTENT" expression="${html5.class.main.content}" if="html5.class.main.content" />
     <param name="CLASSMAINCONTAINER" expression="${html5.class.main.container}" if="html5.class.main.container" />
     <param name="CLASSSECTIONCONTAINER" expression="${html5.class.section.container}" if="html5.class.main.container" />
-    <param name="CLASSNAVIGATION" expression="${html5.class.navigation}" if="html5.class.navigation" />     
-    <param name="IDLOCALNAV" expression="${html5.id.navigation}" if="html5.id.navigation" />    
+    <param name="CLASSNAVIGATION" expression="${html5.class.navigation}" if="html5.class.navigation" />
+    <param name="IDLOCALNAV" expression="${html5.id.navigation}" if="html5.id.navigation" />
     <param name="GRIDPREFIX" expression="${html5.grid.prefix}" if="html5.grid.prefix" />
     <param name="JS" expression="${args.js.file}" if="args.js.file" />
     <param name="CSSPATH" expression="${user.csspath}" if="user.csspath" />
