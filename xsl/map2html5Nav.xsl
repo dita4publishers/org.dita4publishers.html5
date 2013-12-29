@@ -347,7 +347,7 @@
       <xsl:attribute name="class" select="'selected'" />
     </xsl:if>
       <xsl:attribute name="href" select="concat($prefix, @href)"/>
-      <xsl:value-of select="text()" />
+      <xsl:sequence select="node()" />
     </a>
   </xsl:template>
 

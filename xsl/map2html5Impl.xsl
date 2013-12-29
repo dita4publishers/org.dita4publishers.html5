@@ -185,18 +185,6 @@
   <xsl:param name="HTTPABSOLUTEURI" select="''" />
   <xsl:param name="OUTPUTDEFAULTNAVIGATION" select="true()" />
 
-  <xsl:param name="mathJaxInclude" select="'false'"/>
-  <xsl:param name="mathJaxIncludeBoolean" select="matches($mathJaxInclude, 'yes|true|on|1', 'i')" as="xs:boolean" />
-
-  <xsl:param name="mathJaxUseCDNLink" select="'false'"/>
-  <xsl:param name="mathJaxUseCDNLinkBoolean" select="false()" as="xs:boolean"/><!-- For EPUB, can't use remote version -->
-
-  <xsl:param name="mathJaxUseLocalLink" select="'false'"/>
-  <xsl:param name="mathJaxUseLocalLinkBoolean" select="$mathJaxIncludeBoolean" as="xs:boolean" />
-
-  <!-- FIXME: Parameterize the location of the JavaScript directory -->
-  <xsl:param name="mathJaxLocalJavascriptUri" select="'js/mathjax/MathJax.js'"/>
-
   <xsl:variable name="maxTocDepthInt" select="xs:integer($maxTocDepth)" as="xs:integer"/>
 
   <xsl:variable name="platform" as="xs:string"
