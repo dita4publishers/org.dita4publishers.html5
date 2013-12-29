@@ -28,12 +28,42 @@ ul li, ol li {
  * 1. abc
  * 1.1 def.
  **/
+/** full scope support
+ *
+ * nested ol lishould render
+ * 1. abc
+ * 1.1 def.
+ **/
+ol.full-scope {
+  counter-reset: section;
+  list-style-type: none;
+}
 
-ol.full-scope { counter-reset: item }
+ol.full-scope li:before{
+   counter-increment:section;
+   content:counter(section, decimal) ". ";/*content:"Section " counter(section) ". ";*/
+}
 
-ol.full-scope li:before {
-  content: counters(item, ".") " ";
-  counter-increment: item
+ol.full-scope li ol  {
+  list-style-type: none;
+  counter-reset: subsection;
+}
+
+ol.full-scope li ol li:before {
+   list-style-type: none;
+    counter-increment:subsection;
+    content:counter(section) "." counter(subsection, decimal) " ";
+}
+
+ol.full-scope li ol li ol  {
+  list-style-type: none;
+  counter-reset: subsubsection;
+}
+
+ol.full-scope li ol li ol li:before {
+   list-style-type: none;
+    counter-increment:subsubsection;
+    content:counter(section) "." counter(subsection, decimal) "." counter(subsubsection, decimal) " ";
 }
 
 li p:first-child {
