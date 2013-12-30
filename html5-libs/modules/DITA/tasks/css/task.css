@@ -15,13 +15,13 @@
  */
 span.ph.cmd {
   margin:1.5em 0;
-  display:block;
   font-size:1.1em;
 }
 
 .taskbody .itemgroup.info {
   border-left: 3px dotted #DFDFDF;
-  padding-left: 32px;
+  padding-left: 15px;
+  margin:1.2em 0;
 }
 
 .taskbody ul li.step {
