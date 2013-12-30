@@ -310,7 +310,7 @@
 
 
 
-  <xsl:output name="html5" method="html" indent="yes" encoding="utf-8" omit-xml-declaration="yes"/>
+  <xsl:output name="html5" method="html" indent="yes" encoding="utf-8" doctype-system="about:legacy-compat" omit-xml-declaration="yes"/>
 
   <xsl:template match="/">
     <xsl:message> + [INFO] Using DITA for Publishers HTML5 transformation type</xsl:message>
