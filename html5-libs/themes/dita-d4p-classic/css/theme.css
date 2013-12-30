@@ -228,13 +228,12 @@ footer h2, address strong
   display: block;
   padding-left:10px;
   height:25px;
-  color: #504F4F;
+  color: #FFFFFF;
   position:fixed;
   top:0;
   left:0;
   width:100%;
-  background: #EFEFEF url(../img/subtle-pattern-1.jpg) repeat;
-  border-bottom:1px solid #dfdfdf;
+  background: #000000;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
   -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
   -webkit-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
