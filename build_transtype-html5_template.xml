@@ -203,7 +203,7 @@
     </condition>
 
     <!-- the html5.themes.output.dir change in debug mode -->
-    <condition property="html5.themes.output.dir" value="libs">
+    <condition property="html5.themes.output.dir" value="${html5.libs.dir}">
       <isset property="args.debug" />
     </condition>
 
