@@ -264,7 +264,7 @@
       </attributes>
       <value>
       <![CDATA[
-        d4p.cssGridPath = d4p.dev ? 'libs/modules/960-Responsive-Grid/css/' : 'themes/dita-d4p-classic/css/';
+        d4p.cssGridPath = d4p.dev ? 'html5-libs/modules/960-Responsive-Grid/css/' : 'themes/dita-d4p-classic/css/';
         var ADAPT_CONFIG = {
           // Where is your CSS?
           path: d4p.relativePath + d4p.cssGridPath,
