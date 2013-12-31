@@ -66,6 +66,13 @@ ol.full-scope li ol li ol li:before {
     content:counter(section) "." counter(subsection, decimal) "." counter(subsubsection, decimal) " ";
 }
 
+/**
+ * steps
+ */
+li.step {
+  font-size: 1.2em;;
+}
+
 li p:first-child {
   display:inline;
 }
