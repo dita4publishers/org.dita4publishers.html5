@@ -372,6 +372,12 @@ footer h2, address strong
   padding-bottom:5px;
 
 }
+
+.syntaxhighlighter {
+  padding: 5px 0;
+  border-top: 3px solid #faf8f0;
+  border-bottom: 3px solid #faf8f0;
+}
 /* `XHTML, HTML4, HTML5 Reset
 ----------------------------------------------------------------------------------------------------*/
 
@@ -1383,6 +1389,10 @@ li.step {
   font-size: 1.2em;;
 }
 
+li.step div {
+  font-size: 1em;
+}
+
 li p:first-child {
   display:inline;
 }
@@ -1560,7 +1570,7 @@ span.figcap {
 }
 
 /**
- * 
+ *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
@@ -1573,15 +1583,18 @@ span.figcap {
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  *
- */ 
- 
+ */
+
  pre {
  overflow-x:auto;
  background: #faf8f0;
  display: block;
  padding: 0.5em 1em;
  border: 1px solid #bebab0;
-}/**
+}
+
+
+/**
  * 
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -2606,6 +2619,25 @@ span.ph.cmd {
 .ui-accordion .ui-accordion-content { padding: 1.5em 2.2em; border-top: 0; position: relative; top: 1px; margin-bottom: 2px; overflow: auto; display: none; zoom: 1; }
 .ui-accordion .ui-accordion-content-active { display: block; }
 /**
+ * 
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ */  
+body .d4p-ui-cycle {
+  display:block;
+  position:relative;
+  min-height:150px;
+}/**
  * 
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
