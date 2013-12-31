@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>   
-<!--   
+<?xml version="1.0" encoding="utf-8"?>
+<!--
        Licensed to the Apache Software Foundation (ASF) under one
        or more contributor license agreements.  See the NOTICE file
        distributed with this work for additional information
@@ -27,15 +27,15 @@
   xmlns:relpath="http://dita2indesign/functions/relpath"
   xmlns:mapdriven="http://dita4publishers.org/mapdriven"
   exclude-result-prefixes="xs xd df relpath mapdriven index-terms java xsl mapdriven"
-    xmlns:java="org.dita.dost.util.ImgUtils"
+  xmlns:java="org.dita.dost.util.ImgUtils"
   version="1.0">
 
   <xsl:template match="*" mode="process.note.common-processing">
-    
-    
-    
+
+
+
     <xsl:param name="type" select="@type"/>
-    
+
     <xsl:param name="title">
       <xsl:call-template name="getString">
         <!-- For the parameter, turn "note" into "Note", caution => Caution, etc -->
@@ -45,9 +45,9 @@
         />
       </xsl:call-template>
     </xsl:param>
-    
+
     <xsl:variable name="importance" select="@importance" />
-    
+
     <xsl:variable name="flagrules">
       <xsl:call-template name="getrules"/>
     </xsl:variable>
@@ -62,9 +62,9 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    
 
-    <xsl:element name="{$html5NoteElement}"> 
+
+    <xsl:element name="{$html5NoteElement}">
     <xsl:attribute name="class" select="concat($type, ' ', $importance)"/>
       <!--xsl:call-template name="commonattributes">
         <xsl:with-param name="default-output-class" select="$type"/>
@@ -91,8 +91,8 @@
       </xsl:call-template>
     </xsl:element>
   </xsl:template>
-  
-  
+
+
   <xsl:template match="*[contains(@class,' topic/image ')]" name="topic.image">
   <xsl:variable name="flagrules">
     <xsl:call-template name="getrules"/>
@@ -118,24 +118,24 @@
   </xsl:call-template>
   <xsl:call-template name="setaname"/>
   <xsl:choose>
-  
-  
+
+
    <xsl:when test="@placement='break'"><!--Align only works for break-->
       <div class="block wide">
        <xsl:call-template name="topic-image"/>
       </div>
-   </xsl:when>   
-   
+   </xsl:when>
+
    <xsl:otherwise>
     <xsl:call-template name="topic-image"/>
    </xsl:otherwise>
   </xsl:choose>
-  
+
   <xsl:call-template name="end-revflag">
     <xsl:with-param name="flagrules" select="$flagrules"/>
   </xsl:call-template>
   <xsl:call-template name="end-flagit">
-    <xsl:with-param name="flagrules" select="$flagrules"></xsl:with-param> 
+    <xsl:with-param name="flagrules" select="$flagrules"></xsl:with-param>
   </xsl:call-template>
   <!-- build any post break indicated by style -->
   <xsl:if test="not(@placement='inline')"><br/></xsl:if>
@@ -152,14 +152,14 @@
       <xsl:with-param name="with" select="'.svg'"/>
     </xsl:call-template>
   </xsl:variable>
-  
+
   <xsl:variable name="ends-with-svgz">
     <xsl:call-template name="ends-with">
       <xsl:with-param name="text" select="@href"/>
       <xsl:with-param name="with" select="'.svgz'"/>
     </xsl:call-template>
   </xsl:variable>
-  
+
   <xsl:variable name="scale-to-fit">
   <xsl:choose>
     <xsl:when test="@scalefit='yes'">
@@ -167,13 +167,13 @@
     </xsl:when>
   </xsl:choose>
   </xsl:variable>
-  
+
   <xsl:variable name="isSVG" select="$ends-with-svg = 'true' or $ends-with-svgz = 'true'"/>
-  
+
 <xsl:choose>
  <xsl:when test="$isSVG">
         <!-- @see article
-            http://e.metaclarity.org/52/cross-browser-svg-issues/ 
+            http://e.metaclarity.org/52/cross-browser-svg-issues/
         -->
         <object type="image/svg+xml" data="{@href}">
       <xsl:call-template name="commonattributes">
@@ -196,9 +196,9 @@
     <xsl:attribute name="class">
     <xsl:value-of select="concat(@placement, ' ', @align, ' ', $scale-to-fit)" />
     </xsl:attribute>
-    
+
     <xsl:call-template name="setid"/>
-   
+
     <xsl:apply-templates select="@href|@height|@width"/>
     <!-- Add by Alan for Bug:#2900417 on Date: 2009-11-23 begin -->
     <xsl:apply-templates select="@scale"/>
@@ -217,16 +217,16 @@
 </xsl:choose>
 </xsl:template>
 
-<!-- This is an override of the same template from dita2htmlmpl.xsl. It 
+<!-- This is an override of the same template from dita2htmlmpl.xsl. It
        uses xtrf rather than $OUTPUTDIR to provide the location of the
        graphic as authored, not as output.
     -->
   <xsl:template match="*[contains(@class,' topic/image ')]/@scale">
-    
+
     <xsl:variable name="xtrf" as="xs:string" select="../@xtrf"/>
-    <xsl:variable name="baseUri" as="xs:string" 
+    <xsl:variable name="baseUri" as="xs:string"
       select="relpath:getParent($xtrf)"/>
-    
+
     <xsl:variable name="width">
       <xsl:choose>
         <xsl:when test="not(contains(../@href,'://'))">
@@ -253,7 +253,7 @@
     </xsl:if>
      <xsl:attribute name="class" select="../@align" />
   </xsl:template>
-  
+
 
 
 

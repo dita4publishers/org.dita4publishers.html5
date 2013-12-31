@@ -73,7 +73,9 @@
       <!-- Custom jQuery widgets -->
       <file path="modules/jQuery-widgets/navigation/classic/css/collapsible-navigation.css" />
 
-
+      <!--Syntax highlighter https://github.com/alexgorbatchev/SyntaxHighlighter -->
+      <file path="modules/syntaxhighlighter_3.0.83/styles/shCore.css" />
+      <file path="modules/syntaxhighlighter_3.0.83/styles/shThemeDefault.css" />
     </source>
   </tag>
 
@@ -243,7 +245,20 @@
       <file path="modules/jQuery-ui/ui/jquery.ui.core.js" />
       <file path="modules/jQuery-ui/ui/jquery.ui.widget.js" />
       <file path="modules/jQuery-ui/ui/jquery.ui.accordion.js" />
-      <file path="themes/dita-d4p-classic/js/script.js" />
+
+      <!-- Syntax highlighter -->
+      <file path="modules/syntaxhighlighter_3.0.83/scripts/shCore.js"/>
+       <!--
+         At least one brush, here we choose JS. You need to include a brush for every
+         language you want to highlight
+        -->
+       <file path="modules/syntaxhighlighter_3.0.83/scripts/shBrushJScript.js"/>
+       <file path="modules/syntaxhighlighter_3.0.83/scripts/shBrushXML.js"/>
+       <file path="modules/syntaxhighlighter_3.0.83/scripts/shBrushPhp.js"/>
+       <file path="modules/syntaxhighlighter_3.0.83/scripts/shBrushCss.js"/>
+       <file path="modules/syntaxhighlighterAdapter/syntaxHighlighterAdapter.js"/>
+       <file path="themes/dita-d4p-classic/js/script.js" />
+
 
       <!-- code to instantiate jQuery UI -->
       <!--file path="modules/jQuery-widgets-init/accordion/accordion.js" /-->
