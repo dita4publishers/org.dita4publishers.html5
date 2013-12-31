@@ -1,7 +1,13 @@
 $(function() {
   $('pre').each(function(){
+
     var language = $(this).attr('data-language');
-    $(this).addClass('brush: ' + language);
+
+    if(language != undefined)
+    {
+      $(this).addClass('brush: ' + language);
+    }
+
   })
 
   SyntaxHighlighter.all()
