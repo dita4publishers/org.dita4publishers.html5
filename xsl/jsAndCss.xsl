@@ -92,6 +92,10 @@
         </xsl:call-template>
       </xsl:variable>
 
+      <xsl:if test="prefix and prefix != ''">
+        <xsl:value-of select="prefix" disable-output-escaping="yes"/>
+      </xsl:if>
+
       <xsl:element name="{$name}">
 
         <xsl:for-each select="$attributes/*">
@@ -107,6 +111,11 @@
         </xsl:if>
 
       </xsl:element>
+
+      <xsl:if test="suffix and suffix != ''">
+        <xsl:value-of select="suffix" disable-output-escaping="yes"/>
+      </xsl:if>
+
       <xsl:value-of select="$newline"/>
     </xsl:for-each>
 
@@ -153,13 +162,22 @@
       </xsl:call-template>
     </xsl:variable>
 
+    <xsl:if test="prefix and prefix != ''">
+      <xsl:value-of select="prefix" disable-output-escaping="yes"/>
+    </xsl:if>
+
     <xsl:element name="{$name}">
       <xsl:for-each select="$attributes/*">
         <xsl:attribute name="{@name}" select="@value"/>
       </xsl:for-each>
 
-      <xsl:value-of select="value" />
+      <xsl:value-of select="value"  disable-output-escaping="yes" />
     </xsl:element>
+
+    <xsl:if test="suffix and suffix != ''">
+      <xsl:value-of select="suffix"/>
+    </xsl:if>
+
   </xsl:template>
 
 
@@ -186,6 +204,10 @@
       </xsl:choose>
     </xsl:variable>
 
+    <xsl:if test="prefix and prefix != ''">
+      <xsl:value-of select="prefix" disable-output-escaping="yes"/>
+    </xsl:if>
+
     <xsl:element name="{$name}">
 
       <xsl:for-each select="attributes/*">
@@ -203,6 +225,11 @@
       <xsl:value-of select="value" />
 
     </xsl:element>
+
+    <xsl:if test="suffix and suffix != ''">
+      <xsl:value-of select="suffix" disable-output-escaping="yes"/>
+    </xsl:if>
+
     <xsl:value-of select="$newline"/>
 
 
@@ -215,6 +242,7 @@
     <xsl:choose>
       <xsl:when test="$name = 'link'">link</xsl:when>
       <xsl:when test="$name = 'script'">script</xsl:when>
+      <xsl:when test="$name = 'style'">style</xsl:when>
       <xsl:otherwise>meta</xsl:otherwise>
     </xsl:choose>
   </xsl:template>
