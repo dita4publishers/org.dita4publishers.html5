@@ -14,7 +14,7 @@ Install the [DITA for publishers project](http://sourceforge.net/projects/dita4p
 
 Get the latest version of this plugin
 -------------------------------------
-* download the latest release under the releases tabs, and extract it
+download the latest release under the releases tabs, and extract it
 
 Unzip this so that the net.sourceforge.dita4publishers.html5 subdirectory
 is a child of the DITA-OT plugins or demo directory (e.g. C:\DITA-OTx.y\plugins\), and
@@ -22,9 +22,10 @@ you should be ready to go.
 
 Running the transformation
 --------------------------
-Using Ant:
-ant -Dargs.input=samples/hierarchy.ditamap -Doutput.dir=out/garage-num -Dtranstype=html5
 
-Using Java:
-java -jar lib\dost.jar /i:samples/hierarchy.ditamap /transtype:html5
+    Using Ant:
+    ant -Dargs.input=samples/hierarchy.ditamap -Doutput.dir=out/garage-num -Dtranstype=html5
+
+    Using Java:
+    java -jar lib\dost.jar /i:samples/hierarchy.ditamap /transtype:html5
 
