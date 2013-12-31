@@ -20,9 +20,21 @@
 <html5>
   <!--
 
-    Every CSS below this marker should be easely reusable
+    Information:
 
-  -->
+    Every CSS below this marker should be easely reusable
+    The structure is simple, every tag represent a real tag in the final html output
+
+    name: Supported tags are style, script and link
+    output: if yes, output the tag in the html head, if false, the file will only send to ouput
+    filename: the final filename
+    prefix: used to add IE conditional comments
+    suffix: same as previous
+    attributes: define all attributes you want to have in the tag
+    value: direct content to be output, use CDATA
+    source: list of file to be concatenated and compressed
+    -->
+
   <!-- Core -->
   <tag>
     <name>link</name>
@@ -256,6 +268,7 @@
        <file path="modules/syntaxhighlighter_3.0.83/scripts/shBrushXML.js"/>
        <file path="modules/syntaxhighlighter_3.0.83/scripts/shBrushPhp.js"/>
        <file path="modules/syntaxhighlighter_3.0.83/scripts/shBrushCss.js"/>
+       <file path="modules/syntaxhighlighter_3.0.83/scripts/shBrushBash.js"/>
        <file path="modules/syntaxhighlighterAdapter/syntaxHighlighterAdapter.js"/>
        <file path="themes/dita-d4p-classic/js/script.js" />
 
