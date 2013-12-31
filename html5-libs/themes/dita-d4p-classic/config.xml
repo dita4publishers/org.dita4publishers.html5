@@ -82,6 +82,9 @@
       <file path="modules/jQuery-ui/themes/d4p-default/jquery.ui.theme.css" />
       <file path="modules/jQuery-ui/themes/d4p-default/jquery.ui.accordion.css" />
 
+      <!-- cycle -->
+      <file path="modules/jQuery-widgets/cycle/css/cycle.css" />
+
       <!-- Custom jQuery widgets -->
       <file path="modules/jQuery-widgets/navigation/classic/css/collapsible-navigation.css" />
 
@@ -277,8 +280,8 @@
       <!--file path="modules/jQuery-widgets-init/accordion/accordion.js" /-->
 
       <!-- jQuery Cycle -->
-      <!--file path="modules/jQuery-widgets/cycle/js/cycle.js" /-->
-      <!--file path="modules/jQuery-widgets/cycle/js/jquery.cycle.js" /-->
+      <file path="modules/jQuery-widgets/cycle/js/cycle.js" />
+      <file path="modules/jQuery-widgets/cycle/js/jquery.cycle.js" />
     </source>
   </tag>
 

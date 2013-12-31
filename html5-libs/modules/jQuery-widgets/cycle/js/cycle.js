@@ -3,8 +3,8 @@
  *
  * adapter to jQuery Cycle
  *
- *  Copyright 2012 DITA For Publishers  
- * 
+ *  Copyright 2012 DITA For Publishers
+ *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
@@ -17,20 +17,13 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  *
- */ 
-(function (d4p) {
+ */
+$(function() {
 
-  d4p.ui.cycle = {
+ $('.d4p-ui-cycle').cycle({
+    fx: 'fade',
+    speed: 500,
+    timeout: 2000,
+  });
 
-    init: function (obj) {
-
-      obj.cycle({
-        fx: 'fade',
-        speed: 500,
-        timeout: 2000,
-      });
-    }
-
-  };
-
-})(d4p);
+});
