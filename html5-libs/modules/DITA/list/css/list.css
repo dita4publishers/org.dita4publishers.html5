@@ -73,6 +73,10 @@ li.step {
   font-size: 1.2em;;
 }
 
+li.step div {
+  font-size: 1em;
+}
+
 li p:first-child {
   display:inline;
 }
