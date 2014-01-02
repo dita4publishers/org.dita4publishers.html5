@@ -1158,7 +1158,7 @@ var navigation = {
 
          $(this).attr('role', 'treeitem');
 
-         //if li has ul children add class collapsible
+         // collapsible
          if ($(this).hasClass('collapsible')) {
 
             // create span for icone
@@ -1170,15 +1170,19 @@ var navigation = {
             });
             $(this).prepend(span);
           }
+          //topichead
+          $(this).children('.navtitle').on('click', function() {
+              $(this).parent().toggleClass('active').toggleClass('collapsed');
+          });
         }
       );
     },
 
     addToolbar: function () {
       if(this.toolbar.position == 'top') {
-         $("#local-navigation").parent().prepend($("<div />").attr('id', this.toolbar.id).attr('class', 'toolbar top'));
+         $("#local-navigation").prepend($("<div />").attr('id', this.toolbar.id).attr('class', 'toolbar top hide-on-small'));
       } else {
-        $("#local-navigation").parent().append($("<div />").attr('id', this.toolbar.id).attr('class', 'toolbar bottom'));
+        $("#local-navigation").append($("<div />").attr('id', this.toolbar.id).attr('class', 'toolbar bottom hide-on-small'));
       }
     },
 
@@ -1190,7 +1194,7 @@ var navigation = {
       collapse = $("<span/>").attr("class", "hidden").html("Collapse All"),
       btnExpand = $("<button/>").attr('id', 'expandBtn').attr('class', 'ui-state-default').append(expandIco).append(expand).click(function(){
         $("#local-navigation" + ' li')
-          .addClass('selected')
+          .addClass('active')
           .removeClass('collapsed')
           .attr('aria-expanded', 'true');
 
@@ -1202,6 +1206,7 @@ var navigation = {
         o.select();
         $("#local-navigation" + ' li')
           .removeClass('selected')
+          .removeClass('active')
           .addClass('collapsed')
           .removeAttr('aria-expanded');
 
@@ -1221,10 +1226,9 @@ var navigation = {
 
       this.traverse();
 
-      if(this.buttons) {
-        this.addToolbar();
-        this.addButtons();
-      }
+      this.addToolbar();
+      this.addButtons();
+
 
     }
     };
@@ -2436,6 +2440,30 @@ $.extend( $.ui.accordion, {
 });
 
 })( jQuery );
+/**
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ */
+$(function() {
+  $('.d4p-ui-accordion').accordion({
+    header: '> section > h2',
+    heightStyle: 'content',
+    active: false,
+    collapsible: true
+  });
+});
+
 /**
  * SyntaxHighlighter
  * http://alexgorbatchev.com/SyntaxHighlighter
