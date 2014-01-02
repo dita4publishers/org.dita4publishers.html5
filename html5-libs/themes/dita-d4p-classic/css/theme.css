@@ -28,8 +28,30 @@ body
   background: #FFFFFF;
 }
 
-h1, h2, h3, h4, h5, h6 { color: #3887b0; }
+h1, h2, h3, h4, h5, h6 {
+  color: #3887b0;
+  font-weight: lighter;
+}
 
+h1 {
+  font-size:2.5em;
+}
+h2 {
+  font-size:2em;
+}
+h3 {
+  font-size:1.8em;
+}
+h4 {
+  font-size:1.6em;
+}
+h5 {
+  font-size:1.4em;
+}
+h6 {
+  font-size:1.2em;
+  font-weight: bold;
+}
 /** header **/
 header { margin: 0 auto; }
 
@@ -37,19 +59,11 @@ header h1
 {
   display: block;
   color: #504F4F;
-  font-size: 2.2em;
+  font-size: 2.5em;
   font-weight: 200;
   padding-left: 12px;
   margin-top: 20px;
-  text-shadow: 0 2px 1px #CCC;
   letter-spacing: 2px;
-}
-
-h1, .nav-pub-title  {
-  font-family: 'Vegur Light','Lucida Grande',Helvetica,Arial,Verdana,sans-serif;
-}
-.nav-pub-title {
-  font-weight: bold;
 }
 
 form#search
@@ -117,6 +131,10 @@ div.nav-pub-title h2 { font-size: 0.9em; }
   box-shadow: 1px 1px 4px #dfdfdf;
   padding-top: 3px;
 }
+#local-navigation .toolbar
+{
+  margin-right:15px;
+}
 
 .toolbar button
 {
@@ -158,7 +176,7 @@ span.navtitle, li.collapsible a:link { color: #3887b0; }
 
 #d4h5-main-container nav#local-navigation a:visited { color: #3887b0; }
 #d4h5-main-container a:active { color: red; }
-#d4h5-main-content h1 { font-size: 2em; }
+
 
 .rounded
 {
