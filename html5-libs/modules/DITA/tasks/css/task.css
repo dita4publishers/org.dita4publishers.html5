@@ -18,11 +18,7 @@ span.ph.cmd {
 }
 
 .taskbody .itemgroup.info {
-  border-left: 3px dotted #DFDFDF;
-  padding-left: 15px;
   margin:1.2em 0;
-  position: relative;
-  left:-12px;
 }
 
 .taskbody ul li.step {
