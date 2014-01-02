@@ -49,7 +49,6 @@
     </attributes>
     <value></value>
     <source>
-      <file path="themes/dita-d4p-classic/css/theme.css" />
 
       <file path="modules/960js/code/css/reset.css" />
       <file path="modules/960js/code/css/text.css" />
@@ -57,6 +56,7 @@
       <!-- Vegur font -->
       <file path="misc/fonts/vegur/css/vegur.css" />
       <file path="misc/fonts/vegur/css/typography.css" />
+
 
       <!-- D4P specific -->
       <file path="modules/features/layout/css/ui-icons.css" />
@@ -91,6 +91,9 @@
       <!--Syntax highlighter https://github.com/alexgorbatchev/SyntaxHighlighter -->
       <file path="modules/syntaxhighlighter_3.0.83/styles/shCore.css" />
       <file path="modules/syntaxhighlighter_3.0.83/styles/shThemeDefault.css" />
+
+      <!-- place your theme.css style at the bottom, so you can override any previous declaration -->
+      <file path="themes/dita-d4p-classic/css/theme.css" />
     </source>
   </tag>
 
@@ -260,6 +263,7 @@
       <file path="modules/jQuery-ui/ui/jquery.ui.core.js" />
       <file path="modules/jQuery-ui/ui/jquery.ui.widget.js" />
       <file path="modules/jQuery-ui/ui/jquery.ui.accordion.js" />
+      <file path="modules/jQuery-widgets-init/accordion/accordion.js" />
 
       <!-- Syntax highlighter -->
       <file path="modules/syntaxhighlighter_3.0.83/scripts/shCore.js"/>
@@ -280,6 +284,7 @@
       <!--file path="modules/jQuery-widgets-init/accordion/accordion.js" /-->
 
       <!-- jQuery Cycle -->
+
       <file path="modules/jQuery-widgets/cycle/js/cycle.js" />
       <file path="modules/jQuery-widgets/cycle/js/jquery.cycle.js" />
     </source>
