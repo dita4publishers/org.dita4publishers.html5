@@ -69,12 +69,59 @@ ol.full-scope li ol li ol li:before {
 /**
  * steps
  */
-li.step {
-  font-size: 1.2em;;
+ol.steps
+{
+  counter-reset: section;
+  list-style-type: none;
 }
 
-li.step div {
-  font-size: 1em;
+ol.steps li { margin: 1.5 0; }
+
+ol.steps li span.cmd
+{
+  font-size: 1.2em;
+  display: block;
+  margin: 0 0 1.5em 0;
+  border-bottom: 1px solid #666;
+}
+
+ol.steps li:before
+{
+  counter-increment: section;
+  content: " " counter(section, decimal);
+  /*content:"Section " counter(section) ". ";*/
+  background-color: #666;
+  border-radius: 20px;
+  color: #FFF;
+  text-align:center;
+  vertical-align: bottom;
+  display: block;
+  position: relative;
+  left: -45px;
+  width: 25px;
+  height: 25px;
+  top: 25px;
+  line-height: 25px;
+}
+
+ol.steps li ol
+{
+  counter-reset: none;
+  list-style-type: decimal;
+}
+
+ol.steps li ul
+{
+  counter-reset: none;
+  list-style-type: bullet;
+}
+
+ol.steps li ol li:before, ol.steps li ul li:before
+{
+  content: '';
+  counter-increment: none;
+  display: inline;
+  background: #FFF;
 }
 
 li p:first-child {
