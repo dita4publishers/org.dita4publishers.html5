@@ -39,7 +39,7 @@ var navigation = {
 
          $(this).attr('role', 'treeitem');
 
-         //if li has ul children add class collapsible
+         // collapsible
          if ($(this).hasClass('collapsible')) {
 
             // create span for icone
@@ -51,15 +51,19 @@ var navigation = {
             });
             $(this).prepend(span);
           }
+          //topichead
+          $(this).children('.navtitle').on('click', function() {
+              $(this).parent().toggleClass('active').toggleClass('collapsed');
+          });
         }
       );
     },
 
     addToolbar: function () {
       if(this.toolbar.position == 'top') {
-         $("#local-navigation").parent().prepend($("<div />").attr('id', this.toolbar.id).attr('class', 'toolbar top'));
+         $("#local-navigation").prepend($("<div />").attr('id', this.toolbar.id).attr('class', 'toolbar top hide-on-small'));
       } else {
-        $("#local-navigation").parent().append($("<div />").attr('id', this.toolbar.id).attr('class', 'toolbar bottom'));
+        $("#local-navigation").append($("<div />").attr('id', this.toolbar.id).attr('class', 'toolbar bottom hide-on-small'));
       }
     },
 
@@ -71,7 +75,7 @@ var navigation = {
       collapse = $("<span/>").attr("class", "hidden").html("Collapse All"),
       btnExpand = $("<button/>").attr('id', 'expandBtn').attr('class', 'ui-state-default').append(expandIco).append(expand).click(function(){
         $("#local-navigation" + ' li')
-          .addClass('selected')
+          .addClass('active')
           .removeClass('collapsed')
           .attr('aria-expanded', 'true');
 
@@ -83,6 +87,7 @@ var navigation = {
         o.select();
         $("#local-navigation" + ' li')
           .removeClass('selected')
+          .removeClass('active')
           .addClass('collapsed')
           .removeAttr('aria-expanded');
 
@@ -102,10 +107,9 @@ var navigation = {
 
       this.traverse();
 
-      if(this.buttons) {
-        this.addToolbar();
-        this.addButtons();
-      }
+      this.addToolbar();
+      this.addButtons();
+
 
     }
     };
