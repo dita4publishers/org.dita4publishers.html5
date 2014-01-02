@@ -17,7 +17,7 @@
     specific language governing permissions and limitations
     under the License.
 -->
-<project name="dita2html5" default="dita2html5" xmlns:dita="http://dita-ot.sourceforge.net">
+<project name="dita2html5" default="dita2d4p-html5" xmlns:dita="http://dita-ot.sourceforge.net">
 
   <dirname property="ditaot.dir" file="${d4p.html5.dir}/../../"/>
 
@@ -30,7 +30,7 @@
   <import file="${compressor.script.filename}" />
   <import file="compressor-install.xml" />
 
-  <target name="dita2html5"
+  <target name="dita2d4p-html5"
     unless="noMap"
     xmlns:dita="http://dita-ot.sourceforge.net"
     dita:depends="set.properties, compressor.install, d4p.map-driven-build-init, build-init, preprocess, html5"
