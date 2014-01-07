@@ -57,6 +57,8 @@
       <file path="misc/fonts/vegur/css/vegur.css" />
       <file path="misc/fonts/vegur/css/typography.css" />
 
+      <!-- Foundation font (icons) -->
+      <file path="misc/fonts/foundation-icons/css/foundation-icons.css" />
 
       <!-- D4P specific -->
       <file path="modules/features/layout/css/ui-icons.css" />
@@ -102,7 +104,7 @@
   <tag>
     <name>link</name>
     <output>no</output>
-    <filename>mobile.min.css</filename>
+    <filename>mobile.css</filename>
     <prefix></prefix>
     <suffix></suffix>
     <attributes>
@@ -120,7 +122,7 @@
   <tag>
     <name>link</name>
     <output>no</output>
-    <filename>720.min.css</filename>
+    <filename>720.css</filename>
     <prefix></prefix>
     <suffix></suffix>
     <attributes>
@@ -138,7 +140,7 @@
   <tag>
     <name>link</name>
     <output>no</output>
-    <filename>960.min.css</filename>
+    <filename>960.css</filename>
     <prefix></prefix>
     <suffix></suffix>
     <attributes>
@@ -156,7 +158,7 @@
   <tag>
     <name>link</name>
     <output>no</output>
-    <filename>1200.min.css</filename>
+    <filename>1200.css</filename>
     <prefix></prefix>
     <suffix></suffix>
     <attributes>
@@ -174,7 +176,7 @@
   <tag>
     <name>link</name>
     <output>no</output>
-    <filename>1560.min.css</filename>
+    <filename>1560.css</filename>
     <prefix></prefix>
     <suffix></suffix>
     <attributes>
@@ -192,7 +194,7 @@
   <tag>
     <name>link</name>
     <output>no</output>
-    <filename>1920.min.css</filename>
+    <filename>1920.css</filename>
     <prefix></prefix>
     <suffix></suffix>
     <attributes>
@@ -210,7 +212,7 @@
   <tag>
     <name>link</name>
     <output>no</output>
-    <filename>2520.min.css</filename>
+    <filename>2520.css</filename>
     <prefix></prefix>
     <suffix></suffix>
     <attributes>
@@ -241,57 +243,6 @@
 
   <tag>
     <name>script</name>
-    <output>yes</output>
-    <filename>script.js</filename>
-    <prefix></prefix>
-    <suffix></suffix>
-    <attributes>
-        <type>text/javascript</type>
-    </attributes>
-    <value></value>
-    <source>
-
-      <file path="modules/modernizr/modernizr.dev.2.0.6.js" />
-
-      <!--file path="modules/prefixFree/prefixFree.js" /-->
-      <file path="modules/jQuery/jquery-1.7.1.min.js" />
-
-      <!-- navigation -->
-      <file path="modules/jQuery-widgets/navigation/classic/js/navigation.js" />
-
-      <!-- jquery ui -->
-      <file path="modules/jQuery-ui/ui/jquery.ui.core.js" />
-      <file path="modules/jQuery-ui/ui/jquery.ui.widget.js" />
-      <file path="modules/jQuery-ui/ui/jquery.ui.accordion.js" />
-      <file path="modules/jQuery-widgets-init/accordion/accordion.js" />
-
-      <!-- Syntax highlighter -->
-      <file path="modules/syntaxhighlighter_3.0.83/scripts/shCore.js"/>
-       <!--
-         At least one brush, here we choose JS. You need to include a brush for every
-         language you want to highlight
-        -->
-       <file path="modules/syntaxhighlighter_3.0.83/scripts/shBrushJScript.js"/>
-       <file path="modules/syntaxhighlighter_3.0.83/scripts/shBrushXML.js"/>
-       <file path="modules/syntaxhighlighter_3.0.83/scripts/shBrushPhp.js"/>
-       <file path="modules/syntaxhighlighter_3.0.83/scripts/shBrushCss.js"/>
-       <file path="modules/syntaxhighlighter_3.0.83/scripts/shBrushBash.js"/>
-       <file path="modules/syntaxhighlighterAdapter/syntaxHighlighterAdapter.js"/>
-       <file path="themes/dita-d4p-classic/js/script.js" />
-
-
-      <!-- code to instantiate jQuery UI -->
-      <!--file path="modules/jQuery-widgets-init/accordion/accordion.js" /-->
-
-      <!-- jQuery Cycle -->
-
-      <file path="modules/jQuery-widgets/cycle/js/cycle.js" />
-      <file path="modules/jQuery-widgets/cycle/js/jquery.cycle.js" />
-    </source>
-  </tag>
-
- <tag>
-    <name>script</name>
       <output>yes</output>
       <prefix></prefix>
       <suffix></suffix>
@@ -317,16 +268,16 @@
           // Separate ranges by "to" keyword.
           range: [
              // small (size-0)
-            '0px    to 760px  = mobile.min.css',
+            '0px    to 760px  = mobile.css',
              // medium (size-1, size-2)
-            '760px  to 980px  = 720.min.css',
-            '980px  to 1270px = 960.min.css',
+            '760px  to 980px  = 720.css',
+            '980px  to 1270px = 960.css',
              // large (size-3, size-5)
-            '1270px to 1600px = 1200.min.css',
-            '1600px to 1940px = 1560.min.css',
+            '1270px to 1600px = 1200.css',
+            '1600px to 1940px = 1560.css',
              // extra large (size-6)
-            '1940px to 2540px = 1920.min.css',
-            '2540px           = 2520.min.css'
+            '1940px to 2540px = 1920.css',
+            '2540px           = 2520.css'
           ]
         };
 
@@ -361,7 +312,7 @@
   <tag>
     <name>script</name>
     <output>yes</output>
-    <filename>adapt.js</filename>
+    <filename>script.js</filename>
     <prefix></prefix>
     <suffix></suffix>
     <attributes>
@@ -369,10 +320,48 @@
     </attributes>
     <value></value>
     <source>
-      <!-- The adapt.js for responsive tools -->
-      <file path="modules/960-Responsive-Grid/js/adapt.js" />
+
+      <file path="modules/modernizr/modernizr.custom.18138.js" />
+
+      <!--file path="modules/prefixFree/prefixFree.js" /-->
+      <file path="modules/jQuery/jquery-1.10.2.min.js" />
+
+      <!-- navigation -->
+      <file path="modules/jQuery-widgets/navigation/classic/js/navigation.js" />
+
+      <!-- jquery ui -->
+      <file path="modules/jQuery-ui/ui/jquery.ui.core.js" />
+      <file path="modules/jQuery-ui/ui/jquery.ui.widget.js" />
+      <file path="modules/jQuery-ui/ui/jquery.ui.accordion.js" />
+      <file path="modules/jQuery-widgets-init/accordion/accordion.js" />
+
+      <!-- Syntax highlighter -->
+      <file path="modules/syntaxhighlighter_3.0.83/scripts/shCore.js"/>
+       <!--
+         At least one brush, here we choose JS. You need to include a brush for every
+         language you want to highlight
+        -->
+       <file path="modules/syntaxhighlighter_3.0.83/scripts/shBrushJScript.js"/>
+       <file path="modules/syntaxhighlighter_3.0.83/scripts/shBrushXML.js"/>
+       <file path="modules/syntaxhighlighter_3.0.83/scripts/shBrushPhp.js"/>
+       <file path="modules/syntaxhighlighter_3.0.83/scripts/shBrushCss.js"/>
+       <file path="modules/syntaxhighlighter_3.0.83/scripts/shBrushBash.js"/>
+       <file path="modules/syntaxhighlighterAdapter/syntaxHighlighterAdapter.js"/>
+
+
+       <!-- jQuery Cycle -->
+
+      <file path="modules/jQuery-widgets/cycle/js/cycle.js" />
+      <file path="modules/jQuery-widgets/cycle/js/jquery.cycle.js" />
+
+      <!-- adapt -->-
+       <file path="modules/960-Responsive-Grid/js/adapt.js" />
+       <file path="themes/dita-d4p-classic/js/script.js" />
+
     </source>
   </tag>
+
+
 
   <!--
     external libraries, stored locally
