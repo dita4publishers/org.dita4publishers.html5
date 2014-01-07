@@ -16,6 +16,10 @@
 .unresolved { background-color: skyblue; }
 .noTemplate { background-color: yellow; }
 
+.filepath {
+  word-wrap: break-word;
+}
+
 /* div with class=p is used for paragraphs that contain blocks, to keep the XHTML valid */
 .p { margin-top: 1em; }
 
