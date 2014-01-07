@@ -15,7 +15,7 @@
  */
 $(function() {
   $('.d4p-ui-accordion').accordion({
-    header: '> section > h2',
+    header: '> .section > h2',
     heightStyle: 'content',
     active: false,
     collapsible: true
