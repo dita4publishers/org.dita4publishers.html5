@@ -348,9 +348,14 @@
 
     <xsl:message> + [INFO] Collecting data for index generation, enumeration, etc....</xsl:message>
 
-  <!-- collected data -->
+    <!-- collected data -->
     <xsl:variable name="collected-data" as="element()">
       <xsl:call-template name="mapdriven:collect-data"/>
+    </xsl:variable>
+
+    <!-- map data elements -->
+    <xsl:variable name="map-metadata" as="element()*">
+      <xsl:sequence select="*[contains(@class, ' map/topicmeta ')]/*[contains(@class, 'topic/data')]" />
     </xsl:variable>
 
     <xsl:if test="true() or $debugBoolean">
@@ -423,6 +428,7 @@
       <xsl:with-param name="has-index" as="xs:boolean" select="$has-index" tunnel="yes" />
       <xsl:with-param name="is-root" as="xs:boolean" select="false()" tunnel="yes"/>
       <xsl:with-param name="audienceSelect"  select="$audienceSelect" tunnel="yes"/>
+      <xsl:with-param name="map-metadata" select="$map-metadata" tunnel="yes"/>
     </xsl:apply-templates>
 
     <!-- add index support -->

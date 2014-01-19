@@ -270,6 +270,7 @@ footer h2, address strong
   background-color:#000;
   color:#FFF;
   height:35px;
+  z-index:100;
 }
 
 .mobile-nav ul, .mobile-nav ul li, .mobile-nav a, .mobile-nav a:link, .mobile-nav section
@@ -476,4 +477,23 @@ footer h2, address strong
   padding: 10px 0;
   border-top: 5px solid #faf8f0;
   border-bottom: 5px solid #faf8f0;
+}
+
+ #flag-version {
+  display:block;
+  position:fixed;
+  width:154px;
+  height:30px;
+  line-height: 30px;
+  top:27px;
+  left:-35px;
+  text-align: center;
+  transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg); /* IE 9 */
+  -webkit-transform: rotate(-45deg); /* Safari and Chrome */
+  border:2px solid #000;
+  background-color:green;
+  font-weight: bold;
+  color:#FFF;
+  z-index:0;
 }

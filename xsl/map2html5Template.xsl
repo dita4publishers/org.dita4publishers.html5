@@ -160,11 +160,13 @@
 
   <!-- generate body -->
   <xsl:template match="*" mode="generate-body">
+    <xsl:param name="map-metadata" as="element()*" tunnel="yes" />
     <body>
       <xsl:apply-templates select="." mode="set-body-class-attr" />
       <xsl:apply-templates select="." mode="gen-user-body-top" />
       <xsl:apply-templates select="." mode="generate-main-container"/>
       <xsl:apply-templates select="." mode="gen-user-body-bottom" />
+      <xsl:apply-templates select="$map-metadata" mode="flag" />
     </body>
   </xsl:template>
 
@@ -297,6 +299,18 @@
     <xsl:call-template name="processFTR"/>
     <xsl:sequence select="'&#x0a;'"/>
   </div>
+  </xsl:template>
+
+
+  <!--
+      flag
+   -->
+  <xsl:template match="*" mode="flag" />
+
+  <xsl:template match="*[contains(@class, ' topic/data ')][@name='version']" mode="flag">
+    <div id="flag-version">
+      <xsl:value-of select="@value" />
+    </div>
   </xsl:template>
 
   <!--
