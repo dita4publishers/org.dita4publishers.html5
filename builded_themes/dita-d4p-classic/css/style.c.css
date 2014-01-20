@@ -2754,8 +2754,6 @@ form#search input
   height: 25px;
 }
 
-
-
 div.nav-pub-title h2 { font-size: 0.9em; }
 
 #local-navigation {
@@ -2763,7 +2761,6 @@ div.nav-pub-title h2 { font-size: 0.9em; }
 }
 
 #local-navigation .toolbar.bottom { margin: 2em 0; }
-
 
 #local-navigation ul li
 {
@@ -3131,15 +3128,16 @@ footer h2, address strong
   width:154px;
   height:30px;
   line-height: 30px;
-  top:27px;
+  bottom: 26px;
   left:-35px;
   text-align: center;
-  transform: rotate(-45deg);
-  -ms-transform: rotate(-45deg); /* IE 9 */
-  -webkit-transform: rotate(-45deg); /* Safari and Chrome */
+  transform: rotate(45deg);
+  -ms-transform: rotate(45deg); /* IE 9 */
+  -webkit-transform: rotate(45deg); /* Safari and Chrome */
   border:2px solid #000;
   background-color:green;
   font-weight: bold;
   color:#FFF;
   z-index:0;
+  opacity:0.7;
 }
