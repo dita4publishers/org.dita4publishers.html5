@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pubmap PUBLIC "urn:pubid:dita4publishers.sourceforge.net:doctypes:dita:dtd:pubmap" "pubmap.dtd">
+<pubmap>
+  <pubtitle>
+    <mainpubtitle>DITA for Publishers HTML5 Plugin</mainpubtitle>
+  </pubtitle>
+  <pubmeta>
+    <data name="version" value="Alpha"></data>
+  </pubmeta>
+  <mapref href="keys.ditamap"/>
+  <mapref href="keys-external.ditamap"/>
+  <chapter keyref="html5-intro" collection-type="sequence">
+    <topichead>
+      <topicmeta>
+        <navtitle>Getting Started</navtitle>
+      </topicmeta>
+      <topicref keyref="html5-install"/>
+      <topicref keyref="html5-run"/>
+      <topicref keyref="html5-license"/>
+    </topichead>
+    <topichead>
+      <topicmeta>
+        <navtitle>How to....</navtitle>
+      </topicmeta>
+      <topicref keyref="html5-theme-dev">
+        <topicref keyref="html5-theme-configuration"/>
+        <topicref keyref="html5-customize-xsl"/>
+      </topicref>      
+      <topicref keyref="html5-feature-muti-columns"/>
+      <topicref keyref="html5-feature-css-grid"/>
+      <topicref keyref="html5-feature-images"/>
+      <topicref keyref="html5-feature-notes"/>
+      <topicref keyref="html5-feature-ui-intro">
+        <topicref keyref="html5-feature-ui-accordion"/>
+        <topicref keyref="html5-feature-ui-images"/>
+      </topicref>
+      <topicref keyref="html5-theme-add-conditional-css"/>
+    </topichead>
+    <topichead>
+      <topicmeta>
+        <navtitle>References</navtitle>
+      </topicmeta>
+      <topicref keyref="html5-plugin-directory-structure"/>
+      <!--topicref keyref="html5-plugin-ant-properties.dita"/-->
+    </topichead>
+  </chapter>
+</pubmap>

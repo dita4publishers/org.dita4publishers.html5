@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE concept PUBLIC "-//OASIS//DTD DITA Concept//EN" "concept.dtd">
+<concept id="concept_phf_dyd_qh">
+ <title>Running the html5 plugin</title>
+ <shortdesc>The html5 plugin can be run as a regular DITA-OT plugin.</shortdesc>
+ <conbody>
+  <p>In order to run the plugin, you must be familiar with the process of running the DITA-OT.
+   Please refer to the <xref keyref="dita-ot-doc"/>. The transtype is d4p-html5 to prevent conflict
+   with the html5 transtype, availaible in the DITA-OT version 2.0.</p>
+  
+  <p>The plugin works with DITA-OT version 1.7 and prior. Different packages are availaible on the DITA for Publishers page download page.</p>
+  
+  <p>There are ant parameters availaible in the xhtml transforms that are not supported yet in the html5 plugin, please consult the references for a complete list of availaible properties.</p>
+  <section>
+   <title>Running DITA-OT from Ant</title>
+   <p>Execute the usual command using html5 as the transtype</p>
+   <codeblock>
+    <data-about>
+      <data name="language" value="bash"/>
+    </data-about> 
+    ant -Dargs.input=samples/hierarchy.ditamap 
+    -Doutput.dir=out/garage/html5 
+    -Dtranstype=d4p-html5</codeblock>   
+  </section>
+  
+  <section>
+   <title>Running DITA-OT from command-line tool</title>
+   <codeblock>
+        <data-about>
+      <data name="language" value="bash"/>
+    </data-about> 
+    java -jar lib/dost.jar 
+    /i:samples/hierarchy.ditamap 
+    /outdir:out/garage/html5 
+    /transtype:d4p-html5</codeblock>  
+  </section>
+  
+ 
+ </conbody>
+</concept>

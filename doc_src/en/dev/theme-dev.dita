@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE task PUBLIC "-//OASIS//DTD DITA Task//EN" "task.dtd">
+<task id="task_u5b_dlw_pm">
+    <title>Create a customization plugin <ph outputclass="quiet">(an example)</ph></title>
+    <shortdesc>In order to develop a new theme, you need to develop a customization plugin.</shortdesc>
+    <taskbody>
+        <context>
+            <p>In this tutorial, we will do a minimal implementation of the <xref
+                    keyref="foundation"/> using the html5 plugin.</p>
+        </context>
+        <steps>
+            <step>
+                <cmd>Create a customization plugin</cmd>
+                <stepxmp>
+                    <p>Using the command line, run:</p>
+                    <codeblock>
+                        <data-about>
+                            <data name="language" value="bash"/>
+                        </data-about>
+ ant -f plugins/net.sourceforge.dita4publishers.utils
+                    </codeblock>
+                    <p>In this order, choose the following options:
+                      <ul>
+                        <li>Type choice 1, then press enter,</li>
+                        <li><b>Plugin's domain:</b> leave as is and press enter,</li>
+                        <li><b>Plugin's name:</b> leave as is and press enter,</li>
+                        <li><b>Plugin's transtype:</b> type <q>foundation</q> and press enter,</li>
+                        <li><b>Plugin's theme:</b> leaave as is</li>                     
+                      </ul>
+                    </p>
+                </stepxmp>
+                <stepresult>
+                    The utility will create a complete customization plugin
+                </stepresult>
+            </step>
+            
+            <step>
+                <cmd>Run the integrator</cmd>
+                <info>
+                    <codeblock>
+                         <data-about>
+                            <data name="language" value="bash"/>
+                        </data-about>
+ ant -f integrator.xml
+                    </codeblock>
+                </info>
+            </step>
+            
+            <step importance="optional">
+                <cmd>Try to build the documentation with the new transtype by running </cmd>
+                <info>
+                    <codeblock>
+                        <data-about>
+                            <data name="language" value="bash"/>
+                        </data-about>
+ ant -Dargs.input=samples/sequence.ditamap -Doutput.dir=out/garage -Dtranstype=foundation
+                    </codeblock>
+                </info>
+            </step>
+        </steps>
+    </taskbody>
+</task>

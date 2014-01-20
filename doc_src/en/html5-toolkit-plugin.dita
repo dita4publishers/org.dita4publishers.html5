@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE concept PUBLIC "urn:pubid:dita4publishers.sourceforge.net:doctypes:dita:concept" "concept.dtd">
+<concept id="conceptId">
+ <title>HTML5 Plugin</title>
+  <shortdesc>The HTML5 transformation type produces HTML5-based output that integrates HTML5 technologies.</shortdesc>
+  <prolog>
+    <metadata>
+      <keywords>
+        <indexterm>HTML<indexterm>generating</indexterm><indexterm>HTML5</indexterm></indexterm>
+        <indexterm>map-driven processing<indexterm>generating HTML</indexterm></indexterm>
+        <indexterm>HTML5 Toolkit plugin</indexterm>
+        <indexterm></indexterm>
+      </keywords>
+    </metadata>
+  </prolog>
+ <conbody>
+    <p>
+      The resulting HTML5 provides dynamic and modern navigation and presentation. The supporting
+      components such as the CSS style sheets and JavaScript used to render the HTML in browsers is
+      designed to be easily adapted or replaced as required to provide specific navigation and
+      presentation styles.</p>
+   <p>The HTML5 plugin contains a <q>theme mechanism</q>. The theme feature, is an attempt to bring a way to register, 
+     concatenate and compress css and javascript into a single theme.</p>
+    <note>The HTML5 plugin does not use the HTML frames mechanism. </note>
+    <note>The HTML5 plugin does not creates an index.html file by default. If you want an index.html
+      file generated, simply rename your fist topic in the map to index.dita and place it at the
+      same level than the map.</note>
+  </conbody>
+</concept>

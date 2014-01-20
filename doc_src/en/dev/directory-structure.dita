@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE concept PUBLIC "-//OASIS//DTD DITA Concept//EN" "concept.dtd">
+<concept id="concept_31k_mbp_sh">
+ <title>Directory structure</title>
+ <shortdesc>The following images shows the structure of the plugin directory.</shortdesc>
+ <conbody>
+  <section>
+   <title>html5-libs</title>
+   <p>The libs directory contains a collection of either javascripts or css librairies that might be usefull for
+    projects. Popular libraries includes: <ul>
+     <li><xref keyref="modernizr">Modernizr</xref></li>
+     <li><xref keyref="jquery">jQuery</xref></li>
+     <li><xref keyref="jquery-ui">jQuery UI</xref></li>
+     <li><xref keyref="grid-960-js">960 css grid</xref></li>
+    </ul></p>
+   <p>The library also contains the html5 library that has been developped for this project.</p>
+   <p>The lib directory contains an ant project (build.xml) which allows to create custom builds from the library to the themes directory.</p>
+  </section>
+  <section>
+   <title>themes</title>
+   <p>The theme directory contains themes used for production. You should never edit content in this directory. </p>
+   <p>The content of this directory is build using the sites intructions using the ant build.xml process found in the lib directory.</p>
+  </section>
+  <section>
+   <title>xsl</title>
+   <p>The xsl directory contains all xsl for this project.</p>
+  </section>
+ </conbody>
+</concept>
