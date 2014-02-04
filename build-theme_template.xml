@@ -58,7 +58,7 @@
     <attribute name="theme" />
     <sequential>
         <antcall target="package.get.assets">
-          <param name="filelist" value="@{dirlist}"/>
+          <param name="dirlist" value="@{dirlist}"/>
           <param name="html5.site.theme" value="@{theme}"/>
         </antcall>
     </sequential>
@@ -117,7 +117,6 @@
     </not>
   </condition>
 
-  <property name="basedir" location="${dita.temp.dir}/${html5.themes.dir}/${html5.site.theme}/${html5.libs.dir}" />
 </target>
 
   <target name="package.get" depends="store.builded.theme.dir">
@@ -187,42 +186,48 @@
   </target>
 
   <target name="package.get.assets">
-    <echo> +++ Getting assets from css files location</echo>
 
-    <filelist id="html5.style.css.path" dir="${basedir}" files="${filelist}"/>
+    <filelist id="html5.modules.dir" dir="${html5.temp.libs.dir}" files="${dirlist}"/>
 
-    <!--pathconvert property="img.path.converted" pathsep="," refid="html5.style.css.path">
-      <mapper type="regexp" from="^${basedir}/(.*)/(.*)/css/.*.css"  to="\1/\2/img/"/>
+    <!-- copy images -->
+    <pathconvert property="img.path.converted" pathsep="," refid="html5.modules.dir">
+       <mapper type="regexp" from="(.*)"  to="\1/${html5.img.dir}/" />
+       <map from="${html5.temp.libs.dir}/" to="" />
     </pathconvert>
 
-    <pathconvert property="font.path.converted" pathsep="," refid="html5.style.css.path">
-      <mapper type="regexp" from="^${basedir}/(.*)/(.*)/css/.*.css"  to="\1/\2/fonts/"/>
-    </pathconvert-->
-
     <fileset id="html5.imgs.path" dir="${html5.temp.libs.dir}" followsymlinks="no">
-      <patternset includes="${html5.style.css.path}">
+      <patternset includes="${img.path.converted}">
         <exclude name="*.css" />
         <exclude name="*.js" />
         <exclude name="*.psd" />
-        <include name="img/*"/>
       </patternset>
     </fileset>
 
-    <fileset id="html5.fonts.path" dir="${html5.temp.libs.dir}" followsymlinks="no">
-      <type type="file"/>
-      <patternset includes="${html5.style.css.path}">
-        <exclude name="*.css" />
-        <exclude name="*.js" />
-        <include name="*.otf" />
-        <include name="*.woff" />
-        <include name="*.ttf" />
-        <include name="fonts/*"/>
-      </patternset>
-    </fileset>
+    <mkdir dir="${html5.temp.theme.dir}/${html5.img.dir}"/>
 
     <copy todir="${html5.temp.theme.dir}/${html5.img.dir}" failonerror="false" force="true" flatten="true">
       <fileset refid="html5.imgs.path" />
     </copy>
+
+    <!-- copy fonts -->
+    <pathconvert property="fonts.path.converted" pathsep="," refid="html5.modules.dir">
+       <mapper type="regexp" from="(.*)"  to="\1/${html5.fonts.dir}/" />
+       <map from="${html5.temp.libs.dir}/" to="" />
+    </pathconvert>
+
+    <fileset id="html5.fonts.path" dir="${html5.temp.libs.dir}" followsymlinks="no">
+      <patternset includes="${fonts.path.converted}">
+        <exclude name="*.css" />
+        <exclude name="*.js" />
+
+        <include name="*.otf" />
+        <include name="*.woff" />
+        <include name="*.ttf" />
+        <include name="*.svg" />
+      </patternset>
+    </fileset>
+
+    <mkdir dir="${html5.temp.theme.dir}/${html5.fonts.dir}"/>
 
     <copy todir="${html5.temp.theme.dir}/${html5.fonts.dir}" failonerror="false" force="true" flatten="true">
       <fileset refid="html5.fonts.path" />

@@ -297,7 +297,7 @@
       </not>
     </condition>
 
-    <xmlproperty file="${html5.site.config}" collapseAttributes="true" semanticAttributes="true" />
+    <!--xmlproperty file="${html5.site.config}" collapseAttributes="true" semanticAttributes="true" /-->
 
   </target>
 
