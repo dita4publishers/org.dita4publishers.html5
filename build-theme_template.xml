@@ -53,6 +53,17 @@
     </sequential>
   </macrodef>
 
+  <macrodef name="package-get-assets">
+    <attribute name="dirlist"/>
+    <attribute name="theme" />
+    <sequential>
+        <antcall target="package.get.assets">
+          <param name="filelist" value="@{dirlist}"/>
+          <param name="html5.site.theme" value="@{theme}"/>
+        </antcall>
+    </sequential>
+  </macrodef>
+
   <macrodef name="package-get">
     <attribute name="dir" />
      <attribute name="theme" />
@@ -117,7 +128,7 @@
      </copy>
   </target>
 
-  <target name="package.compress" depends="package.concatenate, package.copy-assets">
+  <target name="package.compress" depends="package.concatenate">
     <apply executable="java" parallel="false" dest="${html5.temp.theme.dir}">
       <fileset dir="${html5.temp.theme.dir}">
         <include name="**/**"/>
@@ -175,35 +186,37 @@
     <property name="package.prepare" value="yes" />
   </target>
 
-  <target name="package.copy-assets" if="package.css">
+  <target name="package.get.assets">
     <echo> +++ Getting assets from css files location</echo>
 
     <filelist id="html5.style.css.path" dir="${basedir}" files="${filelist}"/>
 
-    <pathconvert property="img.path.converted" pathsep="," refid="html5.style.css.path">
+    <!--pathconvert property="img.path.converted" pathsep="," refid="html5.style.css.path">
       <mapper type="regexp" from="^${basedir}/(.*)/(.*)/css/.*.css"  to="\1/\2/img/"/>
     </pathconvert>
 
     <pathconvert property="font.path.converted" pathsep="," refid="html5.style.css.path">
       <mapper type="regexp" from="^${basedir}/(.*)/(.*)/css/.*.css"  to="\1/\2/fonts/"/>
-    </pathconvert>
+    </pathconvert-->
 
     <fileset id="html5.imgs.path" dir="${html5.temp.libs.dir}" followsymlinks="no">
-      <patternset includes="${img.path.converted}">
+      <patternset includes="${html5.style.css.path}">
         <exclude name="*.css" />
         <exclude name="*.js" />
         <exclude name="*.psd" />
+        <include name="img/*"/>
       </patternset>
     </fileset>
 
     <fileset id="html5.fonts.path" dir="${html5.temp.libs.dir}" followsymlinks="no">
       <type type="file"/>
-      <patternset includes="${font.path.converted}">
+      <patternset includes="${html5.style.css.path}">
         <exclude name="*.css" />
         <exclude name="*.js" />
         <include name="*.otf" />
         <include name="*.woff" />
         <include name="*.ttf" />
+        <include name="fonts/*"/>
       </patternset>
     </fileset>
 
