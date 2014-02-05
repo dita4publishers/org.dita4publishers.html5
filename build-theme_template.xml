@@ -81,6 +81,9 @@
      * args.cssroot
      * setting the property in a previous ant script
   -->
+  <property name="regex.file.separator" value="[\\|/]" />
+
+
   <condition property="html5.site.theme" value="${args.cssroot}">
     <isset property="args.cssroot" />
   </condition>
@@ -170,7 +173,7 @@
       <fileset dir="${dita.plugins.dir}" followsymlinks="no">
         <include name="*/${html5.libs.dir}/**"/>
       </fileset>
-      <regexpmapper from=".*/${html5.libs.dir}/(.*)" to="\1" />
+      <regexpmapper from=".*${regex.file.separator}${html5.libs.dir}${regex.file.separator}(.*)" to="\1" />
     </copy>
 
     <!-- copy theme directory -->
@@ -179,7 +182,7 @@
       <fileset dir="${dita.plugins.dir}" followsymlinks="no">
         <include name="*/theme/${html5.site.theme}/**"/>
       </fileset>
-      <regexpmapper from=".*/theme/(.*)" to="\1" />
+      <regexpmapper from=".*${regex.file.separator}theme${regex.file.separator}(.*)" to="\1" />
     </copy>
 
     <property name="package.prepare" value="yes" />
