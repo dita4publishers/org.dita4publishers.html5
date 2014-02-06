@@ -66,10 +66,13 @@ h6 {
 
 .toolbar button {
   float:left;
+  padding:0px 2px;
+  margin:0px 3px;
 }
 .toolbar button span {
   font-size:18px;
   line-height: 18px;
+  color:#666;
 }
 
 button.right {
@@ -316,34 +319,34 @@ footer h2, address strong
  */
 
 /** show-for-small **/
-.size-small .show-for-small { display:block; }
-.size-medium .show-for-small { display:none; }
-.size-large .show-for-small { display:none; }
-.size-x-large .show-for-small { display:none; }
+.size-small .show-for-small { display:block !important; }
+.size-medium .show-for-small { display:none !important; }
+.size-large .show-for-small { display:none !important; }
+.size-x-large .show-for-small { display:none !important; }
 
 /** show-for-medium **/
-.size-small.show-for-medium { display:none; }
-.size-medium .show-for-medium {display:inherit; }
-.size-large .show-for-medium { display:none; }
+.size-small.show-for-medium { display:none !important; }
+.size-medium .show-for-medium {display:inherit !important; }
+.size-large .show-for-medium { display:none !important; }
 .size-x-large .show-for-medium { display:none; }
 
 /** show-for-large **/
-.size-small .show-for-large { display:none; }
-.size-medium .show-for-large { display:none; }
-.size-large .show-for-large { display:inherit; }
-.size-x-large .show-for-large { display:none; }
+.size-small .show-for-large { display:none !important; }
+.size-medium .show-for-large { display:none !important; }
+.size-large .show-for-large { display:inherit !important; }
+.size-x-large .show-for-large { display:none !important; }
 
 /** show-for-x-large **/
-.size-small .show-for-x-large { display:none; }
-.size-medium .show-for-x-large { display:none; }
-.size-large .show-for-x-large { display:none; }
-.size-x-large .show-for-x-large { display:inherit; }
+.size-small .show-for-x-large { display:none !important; }
+.size-medium .show-for-x-large { display:none !important; }
+.size-large .show-for-x-large { display:none !important; }
+.size-x-large .show-for-x-large { display:inherit !important; }
 
 /** hide  **/
-.size-small .hide-for-small { display:none; }
-.size-medium .hide-for-medium { display:none; }
-.size-large .hide-for-large { display:none; }
-.size-x-large .hide-for-x-large { display:none; }
+.size-small .hide-for-small { display:none !important; }
+.size-medium .hide-for-medium { display:none !important; }
+.size-large .hide-for-large { display:none !important; }
+.size-x-large .hide-for-x-large { display:none !important; }
 
 
 

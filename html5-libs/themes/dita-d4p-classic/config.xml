@@ -61,7 +61,6 @@
       <file path="misc/fonts/foundation-icons/css/foundation-icons.css" />
 
       <!-- D4P specific -->
-      <file path="modules/features/layout/css/ui-icons.css" />
       <file path="modules/features/d4p/css/d4p.css" />
       <file path="modules/features/d4p/css/tools.css" />
       <file path="modules/features/columns/css/columns.css" />

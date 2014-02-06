@@ -956,59 +956,6 @@ header h1 {
 .fi-zoom-in:before { content: "\f219"; }
 .fi-zoom-out:before { content: "\f21a"; }
 /**
- * 
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *  http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- */ 
-.ui-icon, button.ui-icon  {
-  width: 16px;
-  height: 16px;
-  background-image: url(../img/ui-icons_222222_256x240.png);
-}
-
-.ui-widget-content .ui-icon {
-  background-image: url(../img/ui-icons_222222_256x240.png);
-}
-
-.ui-widget-header .ui-icon {
-  background-image: url(../img/ui-icons_222222_256x240.png);
-}
-
-.ui-state-default .ui-icon {
-  background-image: url(../img/ui-icons_888888_256x240.png);
-}
-
-.ui-state-hover .ui-icon, .ui-state-focus .ui-icon {
-  background-image: url(../img/ui-icons_454545_256x240.png);
-}
-
-.ui-state-active .ui-icon {
-  background-image: url(../img/ui-icons_454545_256x240.png);
-}
-
-.ui-state-highlight .ui-icon {
-  background-image: url(../img/ui-icons_2e83ff_256x240.png);
-}
-
-.ui-state-error .ui-icon, .ui-state-error-text .ui-icon {
-  background-image: url(../img/ui-icons_cd0a0a_256x240.png);
-}
-
-button.ui-icon {
-    height: 24px;
-    width: 24px;
-}
-/**
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -2712,10 +2659,13 @@ h6 {
 
 .toolbar button {
   float:left;
+  padding:0px 2px;
+  margin:0px 3px;
 }
 .toolbar button span {
   font-size:18px;
   line-height: 18px;
+  color:#666;
 }
 
 button.right {
@@ -2962,34 +2912,34 @@ footer h2, address strong
  */
 
 /** show-for-small **/
-.size-small .show-for-small { display:block; }
-.size-medium .show-for-small { display:none; }
-.size-large .show-for-small { display:none; }
-.size-x-large .show-for-small { display:none; }
+.size-small .show-for-small { display:block !important; }
+.size-medium .show-for-small { display:none !important; }
+.size-large .show-for-small { display:none !important; }
+.size-x-large .show-for-small { display:none !important; }
 
 /** show-for-medium **/
-.size-small.show-for-medium { display:none; }
-.size-medium .show-for-medium {display:inherit; }
-.size-large .show-for-medium { display:none; }
+.size-small.show-for-medium { display:none !important; }
+.size-medium .show-for-medium {display:inherit !important; }
+.size-large .show-for-medium { display:none !important; }
 .size-x-large .show-for-medium { display:none; }
 
 /** show-for-large **/
-.size-small .show-for-large { display:none; }
-.size-medium .show-for-large { display:none; }
-.size-large .show-for-large { display:inherit; }
-.size-x-large .show-for-large { display:none; }
+.size-small .show-for-large { display:none !important; }
+.size-medium .show-for-large { display:none !important; }
+.size-large .show-for-large { display:inherit !important; }
+.size-x-large .show-for-large { display:none !important; }
 
 /** show-for-x-large **/
-.size-small .show-for-x-large { display:none; }
-.size-medium .show-for-x-large { display:none; }
-.size-large .show-for-x-large { display:none; }
-.size-x-large .show-for-x-large { display:inherit; }
+.size-small .show-for-x-large { display:none !important; }
+.size-medium .show-for-x-large { display:none !important; }
+.size-large .show-for-x-large { display:none !important; }
+.size-x-large .show-for-x-large { display:inherit !important; }
 
 /** hide  **/
-.size-small .hide-for-small { display:none; }
-.size-medium .hide-for-medium { display:none; }
-.size-large .hide-for-large { display:none; }
-.size-x-large .hide-for-x-large { display:none; }
+.size-small .hide-for-small { display:none !important; }
+.size-medium .hide-for-medium { display:none !important; }
+.size-large .hide-for-large { display:none !important; }
+.size-x-large .hide-for-x-large { display:none !important; }
 
 
 

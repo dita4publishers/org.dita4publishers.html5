@@ -44,7 +44,7 @@
   />
 
   <target name="get.plugin.version">
-    <echo>HTML5 plugin version 1.1.0 - alpha 3</echo>
+    <echo>HTML5 plugin version 1.1.183 - alpha 3</echo>
   </target>
 
   <target name="dita.map.html5.init" description="Initialize HTML5 plugin properties">

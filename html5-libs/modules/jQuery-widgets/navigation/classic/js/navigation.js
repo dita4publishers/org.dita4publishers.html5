@@ -133,7 +133,7 @@ var navigation = {
          $('#'+self.buttons.expand).show();
     });
 
-    btnClose.attr('class', 'show-on-small right').append(closeIco).append(close).on('click tap',
+    btnClose.attr('class', 'show-for-small right').append(closeIco).append(close).on('click tap',
       function(){
         self.menuCollapse();
     });
