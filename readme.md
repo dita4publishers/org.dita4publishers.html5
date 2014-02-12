@@ -24,8 +24,8 @@ Running the transformation
 --------------------------
 
     Using Ant:
-    ant -Dargs.input=samples/hierarchy.ditamap -Doutput.dir=out/garage-num -Dtranstype=html5
+    ant -Dargs.input=samples/hierarchy.ditamap -Doutput.dir=out/garage-num -Dtranstype=d4p-html5
 
     Using Java:
-    java -jar lib\dost.jar /i:samples/hierarchy.ditamap /transtype:html5
+    java -jar lib\dost.jar /i:samples/hierarchy.ditamap /transtype:d4p-html5
 
