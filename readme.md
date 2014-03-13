@@ -29,3 +29,11 @@ Running the transformation
     Using Java:
     java -jar lib\dost.jar /i:samples/hierarchy.ditamap /transtype:d4p-html5
 
+Authors and Contributors
+------------------------
+
+A big thanks to:
+
+* Eliot Kimber [Tweedle](http://www.tweddle.com)
+* Ray Fan [Tweedle](http://www.tweddle.com)
+* Mica Semrick [silent umbrella](http://www.silentumbrella.com)
