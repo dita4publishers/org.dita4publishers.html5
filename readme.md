@@ -31,9 +31,8 @@ Running the transformation
 
 Authors and Contributors
 ------------------------
-
 A big thanks to:
 
-* Eliot Kimber [Tweedle](http://www.tweddle.com)
+* Eliot Kimber [Contrext, LLC](http://contrext.com)
 * Ray Fan [Tweedle](http://www.tweddle.com)
 * Mica Semrick [silent umbrella](http://www.silentumbrella.com)
