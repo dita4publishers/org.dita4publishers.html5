@@ -35,4 +35,4 @@ A big thanks to:
 
 * Eliot Kimber [Contrext, LLC](http://contrext.com)
 * Ray Fan [Tweedle](http://www.tweddle.com)
-* Mica Semrick [silent umbrella](http://www.silentumbrella.com)
+* Mica Semrick [Silent Umbrella](http://www.silentumbrella.com)
