@@ -2,7 +2,7 @@ Dita for Publishers HTML5 plugin
 ================================
 This repository is a temporary repository for the development of the DITA for Publishers HTML5 plugin.
 
-Installation
+Introduction
 ------------
 
 If you have no idea of what DITA is, you should first read [Introduction to the Darwin Information Typing Architecture
@@ -12,11 +12,14 @@ If you are interested in this plugin, please:
 Read the [Dita for publishers documentation](http://dita4publishers.sourceforge.net/d4p-user-guide/).
 Install the [DITA for publishers project](http://sourceforge.net/projects/dita4publishers/).
 
-Get the latest version of this plugin
--------------------------------------
-download the latest release under the releases tabs, and extract it
+Installation
+------------
 
-Unzip this so that the net.sourceforge.dita4publishers.html5 subdirectory
+* Install the dita4publishers-0.9.19_OT17RC10.zip from [http://sourceforge.net/projects/dita4publishers/files/release-candidate/](http://sourceforge.net/projects/dita4publishers/files/release-candidate/)
+
+* Download the latest release under the releases tabs, and extract it
+
+* Unzip this so that the net.sourceforge.dita4publishers.html5 subdirectory
 is a child of the DITA-OT plugins or demo directory (e.g. C:\DITA-OTx.y\plugins\), and
 you should be ready to go.
 
