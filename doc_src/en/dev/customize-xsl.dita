@@ -5,17 +5,18 @@
     <shortdesc></shortdesc>
     <taskbody>
         <context>
-           <p>In order to customize the xsl code, you should have a look at this file
-          <filepath>plugins/net.sourceforge.dita4publishers.html5/xsl/map2html5Template.xsl</filepath>.
-             This xsl template is the main template file use in the html5 plugin.</p>
-          <p>Edit the file <filepath>plugins/net.sourceforge.dita4publishers.html5.foundation/xsl/map2foundationImpl.xsl</filepath></p>
+           <p>For guidance when customizing your xsl code, consult the
+                    <filepath>plugins/net.sourceforge.dita4publishers.html5/xsl/map2html5Template.xsl</filepath>
+                file. This xsl template is the main template file used in the html5 plugin.</p>
+          <p>Edit the file
+                    <filepath>plugins/net.sourceforge.dita4publishers.html5.foundation/xsl/map2foundationImpl.xsl</filepath>.</p>
         </context>
         <steps>
             <step>
-                <cmd>Override the template with mode equal to <apiname>gen-page-links</apiname></cmd>
-                <info>
-                    In the HTML5 plugin, this template is used to output hidden links, used for screen readers. Theses links are not availaible in the Foundation framework and must me removed.
-                </info>
+                <cmd>Override the <apiname>gen-page-links</apiname> template.</cmd>
+                <info> In the HTML5 plugin, this template is used to output hidden links used for
+                    screen readers. These links are not available in the Foundation framework and
+                    must be removed. </info>
                 <stepxmp>
                     <codeblock>
                         <data-about>
@@ -28,7 +29,8 @@
                 </stepxmp>             
             </step>
             <step>
-                <cmd>Override the template with mode equal to <apiname>generate-header</apiname></cmd>
+                <cmd>Override the template that defines the <apiname>generate-header</apiname>
+                    mode.</cmd>
                 <info> In the HTML5 plugin, this template is used to control the header.</info>
                 <stepxmp>
                     <codeblock>
@@ -51,9 +53,13 @@
                 </stepxmp>
             </step>
             <step>
-                <cmd>Override the template with mode equal to <apiname>generate-header</apiname></cmd>
+                <cmd>Override the template that defines the
+                        <apiname>generate-section-container</apiname> mode. <draft-comment
+                        author="Jim">The original duplicated the previous step. My suggested edit is
+                        a guess based on the example.</draft-comment></cmd>
                 <stepxmp>
-                    <p>In Foundation, you can use the grid to output content properly:</p>
+                    <p>In Foundation, you can define a grid-based column layout using &lt;div> class
+                        attributes:</p>
                     <codeblock>
                         <data-about>
                             <data name="language" value="xml"></data>
@@ -70,7 +76,8 @@
         &lt;/div&gt;
       &lt;/section&gt;                    
                     </codeblock>
-                    <p>should be done like this: </p>
+                    <p>To use the grid layout, add the code to the
+                            <apiname>generate-section-container</apiname> mode: </p>
                     <codeblock>
                         <data-about>
                             <data name="language" value="xml"></data>

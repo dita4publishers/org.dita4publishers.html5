@@ -2,28 +2,29 @@
 <!DOCTYPE task PUBLIC "-//OASIS//DTD DITA Task//EN" "task.dtd">
 <task id="task_u5b_dlw_pm">
     <title>Install Foundation and configure the theme</title>
-    <shortdesc>Foundation provided its own set of css and javascripts that could be integrated in the plugin.</shortdesc>
+    <shortdesc>Foundation provides a set of css and javascript files that can be integrated into the
+        plugin.</shortdesc>
     <taskbody>
 
         <steps>   
             <step>
-                <cmd>Download the <xref keyref="foundation"/>, and extract it</cmd>
-                <info>
-                    Extract it in the <filepath>net.sourceforge.dita4publishers.html5.foundation/theme/html5-foundation/</filepath> directory
-                    This directory should contains all the css and javascript your need for your project.                   
-                </info>
+                <cmd>Download the <xref keyref="foundation"/>, and extract it.</cmd>
+                <info> Extract it to the
+                        <filepath>net.sourceforge.dita4publishers.html5.foundation/theme/html5-foundation/</filepath>
+                    directory. Use this directory for all css and javascript files required by your
+                    project. </info>
             </step>
             
             <step>
-                <cmd>Edit the <filepath>config.xml</filepath></cmd>
-                <info>The file <filepath>config.xml</filepath>file is located in the
+                <cmd>Edit <filepath>config.xml</filepath>.</cmd>
+                <info>The file <filepath>config.xml</filepath> file is located in the
                         <filepath>net.sourceforge.dita4publishers.html5.foundation/theme/html5-foundation/</filepath>
-                    directory. The structure allows you specify how you want the css and javascript
-                    builded for you documentation. According to the Foundation documentation, a
-                    foundation project requires only the foundation.css file and 3 scripts. The
-                    html5 plugins allows to concatenate this 3 scripts into a single file (this will
-                    reduces the number of http connections required per page).
-                </info>
+                    directory. Use this file to specify the css and javascript files required for
+                    your documentation<draft-comment author="Jim">did this edit change the
+                        meaning?</draft-comment>. According to the Foundation documentation, a
+                    Foundation project requires only the <filepath>foundation.css</filepath> file
+                    and three scripts. The html5 plugins allows to concatenate the three scripts
+                    into a single file, reducing the number of http connections required per page. </info>
                 <stepxmp>
                     <codeblock>
                         <data-about>
@@ -66,9 +67,7 @@
                                                    
                     </codeblock>
                 </stepxmp>
-                <stepresult>
-                    At this step, you already have processed all the required css and files for the plugin.
-                </stepresult>
+                <stepresult> You have now processed all the required css and files for the plugin. </stepresult>
             </step>
             
         </steps>
