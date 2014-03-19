@@ -9,21 +9,21 @@
         <indexterm>HTML<indexterm>generating</indexterm><indexterm>HTML5</indexterm></indexterm>
         <indexterm>map-driven processing<indexterm>generating HTML</indexterm></indexterm>
         <indexterm>HTML5 Toolkit plugin</indexterm>
-        <indexterm></indexterm>
+        <indexterm>index.html, generating</indexterm>
       </keywords>
     </metadata>
   </prolog>
  <conbody>
-    <p>
-      The resulting HTML5 provides dynamic and modern navigation and presentation. The supporting
-      components such as the CSS style sheets and JavaScript used to render the HTML in browsers is
-      designed to be easily adapted or replaced as required to provide specific navigation and
+    <p> The resulting HTML5 provides dynamic and modern navigation and presentation. Supporting
+      components, such as the CSS style sheets and JavaScript used to render the HTML in browsers,
+      are designed to be easily adapted or replaced as required to provide specific navigation and
       presentation styles.</p>
-   <p>The HTML5 plugin contains a <q>theme mechanism</q>. The theme feature, is an attempt to bring a way to register, 
-     concatenate and compress css and javascript into a single theme.</p>
+   <p>The HTML5 plugin contains a <q>theme mechanism</q>. This provides a way to register,
+      concatenate and compress css and javascript into a single theme.</p>
     <note>The HTML5 plugin does not use the HTML frames mechanism. </note>
-    <note>The HTML5 plugin does not creates an index.html file by default. If you want an index.html
-      file generated, simply rename your fist topic in the map to index.dita and place it at the
-      same level than the map.</note>
+    <note>The HTML5 plugin does not create an index.html file by default. To generate an index.html
+      file, rename the first topic in the map to <filepath>index.dita</filepath> and place it at the
+      same level as the map.<draft-comment author="Jim">A task or concept such as "Setting the home
+        page" might make this information easier to find.</draft-comment></note>
   </conbody>
 </concept>
