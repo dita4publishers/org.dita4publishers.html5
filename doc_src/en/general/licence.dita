@@ -2,12 +2,14 @@
 <!DOCTYPE concept PUBLIC "-//OASIS//DTD DITA Concept//EN" "concept.dtd">
 <concept id="concept_j5b_lsd_qh">
  <title>License</title>
-  <shortdesc>The DITA4publishers is released under the Apache License V2.0</shortdesc>
+  <shortdesc>The DITA for Publishers project is released under the Apache License V2.0</shortdesc>
  <conbody>
-  <p>However the html5 plugins used different libraries that are released in both <xref keyref="GPL">GPL</xref> and
-    <xref keyref="MIT">MIT</xref> licenses.</p>
-  <p>If you want to not use certain library or replace others, the architecture of the plugin allows you to do it
-   easely. Please see the developper section for this purpose</p>
+  <p>The html5 plugin uses additional libraries that are released under the <xref keyref="GPL"
+        >GPL</xref> and <xref keyref="MIT">MIT</xref> licenses.</p>
+  <p>The architecture of the plugin allows you to substitute other libraries if you prefer.  For
+      more information, refer to the developer section.<draft-comment author="Jim">need link to the
+        "developer section." In that section, a brief explanation of each library and how it is used
+        would be helpful.</draft-comment></p>
   <section>
    <title>jQuery</title>
    <p><xref keyref="jquery">jQuery</xref> is released under the <xref keyref="MIT">MIT</xref> license.</p>

@@ -4,16 +4,20 @@
  <title>Running the html5 plugin</title>
  <shortdesc>The html5 plugin can be run as a regular DITA-OT plugin.</shortdesc>
  <conbody>
-  <p>In order to run the plugin, you must be familiar with the process of running the DITA-OT.
-   Please refer to the <xref keyref="dita-ot-doc"/>. The transtype is d4p-html5 to prevent conflict
-   with the html5 transtype, availaible in the DITA-OT version 2.0.</p>
+  <p>To run the plugin, you must be familiar with the process of running the DITA-OT.  Refer to the
+        <xref keyref="dita-ot-doc"/>. The transtype is d4p-html5 to prevent conflict with the html5
+      transtype, availaible in the DITA-OT version 2.0.</p>
   
-  <p>The plugin works with DITA-OT version 1.7 and prior. Different packages are availaible on the DITA for Publishers page download page.</p>
+  <p>The plugin works with DITA-OT versions 1.7.x and prior.</p>
   
-  <p>There are ant parameters availaible in the xhtml transforms that are not supported yet in the html5 plugin, please consult the references for a complete list of availaible properties.</p>
+  <p>The plugin uses ant parameters similar to those for the xhtml transform. Some parameters
+      available for the xhtml transform are not currently supported in the html5 plugin. For a
+      complete list of available properties, consult the reference material.<draft-comment
+        author="Jim">"reference material" needs clearer identification, and a
+      link.</draft-comment></p>
   <section>
    <title>Running DITA-OT from Ant</title>
-   <p>Execute the usual command using html5 as the transtype</p>
+   <p>Execute the usual command using html5 as the transtype.</p>
    <codeblock>
     <data-about>
       <data name="language" value="bash"/>

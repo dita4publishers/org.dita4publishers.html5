@@ -2,10 +2,10 @@
 <!DOCTYPE concept PUBLIC "-//OASIS//DTD DITA Concept//EN" "concept.dtd">
 <concept id="concept_3b5_mrd_qh">
  <title>Downloading HTML5 plugin</title>
- <shortdesc>The html5 plugin is part of the dita4publishers set of plugins. </shortdesc>
+ <shortdesc>The html5 plugin is part of the DITA for Publishers set of plugins.</shortdesc>
  <conbody>
-  <p>The dita4publishers project could be downloaded on source forge Web site on <xref keyref="d4p-source">the
-    Dita4publishers project page</xref></p>
-  <p>Please follow the installation instructions of the Dita4publishers projects.</p>
+   <p>The DITA for Publishers plugins can be downloaded from the <xref keyref="d4p-source">Dita for
+        Publishers project page</xref> on the SourceForge web site. Installation instructions are
+      included with the project. </p>  
  </conbody>
 </concept>
