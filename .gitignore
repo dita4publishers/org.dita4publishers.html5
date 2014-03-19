@@ -56,3 +56,6 @@ xsl/map2html5.xsl
 build-theme.xml
 build_transtype-html5.xml
 themes/*/libs
+
+# oXygen project #
+*.xpr
