@@ -4,13 +4,19 @@
     <title>Create a customization plugin <ph outputclass="quiet">(an example)</ph></title>
     <shortdesc>In order to develop a new theme, you need to develop a customization plugin.</shortdesc>
     <taskbody>
+        <prereq>The DITA for Publishers html5 plugin is required. This plugin must be in a folder
+            named <filepath>net.sourceforge.dita4publishers.html5</filepath>.</prereq>
         <context>
             <p>In this tutorial, we will do a minimal implementation of the <xref
                     keyref="foundation"/> using the html5 plugin.</p>
         </context>
         <steps>
             <step>
-                <cmd>Create a customization plugin</cmd>
+                <cmd>Download and install the <xref keyref="d4p-utils"
+                        >net.sourceforge.dita4publishers.utils</xref> plugin.</cmd>
+            </step>
+            <step>
+                <cmd>Create a customization plugin.</cmd>
                 <stepxmp>
                     <p>Using the command line, run:</p>
                     <codeblock>
@@ -19,19 +25,20 @@
                         </data-about>
  ant -f plugins/net.sourceforge.dita4publishers.utils
                     </codeblock>
-                    <p>In this order, choose the following options:
-                      <ul>
-                        <li>Type choice 1, then press enter,</li>
-                        <li><b>Plugin's domain:</b> leave as is and press enter,</li>
-                        <li><b>Plugin's name:</b> leave as is and press enter,</li>
-                        <li><b>Plugin's transtype:</b> type <q>foundation</q> and press enter,</li>
-                        <li><b>Plugin's theme:</b> leaave as is</li>                     
-                      </ul>
+                    <p>Choose the following options: <ul>
+                            <li>Type choice 1, then press enter,</li>
+                            <li><msgph>Plugin's domain:</msgph> Leave as is and press
+                                    <uicontrol>Enter</uicontrol>.</li>
+                            <li><msgph>Plugin's name:</msgph> Leave as is and press
+                                    <uicontrol>Enter</uicontrol>.</li>
+                            <li><msgph>Plugin's transtype:</msgph> Type <q>foundation</q> and press
+                                    <uicontrol>Enter</uicontrol>.</li>
+                            <li><msgph>Plugin's theme:</msgph> Leave as is and press
+                                    <uicontrol>Enter</uicontrol>.</li>
+                        </ul>
                     </p>
                 </stepxmp>
-                <stepresult>
-                    The utility will create a complete customization plugin
-                </stepresult>
+                <stepresult> The utility will create a complete customization plugin. </stepresult>
             </step>
             
             <step>
@@ -47,7 +54,7 @@
             </step>
             
             <step importance="optional">
-                <cmd>Try to build the documentation with the new transtype by running </cmd>
+                <cmd>To test the new transtype, build the sample documentation. </cmd>
                 <info>
                     <codeblock>
                         <data-about>

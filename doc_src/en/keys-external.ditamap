@@ -81,6 +81,12 @@
             <navtitle>SyntaxHighlighter</navtitle>
         </topicmeta>
     </keydef>
+    
+    <keydef keys="d4p-utils" href="https://github.com/uo-hrsys/net.sourceforge.dita4publishers.utils" scope="external" format="html">
+        <topicmeta>
+            <navtitle>DITA for Publishers utilities</navtitle>
+        </topicmeta>
+    </keydef>
 
 
 </map>
