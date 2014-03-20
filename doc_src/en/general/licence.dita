@@ -10,6 +10,11 @@
       more information, refer to the developer section.<draft-comment author="Jim">need link to the
         "developer section." In that section, a brief explanation of each library and how it is used
         would be helpful.</draft-comment></p>
+   <section>
+     <title>Foundation</title>
+     <p><xref keyref="foundation">Foundation</xref> is available under the <xref keyref="MIT">MIT</xref> license.</p>
+     <p>Foundation provides a framework for responsive web design. This simplifies adaptive content styling for different devices and window sizes.</p>
+   </section>
   <section>
    <title>jQuery</title>
    <p><xref keyref="jquery">jQuery</xref> is released under the <xref keyref="MIT">MIT</xref> license.</p>
@@ -33,5 +38,6 @@
      <p><xref keyref="syntaxHighlighter">SyntaxHighlighter</xref> is currently available for use in all personal or commercial
        projects under both <xref keyref="MIT">MIT</xref> and <xref keyref="GPL">GPL</xref> licenses.</p>
    </section>
+   
  </conbody>
 </concept>
