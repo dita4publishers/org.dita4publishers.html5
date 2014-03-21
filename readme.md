@@ -37,5 +37,6 @@ Authors and Contributors
 A big thanks to:
 
 * Eliot Kimber [Contrext, LLC](http://contrext.com)
+* Jim Owens
 * Ray Fan [Tweedle](http://www.tweddle.com)
 * Mica Semrick [Silent Umbrella](http://www.silentumbrella.com)
