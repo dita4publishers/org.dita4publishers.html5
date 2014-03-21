@@ -4,9 +4,9 @@
  <title>Running the html5 plugin</title>
  <shortdesc>The html5 plugin can be run as a regular DITA-OT plugin.</shortdesc>
  <conbody>
-  <p>To run the plugin, you must be familiar with the process of running the DITA-OT.  Refer to the
+  <p>To run the plugin, you must be familiar with the process of running the DITA-OT. Refer to the
         <xref keyref="dita-ot-doc"/>. The transtype is d4p-html5 to prevent conflict with the html5
-      transtype, availaible in the DITA-OT version 2.0.</p>
+      transtype, available in the DITA-OT version 2.0.</p>
   
   <p>The plugin works with DITA-OT versions 1.7.x and prior.</p>
   
