@@ -2,11 +2,16 @@
 <!DOCTYPE concept PUBLIC "-//OASIS//DTD DITA Concept//EN" "concept.dtd">
 <concept id="concept_vqn_l1p_sh">
  <title>Introduction</title>
- <shortdesc>This plugin is an attempt to bring more features for people interested to make their
-  documentations more interactive.</shortdesc>
+ <shortdesc>The DITA HTML5 plugin provides features for making documentation more interactive. 
+  <draft-comment author="CW"> CW - 24/03/2014 - Reworded from 'This plugin is an attempt to bring more features for people interested to make their
+  documentations more interactive'.</draft-comment>
+ </shortdesc>
+
+   
  <conbody>
-  <p>The plugins works a bit differently than usual DITA-OT plugins. The plugin allows you to use
+  <p>The HTML5 plugin works differently to many other DITA-OT plugins. It allows you to build custom widgets using javascripts and css libraries of your own choice. You can use the custom widgets to enhance your documentation.</p>
+  <draft-comment author="CW"> CW - 24/03/2014 - Reworded from 'The HTML5 plugin works a bit differently than usual DITA-OT plugins. The plugin allows you to use
    the javascripts and css libraries of your choice to build custom widgets for your
-   documentations.</p>
+   documentations'.</draft-comment>    
  </conbody>
 </concept>
