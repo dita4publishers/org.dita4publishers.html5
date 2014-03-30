@@ -16,6 +16,7 @@
       </topicmeta>
       <topicref keyref="html5-install"/>
       <topicref keyref="html5-run"/>
+      <topicref keyref="html5-index-file"/>
       <topicref keyref="html5-license"/>
     </topichead>
     <topichead>

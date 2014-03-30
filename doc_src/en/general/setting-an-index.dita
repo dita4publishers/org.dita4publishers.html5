@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE concept PUBLIC "urn:pubid:dita4publishers.sourceforge.net:doctypes:dita:concept" "concept.dtd">
+<concept id="conceptId">
+ <title>Setting an index.html file</title>
+ <shortdesc>The HTML5 transformation type does not produce an index.html file by
+  default.</shortdesc>
+ <prolog>
+  <metadata>
+   <keywords>
+    <indexterm>HTML<indexterm>generating</indexterm><indexterm>HTML5</indexterm></indexterm>
+    <indexterm>map-driven processing<indexterm>generating HTML</indexterm></indexterm>
+    <indexterm>HTML5 Toolkit plugin</indexterm>
+    <indexterm>index.html, generating</indexterm>
+   </keywords>
+  </metadata>
+ </prolog>
+ <conbody>
+  <p>Modern web servers such as Apache or nginx will look for the file
+    <filepath>index.html</filepath> if a specific page is not included in the requested URL. For
+   example, if you enter <codeph>http://example.com/some/path/</codeph>, the web server will search
+   for <codeph>http://example.com/some/path/index.html</codeph> and serve that page to the
+   reqeuster.</p>
+  <p>To have an <filepath>index.html</filepath> built by the HTML5 plugin, create at topic named
+    <filepath>index.dita</filepath> and place it at the same level as your main ditamap file. </p>
+ </conbody>
+</concept>

@@ -4,6 +4,7 @@
  <keydef keys="html5-intro" href="html5-toolkit-plugin.dita" type="concept"/>
  <keydef keys="html5-install" href="general/downloading.dita" type="concept"/>
  <keydef keys="html5-run" href="general/running.dita" type="concept"/>
+ <keydef keys="html5-index-file" href="general/setting-an-index.dita"/>
  <keydef keys="html5-license" href="general/licence.dita" type="concept"/>
 
  <keydef keys="html5-theme-dev" href="dev/theme-dev.dita" type="task"/>
