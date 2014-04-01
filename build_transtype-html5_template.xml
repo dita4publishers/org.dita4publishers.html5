@@ -37,10 +37,10 @@
     dita:extension="depends org.dita.dost.platform.InsertDependsAction">
   </target>
 
-  <!-- AJO 2014-03-31 corrected typo "dita.map.html5" --> 
+   
   <target name="html5"
     unless="noMap"
-    depends="dita.html5.map"
+    depends="dita.map.html5"
   />
 
   <target name="get.plugin.version">
