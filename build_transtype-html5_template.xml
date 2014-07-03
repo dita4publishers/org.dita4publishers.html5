@@ -21,30 +21,24 @@
 
   <dirname property="ditaot.dir" file="${d4p.html5.dir}/../../"/>
 
-  <condition property="compressor.script.filename" value="build-theme.xml">
-    <not>
-      <isset property="compressor.script.filename" />
-    </not>
-  </condition>
+  <import file="build-theme.xml" />
+  <!--import file="compressor-install.xml" /-->
 
-  <import file="${compressor.script.filename}" />
-  <import file="compressor-install.xml" />
-
+  <!-- todo add compressor.install once bug in java is fixed -->
   <target name="dita2d4p-html5"
     unless="noMap"
     xmlns:dita="http://dita-ot.sourceforge.net"
-    dita:depends="get.plugin.version, set.properties, compressor.install, d4p.map-driven-build-init, build-init, preprocess, html5"
+    dita:depends="get.plugin.version, set.properties, d4p.map-driven-build-init, build-init, preprocess, html5"
     dita:extension="depends org.dita.dost.platform.InsertDependsAction">
   </target>
 
-   
   <target name="html5"
     unless="noMap"
     depends="dita.map.html5"
   />
 
   <target name="get.plugin.version">
-    <echo>HTML5 plugin version 1.1.183 - alpha 3</echo>
+    <echo>HTML5 plugin version 1.1.209</echo>
   </target>
 
   <target name="dita.map.html5.init" description="Initialize HTML5 plugin properties">
