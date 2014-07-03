@@ -19,10 +19,20 @@
 
 <project name="theme.builder" basedir=".">
 
+  <condition property="os.path.separator" value="\\">
+    <os family="windows"/>
+  </condition>
+
+  <condition property="os.path.separator" value="/">
+    <not>
+      <os family="windows"/>
+   </not>
+  </condition>
+  
   <dirname property="theme.builder.dir" file="${ant.file.theme.builder}"/>
-  <property name="dita.plugins.dir" location="${theme.builder.dir}/../" />
-  <property name="ditaot.dir" location="${theme.builder.dir}/../../"/>
-  <property name="ditaot.temp.dir" location="${theme.builder.dir}/../../temp"/>
+  <property name="dita.plugins.dir" location="${theme.builder.dir}${file.separator}..${file.separator}" />
+  <property name="ditaot.dir" location="${theme.builder.dir}${file.separator}..${file.separator}..${file.separator}"/>
+  <property name="ditaot.temp.dir" location="${theme.builder.dir}${os.path.separator}..${os.path.separator}..${os.path.separator}temp"/>
   <property name="d4p.html5.dir" location="${theme.builder.dir}" />
 
   <mkdir dir="${ditaot.temp.dir}" />
@@ -83,7 +93,6 @@
   -->
   <property name="regex.file.separator" value="[\\|/]" />
 
-
   <condition property="html5.site.theme" value="${args.cssroot}">
     <isset property="args.cssroot" />
   </condition>
@@ -95,26 +104,26 @@
   </condition>
 
   <!-- theme dir definition -->
-  <condition property="html5.theme.dir" value="${d4p.html5.dir}/${html5.build.themes.dir}/${html5.site.theme}">
+  <condition property="html5.theme.dir" value="${d4p.html5.dir}${file.separator}${html5.build.themes.dir}${file.separator}${html5.site.theme}">
     <not>
       <isset property="html5.theme.dir" />
     </not>
   </condition>
 
-  <condition property="html5.theme.config.dir" value="${d4p.html5.dir}/${html5.libs.dir}/${html5.themes.dir}">
+  <condition property="html5.theme.config.dir" value="${d4p.html5.dir}${file.separator}${html5.libs.dir}${file.separator}${html5.themes.dir}">
     <not>
       <isset property="html5.theme.config.dir" />
     </not>
   </condition>
 
-  <property name="html5.temp.theme.dir" location="${ditaot.temp.dir}/${html5.themes.dir}/${html5.site.theme}" />
-  <property name="html5.temp.libs.dir" location="${ditaot.temp.dir}/${html5.libs.dir}" />
-  <property name="html5.theme.output.dir" location="${output.dir}/${html5.themes.dir}/${html5.site.theme}" />
+  <property name="html5.temp.theme.dir" location="${ditaot.temp.dir}${file.separator}${html5.themes.dir}${file.separator}${html5.site.theme}" />
+  <property name="html5.temp.libs.dir" location="${ditaot.temp.dir}${file.separator}${html5.libs.dir}" />
+  <property name="html5.theme.output.dir" location="${output.dir}${file.separator}${html5.themes.dir}${file.separator}${html5.site.theme}" />
 
   <available file="${html5.theme.dir}" type="dir" property="html5.theme.exists"/>
 
   <!-- Default location of the configuration file -->
-  <condition property="html5.site.config" value="${html5.theme.config.dir}/${html5.site.theme}/config.xml">
+  <condition property="html5.site.config" value="${html5.theme.config.dir}${file.separator}${html5.site.theme}${file.separator}config.xml">
     <not>
       <isset property="html5.site.config" />
     </not>
@@ -131,28 +140,44 @@
   </target>
 
   <target name="package.compress" depends="package.concatenate">
-    <apply executable="java" parallel="false" dest="${html5.temp.theme.dir}">
-      <fileset dir="${html5.temp.theme.dir}">
-        <include name="**/**"/>
-      </fileset>
-      <arg line="-jar"/>
-      <arg path="${theme.builder.dir}/${compressor.path}"/>
-      <srcfile/>
-      <arg line="-o"/>
-      <mapper type="glob" from="*.${html5.concatenation.prefix}.${type}" to="*.${type}"/>
-      <targetfile/>
-    </apply>
+      
+    <pathconvert property="fromfile" dirsep="${os.path.separator}">
+      <path location="${html5.temp.theme.dir}${file.separator}${type}${file.separator}${to}.${html5.concatenation.prefix}.${type}"/>
+    </pathconvert>
+
+    <pathconvert property="tofile" dirsep="${os.path.separator}">
+      <path location="${html5.temp.theme.dir}${file.separator}${type}${file.separator}${to}.${type}"/>
+    </pathconvert>
+	
+	 <echo> +++ Compressing concatenated file 
+           ${fromfile}
+           to ${tofile}</echo>
+
+     <java jar="${theme.builder.dir}${file.separator}${compressor.path}"
+           fork="true"
+           maxmemory="128m"
+           failonerror="yes"
+           outputproperty="result.process"
+           >
+		<arg value="-v"/>
+        <arg path="${fromfile}"/>
+        <arg value="-o"/>
+        <arg path="${tofile}"/>  
+       </java>
+	   
+ 
+       <echo message="${result.process}" />
   </target>
 
    <target name="package.concatenate">
     <echo> +++ Concatenating file before compression </echo>
-    <echo>     ${html5.temp.theme.dir}/${type}/${to}.${html5.concatenation.prefix}.${type} </echo>
+    <echo>     ${html5.temp.theme.dir}${file.separator}${type}${file.separator}${to}.${html5.concatenation.prefix}.${type} </echo>
 
    <condition property="package.css">
       <equals arg1="${type}" arg2="css" />
     </condition>
 
-    <concat destfile="${html5.temp.theme.dir}/${type}/${to}.${html5.concatenation.prefix}.${type}">
+    <concat destfile="${html5.temp.theme.dir}${file.separator}${type}${file.separator}${to}.${html5.concatenation.prefix}.${type}">
       <filelist dir="${html5.temp.libs.dir}" files="${filelist}"></filelist>
     </concat>
 
@@ -165,20 +190,20 @@
     <!-- copy main library -->
     <mkdir dir="${html5.temp.libs.dir}" />
     <copy todir="${html5.temp.libs.dir}" >
-      <fileset dir="${theme.builder.dir}/${html5.libs.dir}" followsymlinks="no" />
+      <fileset dir="${theme.builder.dir}${file.separator}${html5.libs.dir}" followsymlinks="no" />
     </copy>
 
     <!-- copy other library -->
     <copy todir="${html5.temp.libs.dir}">
       <fileset dir="${dita.plugins.dir}" followsymlinks="no">
-        <include name="*/${html5.libs.dir}/**"/>
+        <include name="*${file.separator}${html5.libs.dir}${file.separator}**"/>
       </fileset>
       <regexpmapper from=".*${regex.file.separator}${html5.libs.dir}${regex.file.separator}(.*)" to="\1" />
     </copy>
 
     <!-- copy theme directory -->
-    <mkdir dir="${html5.temp.libs.dir}/${html5.themes.dir}" />
-    <copy todir="${html5.temp.libs.dir}/${html5.themes.dir}/">
+    <mkdir dir="${html5.temp.libs.dir}${file.separator}${html5.themes.dir}" />
+    <copy todir="${html5.temp.libs.dir}${file.separator}${html5.themes.dir}/">
       <fileset dir="${dita.plugins.dir}" followsymlinks="no">
         <include name="*/theme/${html5.site.theme}/**"/>
       </fileset>
@@ -222,7 +247,6 @@
       <patternset includes="${fonts.path.converted}">
         <exclude name="*.css" />
         <exclude name="*.js" />
-
         <include name="*.otf" />
         <include name="*.woff" />
         <include name="*.ttf" />
