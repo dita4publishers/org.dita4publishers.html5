@@ -22,13 +22,12 @@
   <dirname property="ditaot.dir" file="${d4p.html5.dir}/../../"/>
 
   <import file="build-theme.xml" />
-  <!--import file="compressor-install.xml" /-->
+  <import file="compressor-install.xml" />
 
-  <!-- todo add compressor.install once bug in java is fixed -->
   <target name="dita2d4p-html5"
     unless="noMap"
     xmlns:dita="http://dita-ot.sourceforge.net"
-    dita:depends="get.plugin.version, set.properties, d4p.map-driven-build-init, build-init, preprocess, html5"
+    dita:depends="get.plugin.version, set.properties, d4p.map-driven-build-init, build-init, preprocess, compressor.install, html5"
     dita:extension="depends org.dita.dost.platform.InsertDependsAction">
   </target>
 
@@ -93,7 +92,7 @@
     <condition property="html5.copy.assets" value="yes">
       <and>
         <not>
-          <isset property="html5.copy.libs" />
+          <isset property="html5.copy.assets" />
         </not>
         <not>
           <isset property="args.debug" />

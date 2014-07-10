@@ -26,7 +26,21 @@
   </target>
 
   <target name="compressor.install" depends="compressor.check" unless="compressor.exists">
-   <get src="${compressor.cloud.uri}${compressor.filename}"
+    <echo>
+      In order to build theme, you need to install the YUI compressor version 2.4.7.
+      Please download it from ${compressor.cloud.uri}
+
+      It is important you download the 2.4.7 version.
+
+      Once you downloaded it, extract it in the html5 plugin at:
+      ${d4p.html5.dir}
+
+      The final path of the jar should be:
+      ${d4p.html5.dir}/${compressor.path}
+    </echo>
+
+     <fail/>
+   <!--get src="${compressor.cloud.uri}${compressor.filename}"
     dest="${d4p.html5.dir}"
     verbose="yes" />
 
@@ -35,6 +49,6 @@
 
    <delete file="${d4p.html5.dir}/${compressor.filename}"/>
 
-   <available file="${compressor.path}" type="file" property="compressor.exists"/>
+   <available file="${compressor.path}" type="file" property="compressor.exists"/-->
   </target>
 </project>
