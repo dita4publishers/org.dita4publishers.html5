@@ -52,9 +52,16 @@
             <linktext>xml2json</linktext>
         </topicmeta>
     </keydef>
+    
     <keydef href="http://developer.yahoo.com/yui/compressor/" keys="YUI" scope="external" format="html">
         <topicmeta>
             <linktext>YUI compressor</linktext>
+        </topicmeta>
+    </keydef>
+    
+    <keydef href="https://github.com/downloads/yui/yuicompressor/yuicompressor-2.4.7.zip" keys="YUI-download" scope="external" format="html">
+        <topicmeta>
+            <linktext>YUI compressor version 2.4.7</linktext>
         </topicmeta>
     </keydef>
 

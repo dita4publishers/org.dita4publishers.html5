@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE concept PUBLIC "-//OASIS//DTD DITA Concept//EN" "concept.dtd">
+<concept id="concept_fct_vhq_q4">
+ <title>Changed Behaviours</title>
+ <shortdesc>This plugin does not always behaves the same way than others DITA OT
+  plugins.</shortdesc>
+ <conbody>
+  <p>This plugin is an attempt to bring more Web design capabilities into the DITA OT. It has
+   been design to allows the creations of Themes (you might name this Skins). </p>
+  <p>There are some expected beahviors that are not implemented in this plugin.</p>
+  <p>Below are the list of arguments, that are used differently in this plugin.</p>
+  <section>
+   <title>args.cssroot</title>
+   <p>The args.cssroot is used to choose a theme instead of a css </p>
+  </section>
+ </conbody>
+</concept>

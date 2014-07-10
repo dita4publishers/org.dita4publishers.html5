@@ -159,9 +159,9 @@ ol.steps li { margin: 1.5 0; }
 ol.steps li span.cmd
 {
   font-size: 1.2em;
+  font-weight: bold;
   display: block;
   margin: 0 0 1.5em 0;
-  border-bottom: 1px solid #666;
 }
 
 ol.steps li.substep span.cmd {

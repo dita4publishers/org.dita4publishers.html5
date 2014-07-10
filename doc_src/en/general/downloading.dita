@@ -5,7 +5,6 @@
  <shortdesc>The html5 plugin is part of the DITA for Publishers set of plugins.</shortdesc>
  <conbody>
    <p>The DITA for Publishers plugins can be downloaded from the <xref keyref="d4p-source">Dita for
-        Publishers project page</xref> on the SourceForge web site. Installation instructions are
-      included with the project. </p>  
+        Publishers project page</xref> on the SourceForge web site.</p>  
  </conbody>
 </concept>

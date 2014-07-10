@@ -14,19 +14,17 @@
       <topicmeta>
         <navtitle>Getting Started</navtitle>
       </topicmeta>
+      <topicref keyref="html5-download"/>
       <topicref keyref="html5-install"/>
       <topicref keyref="html5-run"/>
       <topicref keyref="html5-index-file"/>
       <topicref keyref="html5-license"/>
     </topichead>
+    
     <topichead>
       <topicmeta>
-        <navtitle>How to....</navtitle>
+        <navtitle>For technical writters</navtitle>
       </topicmeta>
-      <topicref keyref="html5-theme-dev">
-        <topicref keyref="html5-theme-configuration"/>
-        <topicref keyref="html5-customize-xsl"/>
-      </topicref>      
       <topicref keyref="html5-feature-muti-columns"/>
       <topicref keyref="html5-feature-css-grid"/>
       <topicref keyref="html5-feature-images"/>
@@ -37,6 +35,17 @@
       </topicref>
       <topicref keyref="html5-theme-add-conditional-css"/>
     </topichead>
+    
+    <!--topichead>
+      <topicmeta>
+        <navtitle>Development</navtitle>
+      </topicmeta>
+      <topicref keyref="html5-theme-dev">
+        <topicref keyref="html5-theme-configuration"/>
+        <topicref keyref="html5-customize-xsl"/>
+      </topicref>    
+    </topichead-->
+
     <topichead>
       <topicmeta>
         <navtitle>References</navtitle>
