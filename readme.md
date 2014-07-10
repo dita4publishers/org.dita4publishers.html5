@@ -26,6 +26,19 @@ Installation
 is a child of the DITA-OT plugins or demo directory (e.g. C:\DITA-OTx.y\plugins\), and
 you should be ready to go.
 
+### Additional steps for developper
+
+If you want to do development on top of the HTML5 plugin, you will need to install the YUI compressor.
+This tool is used to compress your css and javascripts assets.
+
+* Download the   [https://github.com/downloads/yui/yuicompressor/yuicompressor-2.4.7.zip](YUI compressor version 2.4.7)
+* extract the content into the net.sourceforge.dita4publishers.html5 plugin directory
+
+Notes:
+
+* The YUI compressor version 2.4.8 does not work properly on Windows. There is a path resolution issue.
+* 3 July 2014 - Due to a java issue, there is no way to have the GET task working properly with ant over SSL on Java 7. I had to remove the YUI compressor installer
+
 Running the transformation
 --------------------------
 
