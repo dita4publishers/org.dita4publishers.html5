@@ -66,6 +66,9 @@
       <nav class="mobile-nav">
         <!-- do not show toolbar on index page -->
         <ul>
+          <li><a href="index.html"><xsl:call-template name="getString">
+              <xsl:with-param name="stringName" select="'TOC'"/>
+            </xsl:call-template></a></li>
           <li class="toggle-topbar menu-icon">
             <a id="toggle-nav-content" href="#{$IDLOCALNAV}">
               <xsl:call-template name="getString">
@@ -98,6 +101,9 @@
 
         <xsl:if test="$listItems">
           <ul>
+            <li><a href="index.html"><xsl:call-template name="getString">
+              <xsl:with-param name="stringName" select="'TOC'"/>
+            </xsl:call-template></a></li>
             <xsl:sequence select="$listItems"/>
           </ul>
         </xsl:if>

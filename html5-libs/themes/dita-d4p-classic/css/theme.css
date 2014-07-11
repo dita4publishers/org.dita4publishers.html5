@@ -502,3 +502,31 @@ footer h2, address strong
   z-index:0;
   opacity:0.7;
 }
+
+/**
+ * TOC
+ */
+
+body.homepage #local-navigation
+{
+  display:block;
+  float:none;
+}
+
+body.homepage #local-navigation a, body.homepage #local-navigation a:link
+{
+  text-decoration: underline;
+}
+
+
+body.homepage #nav-content {
+  font-size: 1.4em;
+}
+
+body.homepage #nav-content ul li {
+  margin:0.6em 0;
+}
+
+body.homepage #local-navigation ul li ul li {
+    margin-left: 30px;
+}

@@ -30,12 +30,6 @@
 
   <xsl:output name="indented-xml" method="xml" indent="yes" omit-xml-declaration="yes"/>
 
-  <xsl:template match="*[df:class(., 'map/map')]" mode="generate-root-pages">
-    <xsl:param name="uniqueTopicRefs" as="element()*" tunnel="yes"/>
-    <xsl:apply-templates select="." mode="generate-root-nav-page"/>
-  </xsl:template>
-
-
   <xsl:template mode="toc-title" match="*[df:isTopicRef(.)] | *[df:isTopicHead(.)]">
     <xsl:variable name="titleValue" select="df:getNavtitleForTopicref(.)"/>
     <xsl:sequence select="$titleValue"/>
@@ -206,6 +200,9 @@
       <xsl:call-template name="gen-user-sidetoc"/>
       <xsl:choose>
         <xsl:when test="$is-root">
+            <h1><xsl:call-template name="getString">
+              <xsl:with-param name="stringName" select="'TOC'"/>
+            </xsl:call-template></h1>
           <xsl:sequence select="$navigation"/>
         </xsl:when>
         <xsl:otherwise>

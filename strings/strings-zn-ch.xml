@@ -25,4 +25,5 @@
   <str name="turnJavascriptOn">要阅读此文档必须启用 JavaScript 。</str>
   <str name="BackToTop">返回到顶部</str>
   <str name="chooseAudience">选择另外的集体</str>
+  <str name="TOC">Table of contents</str>
 </strings>

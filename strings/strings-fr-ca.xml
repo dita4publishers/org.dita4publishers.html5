@@ -25,4 +25,5 @@
   <str name="turnJavascriptOn">Pour consulter cette documentation, vous devez activer Javascript.</str>
   <str name="BackToTop">Haut de la page</str>
   <str name="chooseAudience">Sélectionner un autre groupe</str>
+  <str name="TOC">Table des matières</str>
 </strings>
