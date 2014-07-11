@@ -207,6 +207,9 @@ var navigation = {
 };
 
 $(function() {
-  navigation.init();
+  if(!$('body').hasClass('homepage'))
+  {
+    navigation.init();
+  }
 });
 

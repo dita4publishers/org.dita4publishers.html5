@@ -14,6 +14,7 @@
       <topicmeta>
         <navtitle>Getting Started</navtitle>
       </topicmeta>
+      <topicref keyref="html5-requirements"/>
       <topicref keyref="html5-download"/>
       <topicref keyref="html5-install"/>
       <topicref keyref="html5-run"/>
@@ -51,7 +52,7 @@
         <navtitle>References</navtitle>
       </topicmeta>
       <topicref keyref="html5-plugin-directory-structure"/>
-      <!--topicref keyref="html5-plugin-ant-properties.dita"/-->
+      <topicref keyref="html5-plugin-ant-properties"/>
     </topichead>
   </chapter>
 </pubmap>

@@ -95,6 +95,7 @@
 
   <!-- define class attribute -->
   <xsl:template match="*" mode="set-body-class-attr">
+    <xsl:param name="is-root" as="xs:boolean"  tunnel="yes" select="false()" />
     <xsl:attribute name = "class">
       <xsl:call-template name="getLowerCaseLang"/>
         <xsl:sequence select="' '"/>
@@ -102,6 +103,10 @@
         <xsl:sequence select="' '"/>
         <xsl:value-of select="$BODYCLASS" />
         <xsl:apply-templates select="." mode="gen-user-body-class"/>
+        <xsl:if test="$is-root">
+          <xsl:sequence select="' '"/>
+          <xsl:value-of select="$CLASSHOMEPAGE"/>
+        </xsl:if>
     </xsl:attribute>
   </xsl:template>
 
@@ -172,7 +177,8 @@
 
   <!-- main content -->
   <xsl:template match="*" mode="generate-main">
-
+    <xsl:param name="is-root" as="xs:boolean"  tunnel="yes" select="false()" />
+    <xsl:param name="navigation" as="element()*"  tunnel="yes" />
     <div>
       <xsl:attribute name="class"><xsl:value-of select="concat('page', ' ', name(.), ' ', @outputclass, ' ', replace(replace(@class, '/', '-'), ' - ', ' '))" /></xsl:attribute>
 
@@ -198,8 +204,15 @@
 
       <!-- Include a user's XSL call here to generate a toc based on what's a child of topic -->
       <xsl:call-template name="gen-user-sidetoc"/>
+      <xsl:choose>
+        <xsl:when test="$is-root">
+          <xsl:sequence select="$navigation"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:apply-templates select="*" />
+        </xsl:otherwise>
+      </xsl:choose>
 
-      <xsl:apply-templates select="*" />
       <!-- this will include all things within topic; therefore, -->
       <!-- title content will appear here by fall-through -->
       <!-- followed by prolog (but no fall-through is permitted for it) -->
@@ -234,7 +247,6 @@
       <xsl:if test="$OUTPUTDEFAULTNAVIGATION">
         <xsl:choose>
           <xsl:when test="$is-root">
-            <xsl:sequence select="$navigation"/>
           </xsl:when>
           <xsl:otherwise>
             <xsl:variable name="navigation-fixed">
@@ -257,12 +269,17 @@
   <xsl:template match="*" mode="generate-main-content">
     <xsl:param name="is-root" as="xs:boolean"  tunnel="yes" select="false()" />
     <xsl:param name="content" tunnel="yes" />
-    <div id="{$IDMAINCONTENT}" class="{$CLASSMAINCONTENT}">
-      <xsl:choose>
-        <xsl:when test="$is-root">
-          <xsl:apply-templates select="." mode="set-initial-content"/>
-        </xsl:when>
-        <xsl:otherwise>
+    <div id="{$IDMAINCONTENT}">
+      <xsl:attribute name="class">
+        <xsl:choose>
+          <xsl:when test="$is-root">
+            <xsl:value-of select="$CLASSROOTMAINCONTENT" />
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="$CLASSMAINCONTENT" />
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:attribute>
           <section>
             <xsl:apply-templates select="." mode="generate-breadcrumb"/>
             <xsl:choose>
@@ -276,8 +293,6 @@
               </xsl:otherwise>
               </xsl:choose>
             </section>
-          </xsl:otherwise>
-        </xsl:choose>
       <div class="clear" /><xsl:sequence select="'&#x0a;'"/>
     </div>
   </xsl:template>

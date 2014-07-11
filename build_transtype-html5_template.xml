@@ -269,6 +269,18 @@
       </not>
     </condition>
 
+    <condition property="html5.class.root.main.content" value="grid_12 alpha omega">
+      <not>
+        <isset property="html5.class.root.main.content"/>
+      </not>
+    </condition>
+
+    <condition property="html5.class.home.page" value="homepage">
+      <not>
+        <isset property="html5.class.home.page"/>
+      </not>
+    </condition>
+
     <condition property="html5.class.navigation" value="grid_4 alpha omega">
       <not>
         <isset property="html5.class.navigation" />

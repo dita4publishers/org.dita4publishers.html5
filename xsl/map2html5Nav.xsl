@@ -36,34 +36,9 @@
     will be used later to offer alternate markup for navigation
    -->
   <xsl:template match="*" mode="choose-html5-nav-markup">
+    <xsl:param name="is-root" as="xs:boolean" tunnel="yes" select="false()" />
     <xsl:message> + [INFO] Generating HTML5 <xsl:value-of select="$NAVIGATIONMARKUP"/> navigation</xsl:message>
-
-    <xsl:choose>
-      <!--
-          Experimental
-        -->
-      <xsl:when test="$NAVIGATIONMARKUP='navigation-tabbed'">
-        <xsl:message> + [WARNING] This code is experimental !</xsl:message>
-        <xsl:apply-templates select="." mode="generate-html5-nav-tabbed-markup"/>
-      </xsl:when>
-
-      <xsl:when test="$NAVIGATIONMARKUP='navigation-ico'">
-        <xsl:message> + [WARNING] This code is experimental !</xsl:message>
-        <xsl:apply-templates select="." mode="generate-html5-nav-ico-markup"/>
-      </xsl:when>
-
-      <xsl:when test="$NAVIGATIONMARKUP='navigation-whole-page'">
-        <xsl:message> + [WARNING] This code is experimental !</xsl:message>
-        <xsl:apply-templates select="." mode="generate-html5-nav-whole-page"/>
-      </xsl:when>
-
-      <xsl:otherwise>
-        <!-- This mode generates the navigation structure (ToC) on the
-                index.html page, that is, the main navigation structure.
-             -->
-        <xsl:apply-templates select="." mode="generate-html5-nav-page-markup"/>
-      </xsl:otherwise>
-    </xsl:choose>
+    <xsl:apply-templates select="." mode="generate-html5-nav-page-markup"/>
   </xsl:template>
 
   <xsl:template match="*[df:class(., 'map/map')]" mode="generate-html5-nav">
@@ -85,38 +60,41 @@
   <xsl:template mode="generate-html5-nav-page-markup" match="*[df:class(., 'map/map')]">
     <xsl:param name="collected-data" as="element()" tunnel="yes"/>
     <xsl:param name="documentation-title" tunnel="yes" />
+    <xsl:param name="is-root" as="xs:boolean" tunnel="yes" select="false()" />
 
-    <nav class="mobile-nav">
-      <ul>
-        <li class="toggle-topbar menu-icon">
-          <a id="toggle-nav-content" href="#{$IDLOCALNAV}">
+    <xsl:if test="not($is-root)">
+      <nav class="mobile-nav">
+        <!-- do not show toolbar on index page -->
+        <ul>
+          <li class="toggle-topbar menu-icon">
+            <a id="toggle-nav-content" href="#{$IDLOCALNAV}">
               <xsl:call-template name="getString">
                 <xsl:with-param name="stringName" select="'menu'"/>
               </xsl:call-template>
-          </a>
-        </li>
-      </ul>
-
-      <section class="nav-pub-title">
-        <xsl:value-of select="$documentation-title" />
-      </section>
-    </nav>
+            </a>
+          </li>
+        </ul>
+        <section class="nav-pub-title">
+          <xsl:value-of select="$documentation-title" />
+        </section>
+      </nav>
+    </xsl:if>
 
     <nav id="{$IDLOCALNAV}" role="navigation" aria-label="Main navigation">
       <xsl:attribute name="class" select="$CLASSNAVIGATION"/>
 
-      <div id="nav-content">
+        <div id="nav-content">
 
-        <xsl:variable name="listItems" as="node()*">
-          <xsl:apply-templates mode="generate-html5-nav"
-            select=".
-            except (
-            *[df:class(., 'topic/title')],
-            *[df:class(., 'map/topicmeta')],
-            *[df:class(., 'map/reltable')]
-            )"
-          />
-        </xsl:variable>
+          <xsl:variable name="listItems" as="node()*">
+            <xsl:apply-templates mode="generate-html5-nav"
+              select=".
+              except (
+              *[df:class(., 'topic/title')],
+              *[df:class(., 'map/topicmeta')],
+              *[df:class(., 'map/reltable')]
+              )"
+            />
+          </xsl:variable>
 
         <xsl:if test="$listItems">
           <ul>

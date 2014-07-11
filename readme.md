@@ -48,6 +48,13 @@ Running the transformation
     Using Java:
     java -jar lib\dost.jar /i:samples/hierarchy.ditamap /transtype:d4p-html5
 
+
+Building the documentation
+--------------------------
+
+    From the DITA_OT directory, run:
+    ant -Dargs.input=plugins/net.sourceforge.dita4publishers.html5/doc_src/en/html5-plugin.ditamap -Doutput.dir=out/html5-plugin/ -Dtranstype=d4p-html5
+
 Authors and Contributors
 ------------------------
 A big thanks to:

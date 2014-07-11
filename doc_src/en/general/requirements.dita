@@ -4,8 +4,8 @@
  <title>Requirements</title>
  <shortdesc/>
  <conbody>
-  <p>The HTML5 plugin has been tested sucessfully using a fresh installation:
-   <ul id="ul_whn_kdn_q4">
+  <p>The HTML5 plugin has been tested sucessfully using a fresh installation on: <ul
+    id="ul_whn_kdn_q4">
     <li>CentOS 6, ant</li>
     <li>Mac OS X.8.5, ant 1.9.4, java 1.6.0_65 on DITA_OT versions 1.6.3, 1.7.5 and 1.8.4</li>
     <li>Windows 7 ant 1.9.4, java 1.6.0_65 on DITA_OT versions 1.6.3, 1.7.5 and 1.8.4</li>

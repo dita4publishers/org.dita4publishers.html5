@@ -59,6 +59,8 @@
     <param name="IDSECTIONCONTAINER" expression="${html5.id.section.container}" if="html5.id.section.container" />
     <param name="IDMAINCONTENT" expression="${html5.id.main.content}" if="html5.id.main.content" />
     <param name="CLASSMAINCONTENT" expression="${html5.class.main.content}" if="html5.class.main.content" />
+    <param name="CLASSROOTMAINCONTENT" expression="${html5.class.root.main.content}" if="html5.class.root.main.content" />
+    <param name="CLASSHOMEPAGE" expression="${html5.class.home.page}" if="html5.class.home.page" />
     <param name="CLASSMAINCONTAINER" expression="${html5.class.main.container}" if="html5.class.main.container" />
     <param name="CLASSSECTIONCONTAINER" expression="${html5.class.section.container}" if="html5.class.main.container" />
     <param name="CLASSNAVIGATION" expression="${html5.class.navigation}" if="html5.class.navigation" />

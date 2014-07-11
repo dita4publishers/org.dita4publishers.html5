@@ -2617,6 +2617,10 @@ body
   background: #EFEFEF url(../img/subtle-pattern-1.jpg) repeat;
 }
 
+.body {
+  overflow:scroll;
+}
+
 h1, h2, h3, h4, h5, h6 {
   color: #3887b0;
   font-weight: lighter;
@@ -2955,12 +2959,12 @@ footer h2, address strong
 
 /** column size is 40px **/
 .size-medium .page {
-  padding: 40px 40px 20px 80px;
+  padding: 30px 30px 15px 60px;
 }
 
 /** column size is 60px **/
 .size-large .page {
-  padding: 60px 60px 20px 120px;
+  padding: 40px 40px 20px 80px;
 }
 .size-x-large .page{
   padding: 60px 40px 20px 120px;

@@ -29,6 +29,11 @@
 >
 
   <!-- generate root pages -->
+   <xsl:template match="*[df:class(., 'map/map')]" mode="generate-root-pages">
+    <xsl:param name="uniqueTopicRefs" as="element()*" tunnel="yes"/>
+    <xsl:apply-templates select="." mode="generate-root-nav-page"/>
+  </xsl:template>
+
   <xsl:template match="*[df:class(., 'map/map')]" mode="generate-root-nav-page">
     <!-- Generate the root output page. By default this page contains the root
          navigation elements. The direct output of this template goes to the
@@ -50,12 +55,10 @@
 
 
     <xsl:message> + [INFO] Generating index document <xsl:sequence select="$indexUri"/>...</xsl:message>
-
-    <xsl:result-document href="{$indexUri}" format="html5">
-      <xsl:text disable-output-escaping="yes">&lt;!DOCTYPE html&gt;</xsl:text>
-
+   <xsl:result-document format="html5" href="{$indexUri}">
       <xsl:apply-templates mode="generate-html5-page" select=".">
         <xsl:with-param name="resultUri" as="xs:string" select="$indexUri" tunnel="yes"/>
+        <xsl:with-param name="is-root" as="xs:boolean" select="true()"/>
       </xsl:apply-templates>
     </xsl:result-document>
   </xsl:template>
