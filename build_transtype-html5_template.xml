@@ -79,14 +79,12 @@
     </condition>
 
     <condition property="dita.map.html5.do.package" value="yes">
-      <and>
+      <or>
         <not>
           <isset property="html5.theme.exists" />
         </not>
-        <not>
-          <isset property="args.debug" />
-        </not>
-      </and>
+        <isset property="args.debug" />
+      </or>
     </condition>
 
     <condition property="html5.copy.assets" value="yes">
