@@ -64,12 +64,9 @@
 
     <xsl:if test="not($is-root)">
 
+      <!-- this navigation block is shown only on mobile view -->
       <nav class="mobile-nav">
-        <!-- do not show toolbar on index page -->
         <ul>
-          <li class="toc_link"><a href="index.html"><xsl:call-template name="getString">
-              <xsl:with-param name="stringName" select="'TOC'"/>
-            </xsl:call-template></a></li>
           <li class="toggle-topbar menu-icon">
             <a id="toggle-nav-content" href="#{$IDLOCALNAV}">
               <xsl:call-template name="getString">
