@@ -24,10 +24,10 @@ var navigation = {
 
   // class
   cs: {
-    leaf: 'leaf',
-    expand: 'fi-arrows-expand',
-    collapse: 'fi-arrows-compress',
-    close: 'fi-x-circle'
+    leaf: ' leaf ',
+    expand: ' fi-arrows-expand ',
+    collapse: ' fi-arrows-compress ',
+    close: ' fi-x-circle '
   },
 
   // text value
