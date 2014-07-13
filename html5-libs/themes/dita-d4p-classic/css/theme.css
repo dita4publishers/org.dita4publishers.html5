@@ -177,7 +177,10 @@ div.nav-pub-title h2 { font-size: 0.9em; }
 section h1 { margin: 0 0 1.5em 0; }
 #d4h5-main-content h1 { margin-top: 0px; }
 .paged #local-navigation { background-color: #F6F6F6; }
-#local-navigation ul li { margin: 0.4em 0; }
+#local-navigation ul li {
+  margin: 0.4em 0;
+  list-style-position: outside;
+}
 #local-navigation a.selected, #local-navigation a.selected:link { font-weight: bold; }
 #local-navigation ul li ul li { margin-left: 10px; }
 
@@ -506,11 +509,29 @@ footer h2, address strong
 /**
  * TOC
  */
-
 body.homepage #local-navigation
 {
   display:block;
   float:none;
+  width:100%;
+}
+
+.homepage .toc_link, .mobile-nav .toc_link
+{
+  display:none;
+}
+
+.size-small body.homepage #local-navigation
+{
+  font-size:0.8em;
+}
+
+.size-small body.homepage #local-navigation {
+  left:0;
+}
+
+.size-small body.homepage h1 {
+  display:none;
 }
 
 body.homepage #local-navigation a, body.homepage #local-navigation a:link
@@ -529,4 +550,34 @@ body.homepage #nav-content ul li {
 
 body.homepage #local-navigation ul li ul li {
     margin-left: 30px;
+}
+
+.size-small  body.homepage #local-navigation ul li ul li {
+    margin-left: 0px;
+}
+
+.size-small .homepage .page {
+   margin:0;
+   padding-top:80px;
+}
+
+.size-small .homepage .toggle-topbar {
+  display:none;
+}
+
+.size-small .homepage .mobile-nav {
+  display:block;
+  position:fixed;
+  left:0;
+  top:0;
+  width:100%;
+}
+
+.size-small .homepage .mobile-nav section {
+  font-size: 1.2em;
+  margin: 5px;
+}
+
+.size-small .homepage #local-navigation {
+  position:static;
 }
