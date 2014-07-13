@@ -4,6 +4,13 @@
  <title>Requirements</title>
  <shortdesc/>
  <conbody>
+  <p>The HTML5 plugin requires:
+   <ul>
+    <li>An installation of DITA OT versions 1.6.3, 1.7.5 or 1.8.4.;</li>
+    <li>Ant 1.9.4. It should works on version abobe 1.8.x;</li>
+    <li>Java 1.6 or superior.</li>
+   </ul>
+   </p>
   <p>The HTML5 plugin has been tested sucessfully using a fresh installation on: <ul
     id="ul_whn_kdn_q4">
     <li>CentOS 6, ant</li>
