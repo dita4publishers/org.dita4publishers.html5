@@ -63,10 +63,11 @@
     <xsl:param name="is-root" as="xs:boolean" tunnel="yes" select="false()" />
 
     <xsl:if test="not($is-root)">
+
       <nav class="mobile-nav">
         <!-- do not show toolbar on index page -->
         <ul>
-          <li><a href="index.html"><xsl:call-template name="getString">
+          <li class="toc_link"><a href="index.html"><xsl:call-template name="getString">
               <xsl:with-param name="stringName" select="'TOC'"/>
             </xsl:call-template></a></li>
           <li class="toggle-topbar menu-icon">
@@ -101,7 +102,7 @@
 
         <xsl:if test="$listItems">
           <ul>
-            <li><a href="index.html"><xsl:call-template name="getString">
+             <li class="toc_link"><a href="index.html"><xsl:call-template name="getString">
               <xsl:with-param name="stringName" select="'TOC'"/>
             </xsl:call-template></a></li>
             <xsl:sequence select="$listItems"/>
@@ -200,8 +201,10 @@
 
     <xsl:if test="$tocDepth le $maxTocDepthInt">
       <xsl:variable name="navPointId" as="xs:string" select="generate-id(.)"/>
-      <li id="{$navPointId}">
-        <xsl:sequence select="df:getNavtitleForTopicref(.)"/>
+      <li id="{$navPointId}" class="topichead">
+        <span>
+          <xsl:sequence select="df:getNavtitleForTopicref(.)"/>
+        </span>
         <xsl:variable name="listItems" as="node()*">
           <xsl:apply-templates select="*[df:class(., 'map/topicref')]" mode="#current">
             <xsl:with-param name="tocDepth" as="xs:integer" tunnel="yes" select="$tocDepth + 1"/>
@@ -272,10 +275,10 @@
     <xsl:variable name="hasChildClass">
       <xsl:choose>
         <xsl:when test="$hasChild">
-          <xsl:value-of select="'collapsible'"/>
+          <xsl:value-of select="' collapsible '"/>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:value-of select="'no-child'"/>
+          <xsl:value-of select="' no-child '"/>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
