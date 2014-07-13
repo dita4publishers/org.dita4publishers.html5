@@ -27,7 +27,7 @@
   <target name="dita2d4p-html5"
     unless="noMap"
     xmlns:dita="http://dita-ot.sourceforge.net"
-    dita:depends="get.plugin.version, set.properties, d4p.map-driven-build-init, build-init, preprocess, compressor.install, html5"
+    dita:depends="get.plugin.version, set.properties, d4p.map-driven-build-init, build-init, preprocess, html5"
     dita:extension="depends org.dita.dost.platform.InsertDependsAction">
   </target>
 
@@ -269,7 +269,7 @@
       </not>
     </condition>
 
-    <condition property="html5.class.root.main.content" value="grid_12 alpha omega">
+    <condition property="html5.class.root.main.content" value="grid_8 alpha omega">
       <not>
         <isset property="html5.class.root.main.content"/>
       </not>
@@ -396,7 +396,7 @@
 
 
    <!-- FIXME: Move to xsl code directly -->
-  <target name="theme-xml-preprocess" description="Process theme">
+  <target name="theme-xml-preprocess" description="Process theme" depends="compressor.install">
 
   <property name="theme.preprocess.style" location="${d4p.html5.dir}/xsl/theme/theme-preprocess.xsl"/>
 
