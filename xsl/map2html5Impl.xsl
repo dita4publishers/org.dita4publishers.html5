@@ -56,7 +56,6 @@
   <xsl:include href="../../net.sourceforge.dita4publishers.common.html/xsl/commonHtmlBookmapEnumeration.xsl"/>
 
   <xsl:include href="map2html5Nav.xsl"/>
-  <xsl:include href="map2html5NavTabbed.xsl"/>
   <xsl:include href="map2html5Content.xsl"/>
   <xsl:include href="map2html5Collection.xsl"/>
   <xsl:include href="map2html5Template.xsl"/>
