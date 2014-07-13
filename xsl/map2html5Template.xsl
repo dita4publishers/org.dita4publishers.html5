@@ -203,7 +203,7 @@
             <h1><xsl:call-template name="getString">
               <xsl:with-param name="stringName" select="'TOC'"/>
             </xsl:call-template></h1>
-          <xsl:sequence select="$navigation"/>
+             <xsl:sequence select="$navigation"/>
         </xsl:when>
         <xsl:otherwise>
           <xsl:apply-templates select="*" />
@@ -296,11 +296,18 @@
 
  <!-- generate html5 footer -->
   <xsl:template match="*" mode="generate-breadcrumb">
-    <div id="content-toolbar" class="toolbar hide-for-small">
-      <xsl:if test="contains($include.roles, ' next ') or contains($include.roles, ' previous ') or contains($include.roles, ' parent ')">
-        <xsl:call-template name="next-prev-parent-links"/><!--handle next and previous links-->
-      </xsl:if>
-    </div>
+    <xsl:param name="is-root" as="xs:boolean"  tunnel="yes" select="false()" />
+    <xsl:choose>
+      <xsl:when test="$is-root">
+      </xsl:when>
+      <xsl:otherwise>
+        <div id="content-toolbar" class="toolbar hide-for-small">
+          <xsl:if test="contains($include.roles, ' next ') or contains($include.roles, ' previous ') or contains($include.roles, ' parent ')">
+            <xsl:call-template name="next-prev-parent-links"/><!--handle next and previous links-->
+          </xsl:if>
+        </div>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <!-- generate html5 footer -->
