@@ -169,20 +169,21 @@
   <xsl:param name="HTML5THEMEDIR" select="'themes'" />
   <xsl:param name="HTML5THEMECONFIG" select="''" />
 
+  <!-- CSS classes and IDs -->
   <xsl:param name="IDMAINCONTAINER" select="'d4h5-main-container'" />
   <xsl:param name="CLASSMAINCONTAINER" select="''" />
-
   <xsl:param name="IDMAINCONTENT" select="'d4h5-main-content'" />
   <xsl:param name="CLASSMAINCONTENT" select="''" />
   <xsl:param name="CLASSROOTMAINCONTENT" select="''" />
   <xsl:param name="CLASSHOMEPAGE" select="''" />
-
+  <xsl:param name="CLASSICONPARENT" select="''" />
+  <xsl:param name="CLASSICONLEFT" select="''" />
+  <xsl:param name="CLASSICONRIGHT" select="''" />
   <xsl:param name="IDSECTIONCONTAINER" select="'d4h5-section-container'" />
   <xsl:param name="CLASSSECTIONCONTAINER" select="''" />
-
   <xsl:param name="IDLOCALNAV" select="'home'" />
-
   <xsl:param name="GRIDPREFIX" select="'grid_'" />
+  <xsl:param name="CLASSSCREENREADER" select="'screen-reader'" />
 
   <xsl:param name="HTTPABSOLUTEURI" select="''" />
   <xsl:param name="OUTPUTDEFAULTNAVIGATION" select="true()" />
