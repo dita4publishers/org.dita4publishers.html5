@@ -18,14 +18,15 @@
       <topicref keyref="html5-download"/>
       <topicref keyref="html5-install"/>
       <topicref keyref="html5-run"/>
-      <!--topicref keyref="html5-index-file"/-->
+      <topicref keyref="html5-changed-behavior"/>  
       <topicref keyref="html5-license"/>
     </topichead>
     
     <topichead>
       <topicmeta>
-        <navtitle>For technical writters</navtitle>
+        <navtitle>For Writters</navtitle>
       </topicmeta>
+      <topicref keyref="html5-index-file"/>
       <topicref keyref="html5-feature-muti-columns"/>
       <topicref keyref="html5-feature-css-grid"/>
       <topicref keyref="html5-feature-images"/>
@@ -34,14 +35,15 @@
         <topicref keyref="html5-feature-ui-accordion"/>
         <topicref keyref="html5-feature-ui-images"/>
       </topicref>
-      <topicref keyref="html5-theme-add-conditional-css"/>
+      
     </topichead>
     
     <!--topichead>
       <topicmeta>
-        <navtitle>Development</navtitle>
+        <navtitle>For Developpers</navtitle>
       </topicmeta>
       <topicref keyref="html5-theme-dev">
+        <topicref keyref="html5-theme-add-conditional-css"/>
         <topicref keyref="html5-theme-configuration"/>
         <topicref keyref="html5-customize-xsl"/>
       </topicref>    

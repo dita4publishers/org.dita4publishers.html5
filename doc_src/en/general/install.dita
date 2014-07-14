@@ -2,12 +2,9 @@
 <!DOCTYPE task PUBLIC "-//OASIS//DTD DITA Task//EN" "task.dtd">
 <task id="task_awz_jbn_q4">
     <title>Specific installation notes for developpers</title>
-    <shortdesc>If you want to do development on the top of the HTML5 plugin, you will need to
-        install additional tool.</shortdesc>
+    <shortdesc>If you want to do development with HTML5 plugin, you will need to
+        install the YUI compressor tool.</shortdesc>
     <taskbody>
-        <context>
-            <p>You must install the YUI compressor tool</p>
-        </context>
         <steps>
             <step>
                 <cmd>Download the <xref keyref="YUI-download"/></cmd>

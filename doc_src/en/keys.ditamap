@@ -8,7 +8,7 @@
  <keydef keys="html5-index-file" href="general/setting-an-index.dita"/>
  <keydef keys="html5-license" href="general/licence.dita" type="concept"/>
  <keydef keys="html5-requirements" href="general/requirements.dita" type="concept"/>
-
+ <keydef keys="html5-navigation-behavior" href="general/navigation_behavior.dita" type="concept"/>
 
  <keydef keys="html5-theme-dev" href="dev/theme-dev.dita" type="task"/>
  <keydef keys="html5-theme-configuration" href="dev/theme-configuration.dita"  type="task"/>
