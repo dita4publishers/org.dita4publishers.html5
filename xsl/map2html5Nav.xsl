@@ -266,7 +266,7 @@
 
   <xsl:template match="li" mode="fix-navigation-href">
     <xsl:param name="topicRelativeUri" as="xs:string" select="''" tunnel="yes"/>
-    <xsl:variable name="isActiveTrail" select="descendant-or-self::*[@href=$topicRelativeUri]"/>
+    <xsl:variable name="isActiveTrail" select="descendant::*[contains(@href, $topicRelativeUri)]"/>
     <xsl:variable name="hasChild" select="descendant::li"/>
 
     <xsl:variable name="hasChildClass">
@@ -280,12 +280,13 @@
       </xsl:choose>
     </xsl:variable>
 
+
     <xsl:variable name="activeTrailClass">
       <xsl:choose>
         <xsl:when test="$isActiveTrail">
           <xsl:value-of select="' active'"/>
         </xsl:when>
-        <xsl:when test="not($isActiveTrail) and $hasChild">
+        <xsl:when test="not($isActiveTrail) and $hasChild and not(contains(@class, 'topichead'))">
           <xsl:value-of select="' collapsed'"/>
         </xsl:when>
         <xsl:otherwise>
@@ -293,6 +294,7 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
+
 
     <li>
       <xsl:attribute name="class" select="concat(@class, $hasChildClass, $activeTrailClass)"/>
