@@ -64,6 +64,9 @@
     <param name="CLASSMAINCONTAINER" expression="${html5.class.main.container}" if="html5.class.main.container" />
     <param name="CLASSSECTIONCONTAINER" expression="${html5.class.section.container}" if="html5.class.main.container" />
     <param name="CLASSNAVIGATION" expression="${html5.class.navigation}" if="html5.class.navigation" />
+    <param name="CLASSICONPARENT" expression="${html5.class.icon.parent}" if="html5.class.icon.parent" />
+    <param name="CLASSICONLEFT" expression="${html5.class.icon.left}" if="html5.class.icon.left" />
+    <param name="CLASSICONRIGHT" expression="${html5.class.icon.right}" if="html5.class.icon.right" />
     <param name="IDLOCALNAV" expression="${html5.id.navigation}" if="html5.id.navigation" />
     <param name="GRIDPREFIX" expression="${html5.grid.prefix}" if="html5.grid.prefix" />
     <param name="JS" expression="${args.js.file}" if="args.js.file" />
