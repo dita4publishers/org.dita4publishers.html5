@@ -1641,8 +1641,7 @@ ol.steps li { margin: 1.5 0; }
 
 ol.steps li span.cmd
 {
-  font-size: 1.2em;
-  font-weight: bold;
+  font-size: 1.35em;
   display: block;
   margin: 0 0 1.5em 0;
 }
@@ -1664,7 +1663,7 @@ ol.steps li:before
   vertical-align: bottom;
   display: block;
   position: relative;
-  left: -45px;
+  left: -42px;
   width: 25px;
   height: 25px;
   top: 25px;
@@ -2228,7 +2227,7 @@ body .d4p-ui-cycle {
   position:relative;
   min-height:150px;
 }/**
- * 
+ *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
@@ -2241,12 +2240,41 @@ body .d4p-ui-cycle {
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  *
- */ 
- #local-navigation ul li.collapsible.collapsed ul {
+ */
+#nav-content { padding: 20px 0; }
+
+li.collapsible ul li {
+  margin-left: 16px;
+  position:relative;
+}
+
+li.topichead > ul > li {
+  margin-left: 0px;
+}
+
+ul li.collapsible.collapsed ul {
+  display:none;
+}
+
+ul li.collapsible {
+  cursor: pointer;
+}
+
+ul li.collapsible.collapsed > ul, ul li.collapsible.active.collapsed  > ul, ul li.topichead.collapsible.collapsed > ul {
    display:none;
 }
-#local-navigation ul li.collapsible {
+
+ul li.collapsible {
     cursor: pointer;
+}
+
+#local-navigation.forced ul
+{
+  display:block;
+}
+
+ul li.collapsible.active > ul, ul li.topichead  > ul {
+  display:block;
 }
 /**
  * SyntaxHighlighter
@@ -2759,23 +2787,29 @@ div.nav-pub-title h2 { font-size: 0.9em; }
 
 .toolbar button
 {
-  background-color: #efefef;
+  background-color: inherit;
   border: none;
   margin: 0px 0 3px 3px;
 }
 
 .toolbar button:hover { cursor: pointer; }
+
 #d4h5-main-content { display: block; }
 
 section h1 { margin: 0 0 1.5em 0; }
+
 #d4h5-main-content h1 { margin-top: 0px; }
+
 .paged #local-navigation { background-color: #F6F6F6; }
+
 #local-navigation ul li {
-  margin: 0.4em 0;
   list-style-position: outside;
+  margin-top: 0.4em;
+  margin-bottom:0.4em;
 }
+
 #local-navigation a.selected, #local-navigation a.selected:link { font-weight: bold; }
-#local-navigation ul li ul li { margin-left: 10px; }
+
 
 #local-navigation a, #local-navigation a:link
 {
@@ -2831,8 +2865,6 @@ span.navtitle, li.collapsible a:link { color: #3887b0; }
   -moz-border-radius: 5px;
   border-radius: 5px;
 }
-
-#nav-content { padding: 18px; }
 
 #footer-container
 {
@@ -2892,24 +2924,38 @@ footer h2, address strong
   text-decoration: none;
 }
 
-.leaf:before {
-  font-family: "foundation-icons";
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-  line-height: 1;
-  -webkit-font-smoothing: antialiased;
-  display: inline-block;
-  text-decoration: inherit;
-  content: "\f199";
-  font-size:10px;
-  line-height: 10px;
+/** leaf and FI **/
+.leaf, .topichead .leaf {
+    display: block;
+    height: 20px;
+    position: absolute;
+    width: 20px;
+    left:-15px;
+    top:0.2em;
+    font-weight: normal;
+    color:#555;
+    font-size:0.7em;
 }
 
-.active .leaf:before {
-  content: "\f176";
+.size-small .fi {
+
 }
+
+.topichead > .leaf {
+  padding-top:1.2em;
+}
+
+.toolbar .fi
+{
+  color:#555555;
+  font-size:1.2em;
+}
+
+.size-small .toolbar .fi
+{
+  color:#FFFFFF;
+}
+
 
 /**
  * size-small
@@ -2948,7 +2994,19 @@ footer h2, address strong
 .size-large .hide-for-large { display:none !important; }
 .size-x-large .hide-for-x-large { display:none !important; }
 
+/** screen reader **/
+.screen-reader {
+  position:absolute;
+  left:-10000px;
+  top:auto;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+}
 
+
+/** Hide on Table of contents **/
+.homepage .hide-on-toc { display:none !important; }
 
 /** padding is proportinal to grid column a columns, except for small size **/
 .size-small .page {
@@ -3173,4 +3231,14 @@ body.homepage #local-navigation ul li ul li {
 
 .size-small .homepage #local-navigation {
   position:static;
+}
+
+li.topichead {
+  padding-top:0.8em;
+}
+.topichead span {
+  font-weight:bold;
+}
+:not(.homepage) .size-small #nav-content {
+  margin-top:60px;
 }

@@ -511,6 +511,45 @@ u[o]&&(delete u[o],c?delete n[l]:typeof n.removeAttribute!==i?n.removeAttribute(
  *  limitations under the License.
  *
  */
+d4p.setBodyClassfunction = function (i, width) {
+  var cs = '';
+  $("html").removeClass (function (index, css) {
+    return (css.match (/size-[a-z]+/g) || []).join(' ');
+  });
+
+  switch(i)
+  {
+  case 0:
+    cs = 'size-small';
+    break;
+  case 1:
+  case 2:
+    cs = 'size-medium';
+    break;
+  case 3:
+  case 4:
+    cs = 'size-large';
+    break;
+  default:
+     cs = 'size-x-large';
+  }
+  $("html").addClass(cs);
+}
+/**
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ */
 var navigation = {
   // navigation object
   o:{},
@@ -522,10 +561,15 @@ var navigation = {
 
   // class
   cs: {
-    leaf: ' leaf ',
-    expand: ' fi-arrows-expand ',
-    collapse: ' fi-arrows-compress ',
-    close: ' fi-x-circle '
+    topichead: 'topichead',
+    leaf: 'leaf',
+    expand: 'fi fi-arrows-expand ',
+    collapse: 'fi fi-arrows-compress ',
+    close: 'fi fi-x-circle ',
+    active: 'active',
+    collapsed: 'collapsed',
+    plus: 'fi-plus',
+    minus: 'fi-minus'
   },
 
   // text value
@@ -565,38 +609,59 @@ var navigation = {
 
     var self = this;
 
-    this.o.find('li').each(function (index) {
+
+    $(this.nav.id).children('ul').attr('role', 'tree');
+    $(this.nav.id).find('ul').attr('role', 'group');
+
+    $(this.nav.id).find('li').each(function (index) {
       var span = {}, span2 = {};
 
       $(this).attr('role', 'treeitem');
 
       // collapsible
-      if ($(this).find('ul').length) {
+      if ($(this).find('ul').length > 0) {
 
         // create span for icone
         span = $("<span/>").html(' ');
         span.addClass(self.cs.leaf);
-        span.on('click', function() {
-          $(this).parent().toggleClass('active').toggleClass('collapsed');
-        });
+
+        // add minus to actice and topicheas
+        if($(this).hasClass(self.cs.active) || $(this).hasClass(self.cs.topichead))
+        {
+          span.addClass(self.cs.minus);
+        } else {
+          span.addClass(self.cs.plus);
+        }
 
         $(this).prepend(span);
-      }
 
-      //topichead
-      $(this).children('.navtitle').on('click', function() {
-         $(this).parent().toggleClass('active').toggleClass('collapsed');
-      });
+        $(this).children('span').on('click', function() {
+         self.toggleState($(this).parent());
+        });
+
+        //self.toggleState($(this));
+      }
     });
+  },
+
+  toggleState: function(obj) {
+    // if collapsed
+    if(obj.toggleClass(this.cs.collapsed).hasClass(this.cs.collapsed) && !obj.hasClass(this.cs.active))
+    {
+      obj.children('.'+this.cs.leaf).removeClass(this.cs.minus).addClass(this.cs.plus);
+    } else {
+      obj.children('.'+this.cs.leaf).removeClass(this.cs.plus).addClass(this.cs.minus);
+    }
   },
 
   addToolbar: function () {
     this.toolbar.o = $('<div />').attr('id', this.toolbar.id).attr('class', 'toolbar hide-on-small' + this.toolbar.position)
-    this.o.prepend(this.toolbar.o);
+    $(this.nav.id).prepend(this.toolbar.o);
   },
 
   addButtons: function () {
     var self = this,
+
     expandIco = $("<span/>").attr("class", this.cs.expand),
     collapseIco = $("<span/>").attr("class", this.cs.collapse),
     closeIco = $("<span/>").attr("class", this.cs.close),
@@ -611,24 +676,22 @@ var navigation = {
     btnExpand.append(expand);
     btnExpand.on('click tap',
      function(){
-        self.o.find('li').addClass('active').removeClass('collapsed').attr('aria-expanded', 'true');
-           $(this).hide();
-           $('#'+self.buttons.collapse).show();
-        }
+        $(self.nav.id).addClass('forced');
+        $(self.nav.id).find('li').attr('aria-expanded', 'true');
+        $('.'+self.cs.leaf).hide();
+        $(this).hide();
+        $('#'+self.buttons.collapse).show();
+      }
     );
 
     btnCollapse.append(collapse);
     btnCollapse.append(collapseIco);
-    btnCollapse.click(function(){
-      o.select();
-      self.o.find('li')
-        .removeClass('selected')
-        .removeClass('active')
-        .addClass('collapsed')
-        .removeAttr('aria-expanded');
-         o.select();
-         $(this).hide();
-         $('#'+self.buttons.expand).show();
+    btnCollapse.on('click', function(){
+      $(self.nav.id).removeClass('forced');
+      $(self.nav.id).find('li').removeAttr('aria-expanded');
+      $('.'+self.cs.leaf).show();
+      $(this).hide();
+      $('#'+self.buttons.expand).show();
     });
 
     btnClose.attr('class', 'show-for-small right').append(closeIco).append(close).on('click tap',
@@ -647,7 +710,7 @@ var navigation = {
       $(this.mobileToolbar.sel).on('click', function(){
         if(self.collapsed)
         {
-          self.o.animate(
+          $(self.nav.id).animate(
             {
               left: 0
             },
@@ -666,8 +729,8 @@ var navigation = {
       var self = this;
       $(document).on('mouseup tap', function (e)
       {
-        if (!self.o.is(e.target) // if the target of the click isn't the container...
-          && self.o.has(e.target).length === 0
+        if (!$(self.nav.id).is(e.target) // if the target of the click isn't the container...
+          && $(self.nav.id).has(e.target).length === 0
           && !self.collapsed) // ... nor a descendant of the container
         {
            self.menuCollapse();
@@ -679,7 +742,7 @@ var navigation = {
   menuCollapse: function()
   {
     var self = this;
-    this.o.animate(
+    $(this.nav.id).animate(
       {
         left: '-100%'
       },
@@ -692,10 +755,6 @@ var navigation = {
 
 
   init: function () {
-    this.o = $(this.nav.id);
-    this.o.children('ul').attr('role', 'tree');
-    this.o.find('ul').attr('role', 'group');
-
     this.traverse();
     this.addToolbar();
     this.addButtons();
