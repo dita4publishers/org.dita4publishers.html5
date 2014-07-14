@@ -235,11 +235,12 @@
   </xsl:template>
 
   <!-- generate section container -->
-   <xsl:template match="*" mode="generate-section-container">
-      <xsl:param name="navigation" as="element()*"  tunnel="yes" />
-      <xsl:param name="is-root" as="xs:boolean"  tunnel="yes" select="false()" />
-      <xsl:param name="resultUri" as="xs:string" tunnel="yes" select="''" />
-      <div id="{$IDSECTIONCONTAINER}" class="{$CLASSSECTIONCONTAINER}">
+  <xsl:template match="*" mode="generate-section-container">
+    <xsl:param name="navigation" as="element()*"  tunnel="yes" />
+    <xsl:param name="is-root" as="xs:boolean"  tunnel="yes" select="false()" />
+    <xsl:param name="resultUri" as="xs:string" tunnel="yes" select="''" />
+
+    <div id="{$IDSECTIONCONTAINER}" class="{$CLASSSECTIONCONTAINER}">
 
       <xsl:if test="$OUTPUTDEFAULTNAVIGATION">
         <xsl:choose>
@@ -247,10 +248,10 @@
           </xsl:when>
           <xsl:otherwise>
             <xsl:variable name="navigation-fixed">
-            <xsl:apply-templates select="$navigation" mode="fix-navigation-href">
-              <xsl:with-param name="resultUri" select="$resultUri" />
-            </xsl:apply-templates>
-          </xsl:variable>
+              <xsl:apply-templates select="$navigation" mode="fix-navigation-href">
+                <xsl:with-param name="resultUri" select="$resultUri" />
+              </xsl:apply-templates>
+            </xsl:variable>
             <xsl:sequence select="$navigation-fixed"/>
           </xsl:otherwise>
         </xsl:choose>
