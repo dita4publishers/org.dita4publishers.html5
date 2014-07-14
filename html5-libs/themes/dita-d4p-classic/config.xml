@@ -260,7 +260,7 @@
           dynamic: true,
 
           // Optional callback... myCallback(i, width)
-          callback: setBodyClassfunction,
+          callback: doc_resize,
 
           // First range entry is the minimum.
           // Last range entry is the maximum.
@@ -280,30 +280,12 @@
           ]
         };
 
-        function setBodyClassfunction (i, width) {
-            var cs = '';
-            $("html").removeClass (function (index, css) {
-              return (css.match (/size-[a-z]+/g) || []).join(' ');
-            });
+        function doc_resize(i, width)
+        {
+          d4p.setBodyClassfunction(i, width);
+        }
 
-            switch(i)
-            {
-            case 0:
-              cs = 'size-small';
-              break;
-            case 1:
-            case 2:
-              cs = 'size-medium';
-              break;
-            case 3:
-            case 4:
-              cs = 'size-large';
-              break;
-            default:
-               cs = 'size-x-large';
-            }
-            $("html").addClass(cs);
-         }
+
         ]]>
       </value>
   </tag>
@@ -324,6 +306,9 @@
 
       <!--file path="modules/prefixFree/prefixFree.js" /-->
       <file path="modules/jQuery/jquery-1.10.2.min.js" />
+
+      <!-- d4p methods -->
+      <file path="modules/d4p/d4p.js"/>
 
       <!-- navigation -->
       <file path="modules/jQuery-widgets/navigation/classic/js/navigation.js" />
