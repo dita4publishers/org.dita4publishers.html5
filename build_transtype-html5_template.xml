@@ -179,9 +179,9 @@
       </not>
     </condition>
 
-    <condition property="html5.args.theme.file" value="themes/${html5.site.theme}/${html5.css.dir}/${args.css.filename}${args.compression.suffix}${args.css.extension}">
+    <condition property="html5.theme.file" value="themes/${html5.site.theme}/${html5.css.dir}/${args.css.filename}${args.compression.suffix}${args.css.extension}">
       <not>
-        <isset property="html5.args.theme.file" />
+        <isset property="html5.theme.file" />
       </not>
     </condition>
 

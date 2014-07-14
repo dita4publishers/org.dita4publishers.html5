@@ -50,8 +50,8 @@
     <!-- Parameters from dita2xhtml and similar transtypes: -->
     <param name="WORKDIR" expression="${workdir}" if="workdir"/>
     <param name="CSS" expression="${args.css.file}" if="args.css.file" />
-    <param name="HTML5THEMEDIR" expression="${html5.themes.output.dir}" if="html5.args.theme.file" />
-    <param name="CSSTHEME" expression="${html5.args.theme.file}" if="html5.args.theme.file" />
+    <param name="HTML5THEMEDIR" expression="${html5.themes.output.dir}" if="html5.theme.file" />
+    <param name="CSSTHEME" expression="${html5.theme.file}" if="html5.theme.file" />
     <param name="HTML5D4PINIT" expression="$html5.d4p.init}" />
     <param name="JSONVARFILE" expression="${d4p.html5.json.vars.file.url}" if="d4p.html5.json.vars.file.url" />
     <param name="NAVIGATIONMARKUP" expression="${html5.navigation.markup}" if="html5.navigation.markup" />
