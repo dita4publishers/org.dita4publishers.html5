@@ -37,7 +37,7 @@
   />
 
   <target name="get.plugin.version">
-    <echo>HTML5 plugin version 1.1.209</echo>
+    <echo>HTML5 plugin version ${html5.plugin.version}</echo>
   </target>
 
   <target name="dita.map.html5.init" description="Initialize HTML5 plugin properties">
@@ -282,6 +282,25 @@
     <condition property="html5.class.navigation" value="grid_4 alpha omega">
       <not>
         <isset property="html5.class.navigation" />
+      </not>
+    </condition>
+
+    <!-- icons -->
+    <condition property="html5.class.icon.parent" value="fi fi-arrow-up">
+      <not>
+        <isset property="html5.class.icon.parent" />
+      </not>
+    </condition>
+
+    <condition property="html5.class.icon.left" value="fi fi-arrow-left">
+      <not>
+        <isset property="html5.class.icon.left" />
+      </not>
+    </condition>
+
+    <condition property="html5.class.icon.right" value="fi fi-arrow-right">
+      <not>
+        <isset property="html5.class.icon.right" />
       </not>
     </condition>
 
