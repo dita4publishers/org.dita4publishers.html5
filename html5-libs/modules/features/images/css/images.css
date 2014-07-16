@@ -31,7 +31,7 @@ img.no-shadow {
 }
 
 img {
-  display:block;
+  display:inline;
 }
 .block.wide img {float:none; } 
 .block.wide img.right {
