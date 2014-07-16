@@ -16,7 +16,7 @@
      <dt>args.cssroot</dt>
      <dd>The <varname>args.cssroot</varname> is used to choose a theme instead of a css. The default theme is
       dita-d4p-classic. If you run a build with args.cssroot=my-custom-theme, the plugin will try to
-      fetch the my-custom-theme if it exists.</dd>
+      fetch the my-custom-theme if it exists in the </dd>
     </dlentry>
     
     <dlentry>
