@@ -198,28 +198,11 @@
   <target name="package.prepare" unless="package.prepared">
 
     <mkdir dir="${html5.temp.libs.dir}" />
-
+    <echo>  +  copy into ${html5.temp.libs.dir} files from "${theme.builder.dir}${file.separator}${html5.libs.dir}</echo>
     <!-- copy main library -->
     <mkdir dir="${html5.temp.libs.dir}" />
     <copy todir="${html5.temp.libs.dir}" >
-      <fileset dir="${theme.builder.dir}${file.separator}${html5.libs.dir}" followsymlinks="no" />
-    </copy>
-
-    <!-- copy other library -->
-    <copy todir="${html5.temp.libs.dir}">
-      <fileset dir="${dita.plugins.dir}" followsymlinks="no">
-        <include name="*${file.separator}${html5.libs.dir}${file.separator}**"/>
-      </fileset>
-      <regexpmapper from=".*${regex.file.separator}${html5.libs.dir}${regex.file.separator}(.*)" to="\1" />
-    </copy>
-
-    <!-- copy theme directory -->
-    <mkdir dir="${html5.temp.libs.dir}${file.separator}${html5.themes.dir}" />
-    <copy todir="${html5.temp.libs.dir}${file.separator}${html5.themes.dir}/">
-      <fileset dir="${dita.plugins.dir}" followsymlinks="no">
-        <include name="*/theme/${html5.site.theme}/**"/>
-      </fileset>
-      <regexpmapper from=".*${regex.file.separator}theme${regex.file.separator}(.*)" to="\1" />
+      <fileset dir="${html5.theme.config.dir}" followsymlinks="no" />
     </copy>
 
     <property name="package.prepare" value="yes" />
