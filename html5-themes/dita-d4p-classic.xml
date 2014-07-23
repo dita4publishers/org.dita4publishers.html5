@@ -308,7 +308,7 @@
       <file path="modules/jQuery/jquery-1.10.2.min.js" />
 
       <!-- d4p methods -->
-      <file path="modules/d4p/d4p.js"/>
+      <file path="modules/d4p/js/d4p.js"/>
 
       <!-- navigation -->
       <file path="modules/jQuery-widgets/navigation/classic/js/navigation.js" />
@@ -340,7 +340,6 @@
 
       <!-- adapt -->-
        <file path="modules/960-Responsive-Grid/js/adapt.js" />
-       <file path="themes/dita-d4p-classic/js/script.js" />
 
     </source>
   </tag>
