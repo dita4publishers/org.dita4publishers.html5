@@ -16,7 +16,8 @@
 
  <keydef keys="html5-theme-dev" href="dev/theme-dev.dita" type="concept"/>
  <keydef keys="html5-theme-general-process" href="dev/theme-general-process.dita" type="concept"/>
- <keydef keys="html5-theme-configuration" href="dev/theme-configuration.dita"  type="task"/>
+ <keydef keys="html5-theme-configuration" href="dev/theme-config.dita"  type="concept"/>
+ <keydef keys="html5-theme-configuration-file" href="dev/theme-config-file.dita"  type="task"/>
  <keydef keys="html5-customize-xsl" href="dev/customize-xsl.dita"  type="task"/>
  <keydef keys="html5-theme-add-conditional-css" href="how-to/theme-add-conditional-css.dita"  type="concept"/>
  
