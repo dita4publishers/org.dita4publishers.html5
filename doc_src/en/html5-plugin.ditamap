@@ -41,9 +41,7 @@
     <topicref keyref="html5-developper">
       <topicref keyref="html5-customization-plugin"/>
       <topicref keyref="html5-theme-dev">
-        <!--topicref keyref="html5-theme-add-conditional-css"/>
-        <topicref keyref="html5-theme-configuration"/>
-        <topicref keyref="html5-customize-xsl"/-->
+        <topicref keyref="html5-theme-general-process"/>
       </topicref>    
     </topicref>
 

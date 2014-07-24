@@ -15,6 +15,7 @@
  <keydef keys="html5-customization-plugin" href="dev/customization-plugin.dita" type="concept"/>
 
  <keydef keys="html5-theme-dev" href="dev/theme-dev.dita" type="concept"/>
+ <keydef keys="html5-theme-general-process" href="dev/theme-general-process.dita" type="concept"/>
  <keydef keys="html5-theme-configuration" href="dev/theme-configuration.dita"  type="task"/>
  <keydef keys="html5-customize-xsl" href="dev/customize-xsl.dita"  type="task"/>
  <keydef keys="html5-theme-add-conditional-css" href="how-to/theme-add-conditional-css.dita"  type="concept"/>
@@ -34,4 +35,10 @@
 
  <keydef keys="html5-plugin-directory-structure" href="dev/directory-structure.dita" type="concept"/>
  <keydef keys="html5-plugin-ant-properties" href="references/ant-properties.dita" type="reference"/>
+ 
+ <keydef keys="theme-process-general" href="assets/img/theme-global-process.jpg" format="jpg" scope="local">
+  <topicmeta>
+   <navtitle>Theme creation, general process</navtitle>
+  </topicmeta>
+ </keydef>
 </map>
