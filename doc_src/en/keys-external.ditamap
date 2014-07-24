@@ -94,6 +94,12 @@
             <navtitle>DITA for Publishers utilities</navtitle>
         </topicmeta>
     </keydef>
+    
+    <keydef keys="dita_ot_doc_dev" href="https://dita-ot.github.io/1.8/dev_ref/developer-reference.html" format="html" scope="external">
+        <topicmeta>
+            <linktext>DITA Open Toolkit Developer Reference</linktext>
+        </topicmeta>
+    </keydef>
 
 
 </map>

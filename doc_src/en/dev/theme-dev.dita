@@ -1,69 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE task PUBLIC "-//OASIS//DTD DITA Task//EN" "task.dtd">
-<task id="task_u5b_dlw_pm">
-    <title>Create a customization plugin <ph outputclass="quiet">(an example)</ph></title>
-    <shortdesc>In order to develop a new theme, you need to develop a customization plugin.</shortdesc>
-    <taskbody>
-        <prereq>The DITA for Publishers html5 plugin is required. This plugin must be in a folder
-            named <filepath>net.sourceforge.dita4publishers.html5</filepath>.</prereq>
-        <context>
-            <p>In this tutorial, we will do a minimal implementation of the <xref
-                    keyref="foundation"/> using the html5 plugin.</p>
-        </context>
-        <steps>
-            <step>
-                <cmd>Download and install the <xref keyref="d4p-utils"
-                        >net.sourceforge.dita4publishers.utils</xref> plugin.</cmd>
-            </step>
-            <step>
-                <cmd>Create a customization plugin.</cmd>
-                <stepxmp>
-                    <p>Using the command line, run:</p>
-                    <codeblock>
-                        <data-about>
-                            <data name="language" value="bash"/>
-                        </data-about>
- ant -f plugins/net.sourceforge.dita4publishers.utils
-                    </codeblock>
-                    <p>Choose the following options: <ul>
-                            <li>Type choice 1, then press enter,</li>
-                            <li><msgph>Plugin's domain:</msgph> Leave as is and press
-                                    <uicontrol>Enter</uicontrol>.</li>
-                            <li><msgph>Plugin's name:</msgph> Leave as is and press
-                                    <uicontrol>Enter</uicontrol>.</li>
-                            <li><msgph>Plugin's transtype:</msgph> Type <q>foundation</q> and press
-                                    <uicontrol>Enter</uicontrol>.</li>
-                            <li><msgph>Plugin's theme:</msgph> Leave as is and press
-                                    <uicontrol>Enter</uicontrol>.</li>
-                        </ul>
-                    </p>
-                </stepxmp>
-                <stepresult> The utility will create a complete customization plugin. </stepresult>
-            </step>
-            
-            <step>
-                <cmd>Run the integrator</cmd>
-                <info>
-                    <codeblock>
-                         <data-about>
-                            <data name="language" value="bash"/>
-                        </data-about>
- ant -f integrator.xml
-                    </codeblock>
-                </info>
-            </step>
-            
-            <step importance="optional">
-                <cmd>To test the new transtype, build the sample documentation. </cmd>
-                <info>
-                    <codeblock>
-                        <data-about>
-                            <data name="language" value="bash"/>
-                        </data-about>
- ant -Dargs.input=samples/sequence.ditamap -Doutput.dir=out/garage -Dtranstype=foundation
-                    </codeblock>
-                </info>
-            </step>
-        </steps>
-    </taskbody>
-</task>
+<!DOCTYPE concept PUBLIC "-//OASIS//DTD DITA Concept//EN" "concept.dtd">
+<concept id="concept_hx2_l2c_w4">
+ <title>Theme Development</title>
+ <shortdesc>The theme mechanism is a preprocessing and packaging mechanism which works on CSS and
+  javascripts.</shortdesc>
+ <conbody>
+  
+  <p>The theme mechanism does not force any particular architectural decision for css and
+   javascripts. It allows you:
+   <ul>
+    <li>to organize the librairies of your choice in the way you want;</li>
+    <li>to package them in the way you want; and</li>
+    <li>to provide this information to the HTML5 plugin so it can render them properly.</li>
+   </ul>
+  </p>
+  
+  <p>The plugin provide an optional javascript object, named <apiname>d4p</apiname> which allows to pass some information from the ant code, xsl code or dita files code to the javascript code.</p>
+  
+ </conbody>
+</concept>
