@@ -95,6 +95,7 @@
       
       <p>All the files app.css, foundation.css and normalize.css are concatenated and compressed in file <filepath>style.min.css</filepath>. The file <filepath>style.css</filepath> will be also present in the theme directory</p>
      </stepxmp>
+    </step>
      
      <step>
       <cmd>Create as many tag as you need</cmd>
@@ -104,8 +105,7 @@
       <cmd>Register your Theme in your customization plugin</cmd>
       <info>See: </info>
      </step>
-    
-    </step>
+   
     
    </steps>
   </taskbody>
