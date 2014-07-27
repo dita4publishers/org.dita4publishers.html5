@@ -17,7 +17,7 @@
     under the License.
 -->
 
-<project name="theme.builder" basedir=".">
+<project name="theme.builder" basedir="." xmlns:dita="http://dita-ot.sourceforge.net">
 
   <condition property="os.path.separator" value="\\">
     <os family="windows"/>
@@ -181,7 +181,11 @@
        <echo message="${result.process}" />
   </target>
 
-   <target name="package.concatenate">
+   <target
+      name="package.concatenate"
+      dita:depends="{depend.package.concatenate.pre}"
+      dita:extension="depends org.dita.dost.platform.InsertDependsAction"
+    >
     <echo> +++ Concatenating file before compression </echo>
     <echo>     ${html5.temp.theme.dir}${file.separator}${type}${file.separator}${to}.${html5.concatenation.prefix}.${type} </echo>
 
