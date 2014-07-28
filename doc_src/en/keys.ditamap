@@ -15,6 +15,7 @@
  <keydef keys="html5-customization-plugin" href="dev/customization-plugin.dita" type="concept"/>
 
  <keydef keys="html5-theme-dev" href="dev/theme-dev.dita" type="concept"/>
+ <keydef keys="html5-analytics" href="how-to/analytics.dita" type="concept"/>
  <keydef keys="html5-theme-general-process" href="dev/theme-general-process.dita" type="concept"/>
  <keydef keys="html5-theme-configuration" href="dev/theme-config.dita"  type="concept"/>
  <keydef keys="html5-theme-configuration-file" href="dev/theme-config-file.dita"  type="task"/>

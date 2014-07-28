@@ -24,7 +24,7 @@
     
     <topichead>
       <topicmeta>
-        <navtitle>For Writters</navtitle>
+        <navtitle>The default theme</navtitle>
       </topicmeta>
       <topicref keyref="html5-index-file"/>
       <topicref keyref="html5-feature-muti-columns"/>
@@ -45,6 +45,7 @@
         <topicref keyref="html5-theme-configuration"/>
         <topicref keyref="html5-theme-configuration-file"/>
         <topicref keyref="html5-theme-add-conditional-css"/>
+        <topicref keyref="html5-analytics"/>
       </topicref>    
     </topicref>
 
