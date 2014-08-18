@@ -74,7 +74,8 @@
   <xsl:param name="inputFileNameParam"/>
 
   <!-- Directory into which the generated output is put. -->
-  <xsl:param name="outdir" select="./html2"/>
+  <xsl:param name="outdir" select="./html5"/>
+  <xsl:param name="inputdir" select="relpath:getParent(document-uri(.))"/>
 
  <!--
     NOTE: Case of OUTEXT parameter matches case used in base HTML

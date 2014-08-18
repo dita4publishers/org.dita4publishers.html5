@@ -430,6 +430,7 @@
       <param name="html5sitetheme" expression="${html5.site.theme}"/>
       <param name="themedir" expression="${html5.themes.dir}"/>
       <param name="ouputdir" expression="${output.dir}"/>
+      <param name="inputdir" expression="${dita.input.dirname}"/>
   </xslt>
 
   <ant antfile="${output.dir}/ant/compressor.xml"/>
