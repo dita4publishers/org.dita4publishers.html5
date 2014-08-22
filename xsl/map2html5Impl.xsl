@@ -31,16 +31,16 @@
   version="2.0">
 
 
-  <xsl:import href="../../net.sourceforge.dita4publishers.common.xslt/xsl/reportParametersBase.xsl"/>
-  <xsl:import href="../../net.sourceforge.dita4publishers.common.xslt/xsl/lib/html-generation-utils.xsl"/>
-  <xsl:import href="../../net.sourceforge.dita4publishers.common.mapdriven/xsl/dataCollection.xsl"/>
+  <xsl:import href="plugin:net.sourceforge.dita4publishers.common.xslt:xsl/reportParametersBase.xsl"/>
+  <xsl:import href="plugin:net.sourceforge.dita4publishers.common.xslt:xsl/lib/html-generation-utils.xsl"/>
+  <xsl:import href="plugin:net.sourceforge.dita4publishers.common.mapdriven:/xsl/dataCollection.xsl"/>
 
   <!-- Import the base HTML output generation transform. -->
   <xsl:import href="plugin:org.dita.xhtml:xsl/dita2xhtml.xsl"/>
 
-  <xsl:import href="../../net.sourceforge.dita4publishers.common.xslt/xsl/graphicMap2AntCopyScript.xsl"/>
-  <xsl:import href="../../net.sourceforge.dita4publishers.common.xslt/xsl/map2graphicMap.xsl"/>
-  <xsl:import href="../../net.sourceforge.dita4publishers.common.xslt/xsl/topicHrefFixup.xsl"/>
+  <xsl:import href="plugin:net.sourceforge.dita4publishers.common.xslt:xsl/graphicMap2AntCopyScript.xsl"/>
+  <xsl:import href="plugin:net.sourceforge.dita4publishers.common.xslt:xsl/map2graphicMap.xsl"/>
+  <xsl:import href="plugin:net.sourceforge.dita4publishers.common.xslt:xsl/topicHrefFixup.xsl"/>
 
   <!-- FIXME: This URL syntax is local to me: I hacked catalog-dita_template.xml
               to add this entry:
@@ -51,9 +51,9 @@
     -->
   <xsl:import href="plugin:org.dita.base:xsl/common/dita-utilities.xsl"/>
 
-  <xsl:include href="../../net.sourceforge.dita4publishers.common.html/xsl/commonHtmlOverrides.xsl"/>
-  <xsl:include href="../../net.sourceforge.dita4publishers.common.html/xsl/commonHtmlEnumeration.xsl"/>
-  <xsl:include href="../../net.sourceforge.dita4publishers.common.html/xsl/commonHtmlBookmapEnumeration.xsl"/>
+  <xsl:include href="plugin:net.sourceforge.dita4publishers.common.html:xsl/commonHtmlOverrides.xsl"/>
+  <xsl:include href="plugin:net.sourceforge.dita4publishers.common.html:xsl/commonHtmlEnumeration.xsl"/>
+  <xsl:include href="plugin:net.sourceforge.dita4publishers.common.html:xsl/commonHtmlBookmapEnumeration.xsl"/>
 
   <xsl:include href="map2html5Nav.xsl"/>
   <xsl:include href="map2html5Content.xsl"/>
@@ -74,15 +74,15 @@
   <xsl:param name="inputFileNameParam"/>
 
   <!-- Directory into which the generated output is put. -->
-  <xsl:param name="outdir" select="./html5"/>
-  <xsl:param name="inputdir" select="relpath:getParent(document-uri(.))"/>
+  <xsl:param name="outdir" select="./html5" as="xs:string"/>
+  <xsl:param name="inputdir" select="relpath:getParent(document-uri(.))" as="xs:string"/>
 
  <!--
     NOTE: Case of OUTEXT parameter matches case used in base HTML
     transformation type.
   -->
-  <xsl:param name="OUTEXT" select="'.html'"/>
-  <xsl:param name="tempdir" select="./temp"/>
+  <xsl:param name="OUTEXT" select="'.html'" as="xs:string"/>
+  <xsl:param name="tempdir" select="./temp" as="xs:string"/>
 
  <!--
     The path of the directory, relative the $outdir parameter,
