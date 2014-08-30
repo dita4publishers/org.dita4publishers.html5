@@ -2,8 +2,6 @@ Dita for Publishers HTML5 plugin
 ================================
 
 
-This repository is a temporary repository for the development of the DITA for Publishers HTML5 plugin.
-
 Introduction
 ------------
 
