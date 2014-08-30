@@ -1,7 +1,6 @@
 Dita for Publishers HTML5 plugin
 ================================
 
-May 2014: Please note that this repository is a way to share code for developpers. The project is not 100% completed and won't be before a couple of months. It is a good start if you have nothing.
 
 This repository is a temporary repository for the development of the DITA for Publishers HTML5 plugin.
 
