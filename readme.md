@@ -54,8 +54,8 @@ Building the documentation
 
 Authors and Contributors
 ------------------------
-A big thanks to:
 
+* Bertrand Lefort 
 * Eliot Kimber [Contrext, LLC](http://contrext.com)
 * Jim Owens
 * Ray Fan [Tweedle](http://www.tweddle.com)
