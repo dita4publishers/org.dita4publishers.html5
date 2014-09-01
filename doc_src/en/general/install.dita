@@ -11,7 +11,7 @@
                 <info>Use the 2.4.7 version, the version 2.4.8 does not work properly on Windows due to a path resolution issue.</info>
             </step>
             <step>
-                <cmd>Extract the content into the org.dita4publishers.dita4publishers.html5 plugin directory</cmd>
+                <cmd>Extract the content into the org.dita4publishers.html5 plugin directory</cmd>
             </step>
         </steps>
     </taskbody>
