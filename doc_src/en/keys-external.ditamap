@@ -23,7 +23,7 @@
     </keydef>
     <keydef keys="img-directory-structure" href="assets/img/directory-structure.jpg" format="jpg">
         <topicmeta>
-            <linktext>Structure of the net.sourceforge.dita4publishers.html5 plugin directory</linktext>
+            <linktext>Structure of the org.dita4publishers.html5 plugin directory</linktext>
         </topicmeta>
     </keydef>
     <keydef href="http://www.w3.org/" scope="external" format="html" keys="external-w3c"><topicmeta>
@@ -89,7 +89,7 @@
         </topicmeta>
     </keydef>
     
-    <keydef keys="d4p-utils" href="https://github.com/uo-hrsys/net.sourceforge.dita4publishers.utils" scope="external" format="html">
+    <keydef keys="d4p-utils" href="https://github.com/uo-hrsys/org.dita4publishers.utils" scope="external" format="html">
         <topicmeta>
             <navtitle>DITA for Publishers utilities</navtitle>
         </topicmeta>

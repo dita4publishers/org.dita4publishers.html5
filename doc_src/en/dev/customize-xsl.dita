@@ -6,10 +6,10 @@
     <taskbody>
         <context>
            <p>For guidance when customizing your xsl code, consult the
-                    <filepath>plugins/net.sourceforge.dita4publishers.html5/xsl/map2html5Template.xsl</filepath>
+                    <filepath>plugins/org.dita4publishers.html5/xsl/map2html5Template.xsl</filepath>
                 file. This xsl template is the main template file used in the html5 plugin.</p>
           <p>Edit the file
-                    <filepath>plugins/net.sourceforge.dita4publishers.html5.foundation/xsl/map2foundationImpl.xsl</filepath>.</p>
+                    <filepath>plugins/org.dita4publishers.html5.foundation/xsl/map2foundationImpl.xsl</filepath>.</p>
         </context>
         <steps>
             <step>
