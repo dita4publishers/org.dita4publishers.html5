@@ -1,27 +1,29 @@
 Dita for Publishers HTML5 plugin
 ================================
 
+The DITA for Publishers HTML5 plugin makes it possible to generate complete HTML5-based Web sites including all the
+supporting Javascript and CSS files. It manages generating the HTML5 source and copying any supporting toolking for
+the Web site. You can configure the theme you want or use any HTML5 library or design you prefer.
 
-Introduction
-------------
+The HTML5 plugin depends on the following other plugins:
 
-If you have no idea of what DITA is, you should first read [Introduction to the Darwin Information Typing Architecture
-](http://www.ibm.com/developerworks/library/x-dita1/) or [google Introduction to DITA](https://www.google.ca/?gfe_rd=cr&ei=w6zBUonhIqGC8QeXgoHABw#q=introduction+to+DITA)
+* The [DITA Community org.dita-community.common.html](https://github.com/dita-community/org.dita-community.common.xslt) plugin
+* The [D4P org.dita4publishers.common.mapdriven](https://github.com/dita4publishers/org.dita4publishers.common.mapdriven) plugin
+* The [D4P org.dita4publishers.common.xslt"](https://github.com/dita4publishers/org.dita4publishers.common.xslt) plugin
+* (https://github.com/dita4publishers/org.dita4publishers.common.html.git
 
-If you are interested in this plugin, please:
-Read the [Dita for publishers documentation](http://dita4publishers.sourceforge.net/d4p-user-guide/).
-Install the [DITA for publishers project](http://sourceforge.net/projects/dita4publishers/).
+All these plugins are provided in the main DITA for Publishers distribution or you can install each plugin individually.
 
 Installation
 ------------
 
-* Install the dita4publishers-0.9.19_OT17RC10.zip from [http://sourceforge.net/projects/dita4publishers/files/release-candidate/](http://sourceforge.net/projects/dita4publishers/files/release-candidate/)
+* There three ways to install the plugin:
 
-* Download the latest release under the releases tabs, and extract it
-
-* Unzip this so that the org.dita4publishers.dita4publishers.html5 subdirectory
-is a child of the DITA-OT plugins or demo directory (e.g. C:\DITA-OTx.y\plugins\), and
-you should be ready to go.
+  1. Download the [DITA for Publishers main distribution](http://sourceforge.net/projects/dita4publishers/files/) and install it.
+  2. Download this repository as a Zip from Github and extract it into your Toolkit's plugins/ directory
+  3. Use git to clone this repository into your Toolkit's plugins directory (if you want to be really clever you can
+make the Toolkit's plugins/ directory into a git repo and configure each plugin you want to track as a git submodule. See
+the DITA for Publishers project wiki for details on how to work with git submodules).
 
 ### Additional steps for developper
 
@@ -29,7 +31,7 @@ If you want to do development on top of the HTML5 plugin, you will need to insta
 This tool is used to compress your css and javascripts assets.
 
 * Download the   [https://github.com/downloads/yui/yuicompressor/yuicompressor-2.4.7.zip](YUI compressor version 2.4.7)
-* extract the content into the org.dita4publishers.dita4publishers.html5 plugin directory
+* extract the content into the org.dita4publishers.html5 plugin directory
 
 Notes:
 
@@ -43,19 +45,19 @@ Running the transformation
     ant -Dargs.input=samples/hierarchy.ditamap -Doutput.dir=out/garage-num -Dtranstype=d4p-html5
 
     Using Java:
-    java -jar lib/dost.jar /i:samples/hierarchy.ditamap /transtype:d4p-html5
+    java -jar lib\dost.jar /i:samples/hierarchy.ditamap /transtype:d4p-html5
 
 
 Building the documentation
 --------------------------
 
     From the DITA_OT directory, run:
-    ant -Dargs.input=plugins/org.dita4publishers.dita4publishers.html5/doc_src/en/html5-plugin.ditamap -Doutput.dir=out/html5-plugin/ -Dtranstype=d4p-html5
+    ant -Dargs.input=plugins/org.dita4publishers.html5/doc_src/en/html5-plugin.ditamap -Doutput.dir=out/html5-plugin/ -Dtranstype=d4p-html5
 
 Authors and Contributors
 ------------------------
+A big thanks to:
 
-* Bertrand Lefort 
 * Eliot Kimber [Contrext, LLC](http://contrext.com)
 * Jim Owens
 * Ray Fan [Tweedle](http://www.tweddle.com)
