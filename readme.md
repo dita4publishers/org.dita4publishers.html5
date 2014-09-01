@@ -19,7 +19,7 @@ Installation
 
 * Download the latest release under the releases tabs, and extract it
 
-* Unzip this so that the net.sourceforge.dita4publishers.html5 subdirectory
+* Unzip this so that the org.dita4publishers.dita4publishers.html5 subdirectory
 is a child of the DITA-OT plugins or demo directory (e.g. C:\DITA-OTx.y\plugins\), and
 you should be ready to go.
 
@@ -29,7 +29,7 @@ If you want to do development on top of the HTML5 plugin, you will need to insta
 This tool is used to compress your css and javascripts assets.
 
 * Download the   [https://github.com/downloads/yui/yuicompressor/yuicompressor-2.4.7.zip](YUI compressor version 2.4.7)
-* extract the content into the net.sourceforge.dita4publishers.html5 plugin directory
+* extract the content into the org.dita4publishers.dita4publishers.html5 plugin directory
 
 Notes:
 
@@ -50,7 +50,7 @@ Building the documentation
 --------------------------
 
     From the DITA_OT directory, run:
-    ant -Dargs.input=plugins/net.sourceforge.dita4publishers.html5/doc_src/en/html5-plugin.ditamap -Doutput.dir=out/html5-plugin/ -Dtranstype=d4p-html5
+    ant -Dargs.input=plugins/org.dita4publishers.dita4publishers.html5/doc_src/en/html5-plugin.ditamap -Doutput.dir=out/html5-plugin/ -Dtranstype=d4p-html5
 
 Authors and Contributors
 ------------------------

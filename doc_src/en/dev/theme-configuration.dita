@@ -10,7 +10,7 @@
             <step>
                 <cmd>Download the <xref keyref="foundation"/>, and extract it.</cmd>
                 <info> Extract it to the
-                        <filepath>net.sourceforge.dita4publishers.html5.foundation/theme/html5-foundation/</filepath>
+                        <filepath>org.dita4publishers.dita4publishers.html5.foundation/theme/html5-foundation/</filepath>
                     directory. Use this directory for all css and javascript files required by your
                     project. </info>
             </step>
@@ -18,7 +18,7 @@
             <step>
                 <cmd>Edit <filepath>config.xml</filepath>.</cmd>
                 <info>The file <filepath>config.xml</filepath> file is located in the
-                        <filepath>net.sourceforge.dita4publishers.html5.foundation/theme/html5-foundation/</filepath>
+                        <filepath>org.dita4publishers.dita4publishers.html5.foundation/theme/html5-foundation/</filepath>
                     directory. Use this file to specify the css and javascript files required for
                     your documentation<draft-comment author="Jim">did this edit change the
                         meaning?</draft-comment>. According to the Foundation documentation, a

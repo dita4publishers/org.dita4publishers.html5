@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<plugin id="net.sourceforge.dita4publishers.html5">
+<plugin id="org.dita4publishers.html5">
 
 <!--
     Licensed to the Apache Software Foundation (ASF) under one
@@ -20,8 +20,8 @@
     under the License.
 -->
 
-  <require plugin="net.sourceforge.dita4publishers.common.mapdriven"/>
-  <require plugin="net.sourceforge.dita4publishers.common.xslt"/>
+  <require plugin="org.dita4publishers.common.mapdriven"/>
+  <require plugin="org.dita4publishers.common.xslt"/>
 
   <extension-point id="dita.html5.map" name="HTML5 xslt parameters" />
   <extension-point id="xsl.transtype-html5" name="HTML5 XSLT extension" />
