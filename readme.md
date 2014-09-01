@@ -25,7 +25,7 @@ There three ways to install the plugin:
 make the Toolkit's plugins/ directory into a git repo and configure each plugin you want to track as a git submodule. See
 the DITA for Publishers project wiki for details on how to work with git submodules).
 
-### Additional steps for developper
+### Additional steps for developers
 
 If you want to do development on top of the HTML5 plugin, you will need to install the YUI compressor.
 This tool is used to compress your css and javascripts assets.
