@@ -17,7 +17,7 @@ All these plugins are provided in the main DITA for Publishers distribution or y
 Installation
 ------------
 
-* There three ways to install the plugin:
+There three ways to install the plugin:
 
   1. Download the [DITA for Publishers main distribution](http://sourceforge.net/projects/dita4publishers/files/) and install it.
   2. Download this repository as a Zip from Github and extract it into your Toolkit's plugins/ directory
