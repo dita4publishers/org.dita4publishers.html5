@@ -32,7 +32,7 @@
 
 
   <xsl:import href="plugin:org.dita4publishers.common.xslt:xsl/reportParametersBase.xsl"/>
-  <xsl:import href="plugin:org.dita4publishers.common.xslt:xsl/lib/html-generation-utils.xsl"/>
+  <xsl:import href="plugin:org.dita4publishers.common.html:xsl/html-generation-utils.xsl"/>
   <xsl:import href="plugin:org.dita4publishers.common.mapdriven:/xsl/dataCollection.xsl"/>
 
   <!-- Import the base HTML output generation transform. -->
