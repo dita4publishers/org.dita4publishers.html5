@@ -37,6 +37,8 @@
 
     <!-- configuration file -->
     <param name="HTML5THEMECONFIG" expression="${html5.xml.theme.config}"/>
+    <param name="HTML5THEMECONFIGDIR" expression="${html5.theme.config.dir}"/>
+
 
     <!-- NOTE: Case of OUTEXT matches parameter used in base HTML transform type -->
     <param name="OUTEXT" expression="${out.ext}"/><!-- Extension to use for result files, e.g., ".html" -->

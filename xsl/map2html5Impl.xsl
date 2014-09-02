@@ -73,8 +73,11 @@
 
   <xsl:param name="inputFileNameParam"/>
 
-  <!-- Directory into which the generated output is put. -->
-  <xsl:param name="outdir" select="./html5" as="xs:string"/>
+  <!-- Directory into which the generated output is put adding  as="xs:string"
+       cause plugin to crash on Unbuntu + Mac OS X.8 on some installation
+       Must find why in order to set the param properly
+  -->
+  <xsl:param name="outdir" select="./html5" />
   <xsl:param name="inputdir" select="relpath:getParent(document-uri(.))" as="xs:string"/>
 
  <!--
@@ -169,6 +172,8 @@
 
   <xsl:param name="HTML5THEMEDIR" select="'themes'" />
   <xsl:param name="HTML5THEMECONFIG" select="''" />
+  <xsl:param name="HTML5THEMECONFIGDIR" select="''" />
+  
 
   <!-- CSS classes and IDs -->
   <xsl:param name="IDMAINCONTAINER" select="'d4h5-main-container'" />
