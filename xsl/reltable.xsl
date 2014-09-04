@@ -158,7 +158,7 @@
                      something.
     -->
 
-      <xsl:value-of select="htmlutil:getTopicResultUrl($outdir, root($topic), $rootMapDocUrl)" />
+      <xsl:value-of select="relpath:getRelativePath($outdir, htmlutil:getTopicResultUrl($outdir, root($topic), $rootMapDocUrl))" />
     </xsl:variable>
 
     <xsl:variable name="title">
@@ -173,13 +173,12 @@
   </xsl:if>
   </xsl:template>
 
-  <xsl:template name="getPrevTopicReference">
+<xsl:template name="getNextTopicHref">
   <xsl:param name="topicref" as="element()*" tunnel="yes"/>
   <xsl:param name="rootMapDocUrl" as="xs:string" tunnel="yes"/>
 
-  <xsl:variable name="siblingTopicRef" select="
-          if ($topicref) 
-             then ($topicref/preceding::*[df:isTopicRef(.)][1] | $topicref/ancestor::*[df:isTopicRef(.)][1])[last()]  
+  <xsl:variable name="siblingTopicRef" select="if ($topicref) 
+             then ($topicref/child::*[df:isTopicRef(.)][1] | $topicref/following::*[df:isTopicRef(.)][1])[1] 
              else ()" as="element()?"
   />    
 
@@ -197,6 +196,35 @@
       <xsl:value-of select="htmlutil:getTopicResultUrl($outdir, root($topic), $rootMapDocUrl)" />
     </xsl:variable>
 
+    <xsl:value-of select="relpath:getRelativePath($outdir, $resultUri)" />
+
+  </xsl:if>
+  </xsl:template>
+
+  <xsl:template name="getPrevTopicReference">
+    <xsl:param name="topicref" as="element()*" tunnel="yes"/>
+    <xsl:param name="rootMapDocUrl" as="xs:string" tunnel="yes"/>
+
+    <xsl:variable name="siblingTopicRef" select="
+          if ($topicref) 
+             then ($topicref/preceding::*[df:isTopicRef(.)][1] | $topicref/ancestor::*[df:isTopicRef(.)][1])[last()]  
+             else ()" as="element()?"
+    />    
+
+  <xsl:if test="$siblingTopicRef">
+
+    <xsl:variable name="topic" as="element()*" select="df:resolveTopicRef($siblingTopicRef)" />
+    <xsl:variable name="resultUri" as="xs:string">
+    <!-- NOTE: This logic is different from the logic for the previous 
+                     link. I'm not sure that's right. There may be a more
+                     general way to hanlde this logic based on general properties
+                     of the topicrefs involved, e.g., @toc="no" or chunking or
+                     something.
+    -->
+
+      <xsl:value-of select="relpath:getRelativePath($outdir, htmlutil:getTopicResultUrl($outdir, root($topic), $rootMapDocUrl))" />
+    </xsl:variable>
+
     <xsl:variable name="title">
       <xsl:apply-templates select="$siblingTopicRef" mode="nav-point-title"/>
     </xsl:variable>
@@ -207,6 +235,38 @@
       <xsl:with-param name="title" as="xs:string" select="$title"/>
     </xsl:call-template>
   </xsl:if>
+  </xsl:template>
+
+  <xsl:template name="getPrevTopicHref">
+    <xsl:param name="topicref" as="element()*" tunnel="yes"/>
+    <xsl:param name="rootMapDocUrl" as="xs:string" tunnel="yes"/>
+
+    <xsl:variable name="siblingTopicRef" select="
+          if ($topicref) 
+             then ($topicref/preceding::*[df:isTopicRef(.)][1] | $topicref/ancestor::*[df:isTopicRef(.)][1])[last()]  
+             else ()" as="element()?"
+    />    
+
+  <xsl:if test="$siblingTopicRef">
+
+    <xsl:variable name="topic" as="element()*" select="df:resolveTopicRef($siblingTopicRef)" />
+    <xsl:variable name="resultUri" as="xs:string">
+    <!-- NOTE: This logic is different from the logic for the previous 
+                     link. I'm not sure that's right. There may be a more
+                     general way to hanlde this logic based on general properties
+                     of the topicrefs involved, e.g., @toc="no" or chunking or
+                     something.
+    -->
+
+      <xsl:value-of select="relpath:getRelativePath($outdir, htmlutil:getTopicResultUrl($outdir, root($topic), $rootMapDocUrl))" />
+    </xsl:variable>
+
+    <xsl:variable name="title">
+      <xsl:apply-templates select="$siblingTopicRef" mode="nav-point-title"/>
+    </xsl:variable>
+
+   <xsl:value-of select="$resultUri"/>
+    </xsl:if>
   </xsl:template>
 
   <xsl:template name="formatSiblingTopicLinks">

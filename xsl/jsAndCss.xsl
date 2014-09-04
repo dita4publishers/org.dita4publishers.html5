@@ -250,14 +250,16 @@
   <xsl:template name="d4p-variables">
   <xsl:param name="relativePath" tunnel="yes" as="xs:string*"/>
     <script type="text/javascript">
-      <xsl:text>
-        var d4p = {};
-        d4p.relativePath = '</xsl:text><xsl:value-of select="$relativePath" /><xsl:text>';</xsl:text>
+
+      <xsl:text>var d4p = {</xsl:text>
+      <xsl:text>relativePath: '</xsl:text><xsl:value-of select="$relativePath" /><xsl:text>',</xsl:text>
+      <xsl:text>nextTopicHref: '</xsl:text><xsl:call-template name="getNextTopicHref"/><xsl:text>',</xsl:text>
+      <xsl:text>previousTopicHref: '</xsl:text><xsl:call-template name="getPrevTopicHref"/><xsl:text>',</xsl:text>
+
       <xsl:if test="$DBG='yes'">
-        <xsl:text>
-          d4p.dev = true;
-        </xsl:text>
+        <xsl:text>dev: true</xsl:text>
       </xsl:if>
+      <xsl:text>};</xsl:text>
     </script>
     <xsl:value-of select="$newline"/>
   </xsl:template>
