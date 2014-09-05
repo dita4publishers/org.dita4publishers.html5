@@ -221,7 +221,7 @@
        uses xtrf rather than $OUTPUTDIR to provide the location of the
        graphic as authored, not as output.
     -->
-  <xsl:template match="*[contains(@class,' topic/image ')]/@scale">
+  <xsl:template match="*[contains(@class,' topic/image ')]/@scale" priority="10">
 
     <xsl:variable name="xtrf" as="xs:string" select="../@xtrf"/>
     <xsl:variable name="baseUri" as="xs:string"
