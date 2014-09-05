@@ -52,6 +52,43 @@
     </div>
   </xsl:template>
 
+  <xsl:template name="inline-breadcrumbs">
+
+    <xsl:for-each select="descendant::*
+     [contains(@class, ' topic/link ')]
+     [(@role='parent' and
+          generate-id(.)=generate-id(key('link',concat(ancestor::*[contains(@class, ' topic/related-links ')]/parent::*[contains(@class, ' topic/topic ')]/@id, ' ', @href,@type,@role,@platform,@audience,@importance,@outputclass,@keyref,@scope,@format,@otherrole,@product,@otherprops,@rev,@class,child::*))[1])
+     ) or (@role='next' and
+          generate-id(.)=generate-id(key('link',concat(ancestor::*[contains(@class, ' topic/related-links ')]/parent::*[contains(@class, ' topic/topic ')]/@id, ' ', @href,@type,@role,@platform,@audience,@importance,@outputclass,@keyref,@scope,@format,@otherrole,@product,@otherprops,@rev,@class,child::*))[1])
+     ) or (@role='previous' and
+          generate-id(.)=generate-id(key('link',concat(ancestor::*[contains(@class, ' topic/related-links ')]/parent::*[contains(@class, ' topic/topic ')]/@id, ' ', @href,@type,@role,@platform,@audience,@importance,@outputclass,@keyref,@scope,@format,@otherrole,@product,@otherprops,@rev,@class,child::*))[1])
+     )]/parent::*">
+
+      <xsl:value-of select="$newline"/>
+
+      <xsl:for-each select="*[@href][@role='parent']">
+        <xsl:variable name="href">
+          <xsl:call-template name="href" />
+        </xsl:variable>
+
+        <xsl:call-template name="breadcrumbs-format-links">
+          <xsl:with-param name="title" as="xs:string" select="linktext"/>
+          <xsl:with-param name="href" as="xs:string" select="$href"/>
+        </xsl:call-template>
+ 
+      <xsl:value-of select="$newline"/>
+    </xsl:for-each>
+    </xsl:for-each>
+  </xsl:template>
+
+   <xsl:template name="breadcrumbs-format-links">
+    <xsl:param name="title" as="xs:string" />
+    <xsl:param name="href" as="xs:string" />
+     <a class="breadcrumb" href="{$href}" title="{$title}">
+         <xsl:value-of select="$title" />
+     </a>
+  </xsl:template>
+
 
   <!--create the next and previous links, with accompanying parent link if any; create group for each unique parent, as well as for any next and previous links that aren't in the same group as a parent-->
   <xsl:template name="next-prev-parent-links">
@@ -141,6 +178,7 @@
 <xsl:template name="getNextTopicReference">
   <xsl:param name="topicref" as="element()*" tunnel="yes"/>
   <xsl:param name="rootMapDocUrl" as="xs:string" tunnel="yes"/>
+  <xsl:param name="relativePath" as="xs:string" select="''" tunnel="yes"/>
 
   <xsl:variable name="siblingTopicRef" select="if ($topicref) 
              then ($topicref/child::*[df:isTopicRef(.)][1] | $topicref/following::*[df:isTopicRef(.)][1])[1] 
@@ -158,7 +196,7 @@
                      something.
     -->
 
-      <xsl:value-of select="relpath:getRelativePath($outdir, htmlutil:getTopicResultUrl($outdir, root($topic), $rootMapDocUrl))" />
+      <xsl:value-of select="concat($relativePath, relpath:getRelativePath($outdir, htmlutil:getTopicResultUrl($outdir, root($topic), $rootMapDocUrl)))" />
     </xsl:variable>
 
     <xsl:variable name="title">
@@ -172,6 +210,7 @@
     </xsl:call-template>
   </xsl:if>
   </xsl:template>
+
 
 <xsl:template name="getNextTopicHref">
   <xsl:param name="topicref" as="element()*" tunnel="yes"/>
@@ -204,7 +243,7 @@
   <xsl:template name="getPrevTopicReference">
     <xsl:param name="topicref" as="element()*" tunnel="yes"/>
     <xsl:param name="rootMapDocUrl" as="xs:string" tunnel="yes"/>
-
+    <xsl:param name="relativePath" as="xs:string" select="''" tunnel="yes"/>
     <xsl:variable name="siblingTopicRef" select="
           if ($topicref) 
              then ($topicref/preceding::*[df:isTopicRef(.)][1] | $topicref/ancestor::*[df:isTopicRef(.)][1])[last()]  
@@ -222,7 +261,7 @@
                      something.
     -->
 
-      <xsl:value-of select="relpath:getRelativePath($outdir, htmlutil:getTopicResultUrl($outdir, root($topic), $rootMapDocUrl))" />
+      <xsl:value-of select="concat($relativePath, relpath:getRelativePath($outdir, htmlutil:getTopicResultUrl($outdir, root($topic), $rootMapDocUrl)))" />
     </xsl:variable>
 
     <xsl:variable name="title">

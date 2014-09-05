@@ -311,6 +311,21 @@
     </xsl:choose>
   </xsl:template>
 
+   <!-- generate html5 footer -->
+  <xsl:template match="*" mode="generate-inline-breadcrumbs">
+    <xsl:param name="is-root" as="xs:boolean"  tunnel="yes" select="false()" />
+    <xsl:comment>generate-inline-breadcrumbs</xsl:comment>
+    <xsl:choose>
+      <xsl:when test="$is-root">
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:call-template name="inline-breadcrumbs"/>
+      </xsl:otherwise>
+    </xsl:choose>
+
+  </xsl:template>
+
+
   <!-- generate html5 footer -->
   <xsl:template match="*" mode="generate-footer">
     <div class="clearfix"></div>
