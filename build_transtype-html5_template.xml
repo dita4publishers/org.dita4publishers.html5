@@ -413,6 +413,7 @@
 
   <target name="html5.copy.graphics" unless="skip.copy.graphics"
     description="Copies graphics from input to the output directory based on the graphic map generated during html5 generation">
+    <mkdir dir="${output.dir}/images"/>
     <ant antfile="${output.dir}/copy-graphics.xml"/>
   </target>
 
