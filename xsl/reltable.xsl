@@ -289,22 +289,25 @@
   <xsl:if test="$siblingTopicRef">
 
     <xsl:variable name="topic" as="element()*" select="df:resolveTopicRef($siblingTopicRef)" />
-    <xsl:variable name="resultUri" as="xs:string">
-    <!-- NOTE: This logic is different from the logic for the previous 
+
+    <xsl:if test="$topic">
+      <xsl:variable name="resultUri" as="xs:string">
+      <!-- NOTE: This logic is different from the logic for the previous 
                      link. I'm not sure that's right. There may be a more
                      general way to hanlde this logic based on general properties
                      of the topicrefs involved, e.g., @toc="no" or chunking or
                      something.
-    -->
+      -->
 
-      <xsl:value-of select="relpath:getRelativePath($outdir, htmlutil:getTopicResultUrl($outdir, root($topic), $rootMapDocUrl))" />
-    </xsl:variable>
+        <xsl:value-of select="relpath:getRelativePath($outdir, htmlutil:getTopicResultUrl($outdir, root($topic), $rootMapDocUrl))" />
+      </xsl:variable>
 
-    <xsl:variable name="title">
-      <xsl:apply-templates select="$siblingTopicRef" mode="nav-point-title"/>
-    </xsl:variable>
+      <xsl:variable name="title">
+        <xsl:apply-templates select="$siblingTopicRef" mode="nav-point-title"/>
+      </xsl:variable>
 
-   <xsl:value-of select="$resultUri"/>
+     <xsl:value-of select="$resultUri"/>
+   </xsl:if>
     </xsl:if>
   </xsl:template>
 
