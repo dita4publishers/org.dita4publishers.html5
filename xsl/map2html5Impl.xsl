@@ -42,6 +42,9 @@
   <xsl:import href="plugin:org.dita4publishers.common.xslt:xsl/map2graphicMap.xsl"/>
   <xsl:import href="plugin:org.dita4publishers.common.xslt:xsl/topicHrefFixup.xsl"/>
 
+  <!-- json library -->
+  <xsl:import href="plugin:org.dita4publishers.json:xsl/xml2json/xml-to-json.xsl"/>
+
   <!-- FIXME: This URL syntax is local to me: I hacked catalog-dita_template.xml
               to add this entry:
 
