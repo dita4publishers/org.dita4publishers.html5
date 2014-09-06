@@ -44,14 +44,6 @@
 
   <!-- json library -->
   <xsl:import href="plugin:org.dita4publishers.json:xsl/xml2json/xml-to-json.xsl"/>
-
-  <!-- FIXME: This URL syntax is local to me: I hacked catalog-dita_template.xml
-              to add this entry:
-
-              <rewriteURI uriStartString="plugin:base-xsl:" rewritePrefix="xsl/"></rewriteURI>
-
-        see https://github.com/dita-ot/dita-ot/issues/1405
-    -->
   <xsl:import href="plugin:org.dita.base:xsl/common/dita-utilities.xsl"/>
 
   <xsl:include href="plugin:org.dita4publishers.common.html:xsl/commonHtmlOverrides.xsl"/>
@@ -176,7 +168,7 @@
   <xsl:param name="HTML5THEMEDIR" select="'themes'" />
   <xsl:param name="HTML5THEMECONFIG" select="''" />
   <xsl:param name="HTML5THEMECONFIGDIR" select="''" />
-  
+
 
   <!-- CSS classes and IDs -->
   <xsl:param name="IDMAINCONTAINER" select="'d4h5-main-container'" />
