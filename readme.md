@@ -57,7 +57,7 @@ Building the documentation
 Authors and Contributors
 ------------------------
 
-* Bertrabd Lefort
+* Bertrand Lefort
 * Eliot Kimber [Contrext, LLC](http://contrext.com)
 * Jim Owens
 * Ray Fan [Tweedle](http://www.tweddle.com)
