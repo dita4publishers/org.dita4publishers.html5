@@ -10,7 +10,7 @@ The HTML5 plugin depends on the following other plugins:
 * The [DITA Community org.dita-community.common.html](https://github.com/dita-community/org.dita-community.common.xslt) plugin
 * The [D4P org.dita4publishers.common.mapdriven](https://github.com/dita4publishers/org.dita4publishers.common.mapdriven) plugin
 * The [D4P org.dita4publishers.common.xslt"](https://github.com/dita4publishers/org.dita4publishers.common.xslt) plugin
-* (https://github.com/dita4publishers/org.dita4publishers.common.html.git
+* The [D4P org.dita4publishers.json"](https://github.com/dita4publishers/org.dita4publishers.json) plugin
 
 All these plugins are provided in the main DITA for Publishers distribution or you can install each plugin individually.
 
