@@ -393,6 +393,7 @@
                  is retained for backward compatibility.
         -->
        <dita:extension id="dita.html5.map" behavior="org.dita.dost.platform.InsertAction" />
+       <dita:extension id="dita.conductor.xhtml.param" behavior="org.dita.dost.platform.InsertAction"/>
 
        <mapper
          type="glob"
