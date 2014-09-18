@@ -30,7 +30,7 @@ the DITA for Publishers project wiki for details on how to work with git submodu
 If you want to do development on top of the HTML5 plugin, you will need to install the YUI compressor.
 This tool is used to compress your css and javascripts assets.
 
-* Download the   [https://github.com/downloads/yui/yuicompressor/yuicompressor-2.4.7.zip](YUI compressor version 2.4.7)
+* Download the   [YUI compressor version 2.4.7](https://github.com/downloads/yui/yuicompressor/yuicompressor-2.4.7.zip)
 * extract the content into the org.dita4publishers.html5 plugin directory
 
 Notes:
