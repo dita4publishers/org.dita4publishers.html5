@@ -132,9 +132,9 @@
   </xsl:template>
 
   <xsl:template match="*" mode="gen-search-box">
-    <xsl:variable name="placeholder" select="$HTML5THEMECONFIGDOC/html5/search/placeholder" />
+    <!--xsl:variable name="placeholder" select="$HTML5THEMECONFIGDOC/html5/search/placeholder" />
     <xsl:variable name="action" select="$HTML5THEMECONFIGDOC/html5/search/action" />
-    <!--form id="search" action="{$action}">
+    <form id="search" action="{$action}">
       <input id="search-text" type="text" autocomplete="off" placeholder="{$placeholder}" name="search" />
       <xsl:sequence select="$HTML5THEMECONFIGDOC/html5/search/inputs/*" />
     </form-->
