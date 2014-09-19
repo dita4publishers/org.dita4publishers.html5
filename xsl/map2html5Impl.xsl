@@ -31,13 +31,15 @@
   version="2.0">
 
   <xsl:import href="plugin:org.dita-community.common.xslt:xsl/relpath_util.xsl"/>
+
   <xsl:import href="plugin:org.dita4publishers.common.xslt:xsl/reportParametersBase.xsl"/>
   <xsl:import href="plugin:org.dita4publishers.common.html:xsl/html-generation-utils.xsl"/>
-  <xsl:import href="plugin:org.dita4publishers.common.mapdriven:/xsl/dataCollection.xsl"/>
+  <xsl:import href="plugin:org.dita4publishers.common.mapdriven:xsl/dataCollection.xsl"/>
 
   <!-- Import the base HTML output generation transform. -->
   <xsl:import href="plugin:org.dita.xhtml:xsl/dita2xhtml.xsl"/>
 
+  <xsl:import href="plugin:org.dita4publishers.media-d.html:xsl/media-d2html.xsl" />
   <xsl:import href="plugin:org.dita4publishers.common.xslt:xsl/graphicMap2AntCopyScript.xsl"/>
   <xsl:import href="plugin:org.dita4publishers.common.xslt:xsl/map2graphicMap.xsl"/>
   <xsl:import href="plugin:org.dita4publishers.common.xslt:xsl/topicHrefFixup.xsl"/>
