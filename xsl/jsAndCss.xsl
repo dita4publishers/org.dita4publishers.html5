@@ -51,22 +51,24 @@
     <xsl:apply-templates select="." mode="generate-d4p-css-js"/>
   </xsl:template>
 
-  <!-- this template is used to add compressed or none-compressed javascripts links -->
+  <!-- this template is used to change the output when debug mode = 0 -->
   <xsl:template match="*" mode="generate-d4p-css-js">
     <xsl:choose>
       <xsl:when test="$DBG='yes'">
-        <xsl:apply-templates select="$HTML5THEMECONFIGDOC/html5/tag" mode="generate-d4p-uncompressed-css"/>
+        <xsl:apply-templates select="$HTML5THEMECONFIGDOC/html5/tag" mode="generate-d4p-uncompressed-css-js"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:apply-templates select="$HTML5THEMECONFIGDOC/html5/tag" mode="generate-d4p-compressed-css"/>
+        <xsl:apply-templates select="$HTML5THEMECONFIGDOC/html5/tag" mode="generate-d4p-compressed-css-js"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template match="tag[count(source/file) &gt; 0 ][output = 'no']" mode="generate-d4p-uncompressed-css" />
+  <!-- tag with @output = no should not be rendered -->
+  <xsl:template match="tag[output = 'no']" mode="generate-d4p-uncompressed-css-js" priority="100" />
+  <xsl:template match="tag[output = 'no']" mode="generate-d4p-compressed-css-js" priority="100" />
 
   <!-- This template render ons script element per script element declared in the theme config.xml -->
-  <xsl:template match="tag[count(source/file) &gt; 0 ][output != 'no']" mode="generate-d4p-uncompressed-css">
+  <xsl:template match="tag[count(source/file) &gt; 0 ][output != 'no']" mode="generate-d4p-uncompressed-css-js">
 
     <xsl:param name="relativePath" as="xs:string" select="''" tunnel="yes"/>
 
@@ -86,11 +88,7 @@
 
     <xsl:for-each select="./source/file">
 
-      <xsl:variable name="extension">
-        <xsl:call-template name="get-file-extension">
-          <xsl:with-param name="path" select="@path"/>
-        </xsl:call-template>
-      </xsl:variable>
+      <xsl:variable name="extension" select="relpath:getExtension(@path)"/>
 
       <xsl:if test="prefix and prefix != ''">
         <xsl:value-of select="prefix" disable-output-escaping="yes"/>
@@ -122,7 +120,7 @@
   </xsl:template>
 
   <!-- This template render ons script element per script element declared in the theme config.xml -->
-  <xsl:template match="tag[count(source/file) = 0 ][output != 'no']" mode="generate-d4p-uncompressed-css">
+  <xsl:template match="tag[count(source/file) = 0 ][output != 'no']" mode="generate-d4p-uncompressed-css-js">
 
     <xsl:param name="relativePath" as="xs:string" select="''" tunnel="yes"/>
 
@@ -136,21 +134,15 @@
       <xsl:choose>
 
         <xsl:when test="attributes/href">
-          <xsl:call-template name="get-file-extension">
-            <xsl:with-param name="path" select="attributes/href"/>
-          </xsl:call-template>
+          <xsl:value-of select="relpath:getExtension(@path)"/>
         </xsl:when>
 
         <xsl:when test="attributes/src">
-          <xsl:call-template name="get-file-extension">
-          <xsl:with-param name="path" select="attributes/src"/>
-          </xsl:call-template>
+           <xsl:value-of select="relpath:getExtension(@path)"/>
         </xsl:when>
 
         <xsl:otherwise>
-          <xsl:call-template name="get-file-extension">
-          <xsl:with-param name="path" select="filemane"/>
-          </xsl:call-template>
+           <xsl:value-of select="relpath:getExtension(@path)"/>
         </xsl:otherwise>
 
       </xsl:choose>
@@ -177,23 +169,28 @@
     <xsl:if test="suffix and suffix != ''">
       <xsl:value-of select="suffix"/>
     </xsl:if>
+    
+    <xsl:value-of select="$newline"/>
 
   </xsl:template>
 
+  <!-- When a tag specify an external file, the rendering code is the samne than in the uncompressed generate-d4p-uncompressed-css-js mode -->
+  <xsl:template match="tag[count(source/file) = 0 ][output != 'no']" mode="generate-d4p-compressed-css-js">
+    <xsl:apply-templates select="." mode="generate-d4p-uncompressed-css-js" />
+  </xsl:template>
 
-  <xsl:template match="tag[output != 'no']" mode="generate-d4p-compressed-css">
+  <!-- Compressed mode use the information from filename -->
+  <xsl:template match="tag[count(source/file) &gt; 0 ][output != 'no']" mode="generate-d4p-compressed-css-js">
+    
     <xsl:param name="relativePath" as="xs:string" select="''" tunnel="yes"/>
-
-    <xsl:variable name="extension">
-      <xsl:call-template name="get-file-extension">
-        <xsl:with-param name="path" select="filename"/>
-      </xsl:call-template>
-    </xsl:variable>
+    
+    <xsl:variable name="filename" as="xs:string" select="filename" />
+    <xsl:variable name="extension" select="relpath:getExtension($filename)"/>
 
     <xsl:variable name="name">
-        <xsl:call-template name="theme-get-tag-name">
-          <xsl:with-param name="name" select="name" />
-        </xsl:call-template>
+      <xsl:call-template name="theme-get-tag-name">
+        <xsl:with-param name="name" select="name" />
+      </xsl:call-template>
     </xsl:variable>
 
     <xsl:variable name="dir">
@@ -235,8 +232,7 @@
 
   </xsl:template>
 
-  <xsl:template match="*" mode="generate-d4p-compressed-css"/>
-
+  <!-- Swicth tage name -->
   <xsl:template name="theme-get-tag-name">
     <xsl:param name="name" />
     <xsl:choose>
@@ -247,6 +243,7 @@
     </xsl:choose>
   </xsl:template>
 
+  <!-- output D4p javascript object -->
   <xsl:template name="d4p-variables">
   <xsl:param name="relativePath" tunnel="yes" as="xs:string*"/>
     <script type="text/javascript">
@@ -263,7 +260,8 @@
     </script>
     <xsl:value-of select="$newline"/>
   </xsl:template>
-
+  
+  <!-- functions -->
   <xsl:function name="relpath:assets-uri" as="xs:string">
     <xsl:param name="relativePath" as="xs:string*"/>
     <xsl:param name="path" as="xs:string*"/>
