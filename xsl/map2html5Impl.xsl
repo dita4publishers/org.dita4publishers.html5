@@ -67,6 +67,10 @@
 
   <xsl:variable name="include.roles" select="concat(' ', normalize-space($include.rellinks), ' ')"/>
 
+  <!-- specify json format for org.dita4publishers.json -->
+  <xsl:param name="use-rabbitfish" as="xs:boolean" select="false()"/>
+  <xsl:param name="skip-root" as="xs:boolean" select="true()"/>
+
   <xsl:param name="inputFileNameParam"/>
 
   <!-- Directory into which the generated output is put adding  as="xs:string"
@@ -170,7 +174,8 @@
   <xsl:param name="HTML5THEMECONFIG" select="''" />
   <xsl:param name="HTML5THEMECONFIGDIR" select="''" />
 
-
+  <xsl:param name="DRAFT" select="''" />
+  <xsl:param name="ISDRAFT" as="xs:boolean" select="if($DRAFT = 'yes') then true() else false()" />
   <!-- CSS classes and IDs -->
   <xsl:param name="IDMAINCONTAINER" select="'d4h5-main-container'" />
   <xsl:param name="CLASSMAINCONTAINER" select="''" />

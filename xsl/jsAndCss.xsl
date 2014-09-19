@@ -25,7 +25,8 @@
   xmlns:htmlutil="http://dita4publishers.org/functions/htmlutil"
   xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl"
   xmlns:dc="http://purl.org/dc/elements/1.1/"
-  exclude-result-prefixes="df xs relpath htmlutil xd dc"
+  xmlns:json="http://json.org/"
+  exclude-result-prefixes="df xs relpath htmlutil xd dc json"
   version="2.0">
   <!-- =============================================================
 
@@ -169,7 +170,7 @@
     <xsl:if test="suffix and suffix != ''">
       <xsl:value-of select="suffix"/>
     </xsl:if>
-    
+
     <xsl:value-of select="$newline"/>
 
   </xsl:template>
@@ -181,9 +182,9 @@
 
   <!-- Compressed mode use the information from filename -->
   <xsl:template match="tag[count(source/file) &gt; 0 ][output != 'no']" mode="generate-d4p-compressed-css-js">
-    
+
     <xsl:param name="relativePath" as="xs:string" select="''" tunnel="yes"/>
-    
+
     <xsl:variable name="filename" as="xs:string" select="filename" />
     <xsl:variable name="extension" select="relpath:getExtension($filename)"/>
 
@@ -222,11 +223,9 @@
       <xsl:value-of select="value" />
 
     </xsl:element>
-
     <xsl:if test="suffix and suffix != ''">
       <xsl:value-of select="suffix" disable-output-escaping="yes"/>
     </xsl:if>
-
     <xsl:value-of select="$newline"/>
 
 
@@ -245,22 +244,30 @@
 
   <!-- output D4p javascript object -->
   <xsl:template name="d4p-variables">
-  <xsl:param name="relativePath" tunnel="yes" as="xs:string*"/>
+    <xsl:param name="relativePath" tunnel="yes" as="xs:string*"/>
+
+    <xsl:variable name="d4p-js-object">
+      <d4p>
+         <relativePath><xsl:value-of select="$relativePath" /></relativePath>
+         <dev><xsl:value-of select="if($DBG='yes') then 'true' else 'false'"/></dev>
+         <debug><xsl:value-of select="if($DBG='yes') then 'true' else 'false'"/></debug>
+         <draft><xsl:value-of select="if(ISDRAFT) then 'true' else 'false'"/></draft>
+         <nextTopicHref><xsl:call-template name="getNextTopicHref"/></nextTopicHref>
+         <previousTopicHref><xsl:call-template name="getPrevTopicHref"/></previousTopicHref>
+         <!-- extension point -->
+         <xsl:apply-templates select="." mode="d4p-js-properties" />
+      </d4p>
+    </xsl:variable>
+
     <script type="text/javascript">
+      <xsl:text>var d4p = </xsl:text><xsl:value-of select="json:generate($d4p-js-object/d4p)"/>
+    </script><xsl:value-of select="$newline"/>
 
-      <xsl:text>var d4p = {</xsl:text>
-      <xsl:text>relativePath: '</xsl:text><xsl:value-of select="$relativePath" /><xsl:text>',</xsl:text>
-      <xsl:text>nextTopicHref: '</xsl:text><xsl:call-template name="getNextTopicHref"/><xsl:text>',</xsl:text>
-      <xsl:text>previousTopicHref: '</xsl:text><xsl:call-template name="getPrevTopicHref"/><xsl:text>',</xsl:text>
-
-      <xsl:if test="$DBG='yes'">
-        <xsl:text>dev: true</xsl:text>
-      </xsl:if>
-      <xsl:text>};</xsl:text>
-    </script>
-    <xsl:value-of select="$newline"/>
   </xsl:template>
-  
+
+  <!-- template to add javascript properties to the D4P object -->
+  <xsl:template match="*" mode="d4p-js-properties"/>
+
   <!-- functions -->
   <xsl:function name="relpath:assets-uri" as="xs:string">
     <xsl:param name="relativePath" as="xs:string*"/>
