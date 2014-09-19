@@ -30,7 +30,7 @@
   xmlns:java="org.dita.dost.util.ImgUtils"
   version="2.0">
 
-
+  <xsl:import href="plugin:org.dita-community.common.xslt:xsl/relpath_util.xsl"/>
   <xsl:import href="plugin:org.dita4publishers.common.xslt:xsl/reportParametersBase.xsl"/>
   <xsl:import href="plugin:org.dita4publishers.common.html:xsl/html-generation-utils.xsl"/>
   <xsl:import href="plugin:org.dita4publishers.common.mapdriven:/xsl/dataCollection.xsl"/>
@@ -62,7 +62,6 @@
   <xsl:include href="audience.xsl"/>
   <xsl:include href="map2html5Index.xsl"/>
   <xsl:include href="reltable.xsl"/>
-  <xsl:include href="function.xsl"/>
 
   <xsl:variable name="include.roles" select="concat(' ', normalize-space($include.rellinks), ' ')"/>
 
