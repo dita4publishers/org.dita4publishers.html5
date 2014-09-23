@@ -255,6 +255,30 @@
   </xsl:template>
 
 
+  <!-- Function to look up a target in the keyref file -->
+  <xsl:template match="*" mode="find-keyref-target">
+    <xsl:param name="relativePath" as="xs:string" select="''" tunnel="yes"/>
+    <xsl:param name="keys" select="@keyref"/>
+    <xsl:param name="target">
+      <xsl:value-of select="$keydefs//*[@keys = $keys]/@href"/>
+    </xsl:param>
 
+    <xsl:choose>
+      <xsl:when test="contains($target, '://')">
+        <xsl:value-of select="$target"/>
+      </xsl:when>
+      <!-- edited  on 2010-12-17 for keyref bug:3114411 start-->
+      <xsl:when test="contains($target, '#')">
+        <xsl:value-of select="concat($relativePath, substring-before(substring-before($target, '#'), '.'), $OUTEXT, '#', substring-after($target, '#'))"/>
+      </xsl:when>
+      <xsl:when test="$target = ''">
+        <xsl:value-of select="$OUTEXT"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="concat($relativePath, substring-before($target, '.'), $OUTEXT)"/>
+      </xsl:otherwise>
+      <!-- edited  on 2010-12-17 for keyref bug:3114411 end-->
+    </xsl:choose>
+  </xsl:template>
 
 </xsl:stylesheet>
