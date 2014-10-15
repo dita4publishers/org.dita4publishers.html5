@@ -27,7 +27,13 @@
   <target name="dita2d4p-html5"
     unless="noMap"
     xmlns:dita="http://dita-ot.sourceforge.net"
-    dita:depends="get.plugin.version, set.properties, d4p.map-driven-build-init, build-init, preprocess, html5"
+    dita:depends="
+    html5.get.plugin.version, 
+    set.properties, 
+    d4p.map-driven-build-init, 
+    build-init, 
+    dc-preprocess, 
+    html5"
     dita:extension="depends org.dita.dost.platform.InsertDependsAction">
   </target>
 
@@ -36,7 +42,7 @@
     depends="dita.map.html5"
   />
 
-  <target name="get.plugin.version">
+  <target name="html5.get.plugin.version">
     <echo>HTML5 plugin version ${html5.plugin.version}</echo>
   </target>
 
