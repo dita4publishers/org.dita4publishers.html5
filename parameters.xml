@@ -18,6 +18,7 @@
     specific language governing permissions and limitations
     under the License.
 -->
+    <param name="inputdir" expression="${dita.input.dirname}"/>
     <param name="siteTheme" expression="${html5.site.theme}"/>
     <param name="BODYCLASS" expression="${html5.class.body}"/>
     <param name="jsoptions" expression="${html5.js.options}"/>

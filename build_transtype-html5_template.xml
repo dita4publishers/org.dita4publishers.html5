@@ -391,37 +391,6 @@
       style="${map2html5.style}"
       filenameparameter="inputFileNameParam"
     >
-      <param name="debug" expression="${debug}"/>
-     	<param name="outdir" expression="${epub.xslt.outdir}"/>
-     	<param name="inputdir" expression="${dita.input.dirname}"/>
-     	<param name="tempdir" expression="${epub.xslt.tempdir}"/>
-    	<param name="rawPlatformString" expression="${os.name}"/>
-    	<param name="titleOnlyTopicClassSpec" expression="${title.only.topic.class.spec}"/>
-    	<param name="titleOnlyTopicTitleClassSpec" expression="${title.only.topic.title.class.spec}"/>
-     	<param name="topicsOutputDir" expression="${topics.output.dir}"/>
-    	<param name="generateGlossary" expression="${html2.generate.glossary}" if="html2.generate.glossary"/>
-    	<param name="generateIndex" expression="${html2.generate.index}" if="html2.generate.index"/>
-      <param name="html.toc.OUTPUTCLASS" expression="${args.xhtml.toc.class}" if="args.xhtml.toc.class" />
-      <param name="maxTocDepth" expression="${d4p.max.toc.depth}" if="d4p.max.toc.depth"/>
-      <param name="maxNavDepth" expression="${d4p.max.nav.depth}" if="d4p.max.nav.depth"/>
-
-    	<!-- Parameters from dita2xhtml and similar transtypes: -->   
-      <param name="WORKDIR" expression="${workdir}" if="workdir"/>
-      <param name="BASEDIR" expression="${basedir}"></param>
-      <param name="CSS" expression="${args.css.file}" if="args.css.file" />
-      <param name="CSSPATH" expression="${user.csspath}" if="user.csspath" />
-      <param name="DRAFT" expression="${args.draft}" if="args.draft"></param>
-      <param name="ARTLBL" expression="${args.artlbl}" if="args.artlbl"></param>
-      <param name="GENERATE-TASK-LABELS" expression="${args.gen.task.lbl}" if="args.gen.task.lbl"></param>
-      <param name="PRESERVE-DITA-CLASS" expression="${args.xhtml.classattr}" if="args.xhtml.classattr"></param>
-      <param name="NOPARENTLINK" expression="${epub.hide.parent.link}" />
-      <param name="BREADCRUMBS" expression="${args.breadcrumbs}" if="args.breadcrumbs"></param>
-      <param name="INDEXSHOW" expression="${args.indexshow}" if="args.indexshow"></param>
-    	<param name="OUTPUTDIR" expression="${epub.temp.dir}"/>
-    	<param name="FILEDIR" expression="."/>
-      <param name="FILTERFILE" expression="${dita.input.valfile.url}" if="dita.input.valfile"></param>
-      <param name="DBG" expression="${args.debug}" if="args.debug"></param>
-
       <dita:extension id="dita.conductor.xhtml.param" behavior="org.dita.dost.platform.InsertAction"/>
 
       <xmlcatalog refid="dita.catalog"></xmlcatalog>
