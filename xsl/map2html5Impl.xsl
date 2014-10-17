@@ -77,6 +77,9 @@
        Must find why in order to set the param properly
   -->
   <xsl:param name="outdir" select="./html5" />
+  <!-- The directory containing the original input root map (not the
+       the temporary directory containing the map we're already processing.
+    -->
   <xsl:param name="inputdir" select="relpath:getParent(document-uri(.))" as="xs:string"/>
 
  <!--
@@ -267,6 +270,7 @@
       + CSSTHEME           = "<xsl:sequence select="$CSSTHEME"/>"
       + IDMAINCONTAINER    = "<xsl:sequence select="$IDMAINCONTAINER"/>"
       + IDSECTIONCONTAINER = "<xsl:sequence select="$IDSECTIONCONTAINER"/>"
+      + inputdir           = "<xsl:sequence select="$inputdir"/>"
       + jsoptions          = "<xsl:sequence select="$jsoptions"/>"
       + JS                 = "<xsl:sequence select="$JS"/>"
       + JSONVARFILE        = "<xsl:sequence select="$JSONVARFILE"/>"
