@@ -48,11 +48,11 @@ Running the transformation
     java -jar lib\dost.jar /i:samples/hierarchy.ditamap /transtype:d4p-html5
 
 
-Building the documentation
+Documentation
 --------------------------
 
-    From the DITA_OT directory, run:
-    ant -Dargs.input=plugins/org.dita4publishers.html5/doc_src/en/html5-plugin.ditamap -Doutput.dir=out/html5-plugin/ -Dtranstype=d4p-html5
+The documentation has been moved to the main [Dita4Publishers](https://github.com/dita4publishers/dita4publishers) project.
+
 
 Authors and Contributors
 ------------------------

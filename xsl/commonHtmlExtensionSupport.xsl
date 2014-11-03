@@ -32,21 +32,15 @@
 
   <xsl:template match="*" mode="process.note.common-processing">
 
-
-
-    <xsl:param name="type" select="@type"/>
-
     <xsl:param name="title">
       <xsl:call-template name="getString">
         <!-- For the parameter, turn "note" into "Note", caution => Caution, etc -->
         <xsl:with-param name="stringName"
-          select="concat(translate(substring($type, 1, 1),'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ'),
-                          substring($type, 2))"
+          select="concat(translate(substring(@type, 1, 1),'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ'),
+                          substring(@type, 2))"
         />
       </xsl:call-template>
     </xsl:param>
-
-    <xsl:variable name="importance" select="@importance" />
 
     <xsl:variable name="flagrules">
       <xsl:call-template name="getrules"/>
@@ -65,30 +59,36 @@
 
 
     <xsl:element name="{$html5NoteElement}">
-    <xsl:attribute name="class" select="concat($type, ' ', $importance)"/>
-      <!--xsl:call-template name="commonattributes">
-        <xsl:with-param name="default-output-class" select="$type"/>
-      </xsl:call-template-->
+    
+      <xsl:attribute name="class" select="concat('note', ' ', @type, ' ', @importance)"/>
+      
       <xsl:call-template name="gen-style">
         <xsl:with-param name="flagrules" select="$flagrules"/>
       </xsl:call-template>
+      
       <xsl:call-template name="setidaname"/>
+      
       <xsl:call-template name="start-flagit">
         <xsl:with-param name="flagrules" select="$flagrules"/>
       </xsl:call-template>
+      
       <span class="title">
         <xsl:value-of select="$title"/>
         <xsl:call-template name="getString">
           <xsl:with-param name="stringName" select="'ColonSymbol'"/>
         </xsl:call-template>
       </span>
+      
       <xsl:text> </xsl:text>
+      
       <xsl:call-template name="revblock">
         <xsl:with-param name="flagrules" select="$flagrules"/>
       </xsl:call-template>
+      
       <xsl:call-template name="end-flagit">
         <xsl:with-param name="flagrules" select="$flagrules"/>
       </xsl:call-template>
+      
     </xsl:element>
   </xsl:template>
 
@@ -255,6 +255,30 @@
   </xsl:template>
 
 
+  <!-- Function to look up a target in the keyref file -->
+  <xsl:template match="*" mode="find-keyref-target">
+    <xsl:param name="relativePath" as="xs:string" select="''" tunnel="yes"/>
+    <xsl:param name="keys" select="@keyref"/>
+    <xsl:param name="target">
+      <xsl:value-of select="$keydefs//*[@keys = $keys]/@href"/>
+    </xsl:param>
 
+    <xsl:choose>
+      <xsl:when test="contains($target, '://')">
+        <xsl:value-of select="$target"/>
+      </xsl:when>
+      <!-- edited  on 2010-12-17 for keyref bug:3114411 start-->
+      <xsl:when test="contains($target, '#')">
+        <xsl:value-of select="concat($relativePath, substring-before(substring-before($target, '#'), '.'), $OUTEXT, '#', substring-after($target, '#'))"/>
+      </xsl:when>
+      <xsl:when test="$target = ''">
+        <xsl:value-of select="$OUTEXT"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="concat($relativePath, substring-before($target, '.'), $OUTEXT)"/>
+      </xsl:otherwise>
+      <!-- edited  on 2010-12-17 for keyref bug:3114411 end-->
+    </xsl:choose>
+  </xsl:template>
 
 </xsl:stylesheet>

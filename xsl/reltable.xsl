@@ -31,16 +31,16 @@
         <!--handle child/descendants outside of linklists in collection-type=ordered/sequence-->
       </xsl:if>
 
-      <!-- 
-          Group all unordered links (which have not already been handled by prior sections). 
-          Skip duplicate links. 
+      <!--
+          Group all unordered links (which have not already been handled by prior sections).
+          Skip duplicate links.
       -->
-      <!-- 
+      <!--
           NOTE: The actual grouping code for related-links:group-unordered-links is common between
                 transform types, and is located in ../common/related-links.xsl. Actual code for
-                creating group titles and formatting links is located in XSL files specific to each type. 
+                creating group titles and formatting links is located in XSL files specific to each type.
       -->
-     
+
       <xsl:apply-templates select="." mode="related-links:group-unordered-links">
         <xsl:with-param name="nodes" select="descendant::*[contains(@class, ' topic/link ')]
        [count(. | key('omit-from-unordered-links', 1)) != count(key('omit-from-unordered-links', 1))]
@@ -75,7 +75,7 @@
           <xsl:with-param name="title" as="xs:string" select="linktext"/>
           <xsl:with-param name="href" as="xs:string" select="$href"/>
         </xsl:call-template>
- 
+
       <xsl:value-of select="$newline"/>
     </xsl:for-each>
     </xsl:for-each>
@@ -180,16 +180,16 @@
   <xsl:param name="rootMapDocUrl" as="xs:string" tunnel="yes"/>
   <xsl:param name="relativePath" as="xs:string" select="''" tunnel="yes"/>
 
-  <xsl:variable name="siblingTopicRef" select="if ($topicref) 
-             then ($topicref/child::*[df:isTopicRef(.)][1] | $topicref/following::*[df:isTopicRef(.)][1])[1] 
+  <xsl:variable name="siblingTopicRef" select="if ($topicref)
+             then ($topicref/child::*[df:isTopicRef(.)][1] | $topicref/following::*[df:isTopicRef(.)][1])[1]
              else ()" as="element()?"
-  />    
+  />
 
   <xsl:if test="$siblingTopicRef">
 
     <xsl:variable name="topic" as="element()*" select="df:resolveTopicRef($siblingTopicRef)" />
     <xsl:variable name="resultUri" as="xs:string">
-    <!-- NOTE: This logic is different from the logic for the previous 
+    <!-- NOTE: This logic is different from the logic for the previous
                      link. I'm not sure that's right. There may be a more
                      general way to hanlde this logic based on general properties
                      of the topicrefs involved, e.g., @toc="no" or chunking or
@@ -216,28 +216,33 @@
   <xsl:param name="topicref" as="element()*" tunnel="yes"/>
   <xsl:param name="rootMapDocUrl" as="xs:string" tunnel="yes"/>
 
-  <xsl:variable name="siblingTopicRef" select="if ($topicref) 
-             then ($topicref/child::*[df:isTopicRef(.)][1] | $topicref/following::*[df:isTopicRef(.)][1])[1] 
+
+  <xsl:variable name="siblingTopicRef" select="if ($topicref)
+             then ($topicref/child::*[df:isTopicRef(.)][1] | $topicref/following::*[df:isTopicRef(.)][1])[1]
              else ()" as="element()?"
-  />    
+  />
 
   <xsl:if test="$siblingTopicRef">
 
     <xsl:variable name="topic" as="element()*" select="df:resolveTopicRef($siblingTopicRef)" />
-    <xsl:variable name="resultUri" as="xs:string">
-    <!-- NOTE: This logic is different from the logic for the previous 
+
+    <xsl:if test="$topic">
+      <xsl:variable name="resultUri" as="xs:string">
+      <!-- NOTE: This logic is different from the logic for the previous
                      link. I'm not sure that's right. There may be a more
                      general way to hanlde this logic based on general properties
                      of the topicrefs involved, e.g., @toc="no" or chunking or
                      something.
-    -->
+      -->
 
-      <xsl:value-of select="htmlutil:getTopicResultUrl($outdir, root($topic), $rootMapDocUrl)" />
-    </xsl:variable>
+        <xsl:value-of select="htmlutil:getTopicResultUrl($outdir, root($topic), $rootMapDocUrl)" />
+      </xsl:variable>
+
 
     <xsl:value-of select="relpath:getRelativePath($outdir, $resultUri)" />
-
+    </xsl:if>
   </xsl:if>
+
   </xsl:template>
 
   <xsl:template name="getPrevTopicReference">
@@ -245,16 +250,16 @@
     <xsl:param name="rootMapDocUrl" as="xs:string" tunnel="yes"/>
     <xsl:param name="relativePath" as="xs:string" select="''" tunnel="yes"/>
     <xsl:variable name="siblingTopicRef" select="
-          if ($topicref) 
-             then ($topicref/preceding::*[df:isTopicRef(.)][1] | $topicref/ancestor::*[df:isTopicRef(.)][1])[last()]  
+          if ($topicref)
+             then ($topicref/preceding::*[df:isTopicRef(.)][1] | $topicref/ancestor::*[df:isTopicRef(.)][1])[last()]
              else ()" as="element()?"
-    />    
+    />
 
   <xsl:if test="$siblingTopicRef">
 
     <xsl:variable name="topic" as="element()*" select="df:resolveTopicRef($siblingTopicRef)" />
     <xsl:variable name="resultUri" as="xs:string">
-    <!-- NOTE: This logic is different from the logic for the previous 
+    <!-- NOTE: This logic is different from the logic for the previous
                      link. I'm not sure that's right. There may be a more
                      general way to hanlde this logic based on general properties
                      of the topicrefs involved, e.g., @toc="no" or chunking or
@@ -281,10 +286,10 @@
     <xsl:param name="rootMapDocUrl" as="xs:string" tunnel="yes"/>
 
     <xsl:variable name="siblingTopicRef" select="
-          if ($topicref) 
-             then ($topicref/preceding::*[df:isTopicRef(.)][1] | $topicref/ancestor::*[df:isTopicRef(.)][1])[last()]  
+          if ($topicref)
+             then ($topicref/preceding::*[df:isTopicRef(.)][1] | $topicref/ancestor::*[df:isTopicRef(.)][1])[last()]
              else ()" as="element()?"
-    />    
+    />
 
   <xsl:if test="$siblingTopicRef">
 
@@ -292,7 +297,7 @@
 
     <xsl:if test="$topic">
       <xsl:variable name="resultUri" as="xs:string">
-      <!-- NOTE: This logic is different from the logic for the previous 
+      <!-- NOTE: This logic is different from the logic for the previous
                      link. I'm not sure that's right. There may be a more
                      general way to hanlde this logic based on general properties
                      of the topicrefs involved, e.g., @toc="no" or chunking or
