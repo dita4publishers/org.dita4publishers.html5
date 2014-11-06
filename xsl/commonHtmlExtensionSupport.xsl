@@ -31,14 +31,14 @@
   version="1.0">
 
   <xsl:template match="*" mode="process.note.common-processing">
+    <xsl:param name="type" select="@type"/>
 
     <xsl:param name="title">
       <xsl:call-template name="getString">
         <!-- For the parameter, turn "note" into "Note", caution => Caution, etc -->
         <xsl:with-param name="stringName"
-          select="concat(translate(substring(@type, 1, 1),'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ'),
-                          substring(@type, 2))"
-        />
+             select="concat(translate(substring($type, 1, 1),'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ'),
+                            substring($type, 2))"/>
       </xsl:call-template>
     </xsl:param>
 
@@ -60,7 +60,7 @@
 
     <xsl:element name="{$html5NoteElement}">
     
-      <xsl:attribute name="class" select="concat('note', ' ', @type, ' ', @importance)"/>
+      <xsl:attribute name="class" select="concat('note', ' ', $type, ' ', @importance)"/>
       
       <xsl:call-template name="gen-style">
         <xsl:with-param name="flagrules" select="$flagrules"/>
