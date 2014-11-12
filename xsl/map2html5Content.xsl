@@ -59,6 +59,7 @@
       <xsl:apply-templates mode="generate-html5-page" select=".">
         <xsl:with-param name="resultUri" as="xs:string" select="$indexUri" tunnel="yes"/>
         <xsl:with-param name="is-root" as="xs:boolean" select="true()"/>
+        <xsl:with-param name="firstTopicUri" as="xs:string?" tunnel="yes" select="$initialTopicUri" />
       </xsl:apply-templates>
     </xsl:result-document>
   </xsl:template>

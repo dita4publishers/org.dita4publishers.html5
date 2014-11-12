@@ -244,7 +244,7 @@
 
   <!-- output D4p javascript object -->
   <xsl:template name="d4p-variables">
-    <xsl:param name="relativePath" tunnel="yes" as="xs:string*"/>
+    <xsl:param name="relativePath" tunnel="yes" as="xs:string*" select="''"/>
 
     <xsl:variable name="d4p-js-object">
       <d4p>
