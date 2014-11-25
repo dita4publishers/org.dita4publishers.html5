@@ -4,7 +4,7 @@
      applicable licenses.-->
 <!-- (c) Copyright IBM Corp. 2004, 2005 All Rights Reserved. -->
 
-<xsl:stylesheet version="1.0"
+<xsl:stylesheet version="2.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl"
@@ -263,26 +263,31 @@
   <xsl:if test="$siblingTopicRef">
 
     <xsl:variable name="topic" as="element()*" select="df:resolveTopicRef($siblingTopicRef)" />
-    <xsl:variable name="resultUri" as="xs:string">
-    <!-- NOTE: This logic is different from the logic for the previous
-                     link. I'm not sure that's right. There may be a more
-                     general way to hanlde this logic based on general properties
-                     of the topicrefs involved, e.g., @toc="no" or chunking or
-                     something.
-    -->
-
-      <xsl:value-of select="concat($relativePath, relpath:getRelativePath($outdir, htmlutil:getTopicResultUrl($outdir, root($topic), $rootMapDocUrl)))" />
-    </xsl:variable>
-
-    <xsl:variable name="title">
-      <xsl:apply-templates select="$siblingTopicRef" mode="nav-point-title"/>
-    </xsl:variable>
-
-    <xsl:call-template name="formatSiblingTopicLinks">
-      <xsl:with-param name="href" as="xs:string" select="$resultUri"/>
-      <xsl:with-param name="role" as="xs:string" select="'previous'"/>
-      <xsl:with-param name="title" as="xs:string" select="$title"/>
-    </xsl:call-template>
+    
+    <xsl:if test="$topic">
+      <xsl:variable name="resultUri" as="xs:string?">
+      <!-- NOTE: This logic is different from the logic for the previous
+                       link. I'm not sure that's right. There may be a more
+                       general way to hanlde this logic based on general properties
+                       of the topicrefs involved, e.g., @toc="no" or chunking or
+                       something.
+      -->
+  
+        <xsl:value-of select="concat($relativePath, relpath:getRelativePath($outdir, htmlutil:getTopicResultUrl($outdir, root($topic), $rootMapDocUrl)))" />
+      </xsl:variable>
+  
+      <xsl:variable name="title">
+        <xsl:apply-templates select="$siblingTopicRef" mode="nav-point-title"/>
+      </xsl:variable>
+  
+      <xsl:if test="$resultUri != ''">
+        <xsl:call-template name="formatSiblingTopicLinks">
+          <xsl:with-param name="href" as="xs:string" select="$resultUri"/>
+          <xsl:with-param name="role" as="xs:string" select="'previous'"/>
+          <xsl:with-param name="title" as="xs:string" select="$title"/>
+        </xsl:call-template>
+      </xsl:if>
+    </xsl:if>
   </xsl:if>
   </xsl:template>
 

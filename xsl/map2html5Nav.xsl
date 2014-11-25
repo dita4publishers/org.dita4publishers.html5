@@ -118,7 +118,7 @@
   <xsl:template mode="generate-html5-nav" match="*[df:class(., 'topic/title')][not(@toc = 'no')]"/>
 
   <!-- Convert each topicref to a ToC entry. -->
-  <xsl:template match="*[df:isTopicRef(.)][not(@toc = 'no')]" mode="generate-html5-nav">
+  <xsl:template match="*[df:isTopicRef(.)][not(@processing-role = 'resource-only')][not(@toc = 'no')]" mode="generate-html5-nav">
     <xsl:param name="tocDepth" as="xs:integer" tunnel="yes" select="0"/>
     <xsl:param name="rootMapDocUrl" as="xs:string" tunnel="yes"/>
 
@@ -152,13 +152,13 @@
               </xsl:if>
               <xsl:apply-templates select="." mode="nav-point-title"/>
             </a>
-            <xsl:if test="$topic/*[df:class(., 'topic/topic')], *[df:class(., 'map/topicref')]">
+            <xsl:if test="$topic/*[df:class(., 'topic/topic')], *[df:class(., 'map/topicref')][not(@processing-role = 'resource-only')]">
               <xsl:variable name="listItems" as="node()*">
                 <!-- Any subordinate topics in the currently-referenced topic are
               reflected in the ToC before any subordinate topicrefs.
             -->
                 <xsl:apply-templates mode="#current"
-                  select="$topic/*[df:class(., 'topic/topic')], *[df:class(., 'map/topicref')]">
+                  select="$topic/*[df:class(., 'topic/topic')], *[df:class(., 'map/topicref')][not(@processing-role = 'resource-only')]">
                   <xsl:with-param name="tocDepth" as="xs:integer" tunnel="yes"
                     select="$tocDepth + 1"/>
                 </xsl:apply-templates>
@@ -176,7 +176,7 @@
   </xsl:template>
 
   <xsl:template match="*[df:isTopicGroup(.)]" priority="20" mode="generate-html5-nav">
-    <xsl:apply-templates select="*[df:class(., 'map/topicref')]" mode="#current"/>
+    <xsl:apply-templates select="*[df:class(., 'map/topicref')][not(@processing-role = 'resource-only')]" mode="#current"/>
   </xsl:template>
 
   <xsl:template match="*[df:class(., 'topic/topic')]" mode="generate-html5-nav">
@@ -203,7 +203,7 @@
           <xsl:sequence select="df:getNavtitleForTopicref(.)"/>
         </span>
         <xsl:variable name="listItems" as="node()*">
-          <xsl:apply-templates select="*[df:class(., 'map/topicref')]" mode="#current">
+          <xsl:apply-templates select="*[df:class(., 'map/topicref')][not(@processing-role = 'resource-only')]" mode="#current">
             <xsl:with-param name="tocDepth" as="xs:integer" tunnel="yes" select="$tocDepth + 1"/>
           </xsl:apply-templates>
         </xsl:variable>

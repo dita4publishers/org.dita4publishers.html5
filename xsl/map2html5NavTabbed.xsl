@@ -91,7 +91,7 @@
               reflected in the ToC before any subordinate topicrefs.
         -->
       <xsl:apply-templates mode="html5-blocks"
-        select="$topic/*[df:class(., 'topic/topic')], *[df:class(., 'map/topicref')]">
+        select="$topic/*[df:class(., 'topic/topic')], *[df:class(., 'map/topicref')][not(@processing-role = 'resource-only')]">
 
         <xsl:with-param name="depth" as="xs:integer" tunnel="yes" select="$depth + 1"/>
       </xsl:apply-templates>
@@ -200,7 +200,7 @@
   </xsl:template>
 
   <xsl:template mode="generate-html5-tabbed-nav-content"
-    match="*[df:isTopicRef(.)][not(@toc = 'no')][not(ancestor::*[df:class(., 'map/topicref')][contains('chunk-to', 'to-content')])]">
+    match="*[df:isTopicRef(.)][not(@processing-role = 'resource-only')][not(@toc = 'no')][not(ancestor::*[df:class(., 'map/topicref')][contains('chunk-to', 'to-content')])]">
     <xsl:apply-templates select="." mode="jquery-tab-content"/>
   </xsl:template>
 
@@ -277,11 +277,11 @@
           <xsl:with-param name="topic" as="element()*" select="$topic"/>
         </xsl:apply-templates>
 
-        <xsl:if test="$topic/*[df:class(., 'topic/topic')], *[df:class(., 'map/topicref')]">
+        <xsl:if test="$topic/*[df:class(., 'topic/topic')], *[df:class(., 'map/topicref')][not(@processing-role = 'resource-only')]">
           <xsl:variable name="items" as="node()*">
 
             <xsl:apply-templates mode="#current"
-              select="$topic/*[df:class(., 'topic/topic')], *[df:class(., 'map/topicref')]">
+              select="$topic/*[df:class(., 'topic/topic')], *[df:class(., 'map/topicref')][not(@processing-role = 'resource-only')]">
               <xsl:with-param name="depth" as="xs:integer" tunnel="yes" select="$depth + 1"/>
               <xsl:with-param name="topicElement" as="xs:string" tunnel="yes" select="$topicElement"/>
             </xsl:apply-templates>
@@ -309,13 +309,13 @@
     <xsl:param name="depth" as="xs:integer" tunnel="yes" select="1"/>
     <xsl:variable name="topic" select="df:resolveTopicRef(.)" as="element()*"/>
 
-    <xsl:if test="$topic/*[df:class(., 'topic/topic')], *[df:class(., 'map/topicref')]">
+    <xsl:if test="$topic/*[df:class(., 'topic/topic')], *[df:class(., 'map/topicref')][not(@processing-role = 'resource-only')]">
       <xsl:message> + [INFO] TOPICGROUP TO MERGE DETECTED</xsl:message>
       <!--xsl:message><xsl:sequence select="."/></xsl:message-->
       <xsl:variable name="items" as="node()*">
 
         <xsl:apply-templates mode="merge-content"
-          select="$topic/*[df:class(., 'topic/topic')], *[df:class(., 'map/topicref')]">
+          select="$topic/*[df:class(., 'topic/topic')], *[df:class(., 'map/topicref')][not(@processing-role = 'resource-only')]">
           <xsl:with-param name="depth" as="xs:integer" tunnel="yes" select="$depth"/>
         </xsl:apply-templates>
 
@@ -366,11 +366,11 @@
         <xsl:apply-templates select="." mode="nav-point-title"/>
       </xsl:element>
 
-      <xsl:if test="$topic/*[df:class(., 'topic/topic')], *[df:class(., 'map/topicref')]">
+      <xsl:if test="$topic/*[df:class(., 'topic/topic')], *[df:class(., 'map/topicref')][not(@processing-role = 'resource-only')]">
         <xsl:variable name="items" as="node()*">
 
           <xsl:apply-templates mode="html5-blocks"
-            select="$topic/*[df:class(., 'topic/topic')], *[df:class(., 'map/topicref')]">
+            select="$topic/*[df:class(., 'topic/topic')], *[df:class(., 'map/topicref')][not(@processing-role = 'resource-only')]">
             <xsl:with-param name="depth" as="xs:integer" tunnel="yes" select="$depth + 1"/>
 
           </xsl:apply-templates>
@@ -415,11 +415,11 @@
       <xsl:element name="{$name}">
         <xsl:attribute name="class" select="@outputclass"/>
         <xsl:if
-          test="$topic/*[df:class(., 'topic/topic')], *[df:class(., 'map/topicref')], *[df:class(., 'map/topicmeta')]">
+          test="$topic/*[df:class(., 'topic/topic')], *[df:class(., 'map/topicref')][not(@processing-role = 'resource-only')], *[df:class(., 'map/topicmeta')]">
           <xsl:variable name="items" as="node()*">
 
             <xsl:apply-templates mode="#current"
-              select="$topic/*[df:class(., 'topic/topic')], *[df:class(., 'map/topicref')], *[df:class(., 'map/topicmeta')]">
+              select="$topic/*[df:class(., 'topic/topic')], *[df:class(., 'map/topicref')][not(@processing-role = 'resource-only')], *[df:class(., 'map/topicmeta')]">
               <xsl:with-param name="depth" as="xs:integer" tunnel="yes" select="$depth + 1"/>
               <xsl:with-param name="topicElement" as="xs:string" tunnel="yes" select="$topicElement"/>
             </xsl:apply-templates>
@@ -444,11 +444,11 @@
         <xsl:apply-templates select="." mode="nav-point-title"/>
       </xsl:element>
 
-      <xsl:if test="$topic/*[df:class(., 'topic/topic')], *[df:class(., 'map/topicref')]">
+      <xsl:if test="$topic/*[df:class(., 'topic/topic')], *[df:class(., 'map/topicref')][not(@processing-role = 'resource-only')]">
         <xsl:variable name="items" as="node()*">
 
           <xsl:apply-templates mode="#current"
-            select="$topic/*[df:class(., 'topic/topic')], *[df:class(., 'map/topicref')]">
+            select="$topic/*[df:class(., 'topic/topic')], *[df:class(., 'map/topicref')][not(@processing-role = 'resource-only')]">
             <xsl:with-param name="depth" as="xs:integer" tunnel="yes" select="$depth + 1"/>
             <xsl:with-param name="topicElement" as="xs:string" tunnel="yes" select="$topicElement"/>
           </xsl:apply-templates>

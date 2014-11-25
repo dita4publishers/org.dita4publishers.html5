@@ -214,7 +214,7 @@
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template mode="topicref-driven-content" match="*[df:class(., 'map/topicref')]">
+  <xsl:template mode="topicref-driven-content" match="*[df:class(., 'map/topicref')][not(@processing-role = 'resource-only')]">
     <!-- Default topicref-driven content template. Simply applies normal processing
       in the default context to the topic parameter. -->
     <xsl:param name="topic" as="element()?"/>
