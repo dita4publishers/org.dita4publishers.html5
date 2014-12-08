@@ -315,10 +315,12 @@
       + imagesOutputPath = "<xsl:sequence select="$imagesOutputPath"/>"
       + platform         = "<xsl:sequence select="$platform"/>"
       + debugBoolean     = "<xsl:sequence select="$debugBoolean"/>"
-
+    </xsl:message>
+    <xsl:next-match/>
+    <xsl:apply-imports/>
+    <xsl:message>
       ==========================================
     </xsl:message>
-    <xsl:apply-imports/>
   </xsl:template>
 
 
