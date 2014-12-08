@@ -335,7 +335,7 @@
 
   <target name="dita.map.html5.echo" description="Echo HTML5 plugin properties" unless="html5.echo.done">
     <echo message="+++ html5-specific properties:"/>
-    <echoproperties format="text" regex="^(html5|css|user|out\.)" taskname="echo"/>
+    <echoproperties format="text" regex="^(html5|d4p\.|css|user|out\.)" taskname="echo"/>
     <property name="html5.echo.done" value="yes"/>
   </target>
 
@@ -392,6 +392,7 @@
       filenameparameter="inputFileNameParam"
     >
       <dita:extension id="dita.conductor.xhtml.param" behavior="org.dita.dost.platform.InsertAction"/>
+      <dita:extension id="d4p.common.html.param" behavior="org.dita.dost.platform.InsertAction"/>
 
       <xmlcatalog refid="dita.catalog"></xmlcatalog>
 
