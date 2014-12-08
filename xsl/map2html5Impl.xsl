@@ -335,6 +335,7 @@
   </xsl:template>
 
   <xsl:template match="/*[df:class(., 'map/map')]">
+    <xsl:param name="doDebug" as="xs:boolean" tunnel="yes" select="false()"/>
 
     <xsl:apply-templates select="." mode="report-parameters"/>
 
@@ -347,9 +348,11 @@
       select="//*[df:class(.,'map/topicref')][@processing-role = 'normal']"
     />
 
-    <xsl:message> + [DEBUG] chunkRootTopicrefs=
-      <xsl:sequence select="$chunkRootTopicrefs"/>
-    </xsl:message>
+    <xsl:if test="$doDebug">
+      <xsl:message> + [DEBUG] chunkRootTopicrefs=
+        <xsl:sequence select="$chunkRootTopicrefs"/>
+      </xsl:message>
+    </xsl:if>
 
     <!-- graphic map -->
     <xsl:variable name="graphicMap" as="element()">

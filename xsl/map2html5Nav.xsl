@@ -420,8 +420,11 @@
   <xsl:template match="index-terms:target" mode="generate-html5-nav">
     <xsl:param name="parentId" as="xs:string" tunnel="yes"/>
     <xsl:param name="rootMapDocUrl" tunnel="yes" as="xs:string"/>
-    <xsl:message> + [DEBUG] index-terms:target: @source-uri="<xsl:sequence
-        select="string(@source-uri)"/>"</xsl:message>
+    <xsl:param name="doDebug" as="xs:boolean" tunnel="yes" select="false()"/>
+    <xsl:if test="$doDebug">
+      <xsl:message> + [DEBUG] index-terms:target: @source-uri="<xsl:sequence
+          select="string(@source-uri)"/>"</xsl:message>
+    </xsl:if>
     <xsl:variable name="topic" select="document(relpath:getResourcePartOfUri(@source-uri))"
       as="document-node()"/>
 
