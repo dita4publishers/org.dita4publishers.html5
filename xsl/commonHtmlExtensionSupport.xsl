@@ -19,6 +19,7 @@
 -->
 
 <xsl:stylesheet
+
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl"
@@ -26,9 +27,51 @@
   xmlns:index-terms="http://dita4publishers.org/index-terms"
   xmlns:relpath="http://dita2indesign/functions/relpath"
   xmlns:mapdriven="http://dita4publishers.org/mapdriven"
-  exclude-result-prefixes="xs xd df relpath mapdriven index-terms java xsl mapdriven"
+  xmlns:random="org.dita.dost.util.RandomUtils"
   xmlns:java="org.dita.dost.util.ImgUtils"
+  exclude-result-prefixes="random xs xd df relpath mapdriven index-terms java xsl mapdriven"
   version="1.0">
+
+  <!-- Process standard attributes that may appear anywhere. Previously this was "setclass" -->
+  <xsl:template name="commonattributes">
+    <xsl:param name="default-output-class"/>
+    <xsl:apply-templates select="@xml:lang"/>
+    <xsl:apply-templates select="@dir"/>
+    <xsl:apply-templates select="*[contains(@class, ' ditaot-d/ditaval-startprop ')]/@outputclass" mode="add-ditaval-style"/>
+
+    <xsl:apply-templates select="." mode="set-output-class">
+      <xsl:with-param name="default" select="$default-output-class"/>
+    </xsl:apply-templates>
+
+
+  </xsl:template>
+
+  <xsl:template match="*" mode="set-data-attr" />
+
+  <xsl:template match="*[contains(@class, ' topic/data-about ')]" mode="set-data-attr">
+    <xsl:apply-templates select="*" mode="#current"/>
+  </xsl:template>
+
+  <xsl:template match="*[contains(@class, ' topic/desc ')]" mode="set-data-attr">
+
+    <xsl:apply-templates select="*" mode="#current"/>
+  </xsl:template>
+
+  <xsl:template match="*[contains(@class, ' topic/data ')]" mode="set-data-attr">
+    <xsl:if test="@name">
+      <xsl:variable name="value">
+        <xsl:choose>
+          <xsl:when test="@value">
+            <xsl:value-of select="@value"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="."/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:variable>
+      <xsl:attribute name="{concat('data-', @name)}"><xsl:value-of  select="normalize-space($value)" /></xsl:attribute>
+    </xsl:if>
+  </xsl:template>
 
   <xsl:template match="*" mode="process.note.common-processing">
     <xsl:param name="type" select="@type"/>
@@ -59,36 +102,36 @@
 
 
     <xsl:element name="{$html5NoteElement}">
-    
+
       <xsl:attribute name="class" select="concat('note', ' ', $type, ' ', @importance)"/>
-      
+
       <xsl:call-template name="gen-style">
         <xsl:with-param name="flagrules" select="$flagrules"/>
       </xsl:call-template>
-      
+
       <xsl:call-template name="setidaname"/>
-      
+
       <xsl:call-template name="start-flagit">
         <xsl:with-param name="flagrules" select="$flagrules"/>
       </xsl:call-template>
-      
+
       <span class="title">
         <xsl:value-of select="$title"/>
         <xsl:call-template name="getString">
           <xsl:with-param name="stringName" select="'ColonSymbol'"/>
         </xsl:call-template>
       </span>
-      
+
       <xsl:text> </xsl:text>
-      
+
       <xsl:call-template name="revblock">
         <xsl:with-param name="flagrules" select="$flagrules"/>
       </xsl:call-template>
-      
+
       <xsl:call-template name="end-flagit">
         <xsl:with-param name="flagrules" select="$flagrules"/>
       </xsl:call-template>
-      
+
     </xsl:element>
   </xsl:template>
 
@@ -235,6 +278,7 @@
         <xsl:otherwise/>
       </xsl:choose>
     </xsl:variable>
+
     <xsl:variable name="height">
       <xsl:choose>
         <xsl:when test="not(contains(../@href,'://'))">
@@ -243,12 +287,13 @@
         <xsl:otherwise/>
       </xsl:choose>
     </xsl:variable>
+
     <xsl:if test="not(../@width) and not(../@height)">
       <xsl:attribute name="height">
-        <xsl:value-of select="floor(number($height) * number(.) div 100)"/>
+        <xsl:value-of select="format-number(floor(number($height) * number(.) div 100),'#.##')"/>
       </xsl:attribute>
       <xsl:attribute name="width">
-        <xsl:value-of select="floor(number($width) * number(.) div 100)"/>
+        <xsl:value-of select="format-number(floor(number($width) * number(.) div 100),'#.##')"/>
       </xsl:attribute>
     </xsl:if>
      <xsl:attribute name="class" select="../@align" />
@@ -280,5 +325,121 @@
       <!-- edited  on 2010-12-17 for keyref bug:3114411 end-->
     </xsl:choose>
   </xsl:template>
+
+ <xsl:template name="dotable">
+
+  <xsl:apply-templates select="*[contains(@class, ' ditaot-d/ditaval-startprop ')]" mode="out-of-line"/>
+
+  <xsl:variable name="id">
+    <xsl:choose>
+      <xsl:when test="@id">
+        <xsl:value-of select= "@id"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="concat('ID', random:getRandomNum())" />
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
+
+  <xsl:call-template name="setaname"/>
+
+  <table id="{$id}">
+
+    <xsl:variable name="colsep">
+      <xsl:choose>
+        <xsl:when test="*[contains(@class, ' topic/tgroup ')]/@colsep"><xsl:value-of select="*[contains(@class, ' topic/tgroup ')]/@colsep"/></xsl:when>
+        <xsl:when test="@colsep"><xsl:value-of select="@colsep"/></xsl:when>
+      </xsl:choose>
+    </xsl:variable>
+
+    <xsl:variable name="rowsep">
+      <xsl:choose>
+        <xsl:when test="*[contains(@class, ' topic/tgroup ')]/@rowsep"><xsl:value-of select="*[contains(@class, ' topic/tgroup ')]/@rowsep"/></xsl:when>
+        <xsl:when test="@rowsep"><xsl:value-of select="@rowsep"/></xsl:when>
+      </xsl:choose>
+    </xsl:variable>
+
+    <xsl:call-template name="commonattributes"/>
+
+    <xsl:apply-templates select="*" mode="set-data-attr"/>
+
+    <xsl:apply-templates select="." mode="generate-table-summary-attribute"/>
+    <xsl:call-template name="setscale"/>
+    <!-- When a table's width is set to page or column, force it's width to 100%. If it's in a list, use 90%.
+         Otherwise, the table flows to the content -->
+    <xsl:choose>
+      <xsl:when test="(@expanse = 'page' or @pgwide = '1')and (ancestor::*[contains(@class, ' topic/li ')] or ancestor::*[contains(@class, ' topic/dd ')] )">
+        <xsl:attribute name="width">90%</xsl:attribute>
+      </xsl:when>
+      <xsl:when test="(@expanse = 'column' or @pgwide = '0') and (ancestor::*[contains(@class, ' topic/li ')] or ancestor::*[contains(@class, ' topic/dd ')] )">
+        <xsl:attribute name="width">90%</xsl:attribute>
+      </xsl:when>
+      <xsl:when test="(@expanse = 'page' or @pgwide = '1')">
+        <xsl:attribute name="width">100%</xsl:attribute>
+      </xsl:when>
+      <xsl:when test="(@expanse = 'column' or @pgwide = '0')">
+        <xsl:attribute name="width">100%</xsl:attribute>
+      </xsl:when>
+    </xsl:choose>
+    <!--xsl:choose>
+      <xsl:when test="@frame = 'all' and $colsep = '0' and $rowsep = '0'">
+        <xsl:attribute name="border">0</xsl:attribute>
+      </xsl:when>
+      <xsl:when test="not(@frame) and $colsep = '0' and $rowsep = '0'">
+        <xsl:attribute name="border">0</xsl:attribute>
+      </xsl:when>
+      <xsl:when test="@frame = 'sides'">
+        <xsl:attribute name="frame">vsides</xsl:attribute>
+        <xsl:attribute name="border">1</xsl:attribute>
+      </xsl:when>
+      <xsl:when test="@frame = 'top'">
+        <xsl:attribute name="frame">above</xsl:attribute>
+        <xsl:attribute name="border">1</xsl:attribute>
+      </xsl:when>
+      <xsl:when test="@frame = 'bottom'">
+        <xsl:attribute name="frame">below</xsl:attribute>
+        <xsl:attribute name="border">1</xsl:attribute>
+      </xsl:when>
+      <xsl:when test="@frame = 'topbot'">
+        <xsl:attribute name="frame">hsides</xsl:attribute>
+        <xsl:attribute name="border">1</xsl:attribute>
+      </xsl:when>
+      <xsl:when test="@frame = 'none'">
+        <xsl:attribute name="frame">void</xsl:attribute>
+        <xsl:attribute name="border">1</xsl:attribute>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:attribute name="frame">border</xsl:attribute>
+        <xsl:attribute name="border">1</xsl:attribute>
+      </xsl:otherwise>
+    </xsl:choose-->
+    <!--xsl:choose>
+      <xsl:when test="@frame = 'all' and $colsep = '0' and $rowsep = '0'">
+        <xsl:attribute name="border">0</xsl:attribute>
+      </xsl:when>
+      <xsl:when test="not(@frame) and $colsep = '0' and $rowsep = '0'">
+        <xsl:attribute name="border">0</xsl:attribute>
+      </xsl:when>
+      <xsl:when test="$colsep = '0' and $rowsep = '0'">
+        <xsl:attribute name="rules">none</xsl:attribute>
+        <xsl:attribute name="border">0</xsl:attribute>
+      </xsl:when>
+      <xsl:when test="$colsep = '0'">
+        <xsl:attribute name="rules">rows</xsl:attribute>
+      </xsl:when>
+      <xsl:when test="$rowsep = '0'">
+        <xsl:attribute name="rules">cols</xsl:attribute>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:attribute name="rules">all</xsl:attribute>
+      </xsl:otherwise>
+    </xsl:choose-->
+    <xsl:call-template name="place-tbl-lbl"/>
+    <!-- title and desc are processed elsewhere -->
+    <xsl:apply-templates select="*[contains(@class, ' topic/tgroup ')]"/>
+    </table><xsl:value-of select="$newline"/>
+    <xsl:apply-templates select="*[contains(@class, ' ditaot-d/ditaval-endprop ')]" mode="out-of-line"/>
+</xsl:template>
+
 
 </xsl:stylesheet>
