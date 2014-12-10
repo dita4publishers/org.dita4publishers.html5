@@ -29,7 +29,8 @@
   xmlns:mapdriven="http://dita4publishers.org/mapdriven"
   xmlns:random="org.dita.dost.util.RandomUtils"
   xmlns:java="org.dita.dost.util.ImgUtils"
-  exclude-result-prefixes="random xs xd df relpath mapdriven index-terms java xsl mapdriven"
+  xmlns:json="http://json.org/"
+  exclude-result-prefixes="random xs xd df relpath mapdriven index-terms java xsl mapdriven json"
   version="1.0">
 
   <!-- Process standard attributes that may appear anywhere. Previously this was "setclass" -->
@@ -49,7 +50,10 @@
   <xsl:template match="*" mode="set-data-attr" />
 
   <xsl:template match="*[contains(@class, ' topic/data-about ')]" mode="set-data-attr">
-    <xsl:apply-templates select="*" mode="#current"/>
+    <xsl:variable name="json">
+      <xsl:apply-templates select="*" mode="json-serialize"/>
+    </xsl:variable>
+    <xsl:attribute name="data-options"><xsl:value-of  select="json:generate($json)" /></xsl:attribute>
   </xsl:template>
 
   <xsl:template match="*[contains(@class, ' topic/desc ')]" mode="set-data-attr">
@@ -57,7 +61,7 @@
     <xsl:apply-templates select="*" mode="#current"/>
   </xsl:template>
 
-  <xsl:template match="*[contains(@class, ' topic/data ')]" mode="set-data-attr">
+  <xsl:template match="*[contains(@class, ' topic/data ')]" mode="json-serialize">
     <xsl:if test="@name">
       <xsl:variable name="value">
         <xsl:choose>
@@ -69,7 +73,17 @@
           </xsl:otherwise>
         </xsl:choose>
       </xsl:variable>
-      <xsl:attribute name="{concat('data-', @name)}"><xsl:value-of  select="normalize-space($value)" /></xsl:attribute>
+
+      <xsl:element name="{@name}">
+        <xsl:choose>
+           <xsl:when test="*[contains(@class, ' topic/data ')]">
+             <xsl:apply-templates select="*" mode="json-serialize"/>
+           </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="$value" />
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:element>
     </xsl:if>
   </xsl:template>
 
