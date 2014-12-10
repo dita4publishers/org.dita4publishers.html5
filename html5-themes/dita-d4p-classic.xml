@@ -93,6 +93,9 @@
       <file path="modules/syntaxhighlighter_3.0.83/styles/shCore.css" />
       <file path="modules/syntaxhighlighter_3.0.83/styles/shThemeDefault.css" />
 
+      <!-- datatable -->
+      <file path="modules/DataTables-1.10.4/media/css/jquery.dataTables.css" />
+
       <!-- place your theme.css style at the bottom, so you can override any previous declaration -->
       <file path="themes/dita-d4p-classic/css/theme.css" />
     </source>
@@ -332,6 +335,8 @@
        <file path="modules/syntaxhighlighter_3.0.83/scripts/shBrushBash.js"/>
        <file path="modules/syntaxhighlighterAdapter/syntaxHighlighterAdapter.js"/>
 
+       <!-- data table -->
+       <file path="modules/DataTables-1.10.4/media/js/jquery.dataTables.js" />
 
        <!-- jQuery Cycle -->
 
@@ -339,7 +344,8 @@
       <file path="modules/jQuery-widgets/cycle/js/jquery.cycle.js" />
 
       <!-- adapt -->-
-       <file path="modules/960-Responsive-Grid/js/adapt.js" />
+      <file path="modules/960-Responsive-Grid/js/adapt.js" />
+      <file path="themes/dita-d4p-classic/js/script.js" />
 
     </source>
   </tag>
