@@ -43,8 +43,6 @@
     <xsl:apply-templates select="." mode="set-output-class">
       <xsl:with-param name="default" select="$default-output-class"/>
     </xsl:apply-templates>
-
-
   </xsl:template>
 
   <xsl:template match="*" mode="set-data-attr" />
@@ -456,4 +454,58 @@
 </xsl:template>
 
 
+
+ <!--create the next and previous links, with accompanying parent link if any; create group for each unique parent, as well as for any next and previous links that aren't in the same group as a parent-->
+  <xsl:template name="next-prev-parent-links">
+    <xsl:for-each select="descendant::*
+     [contains(@class, ' topic/link ')]
+     [(@role='parent' and
+          generate-id(.)=generate-id(key('link',concat(ancestor::*[contains(@class, ' topic/related-links ')]/parent::*[contains(@class, ' topic/topic ')]/@id, ' ', @href,@type,@role,@platform,@audience,@importance,@outputclass,@keyref,@scope,@format,@otherrole,@product,@otherprops,@rev,@class,child::*))[1])
+     ) or (@role='next' and
+          generate-id(.)=generate-id(key('link',concat(ancestor::*[contains(@class, ' topic/related-links ')]/parent::*[contains(@class, ' topic/topic ')]/@id, ' ', @href,@type,@role,@platform,@audience,@importance,@outputclass,@keyref,@scope,@format,@otherrole,@product,@otherprops,@rev,@class,child::*))[1])
+     ) or (@role='previous' and
+          generate-id(.)=generate-id(key('link',concat(ancestor::*[contains(@class, ' topic/related-links ')]/parent::*[contains(@class, ' topic/topic ')]/@id, ' ', @href,@type,@role,@platform,@audience,@importance,@outputclass,@keyref,@scope,@format,@otherrole,@product,@otherprops,@rev,@class,child::*))[1])
+     )]/parent::*">
+      <xsl:value-of select="$newline"/>
+
+      <div class="familylinks"><xsl:value-of select="$newline"/>
+
+      <xsl:if test="$NOPARENTLINK='no' and contains($include.roles, ' parent ')">
+        <xsl:choose>
+          <xsl:when test="*[@href][@role='parent']">
+            <xsl:for-each select="*[@href][@role='parent']">
+              <xsl:call-template name="compas">
+                <xsl:with-param name="direction" select="'parent'" />
+              </xsl:call-template>
+            </xsl:for-each>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:for-each select="*[@href][@role='ancestor'][last()]">
+              <xsl:call-template name="compas">
+                <xsl:with-param name="direction" select="'parent'" />
+              </xsl:call-template>
+            </xsl:for-each>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:if>
+
+      <xsl:if test="contains($include.roles, ' previous ')">
+        <xsl:for-each select="*[@href][@role='previous']">
+          <xsl:call-template name="compas">
+            <xsl:with-param name="direction" select="'previous'" />
+          </xsl:call-template>
+        </xsl:for-each>
+      </xsl:if>
+
+        <xsl:if test="contains($include.roles, ' next ')">
+          <xsl:for-each select="*[@href][@role='next']">
+            <xsl:call-template name="compas">
+              <xsl:with-param name="direction" select="'next'" />
+            </xsl:call-template>
+          </xsl:for-each>
+        </xsl:if>
+      </div>
+      <xsl:value-of select="$newline"/>
+    </xsl:for-each>
+  </xsl:template>
 </xsl:stylesheet>
