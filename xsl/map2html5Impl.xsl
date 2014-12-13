@@ -52,6 +52,7 @@
   <xsl:include href="plugin:org.dita4publishers.common.html:xsl/commonHtmlBookmapEnumeration.xsl"/>
 
   <xsl:include href="map2html5Nav.xsl"/>
+  <xsl:include href="map2html5Search.xsl"/>
   <xsl:include href="map2html5Content.xsl"/>
   <xsl:include href="map2html5Collection.xsl"/>
   <xsl:include href="map2html5Template.xsl"/>
@@ -158,6 +159,10 @@
 
   <xsl:param name="generateStaticToc" select="'false'"/>
   <xsl:param name="generateStaticTocBoolean" select="matches($generateStaticToc, 'yes|true|on|1', 'i')"/>
+
+  <xsl:param name="generateSearchEngine" select="'true'"/>
+  <xsl:param name="generateSearchEngineBoolean" select="matches($generateSearchEngine, 'yes|true|on|1', 'i')"/>
+
   <!-- -->
 
   <xsl:param name="dita-css" select="'css/topic-html5.css'" as="xs:string"/>
@@ -397,6 +402,20 @@
       </xsl:apply-templates>
     </xsl:variable>
 
+    <xsl:if test="$generateSearchEngineBoolean">
+      <xsl:apply-templates select="." mode="generate-search-index">
+        <xsl:with-param name="collected-data" as="element()" select="$collected-data" tunnel="yes"/>
+        <xsl:with-param name="uniqueTopicRefs" as="element()*" select="$uniqueTopicRefs" tunnel="yes"/>
+        <xsl:with-param name="navigation" as="element()*" select="$navigation" tunnel="yes"/>
+        <xsl:with-param name="baseUri" as="xs:string" select="@xtrf" tunnel="yes"/>
+        <xsl:with-param name="documentation-title" select="$documentation-title" tunnel="yes"/>
+        <xsl:with-param name="has-index" as="xs:boolean" select="$has-index" tunnel="yes" />
+        <xsl:with-param name="is-root" as="xs:boolean" select="false()" tunnel="yes"/>
+        <xsl:with-param name="audienceSelect"  select="$audienceSelect" tunnel="yes"/>
+        <xsl:with-param name="map-metadata" select="$map-metadata" tunnel="yes"/>
+      </xsl:apply-templates>
+    </xsl:if>
+
     <xsl:variable name="index-content">
         <xsl:apply-templates select="." mode="generate-index" >
          <xsl:with-param name="collected-data" as="element()" select="$collected-data" tunnel="yes"/>
@@ -436,7 +455,7 @@
         <xsl:with-param name="audienceSelect"  select="$audienceSelect" tunnel="yes"/>
     </xsl:apply-templates>
 
-    <xsl:apply-templates select="." mode="generate-content">
+     <xsl:apply-templates select="." mode="generate-content">
       <xsl:with-param name="collected-data" as="element()" select="$collected-data" tunnel="yes"/>
       <xsl:with-param name="uniqueTopicRefs" as="element()*" select="$uniqueTopicRefs" tunnel="yes"/>
       <xsl:with-param name="navigation" as="element()*" select="$navigation" tunnel="yes"/>

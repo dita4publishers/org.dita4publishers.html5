@@ -28,11 +28,11 @@
     unless="noMap"
     xmlns:dita="http://dita-ot.sourceforge.net"
     dita:depends="
-    html5.get.plugin.version, 
-    set.properties, 
-    d4p.map-driven-build-init, 
-    build-init, 
-    dc-preprocess, 
+    html5.get.plugin.version,
+    set.properties,
+    d4p.map-driven-build-init,
+    build-init,
+    dc-preprocess,
     html5"
     dita:extension="depends org.dita.dost.platform.InsertDependsAction">
   </target>
@@ -326,6 +326,12 @@
     <condition property="generateIndex" value="yes">
       <not>
         <isset property="generateIndex" />
+      </not>
+    </condition>
+
+    <condition property="generateSearchEngine" value="yes">
+      <not>
+        <isset property="generateSearchEngine" />
       </not>
     </condition>
 
