@@ -24,7 +24,10 @@
   xmlns:relpath="http://dita2indesign/functions/relpath"
   xmlns:htmlutil="http://dita4publishers.org/functions/htmlutil"
   xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl"
-  exclude-result-prefixes="df xs relpath htmlutil xd"
+  xmlns:fn="http://www.w3.org/2005/xpath-functions"
+  xmlns:str="http://www.w3.org/2005/xpath-functions"
+  xmlns:json="http://json.org/"
+  exclude-result-prefixes="df xs relpath htmlutil xd json"
   version="2.0"
 >
 
@@ -37,7 +40,11 @@
     <xsl:message> + [INFO] Generating search index ...</xsl:message>
 
     <xsl:variable name="searchindex">
-      <xsl:apply-templates select="$uniqueTopicRefs" mode="generate-search-index"/>
+      <idx>
+        <topics>
+          <xsl:apply-templates select="$uniqueTopicRefs" mode="generate-search-index"/>
+        </topics>
+      </idx>
     </xsl:variable>
 
     <xsl:result-document format="json" href="search-index.json">
@@ -69,13 +76,18 @@
           as="xs:string"/>
         <xsl:variable name="topicRelativeUri" select="htmlutil:getTopicResultUrl('', root($topic), $rootMapDocUrl)"
           as="xs:string"/>
+        <xsl:variable name="number"><xsl:number value="position()" format="1" /></xsl:variable>
 
-        <xsl:apply-templates select="$tempTopic" mode="#current">
-          <xsl:with-param name="topicref" as="element()*" select="." tunnel="yes"/>
-          <xsl:with-param name="collected-data" select="$collected-data" as="element()" tunnel="yes"/>
-          <xsl:with-param name="resultUri" select="$topicResultUri" tunnel="yes"/>
-          <xsl:with-param name="topicRelativeUri" select="$topicRelativeUri" tunnel="yes"/>
-        </xsl:apply-templates>
+
+         <xsl:element name="{concat('t', $number)}">
+          <xsl:apply-templates select="$topic" mode="#current">
+            <xsl:with-param name="topicref" as="element()*" select="." tunnel="yes"/>
+            <xsl:with-param name="collected-data" select="$collected-data" as="element()" tunnel="yes"/>
+            <xsl:with-param name="resultUri" select="$topicResultUri" tunnel="yes"/>
+            <xsl:with-param name="topicRelativeUri" select="$topicRelativeUri" tunnel="yes"/>
+          </xsl:apply-templates>
+
+        </xsl:element>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -106,17 +118,28 @@
     <xsl:variable name="relativePath" select="concat(relpath:getRelativePath($parentDocUri, $parentPath), '')"
       as="xs:string"/>
 
-    <xsl:variable name="topic-title">
-      <xsl:apply-templates select="." mode="nav-point-title"/>
-    </xsl:variable>
-
-
-
-
+    <title><xsl:value-of select="*[df:class(., 'topic/title')][1]" /></title>
+    <desc>
+      <xsl:apply-templates select="*[df:class(., 'topic/shortdesc')][1]" mode="search-filter" />
+    </desc>
+    <body>
+      <xsl:apply-templates select="*[df:class(., 'topic/body')]" mode="search-filter" />
+    </body>
 
   </xsl:template>
 
+  <xsl:template match="text()" mode="search-filter">
 
+  <xsl:for-each select="str:tokenize(., ' ')">
+    <xsl:message>Filtering <xsl:value-of select="."/> size of <xsl:value-of select="fn:string-length(.) "/></xsl:message>
+     <xsl:choose>
+       <xsl:when test="fn:string-length(.) &gt; $searchEngineMinChar">
+         <xsl:value-of select="concat(., ' ')"/>
+       </xsl:when>
+       <xsl:otherwise/>
+     </xsl:choose>
+   </xsl:for-each>
+  </xsl:template>
 
 
 </xsl:stylesheet>
