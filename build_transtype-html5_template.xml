@@ -273,7 +273,7 @@
       </not>
     </condition>
 
-    <condition property="html5.class.root.main.content" value="grid_8 alpha omega">
+    <condition property="html5.class.root.main.content" value="grid_8">
       <not>
         <isset property="html5.class.root.main.content"/>
       </not>
