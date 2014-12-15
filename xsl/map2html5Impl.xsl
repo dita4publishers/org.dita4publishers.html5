@@ -162,7 +162,7 @@
 
   <xsl:param name="generateSearchEngine" select="'true'"/>
   <xsl:param name="generateSearchEngineBoolean" select="matches($generateSearchEngine, 'yes|true|on|1', 'i')"/>
-  <xsl:param name="searchEngineMinChar" as="xs:integer" select="2"/>
+  <xsl:param name="searchEngineMinLength" as="xs:integer" select="2"/>
   <!-- -->
 
   <xsl:param name="dita-css" select="'css/topic-html5.css'" as="xs:string"/>
