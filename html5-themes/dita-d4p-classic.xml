@@ -324,24 +324,27 @@
 
       <!-- Syntax highlighter -->
       <file path="modules/syntaxhighlighter_3.0.83/scripts/shCore.js"/>
-       <!--
-         At least one brush, here we choose JS. You need to include a brush for every
-         language you want to highlight
+      <!--
+        At least one brush, here we choose JS. You need to include a brush for every
+        language you want to highlight
         -->
-       <file path="modules/syntaxhighlighter_3.0.83/scripts/shBrushJScript.js"/>
-       <file path="modules/syntaxhighlighter_3.0.83/scripts/shBrushXML.js"/>
-       <file path="modules/syntaxhighlighter_3.0.83/scripts/shBrushPhp.js"/>
-       <file path="modules/syntaxhighlighter_3.0.83/scripts/shBrushCss.js"/>
-       <file path="modules/syntaxhighlighter_3.0.83/scripts/shBrushBash.js"/>
-       <file path="modules/syntaxhighlighterAdapter/syntaxHighlighterAdapter.js"/>
+      <file path="modules/syntaxhighlighter_3.0.83/scripts/shBrushJScript.js"/>
+      <file path="modules/syntaxhighlighter_3.0.83/scripts/shBrushXML.js"/>
+      <file path="modules/syntaxhighlighter_3.0.83/scripts/shBrushPhp.js"/>
+      <file path="modules/syntaxhighlighter_3.0.83/scripts/shBrushCss.js"/>
+      <file path="modules/syntaxhighlighter_3.0.83/scripts/shBrushBash.js"/>
+      <file path="modules/syntaxhighlighterAdapter/syntaxHighlighterAdapter.js"/>
 
-       <!-- data table -->
-       <file path="modules/DataTables-1.10.4/media/js/jquery.dataTables.js" />
+      <!-- data table -->
+      <file path="modules/DataTables-1.10.4/media/js/jquery.dataTables.js" />
 
-       <!-- jQuery Cycle -->
-
+      <!-- jQuery Cycle -->
       <file path="modules/jQuery-widgets/cycle/js/cycle.js" />
       <file path="modules/jQuery-widgets/cycle/js/jquery.cycle.js" />
+
+      <!-- search engine : lunr -->
+      <file path="modules/lunr/lunr.js" />
+      <file path="modules/lunr/html5-lunr.js" />
 
       <!-- adapt -->-
       <file path="modules/960-Responsive-Grid/js/adapt.js" />
@@ -351,33 +354,11 @@
   </tag>
 
 
-
-  <!--
-    external libraries, stored locally
-    you could use the latest CDN instead
-  -->
-
   <d4p>
-    <init>false</init>
+    <l>
+      <var name="searchPageHeading" string="searchPageHeading" />
+      <var name="close" string="close" />
+    </l>
   </d4p>
-
-  <class>
-    <body>img-with-shadow</body>
-    <navigation>grid_4 alpha omega</navigation>
-    <main>
-      <content>grid_8 alpha omega</content>
-    </main>
-    <section>
-      <container>grid_12</container>
-    </section>
-  </class>
-
-  <search>
-    <action></action>
-    <placeholder>Search the documentation...</placeholder>
-    <inputs>
-      <!-- add all inputs elements you want in the search form -->
-    </inputs>
-  </search>
 
 </html5>
