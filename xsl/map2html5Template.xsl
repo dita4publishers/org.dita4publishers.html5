@@ -132,12 +132,15 @@
   </xsl:template>
 
   <xsl:template match="*" mode="gen-search-box">
-    <!--xsl:variable name="placeholder" select="$HTML5THEMECONFIGDOC/html5/search/placeholder" />
-    <xsl:variable name="action" select="$HTML5THEMECONFIGDOC/html5/search/action" />
-    <form id="search" action="{$action}">
+    <xsl:variable name="placeholder">
+      <xsl:call-template name="getString">
+        <xsl:with-param name="stringName" select="'SearchPlaceholder'"/>
+      </xsl:call-template>
+    </xsl:variable>
+    <form id="search">
       <input id="search-text" type="text" autocomplete="off" placeholder="{$placeholder}" name="search" />
       <xsl:sequence select="$HTML5THEMECONFIGDOC/html5/search/inputs/*" />
-    </form-->
+    </form>
   </xsl:template>
 
   <!-- used to output the head -->
@@ -173,54 +176,52 @@
   <xsl:template match="*" mode="generate-main">
     <xsl:param name="is-root" as="xs:boolean"  tunnel="yes" select="false()" />
     <xsl:param name="navigation" as="element()*"  tunnel="yes" />
-    <div>
-      <xsl:attribute name="class"><xsl:value-of select="concat('page', ' ', name(.), ' ', @outputclass, ' ', replace(replace(@class, '/', '-'), ' - ', ' '))" /></xsl:attribute>
+    <section id="page">
 
-      <xsl:if test="@id">
-        <xsl:attribute name="id"><xsl:value-of select="@id" /></xsl:attribute>
-      </xsl:if>
+      <div>
+        <xsl:attribute name="class"><xsl:value-of select="concat('page', ' ', name(.), ' ', @outputclass, ' ', replace(replace(@class, '/', '-'), '-', ' '))" /></xsl:attribute>
 
-      <!-- Already put xml:lang on <html>; do not copy to body with commonattributes -->
-      <xsl:apply-templates select="*[contains(@class,' ditaot-d/ditaval-startprop ')]/@outputclass" mode="add-ditaval-style"/>
-      <xsl:value-of select="$newline"/>
+        <xsl:if test="@id">
+          <xsl:attribute name="id"><xsl:value-of select="@id" /></xsl:attribute>
+        </xsl:if>
 
-      <xsl:apply-templates select="*[contains(@class,' ditaot-d/ditaval-startprop ')]" mode="out-of-line"/>
+        <!-- Already put xml:lang on <html>; do not copy to body with commonattributes -->
+        <xsl:apply-templates select="*[contains(@class,' ditaot-d/ditaval-startprop ')]/@outputclass" mode="add-ditaval-style"/>
+        <xsl:value-of select="$newline"/>
 
-      <!-- not yet developped -->
-      <!--nav class="breadcrumb">
-        <xsl:call-template name="generateBreadcrumbs"/>
-      </nav-->
+        <xsl:apply-templates select="*[contains(@class,' ditaot-d/ditaval-startprop ')]" mode="out-of-line"/>
 
-      <xsl:if test="$INDEXSHOW='yes'">
-        <xsl:apply-templates select="/*/*[contains(@class,' topic/prolog ')]/*[contains(@class,' topic/metadata ')]/*[contains(@class,' topic/keywords ')]/*[contains(@class,' topic/indexterm ')] |
-          /dita/*[1]/*[contains(@class,' topic/prolog ')]/*[contains(@class,' topic/metadata ')]/*[contains(@class,' topic/keywords ')]/*[contains(@class,' topic/indexterm ')]"/>
-      </xsl:if>
+        <xsl:if test="$INDEXSHOW='yes'">
+          <xsl:apply-templates select="/*/*[contains(@class,' topic/prolog ')]/*[contains(@class,' topic/metadata ')]/*[contains(@class,' topic/keywords ')]/*[contains(@class,' topic/indexterm ')] |
+            /dita/*[1]/*[contains(@class,' topic/prolog ')]/*[contains(@class,' topic/metadata ')]/*[contains(@class,' topic/keywords ')]/*[contains(@class,' topic/indexterm ')]"/>
+        </xsl:if>
 
-      <!-- Include a user's XSL call here to generate a toc based on what's a child of topic -->
-      <xsl:call-template name="gen-user-sidetoc"/>
-      <xsl:choose>
-        <xsl:when test="$is-root">
-            <h1><xsl:call-template name="getString">
-              <xsl:with-param name="stringName" select="'TOC'"/>
-            </xsl:call-template></h1>
-             <xsl:sequence select="$navigation"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:apply-templates select="*" />
-        </xsl:otherwise>
-      </xsl:choose>
+        <!-- Include a user's XSL call here to generate a toc based on what's a child of topic -->
+        <xsl:call-template name="gen-user-sidetoc"/>
+        <xsl:choose>
+          <xsl:when test="$is-root">
+              <h1><xsl:call-template name="getString">
+                <xsl:with-param name="stringName" select="'TOC'"/>
+              </xsl:call-template></h1>
+               <xsl:sequence select="$navigation"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:apply-templates select="*" />
+          </xsl:otherwise>
+        </xsl:choose>
 
-      <!-- this will include all things within topic; therefore, -->
-      <!-- title content will appear here by fall-through -->
-      <!-- followed by prolog (but no fall-through is permitted for it) -->
-      <!-- followed by body content, again by fall-through in document order -->
-      <!-- followed by related links -->
-      <!-- followed by child topics by fall-through -->
+        <!-- this will include all things within topic; therefore, -->
+        <!-- title content will appear here by fall-through -->
+        <!-- followed by prolog (but no fall-through is permitted for it) -->
+        <!-- followed by body content, again by fall-through in document order -->
+        <!-- followed by related links -->
+        <!-- followed by child topics by fall-through -->
 
-      <xsl:call-template name="gen-endnotes"/>    <!-- include footnote-endnotes -->
+        <xsl:call-template name="gen-endnotes"/>    <!-- include footnote-endnotes -->
 
-      <xsl:apply-templates select="*[contains(@class,' ditaot-d/ditaval-endprop ')]" mode="out-of-line"/>
-    </div>
+        <xsl:apply-templates select="*[contains(@class,' ditaot-d/ditaval-endprop ')]" mode="out-of-line"/>
+      </div>
+    </section>
     <xsl:value-of select="$newline"/>
   </xsl:template>
 
@@ -278,7 +279,7 @@
           </xsl:otherwise>
         </xsl:choose>
       </xsl:attribute>
-          <section>
+          <article>
             <xsl:apply-templates select="." mode="generate-breadcrumb"/>
             <xsl:choose>
               <xsl:when test="$content">
@@ -290,7 +291,7 @@
                 <xsl:apply-templates select="." mode="generate-main"/>
               </xsl:otherwise>
               </xsl:choose>
-            </section>
+            </article>
       <div class="clear" /><xsl:sequence select="'&#x0a;'"/>
     </div>
   </xsl:template>
@@ -302,11 +303,11 @@
       <xsl:when test="$is-root">
       </xsl:when>
       <xsl:otherwise>
-        <div id="content-toolbar" class="toolbar hide-for-small">
+        <nav id="content-toolbar" class="toolbar hide-for-small">
           <xsl:if test="contains($include.roles, ' next ') or contains($include.roles, ' previous ') or contains($include.roles, ' parent ')">
             <xsl:call-template name="next-prev-parent-links"/><!--handle next and previous links-->
           </xsl:if>
-        </div>
+        </nav>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>

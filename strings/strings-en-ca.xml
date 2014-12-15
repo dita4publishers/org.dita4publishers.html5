@@ -26,4 +26,7 @@
   <str name="BackToTop">Back to top</str>
   <str name="chooseAudience">Select another group</str>
   <str name="TOC">Table of Contents</str>
+  <str name="SearchPlaceholder">Search Documentation</str>
+  <str name="searchPageHeading">Search Results</str>
+  <str name="close">Close</str>
 </strings>

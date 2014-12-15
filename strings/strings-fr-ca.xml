@@ -26,4 +26,7 @@
   <str name="BackToTop">Haut de la page</str>
   <str name="chooseAudience">Sélectionner un autre groupe</str>
   <str name="TOC">Table des matières</str>
+  <str name="SearchPlaceholder">Rechercher dans la documentation</str>
+  <str name="searchPageHeading">Résultats de la recherche/str>
+  <str name="close">Fermer</str>
 </strings>

@@ -148,11 +148,6 @@
     <xsl:variable name="relativePath" select="concat(relpath:getRelativePath($parentDocUri, $parentPath), '')"
       as="xs:string"/>
 
-    <xsl:variable name="topic-title">
-      <xsl:apply-templates select="." mode="nav-point-title"/>
-    </xsl:variable>
-
-
     <!--xsl:message>docUri is: <xsl:value-of select="$docUri"/></xsl:message>
       <xsl:message>resultUri is: <xsl:value-of select="$resultUri"/></xsl:message>
        <xsl:message>map:  <xsl:value-of select="$baseUri"/></xsl:message>
@@ -180,7 +175,6 @@
     <xsl:result-document format="html5" href="{$resultUri}">
       <xsl:apply-templates mode="generate-html5-page" select=".">
         <xsl:with-param name="relativePath" select="$relativePath" as="xs:string" tunnel="yes"/>
-        <xsl:with-param name="topic-title" select="$topic-title" tunnel="yes"/>
         <xsl:with-param name="resultUri" as="xs:string" select="$resultUri" tunnel="yes"/>
         <xsl:with-param name="topicref" select="$topicref" as="element()?" tunnel="yes"/>
       </xsl:apply-templates>

@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>   
-<!--   
+<?xml version="1.0" encoding="utf-8"?>
+<!--
        Licensed to the Apache Software Foundation (ASF) under one
        or more contributor license agreements.  See the NOTICE file
        distributed with this work for additional information
@@ -27,16 +27,21 @@
   xmlns:relpath="http://dita2indesign/functions/relpath"
   xmlns:mapdriven="http://dita4publishers.org/mapdriven"
   exclude-result-prefixes="xs xd df relpath mapdriven index-terms java xsl mapdriven"
-    xmlns:java="org.dita.dost.util.ImgUtils"
+  xmlns:java="org.dita.dost.util.ImgUtils"
   version="2.0">
-  
-  
-  <xsl:template mode="nav-point-title" match="*[df:class(., 'topic/fn')]" priority="10">
-    <!-- Suppress footnotes in titles -->
+
+
+  <xsl:template match="*" mode="nav-point-title" />
+
+  <xsl:template mode="nav-point-title" match="*[df:isTopicRef(.)] | *[df:isTopicHead(.)]">
+    <xsl:variable name="navPointTitleString" select="df:getNavtitleForTopicref(.)"/>
+    <xsl:value-of select="$navPointTitleString"/>
   </xsl:template>
-  
+
   <xsl:template match="*[df:class(., 'topic/tm')]" mode="nav-point-title">
+
     <xsl:apply-templates mode="#current"/>
+
     <xsl:choose>
       <xsl:when test="@type = 'reg'">
         <xsl:text>[reg]</xsl:text>
@@ -50,38 +55,6 @@
     </xsl:choose>
 
   </xsl:template>
-  
-    <xsl:template mode="nav-point-title" match="*[df:isTopicRef(.)] | *[df:isTopicHead(.)]">
-    <xsl:variable name="navPointTitleString" select="df:getNavtitleForTopicref(.)"/>
-    <xsl:value-of select="$navPointTitleString"/>
-  </xsl:template>
-  
-  
-  <xsl:template match="*[df:isTopicGroup(.)]" mode="nav-point-title">
-    <!-- Per the 1.2 spec, topic group navtitles are always ignored -->
-  </xsl:template>
-  
-    <xsl:template mode="nav-point-title" match="*[df:class(., 'topic/body')]" priority="10">
-    <!-- Suppress body from output -->
-  </xsl:template>
 
-    <xsl:template mode="nav-point-title" match="*[df:class(., 'topic/shortdesc')]" priority="10">
-    <!-- Suppress body from output -->
-  </xsl:template>
-  
-  <xsl:template mode="nav-point-title" match="*[df:class(., 'topic/abstract')]" priority="10">
-    <!-- Suppress body from output -->
-  </xsl:template>
-  
-    <xsl:template mode="nav-point-title" match="concept/concept" priority="10">
-    <!-- Suppress body from output -->
-  </xsl:template>
-  
-  
-  
-<!--  <xsl:template mode="nav-point-title" match="*[df:class(., 'topic/title')]" priority="10">
-    <xsl:apply-templates mode="#current"/>
-  </xsl:template>
--->
-  
+
  </xsl:stylesheet>

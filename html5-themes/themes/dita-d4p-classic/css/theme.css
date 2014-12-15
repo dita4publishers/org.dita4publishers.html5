@@ -52,6 +52,11 @@ h6 {
   font-size:1.2em;
   font-weight: bold;
 }
+
+.highlight {
+  background-color:yellow;
+}
+
 .size-small h1 {
   font-size:2em;
 }
@@ -97,22 +102,46 @@ header h1
   letter-spacing: 2px;
 }
 
-form#search
+#search
 {
   display: block;
+  position:relative;
+  float:right;
   background-color: transparent;
+  margin-top: 25px;
 }
 
-form#search input
+#search-text
 {
   border: 1px solid #dfdfdf;
   background-color: #fff;
   background-clip: border-box;
   box-shadow: inset 0 0 3px #000;
   border-radius: 20px;
-  padding-left: 10px;
-  width: 100%;
+  padding: 0 30px 0 10px;
+  margin-right:20px;
+  width: 70%;
   height: 25px;
+  float:right;
+}
+
+#searchClose {
+  position:absolute;
+  border:none;
+  background:none;
+  background-color: none;
+  right:22px;
+  top:4px;
+  display:block;
+  width:20px;
+  height:20px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+
+#searchClose:hover {
+  cursor:pointer;
 }
 
 div.nav-pub-title h2 { font-size: 0.9em; }
@@ -324,7 +353,7 @@ footer h2, address strong
   padding-top:1.2em;
 }
 
-.toolbar .fi
+.toolbar .fi, #search .fi
 {
   color:#555555;
   font-size:1.2em;
@@ -620,4 +649,12 @@ li.topichead {
 }
 :not(.homepage) .size-small #nav-content {
   margin-top:60px;
+}
+
+.float_right {
+  float:right;
+}
+
+.float_left
+  float:left;
 }

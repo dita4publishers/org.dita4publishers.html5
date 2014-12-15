@@ -254,15 +254,18 @@
          <draft><xsl:value-of select="if(ISDRAFT) then 'true' else 'false'"/></draft>
          <nextTopicHref><xsl:call-template name="getNextTopicHref"/></nextTopicHref>
          <previousTopicHref><xsl:call-template name="getPrevTopicHref"/></previousTopicHref>
+         <search>
+           <minlength><xsl:value-of select="$searchEngineMinLength" /></minlength>
+         </search>
          <xsl:if test="$HTML5THEMECONFIGDOC/html5/d4p/l">
            <l>
-             <xsl:for-each select="$HTML5THEMECONFIGDOC/html5/d4p/l/var">             
+             <xsl:for-each select="$HTML5THEMECONFIGDOC/html5/d4p/l/var">
                <xsl:element name="{@name}">
                  <xsl:call-template name="getString">
                    <xsl:with-param name="stringName" select="@string"/>
                 </xsl:call-template>
-               </xsl:element>         
-             </xsl:for-each>        
+               </xsl:element>
+             </xsl:for-each>
            </l>
           </xsl:if>
          <!-- extension point -->

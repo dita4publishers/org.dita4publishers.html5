@@ -37,3 +37,9 @@ d4p.setBodyClassfunction = function (i, width) {
   }
   $("html").addClass(cs);
 }
+
+d4p.getDocumentationRoot = function ()
+{
+  var loc = window.location.pathname;
+  return loc.substring(0, loc.lastIndexOf('/')) + '/' + (d4p.relativePath == null ? '' : d4p.relativePath);
+}
