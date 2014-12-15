@@ -162,7 +162,7 @@
 
   <xsl:param name="generateSearchEngine" select="'true'"/>
   <xsl:param name="generateSearchEngineBoolean" select="matches($generateSearchEngine, 'yes|true|on|1', 'i')"/>
-
+  <xsl:param name="searchEngineMinChar" as="xs:integer" select="2"/>
   <!-- -->
 
   <xsl:param name="dita-css" select="'css/topic-html5.css'" as="xs:string"/>
@@ -406,13 +406,7 @@
       <xsl:apply-templates select="." mode="generate-search-index">
         <xsl:with-param name="collected-data" as="element()" select="$collected-data" tunnel="yes"/>
         <xsl:with-param name="uniqueTopicRefs" as="element()*" select="$uniqueTopicRefs" tunnel="yes"/>
-        <xsl:with-param name="navigation" as="element()*" select="$navigation" tunnel="yes"/>
         <xsl:with-param name="baseUri" as="xs:string" select="@xtrf" tunnel="yes"/>
-        <xsl:with-param name="documentation-title" select="$documentation-title" tunnel="yes"/>
-        <xsl:with-param name="has-index" as="xs:boolean" select="$has-index" tunnel="yes" />
-        <xsl:with-param name="is-root" as="xs:boolean" select="false()" tunnel="yes"/>
-        <xsl:with-param name="audienceSelect"  select="$audienceSelect" tunnel="yes"/>
-        <xsl:with-param name="map-metadata" select="$map-metadata" tunnel="yes"/>
       </xsl:apply-templates>
     </xsl:if>
 
