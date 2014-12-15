@@ -72,9 +72,7 @@
             select="string(@href)"/>"</xsl:message>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:variable name="topicResultUri" select="htmlutil:getTopicResultUrl($outdir, root($topic), $rootMapDocUrl)"
-          as="xs:string"/>
-        <xsl:variable name="topicRelativeUri" select="htmlutil:getTopicResultUrl('', root($topic), $rootMapDocUrl)"
+        <xsl:variable name="topicResultUri" select="htmlutil:getTopicResultUrl('', root($topic), $rootMapDocUrl)"
           as="xs:string"/>
         <xsl:variable name="number"><xsl:number value="position()" format="1" /></xsl:variable>
 
@@ -84,7 +82,7 @@
             <xsl:with-param name="topicref" as="element()*" select="." tunnel="yes"/>
             <xsl:with-param name="collected-data" select="$collected-data" as="element()" tunnel="yes"/>
             <xsl:with-param name="resultUri" select="$topicResultUri" tunnel="yes"/>
-            <xsl:with-param name="topicRelativeUri" select="$topicRelativeUri" tunnel="yes"/>
+            <xsl:with-param name="id"  as="xs:string" select="concat('t', $number)" tunnel="yes"/>
           </xsl:apply-templates>
 
         </xsl:element>
@@ -101,6 +99,7 @@
     <!-- This template generates the output file for a referenced topic.
     -->
     <xsl:param name="rootMapDocUrl" as="xs:string" tunnel="yes"/>
+    <xsl:param name="id" as="xs:string" tunnel="yes"/>
     <!-- The topicref that referenced the topic -->
     <xsl:param name="topicref" as="element()*" tunnel="yes"/>
     <!-- Enumerables structure: -->
@@ -114,13 +113,12 @@
     <xsl:variable name="parentDocUri" select="relpath:getParent($resultUri)" as="xs:string"/>
 
     <xsl:variable name="parentPath" select="$outdir" as="xs:string"/>
-    <!--xsl:variable name="parentPath" select="relpath:getParent($baseUri)" as="xs:string"/-->
-    <xsl:variable name="relativePath" select="concat(relpath:getRelativePath($parentDocUri, $parentPath), '')"
-      as="xs:string"/>
 
+    <id><xsl:value-of select="$id" /></id>
+    <href><xsl:value-of select="$resultUri" /></href>
     <title><xsl:value-of select="*[df:class(., 'topic/title')][1]" /></title>
     <desc>
-      <xsl:apply-templates select="*[df:class(., 'topic/shortdesc')][1]" mode="search-filter" />
+      <xsl:value-of select="*[df:class(., 'topic/shortdesc')][1]" />
     </desc>
     <body>
       <xsl:apply-templates select="*[df:class(., 'topic/body')]" mode="search-filter" />
@@ -131,9 +129,8 @@
   <xsl:template match="text()" mode="search-filter">
 
   <xsl:for-each select="str:tokenize(., ' ')">
-    <xsl:message>Filtering <xsl:value-of select="."/> size of <xsl:value-of select="fn:string-length(.) "/></xsl:message>
      <xsl:choose>
-       <xsl:when test="fn:string-length(.) &gt; $searchEngineMinChar">
+       <xsl:when test="fn:string-length(.) &gt; $searchEngineMinLength">
          <xsl:value-of select="concat(., ' ')"/>
        </xsl:when>
        <xsl:otherwise/>
