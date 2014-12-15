@@ -26,4 +26,7 @@
   <str name="BackToTop">返回到顶部</str>
   <str name="chooseAudience">选择另外的集体</str>
   <str name="TOC">Table of contents</str>
+  <str name="SearchPlaceholder">Search Documentation</str>
+  <str name="searchPageHeading">Search Results</str>
+  <str name="close">Close</str>
 </strings>
