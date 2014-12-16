@@ -360,16 +360,22 @@
     </xsl:if>
 
     <!-- graphic map -->
+    <xsl:message> + [INFO] Generating graphicMap...</xsl:message>
+    <!-- collected data -->
     <xsl:variable name="graphicMap" as="element()">
       <xsl:apply-templates select="." mode="generate-graphic-map">
       </xsl:apply-templates>
     </xsl:variable>
-    <xsl:result-document href="{relpath:newFile($outdir, 'graphicMap.xml')}" format="graphic-map">
+    
+    <xsl:if test="false() or $debugBoolean">
+      <xsl:message> + [DEBUG] Writing file <xsl:sequence select="relpath:newFile($outdir, 'graphicMap.xml')"/>...</xsl:message>
+      <xsl:result-document href="{relpath:newFile($outdir, 'graphicMap.xml')}" format="graphic-map">
       <xsl:sequence select="$graphicMap"/>
     </xsl:result-document>
-
+    </xsl:if>
+  
+    
     <xsl:message> + [INFO] Collecting data for index generation, enumeration, etc....</xsl:message>
-
     <!-- collected data -->
     <xsl:variable name="collected-data" as="element()">
       <xsl:call-template name="mapdriven:collect-data"/>
@@ -380,7 +386,7 @@
       <xsl:sequence select="*[contains(@class, ' map/topicmeta ')]/*[contains(@class, 'topic/data')]" />
     </xsl:variable>
 
-    <xsl:if test="true() or $debugBoolean">
+    <xsl:if test="false() or $debugBoolean">
       <xsl:message> + [DEBUG] Writing file <xsl:sequence select="relpath:newFile($outdir, 'collected-data.xml')"/>...</xsl:message>
       <xsl:result-document href="{relpath:newFile($outdir, 'collected-data.xml')}"
         format="indented-xml"
@@ -474,6 +480,7 @@
           <xsl:with-param name="is-root" as="xs:boolean" select="false()" tunnel="yes"/>
         </xsl:apply-templates>
     </xsl:if>
+    
     <!--xsl:apply-templates select="." mode="generate-glossary">
       <xsl:with-param name="collected-data" as="element()" select="$collected-data" tunnel="yes"/>
     </xsl:apply-templates-->
