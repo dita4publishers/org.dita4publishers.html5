@@ -30,6 +30,7 @@
   xmlns:random="org.dita.dost.util.RandomUtils"
   xmlns:java="org.dita.dost.util.ImgUtils"
   xmlns:json="http://json.org/"
+  xmlns:local="urn:ns:local-functions"
   xmlns:related-links="http://dita-ot.sourceforge.net/ns/200709/related-links"
   exclude-result-prefixes="random xs xd df relpath mapdriven index-terms java xsl mapdriven json related-links"
   version="1.0">
@@ -541,4 +542,54 @@
       <xsl:value-of select="$newline"/>
     </xsl:for-each>
   </xsl:template>
+
+
+<!-- section processor - div with no generated title -->
+<xsl:template match="*[contains(@class, ' topic/section ')]" name="topic.section">
+  <div class="section">
+    <xsl:call-template name="commonattributes"/>
+    <xsl:call-template name="set_an_anchor" />
+    <xsl:apply-templates select="."  mode="section-fmt" />
+  </div><xsl:value-of select="$newline"/>
+</xsl:template>
+
+<xsl:template name="set_an_anchor">
+  <xsl:variable name="existingId">
+    <xsl:choose>
+      <xsl:when test="@id">
+        <xsl:value-of select="normalize-space(@id)" />
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="generate-id(.)" />
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
+    <!--xsl:choose>
+      <xsl:when test="@id">
+        <xsl:if test="ancestor::*[contains(@class, ' topic/body ')]">
+          <xsl:value-of select="ancestor::*[contains(@class, ' topic/body ')]/parent::*/@id"/><xsl:text>__</xsl:text>
+       </xsl:if>
+    <xsl:value-of select="@id"/>
+    </xsl:choose-->
+
+
+    <!-- NOTE: The rules for ID reference as defined in the DITA spec are that
+               when an ID is duplicated within a topic, the first occurence of that
+               ID is the one you get. For DITA 1.3 this is clarified as also applying
+               to this-topic fragment IDs and IDs included via conref.
+
+               Therefore, there's no need to worry about duplicate explicit IDs
+               on sections.
+      -->
+
+    <xsl:variable name="anchorid" select="translate(concat(normalize-space(ancestor::*[df:class(., 'topic/topic')][1]/@id), '__', $existingId), '-', '_')"/>
+
+    <a>
+      <xsl:attribute name="name" select="$anchorid"/>
+      <xsl:attribute name="id" select="$anchorid"/>
+      <xsl:attribute name="class" select="'anchor'"/>
+    </a>
+  </xsl:template>
+
 </xsl:stylesheet>
+
