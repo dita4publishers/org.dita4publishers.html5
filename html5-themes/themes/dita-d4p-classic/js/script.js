@@ -6,6 +6,12 @@ $.extend( $.fn.dataTable.defaults, {
 
 $(document).ready(function() {
 
+
+  if(!$('body').hasClass('homepage'))
+  {
+    navigation.init();
+  }
+
   $('table').each(function( index ) {
     var opts = jQuery.parseJSON($(this).attr('data-options'))
     if(opts.d4p_datatable.activate == '1')
