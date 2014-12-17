@@ -139,7 +139,6 @@
     </xsl:variable>
     <form id="search">
       <input id="search-text" type="text" autocomplete="off" placeholder="{$placeholder}" name="search" />
-      <xsl:sequence select="$HTML5THEMECONFIGDOC/html5/search/inputs/*" />
     </form>
   </xsl:template>
 
