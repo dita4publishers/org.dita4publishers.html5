@@ -22,7 +22,7 @@ function searchIdx()
   this.idx = lunr(function () {
     this.field('title', { boost: 10 })
     this.field('desc', { boost: 5 })
-    this.field('body')
+    this.field('keywords')
   });
   this.str;
   this.data = {};
@@ -34,12 +34,17 @@ function searchIdx()
  */
 searchIdx.prototype.getData = function()
 {
-  var self = this;
-  $.getJSON(d4p.getDocumentationRoot() + 'search-index.json', function( data ) {
-    self.data = data.idx;
-    $.each(self.data.topics, function( index, value ) {
-      self.idx.add(value);
-    })
+ var self = this;
+  $.ajax({
+  dataType: "json",
+  async: true,
+  url: d4p.getDocumentationRoot() + 'search-index.json',
+    success: function( data ) {
+      self.data = data.idx;
+      $.each(self.data.topics, function( index, value ) {
+        self.idx.add(value);
+      })
+    }
   });
 }
 

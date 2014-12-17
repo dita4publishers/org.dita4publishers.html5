@@ -120,9 +120,9 @@
     <desc>
       <xsl:value-of select="*[df:class(., 'topic/shortdesc')][1]" />
     </desc>
-    <body>
-      <xsl:apply-templates select="*[df:class(., 'topic/body')]" mode="search-filter" />
-    </body>
+    <keywords>
+      <xsl:apply-templates select="//*[df:class(., 'topic/keyword')]" mode="search-filter" />
+    </keywords>
 
   </xsl:template>
 
