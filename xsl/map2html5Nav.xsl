@@ -164,15 +164,22 @@
                 </xsl:apply-templates>
               </xsl:variable>
               <xsl:if test="$listItems">
-                <ul>
-                  <xsl:sequence select="$listItems"/>
-                </ul>
+                <xsl:call-template name="nav-child-items">
+                  <xsl:with-param name="listItems" select="$listItems" />
+                </xsl:call-template>
               </xsl:if>
             </xsl:if>
           </li>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:if>
+  </xsl:template>
+
+  <xsl:template name="nav-child-items">
+    <xsl:param name="listItems" as="node()*" />
+    <ul>
+      <xsl:sequence select="$listItems"/>
+    </ul>
   </xsl:template>
 
   <xsl:template match="*[df:isTopicGroup(.)]" priority="20" mode="generate-html5-nav">
