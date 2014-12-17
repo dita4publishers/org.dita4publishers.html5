@@ -208,7 +208,11 @@
     <copy todir="${html5.temp.libs.dir}" >
       <fileset dir="${html5.theme.config.dir}" followsymlinks="no" />
     </copy>
-
+     <copy todir="${html5.temp.libs.dir}" >
+      <fileset dir="${theme.builder.dir}/${html5.libs.dir}" followsymlinks="no" >
+        <include name="**" />
+      </fileset>
+    </copy>
     <property name="package.prepare" value="yes" />
   </target>
 
