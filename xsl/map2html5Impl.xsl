@@ -429,12 +429,14 @@
       <xsl:with-param name="audienceSelect"  select="$audienceSelect" tunnel="yes"/>
       <xsl:with-param name="map-metadata" select="$map-metadata" tunnel="yes"/>
       <xsl:with-param name="indexUri" as="xs:string" select="$indexUri" tunnel = "yes" />
+      <xsl:with-param name="isChunkedMap" as="xs:boolean" select="$isChunkedMap" tunnel="yes"/>
     </xsl:apply-templates>
 
   </xsl:template>
 
   <xsl:template match="/*[df:class(., 'map/map')]" mode="standard-map-processing">
-     <xsl:param name="doDebug" as="xs:boolean" tunnel="yes" select="false()"/>
+    <xsl:param name="isChunkedMap" as="xs:boolean" tunnel="yes" />
+    <xsl:param name="doDebug" as="xs:boolean" tunnel="yes" select="false()"/>
     <!-- this is intended to allow developper to add custom hook -->
     <xsl:message>  + [INFO] Processing Standard Map</xsl:message>
 

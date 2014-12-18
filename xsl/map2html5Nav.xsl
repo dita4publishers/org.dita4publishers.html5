@@ -121,7 +121,6 @@
   <xsl:template match="*[df:isTopicRef(.)][not(@processing-role = 'resource-only')][not(@toc = 'no')]" mode="generate-html5-nav">
     <xsl:param name="tocDepth" as="xs:integer" tunnel="yes" select="0"/>
     <xsl:param name="rootMapDocUrl" as="xs:string" tunnel="yes"/>
-
     <xsl:param name="isChunkedMap" as="xs:boolean" select="false()" tunnel="yes"/>
     <xsl:param name="indexUri" as="xs:string" select="''" tunnel = "yes" />
 
