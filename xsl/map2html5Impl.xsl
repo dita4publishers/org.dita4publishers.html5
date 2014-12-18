@@ -357,6 +357,7 @@
 
   <xsl:template match="/*[df:class(., 'map/map')]" mode="chunked-map-processing">
      <xsl:param name="doDebug" as="xs:boolean" tunnel="yes" select="false()"/>
+     <xsl:param name="isChunkedMap" as="xs:boolean" tunnel="yes" />
     <!-- this is intended to allow developper to add custom hook -->
     <xsl:message>  + [INFO] Processing Chunked Map</xsl:message>
 
@@ -412,6 +413,8 @@
         <xsl:with-param name="has-index" as="xs:boolean" select="false()" tunnel="yes" />
         <xsl:with-param name="documentation-title" select="$documentation-title" tunnel="yes"/>
         <xsl:with-param name="audienceSelect"  select="$audienceSelect" tunnel="yes"/>
+        <xsl:with-param name="isChunkedMap" as="xs:boolean" select="$isChunkedMap" tunnel="yes"/>
+        <xsl:with-param name="indexUri" as="xs:string" select="$indexUri" tunnel = "yes" />
       </xsl:apply-templates>
     </xsl:variable>
 

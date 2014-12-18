@@ -122,6 +122,9 @@
     <xsl:param name="tocDepth" as="xs:integer" tunnel="yes" select="0"/>
     <xsl:param name="rootMapDocUrl" as="xs:string" tunnel="yes"/>
 
+    <xsl:param name="isChunkedMap" as="xs:boolean" select="false()" tunnel="yes"/>
+    <xsl:param name="indexUri" as="xs:string" select="''" tunnel = "yes" />
+
     <xsl:if test="$tocDepth le $maxTocDepthInt">
       <xsl:variable name="topic" select="df:resolveTopicRef(.)" as="element()*"/>
       <xsl:choose>
@@ -131,7 +134,7 @@
         </xsl:when>
         <xsl:otherwise>
           <xsl:variable name="targetUri"
-            select="htmlutil:getTopicResultUrl($outdir, root($topic), $rootMapDocUrl)"
+            select="if($isChunkedMap) then concat($outdir, $indexUri, htmlutil:getTopicrefUrlHash(.)) else htmlutil:getTopicResultUrl($outdir, root($topic), $rootMapDocUrl)"
             as="xs:string"/>
           <xsl:variable name="relativeUri" select="relpath:getRelativePath($outdir, $targetUri)"
             as="xs:string"/>
