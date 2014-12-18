@@ -65,7 +65,9 @@
   </xsl:template>
 
    <xsl:template match="*[df:class(., 'topic/topic')]" mode="render">
-    <xsl:apply-templates select="*" />
+      <article>
+        <xsl:apply-templates select="*" />
+      </article>
    </xsl:template>
 
    <xsl:template match="*[df:isTopicRef(.)]" mode="generate-chunked-map-content">
@@ -85,19 +87,6 @@
             select="string(@href)"/>"</xsl:message>
       </xsl:when>
       <xsl:otherwise>
-
-        <!--xsl:variable name="tempTopic" as="document-node()">
-          <xsl:document>
-            <xsl:apply-templates select="$topic" mode="href-fixup">
-              <xsl:with-param name="topicResultUri" select="$topicResultUri" tunnel="yes"/>
-            </xsl:apply-templates>
-          </xsl:document>
-        </xsl:variable-->
-
-        <!--xsl:apply-templates select="$topic" mode="#current">
-          <xsl:with-param name="topicref" as="element()*" select="." tunnel="yes"/>
-          <xsl:with-param name="collected-data" select="$collected-data" as="element()" tunnel="yes"/>
-        </xsl:apply-templates-->
         <xsl:sequence select="$topic" />
       </xsl:otherwise>
     </xsl:choose>
