@@ -541,4 +541,47 @@
       <xsl:value-of select="$newline"/>
     </xsl:for-each>
   </xsl:template>
+
+  <!-- child topics get a div wrapper and fall through -->
+<xsl:template match="*[contains(@class, ' topic/topic ')]" mode="child.topic" name="child.topic">
+  <xsl:param name="nestlevel">
+      <xsl:choose>
+          <!-- Limit depth for historical reasons, could allow any depth. Previously limit was 5. -->
+          <xsl:when test="count(ancestor::*[contains(@class, ' topic/topic ')]) > 9">9</xsl:when>
+          <xsl:otherwise><xsl:value-of select="count(ancestor::*[contains(@class, ' topic/topic ')])"/></xsl:otherwise>
+      </xsl:choose>
+  </xsl:param>
+<section class="nested{$nestlevel}">
+ <xsl:call-template name="gen-topic"/>
+</section><xsl:value-of select="$newline"/>
+</xsl:template>
+
+<xsl:template name="gen-topic">
+  <xsl:param name="nestlevel">
+      <xsl:choose>
+          <!-- Limit depth for historical reasons, could allow any depth. Previously limit was 5. -->
+          <xsl:when test="count(ancestor::*[contains(@class, ' topic/topic ')]) > 9">9</xsl:when>
+          <xsl:otherwise><xsl:value-of select="count(ancestor::*[contains(@class, ' topic/topic ')])"/></xsl:otherwise>
+      </xsl:choose>
+  </xsl:param>
+
+  <xsl:variable name="id" select="df:getTopicSectionID(.)"/>
+
+ <xsl:choose>
+   <xsl:when test="parent::dita and not(preceding-sibling::*)">
+     <!-- Do not reset xml:lang if it is already set on <html> -->
+     <!-- Moved outputclass to the body tag -->
+     <!-- Keep ditaval based styling at this point (replace DITA-OT 1.6 and earlier call to gen-style) -->
+     <xsl:apply-templates select="*[contains(@class, ' ditaot-d/ditaval-startprop ')]/@outputclass" mode="add-ditaval-style"/>
+   </xsl:when>
+   <xsl:otherwise>
+     <xsl:call-template name="commonattributes">
+       <xsl:with-param name="default-output-class" select="concat('nested', $nestlevel)"/>
+     </xsl:call-template>
+   </xsl:otherwise>
+ </xsl:choose>
+
+</xsl:template>
+
+
 </xsl:stylesheet>
