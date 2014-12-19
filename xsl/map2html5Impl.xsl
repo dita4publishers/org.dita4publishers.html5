@@ -381,7 +381,7 @@
       <xsl:sequence select="*[contains(@class, ' map/topicmeta ')]/*[contains(@class, 'topic/data')]" />
     </xsl:variable>
 
-    <xsl:if test="true() or $debugBoolean">
+    <xsl:if test="false() or $debugBoolean">
       <xsl:message> + [DEBUG] Writing file <xsl:sequence select="relpath:newFile($outdir, 'collected-data.xml')"/>...</xsl:message>
       <xsl:result-document href="{relpath:newFile($outdir, 'collected-data.xml')}"
         format="indented-xml"
@@ -394,15 +394,6 @@
         <xsl:apply-templates select="." mode="generate-root-page-header" />
     </xsl:variable>
 
-     <xsl:variable name="audienceSelect">
-      <xsl:apply-templates select="." mode="generate-audience-select">
-        <xsl:with-param name="collected-data" as="element()" select="$collected-data" tunnel="yes"/>
-        <xsl:with-param name="uniqueTopicRefs" as="element()*" select="$chunkTopicrefs" tunnel="yes"/>
-        <xsl:with-param name="documentation-title" as="xs:string" select="$documentation-title" tunnel="yes"/>
-        <xsl:with-param name="is-root" as="xs:boolean" select="true()" tunnel="yes"/>
-      </xsl:apply-templates>
-    </xsl:variable>
-
      <!-- NOTE: By default, this mode puts its output in the main output file
          produced by the transform.
     -->
@@ -412,7 +403,6 @@
         <xsl:with-param name="uniqueTopicRefs" as="element()*" select="$chunkTopicrefs" tunnel="yes"/>
         <xsl:with-param name="has-index" as="xs:boolean" select="false()" tunnel="yes" />
         <xsl:with-param name="documentation-title" select="$documentation-title" tunnel="yes"/>
-        <xsl:with-param name="audienceSelect"  select="$audienceSelect" tunnel="yes"/>
         <xsl:with-param name="isChunkedMap" as="xs:boolean" select="$isChunkedMap" tunnel="yes"/>
         <xsl:with-param name="indexUri" as="xs:string" select="$indexUri" tunnel = "yes" />
       </xsl:apply-templates>
@@ -426,7 +416,6 @@
       <xsl:with-param name="documentation-title" select="$documentation-title" tunnel="yes"/>
       <xsl:with-param name="has-index" as="xs:boolean" select="false()" tunnel="yes" />
       <xsl:with-param name="is-root" as="xs:boolean" select="false()" tunnel="yes"/>
-      <xsl:with-param name="audienceSelect"  select="$audienceSelect" tunnel="yes"/>
       <xsl:with-param name="map-metadata" select="$map-metadata" tunnel="yes"/>
       <xsl:with-param name="indexUri" as="xs:string" select="$indexUri" tunnel = "yes" />
       <xsl:with-param name="isChunkedMap" as="xs:boolean" select="$isChunkedMap" tunnel="yes"/>
@@ -520,6 +509,7 @@
         <xsl:with-param name="has-index" as="xs:boolean" select="$has-index" tunnel="yes" />
         <xsl:with-param name="documentation-title" select="$documentation-title" tunnel="yes"/>
         <xsl:with-param name="audienceSelect"  select="$audienceSelect" tunnel="yes"/>
+        <xsl:with-param name="showTocEntry" as="xs:boolean" tunnel="yes" select="true()" />
       </xsl:apply-templates>
     </xsl:variable>
 

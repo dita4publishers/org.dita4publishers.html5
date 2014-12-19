@@ -61,25 +61,7 @@
     <xsl:param name="collected-data" as="element()" tunnel="yes"/>
     <xsl:param name="documentation-title" tunnel="yes" />
     <xsl:param name="is-root" as="xs:boolean" tunnel="yes" select="false()" />
-
-    <xsl:if test="not($is-root)">
-
-      <!-- this navigation block is shown only on mobile view -->
-      <nav class="mobile-nav">
-        <ul>
-          <li class="toggle-topbar menu-icon">
-            <a id="toggle-nav-content" href="#{$IDLOCALNAV}">
-              <xsl:call-template name="getString">
-                <xsl:with-param name="stringName" select="'menu'"/>
-              </xsl:call-template>
-            </a>
-          </li>
-        </ul>
-        <section class="nav-pub-title">
-          <xsl:value-of select="$documentation-title" />
-        </section>
-      </nav>
-    </xsl:if>
+    <xsl:param name="showTocEntry" as="xs:boolean" tunnel="yes" select="false()" />
 
     <nav id="{$IDLOCALNAV}" role="navigation" aria-label="Main navigation">
       <xsl:attribute name="class" select="$CLASSNAVIGATION"/>
@@ -99,9 +81,15 @@
 
         <xsl:if test="$listItems">
           <ul>
-             <li class="toc_link"><a href="index.html"><xsl:call-template name="getString">
-              <xsl:with-param name="stringName" select="'TOC'"/>
-            </xsl:call-template></a></li>
+            <xsl:if test="$showTocEntry">
+              <li class="toc_link">
+                <a href="index.html">
+                  <xsl:call-template name="getString">
+                    <xsl:with-param name="stringName" select="'TOC'"/>
+                  </xsl:call-template>
+                </a>
+              </li>
+            </xsl:if>
             <xsl:sequence select="$listItems"/>
           </ul>
         </xsl:if>
@@ -133,7 +121,7 @@
         </xsl:when>
         <xsl:otherwise>
           <xsl:variable name="targetUri"
-            select="if($isChunkedMap) then concat($outdir, $indexUri, htmlutil:getTopicrefUrlHash(.)) else htmlutil:getTopicResultUrl($outdir, root($topic), $rootMapDocUrl)"
+            select="if($isChunkedMap) then concat($outdir, htmlutil:getTopicrefUrlHash(.)) else htmlutil:getTopicResultUrl($outdir, root($topic), $rootMapDocUrl)"
             as="xs:string"/>
           <xsl:variable name="relativeUri" select="relpath:getRelativePath($outdir, $targetUri)"
             as="xs:string"/>
