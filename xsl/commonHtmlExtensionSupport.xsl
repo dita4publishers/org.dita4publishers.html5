@@ -30,7 +30,6 @@
   xmlns:random="org.dita.dost.util.RandomUtils"
   xmlns:java="org.dita.dost.util.ImgUtils"
   xmlns:json="http://json.org/"
-  xmlns:local="urn:ns:local-functions"
   xmlns:related-links="http://dita-ot.sourceforge.net/ns/200709/related-links"
   exclude-result-prefixes="random xs xd df relpath mapdriven index-terms java xsl mapdriven json related-links"
   version="1.0">
@@ -553,43 +552,55 @@
   </div><xsl:value-of select="$newline"/>
 </xsl:template>
 
-<xsl:template name="set_an_anchor">
-  <xsl:variable name="existingId">
-    <xsl:choose>
-      <xsl:when test="@id">
-        <xsl:value-of select="normalize-space(@id)" />
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:value-of select="generate-id(.)" />
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:variable>
-    <!--xsl:choose>
-      <xsl:when test="@id">
-        <xsl:if test="ancestor::*[contains(@class, ' topic/body ')]">
-          <xsl:value-of select="ancestor::*[contains(@class, ' topic/body ')]/parent::*/@id"/><xsl:text>__</xsl:text>
-       </xsl:if>
-    <xsl:value-of select="@id"/>
-    </xsl:choose-->
-
-
-    <!-- NOTE: The rules for ID reference as defined in the DITA spec are that
-               when an ID is duplicated within a topic, the first occurence of that
-               ID is the one you get. For DITA 1.3 this is clarified as also applying
-               to this-topic fragment IDs and IDs included via conref.
-
-               Therefore, there's no need to worry about duplicate explicit IDs
-               on sections.
-      -->
-
-    <xsl:variable name="anchorid" select="translate(concat(normalize-space(ancestor::*[df:class(., 'topic/topic')][1]/@id), '__', $existingId), '-', '_')"/>
-
+  <xsl:template name="set_an_anchor">
+    <xsl:variable name="anchorid" select="df:getIdForElement(.)"/>
     <a>
       <xsl:attribute name="name" select="$anchorid"/>
       <xsl:attribute name="id" select="$anchorid"/>
       <xsl:attribute name="class" select="'anchor'"/>
     </a>
   </xsl:template>
+
+  <!-- child topics get a div wrapper and fall through -->
+<xsl:template match="*[contains(@class, ' topic/topic ')]" mode="child.topic" name="child.topic">
+  <xsl:param name="nestlevel">
+      <xsl:choose>
+          <!-- Limit depth for historical reasons, could allow any depth. Previously limit was 5. -->
+          <xsl:when test="count(ancestor::*[contains(@class, ' topic/topic ')]) > 9">9</xsl:when>
+          <xsl:otherwise><xsl:value-of select="count(ancestor::*[contains(@class, ' topic/topic ')])"/></xsl:otherwise>
+      </xsl:choose>
+  </xsl:param>
+
+<section class="{concat('nested', $nestlevel, ' ', @outputclass)}">
+ <xsl:call-template name="gen-topic"/>
+ <xsl:apply-templates/>
+</section><xsl:value-of select="$newline"/>
+</xsl:template>
+
+<xsl:template name="gen-topic">
+  <xsl:param name="nestlevel">
+      <xsl:choose>
+          <!-- Limit depth for historical reasons, could allow any depth. Previously limit was 5. -->
+          <xsl:when test="count(ancestor::*[contains(@class, ' topic/topic ')]) > 9">9</xsl:when>
+          <xsl:otherwise><xsl:value-of select="count(ancestor::*[contains(@class, ' topic/topic ')])"/></xsl:otherwise>
+      </xsl:choose>
+  </xsl:param>
+
+ <xsl:call-template name="set_an_anchor" />
+
+ <xsl:choose>
+   <xsl:when test="parent::dita and not(preceding-sibling::*)">
+     <!-- Do not reset xml:lang if it is already set on <html> -->
+     <!-- Moved outputclass to the body tag -->
+     <!-- Keep ditaval based styling at this point (replace DITA-OT 1.6 and earlier call to gen-style) -->
+     <xsl:apply-templates select="*[contains(@class, ' ditaot-d/ditaval-startprop ')]/@outputclass" mode="add-ditaval-style"/>
+   </xsl:when>
+   <xsl:otherwise>
+   </xsl:otherwise>
+ </xsl:choose>
+
+</xsl:template>
+
 
 </xsl:stylesheet>
 

@@ -54,6 +54,8 @@
   <xsl:include href="map2html5Nav.xsl"/>
   <xsl:include href="map2html5Search.xsl"/>
   <xsl:include href="map2html5Content.xsl"/>
+  <xsl:include href="map2html5RootContent.xsl"/>
+  <xsl:include href="map2html5ChunkContent.xsl" />
   <xsl:include href="map2html5Collection.xsl"/>
   <xsl:include href="map2html5Template.xsl"/>
   <xsl:include href="nav-point-title.xsl"/>
@@ -239,18 +241,8 @@
     </xsl:choose>
   </xsl:variable>
 
-  <xsl:variable name="cssOutputPath">
-    <xsl:choose>
-      <xsl:when test="$cssOutputDir != ''">
-        <xsl:sequence select="concat($outdir, $cssOutputDir)"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:sequence select="$outdir"/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:variable>
 
-  <xsl:variable name="indexUri" select="concat('index', $OUTEXT)"/>
+  <xsl:variable name="indexUri" as="xs:string" select="concat('index', $OUTEXT)"/>
   <xsl:variable name="HTML5THEMECONFIGDOC" select="document($HTML5THEMECONFIG)" />
 
   <xsl:variable name="TEMPLATELANG">
@@ -315,7 +307,6 @@
 
       Global Variables:
 
-      + cssOutputPath    = "<xsl:sequence select="$cssOutputPath"/>"
       + topicsOutputPath = "<xsl:sequence select="$topicsOutputPath"/>"
       + imagesOutputPath = "<xsl:sequence select="$imagesOutputPath"/>"
       + platform         = "<xsl:sequence select="$platform"/>"
@@ -333,7 +324,9 @@
   <xsl:output name="html5" method="html" indent="yes" encoding="utf-8" doctype-system="about:legacy-compat" omit-xml-declaration="yes"/>
 
   <xsl:template match="/">
-    <xsl:message> + [INFO] Using DITA for Publishers HTML5 transformation type</xsl:message>
+    <xsl:message> + [INFO] Using DITA for Publishers HTML5 transformation type
+  </xsl:message>
+
     <xsl:apply-templates>
       <xsl:with-param name="rootMapDocUrl" select="document-uri(.)" as="xs:string" tunnel="yes"/>
     </xsl:apply-templates>
@@ -344,20 +337,99 @@
 
     <xsl:apply-templates select="." mode="report-parameters"/>
 
-    <!-- this is intended to allow developper to add custom hook -->
+    <xsl:variable name="isChunkedMap" as="xs:boolean" select="df:mapIsChunkToContent(.)" />
+
     <xsl:apply-templates select="." mode="html5-impl" />
 
-    <xsl:variable name="uniqueTopicRefs" as="element()*" select="df:getUniqueTopicrefs(.)"/>
+    <xsl:choose>
+      <xsl:when test="$isChunkedMap">
+        <xsl:apply-templates select="." mode="chunked-map-processing">
+          <xsl:with-param name="isChunkedMap" as="xs:boolean" select="$isChunkedMap" tunnel="yes"/>
+        </xsl:apply-templates>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:apply-templates select="." mode="standard-map-processing">
+          <xsl:with-param name="isChunkedMap" as="xs:boolean" select="$isChunkedMap" tunnel="yes"/>
+        </xsl:apply-templates>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
 
-    <xsl:variable name="chunkRootTopicrefs" as="element()*"
-      select="//*[df:class(.,'map/topicref')][@processing-role = 'normal']"
-    />
+  <xsl:template match="/*[df:class(., 'map/map')]" mode="chunked-map-processing">
+     <xsl:param name="doDebug" as="xs:boolean" tunnel="yes" select="false()"/>
+     <xsl:param name="isChunkedMap" as="xs:boolean" tunnel="yes" />
+    <!-- this is intended to allow developper to add custom hook -->
+    <xsl:message>  + [INFO] Processing Chunked Map</xsl:message>
+
+     <xsl:variable name="chunkTopicrefs" as="element()*" select="df:getUniqueTopicrefsFromChunkedMap(.)"/>
 
     <xsl:if test="$doDebug">
-      <xsl:message> + [DEBUG] chunkRootTopicrefs=
-        <xsl:sequence select="$chunkRootTopicrefs"/>
+      <xsl:message> + [DEBUG] chunkRootTopicref=
+        <xsl:sequence select="$chunkTopicrefs"/>
       </xsl:message>
     </xsl:if>
+
+    <xsl:message> + [INFO] Collecting data for index generation, enumeration, etc....</xsl:message>
+
+    <!-- collected data -->
+    <xsl:variable name="collected-data" as="element()">
+      <xsl:call-template name="mapdriven:collect-data"/>
+    </xsl:variable>
+
+    <!-- map data elements -->
+    <xsl:variable name="map-metadata" as="element()*">
+      <xsl:sequence select="*[contains(@class, ' map/topicmeta ')]/*[contains(@class, 'topic/data')]" />
+    </xsl:variable>
+
+    <xsl:if test="false() or $debugBoolean">
+      <xsl:message> + [DEBUG] Writing file <xsl:sequence select="relpath:newFile($outdir, 'collected-data.xml')"/>...</xsl:message>
+      <xsl:result-document href="{relpath:newFile($outdir, 'collected-data.xml')}"
+        format="indented-xml"
+        >
+        <xsl:sequence select="$collected-data"/>
+      </xsl:result-document>
+    </xsl:if>
+
+    <xsl:variable name="documentation-title" as="xs:string">
+        <xsl:apply-templates select="." mode="generate-root-page-header" />
+    </xsl:variable>
+
+     <!-- NOTE: By default, this mode puts its output in the main output file
+         produced by the transform.
+    -->
+    <xsl:variable name="navigation" as="element()*">
+      <xsl:apply-templates select="." mode="choose-html5-nav-markup" >
+        <xsl:with-param name="collected-data" as="element()" select="$collected-data" tunnel="yes"/>
+        <xsl:with-param name="uniqueTopicRefs" as="element()*" select="$chunkTopicrefs" tunnel="yes"/>
+        <xsl:with-param name="has-index" as="xs:boolean" select="false()" tunnel="yes" />
+        <xsl:with-param name="documentation-title" select="$documentation-title" tunnel="yes"/>
+        <xsl:with-param name="isChunkedMap" as="xs:boolean" select="$isChunkedMap" tunnel="yes"/>
+        <xsl:with-param name="indexUri" as="xs:string" select="$indexUri" tunnel = "yes" />
+      </xsl:apply-templates>
+    </xsl:variable>
+
+    <xsl:apply-templates select="." mode="generate-chunked-map-content">
+      <xsl:with-param name="collected-data" as="element()" select="$collected-data" tunnel="yes"/>
+      <xsl:with-param name="uniqueTopicRefs" as="element()*" select="$chunkTopicrefs" tunnel="yes"/>
+      <xsl:with-param name="navigation" as="element()*" select="$navigation" tunnel="yes"/>
+      <xsl:with-param name="baseUri" as="xs:string" select="@xtrf" tunnel="yes"/>
+      <xsl:with-param name="documentation-title" select="$documentation-title" tunnel="yes"/>
+      <xsl:with-param name="has-index" as="xs:boolean" select="false()" tunnel="yes" />
+      <xsl:with-param name="is-root" as="xs:boolean" select="false()" tunnel="yes"/>
+      <xsl:with-param name="map-metadata" select="$map-metadata" tunnel="yes"/>
+      <xsl:with-param name="indexUri" as="xs:string" select="$indexUri" tunnel = "yes" />
+      <xsl:with-param name="isChunkedMap" as="xs:boolean" select="$isChunkedMap" tunnel="yes"/>
+    </xsl:apply-templates>
+
+  </xsl:template>
+
+  <xsl:template match="/*[df:class(., 'map/map')]" mode="standard-map-processing">
+    <xsl:param name="isChunkedMap" as="xs:boolean" tunnel="yes" />
+    <xsl:param name="doDebug" as="xs:boolean" tunnel="yes" select="false()"/>
+    <!-- this is intended to allow developper to add custom hook -->
+    <xsl:message>  + [INFO] Processing Standard Map</xsl:message>
+
+    <xsl:variable name="uniqueTopicRefs" as="element()*" select="df:getUniqueTopicrefs(.)"/>
 
     <!-- graphic map -->
     <xsl:message> + [INFO] Generating graphicMap...</xsl:message>
@@ -443,6 +515,7 @@
         <xsl:with-param name="has-index" as="xs:boolean" select="$has-index" tunnel="yes" />
         <xsl:with-param name="documentation-title" select="$documentation-title" tunnel="yes"/>
         <xsl:with-param name="audienceSelect"  select="$audienceSelect" tunnel="yes"/>
+        <xsl:with-param name="showTocEntry" as="xs:boolean" tunnel="yes" select="true()" />
       </xsl:apply-templates>
     </xsl:variable>
 

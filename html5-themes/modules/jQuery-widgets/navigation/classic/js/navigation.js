@@ -225,11 +225,3 @@ var navigation = {
     this.setCloseEvt();
   }
 };
-
-$(function() {
-  if(!$('body').hasClass('homepage'))
-  {
-    navigation.init();
-  }
-});
-

@@ -28,47 +28,10 @@
   version="2.0"
 >
 
-  <!-- generate root pages -->
-   <xsl:template match="*[df:class(., 'map/map')]" mode="generate-root-pages">
-    <xsl:param name="uniqueTopicRefs" as="element()*" tunnel="yes"/>
-    <xsl:apply-templates select="." mode="generate-root-nav-page"/>
-  </xsl:template>
-
-  <xsl:template match="*[df:class(., 'map/map')]" mode="generate-root-nav-page">
-    <!-- Generate the root output page. By default this page contains the root
-         navigation elements. The direct output of this template goes to the
-         default output target of the XSLT transform.
-    -->
-    <xsl:param name="uniqueTopicRefs" as="element()*" tunnel="yes"/>
-    <xsl:param name="collected-data" as="element()" tunnel="yes"/>
-    <xsl:param name="firstTopicUri" as="xs:string?" tunnel="yes"/>
-    <xsl:param name="rootMapDocUrl" as="xs:string" tunnel="yes"/>
-
-    <xsl:variable name="initialTopicUri"
-      as="xs:string"
-      select="
-      if ($firstTopicUri != '')
-       then $firstTopicUri
-       else htmlutil:getInitialTopicrefUri($uniqueTopicRefs, $topicsOutputPath, $outdir, $rootMapDocUrl)
-       "
-    />
-
-
-    <xsl:message> + [INFO] Generating index document <xsl:sequence select="$indexUri"/>...</xsl:message>
-   <xsl:result-document format="html5" href="{$indexUri}">
-      <xsl:apply-templates mode="generate-html5-page" select=".">
-        <xsl:with-param name="resultUri" as="xs:string" select="$indexUri" tunnel="yes"/>
-        <xsl:with-param name="is-root" as="xs:boolean" select="true()"/>
-        <xsl:with-param name="firstTopicUri" as="xs:string?" tunnel="yes" select="$initialTopicUri" />
-      </xsl:apply-templates>
-    </xsl:result-document>
-  </xsl:template>
-
   <xsl:template match="*[df:class(., 'map/map')]" mode="generate-content">
     <xsl:param name="uniqueTopicRefs" as="element()*" tunnel="yes"/>
     <xsl:param name="rootMapDocUrl" as="xs:string" tunnel="yes"/>
     <xsl:message> + [INFO] Generating content...</xsl:message>
-
     <xsl:if test="false() and $debugBoolean">
       <xsl:message> + [DEBUG] ------------------------------- + [DEBUG] Unique topics: <xsl:for-each
           select="$uniqueTopicRefs"> + [DEBUG] <xsl:sequence select="name(.)"/>: generated id="<xsl:sequence
@@ -121,11 +84,6 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-
-  <!--xsl:template match="*" mode="generate-content" priority="-1">
-    <xsl:message> + [DEBUG] In catchall for generate-content, got
-      <xsl:sequence select="."/></xsl:message>
-  </xsl:template-->
 
   <xsl:template match="*[df:class(., 'topic/topic')]" mode="generate-content">
     <!-- This template generates the output file for a referenced topic.
@@ -180,12 +138,6 @@
       </xsl:apply-templates>
     </xsl:result-document>
   </xsl:template>
-
-  <xsl:template mode="no-namespace-html-post-process" match="html">
-    <!-- Default post-processing for HTML: just copy input back to the output -->
-    <xsl:apply-templates select="." mode="html-identity-transform"/>
-  </xsl:template>
-
 
   <xsl:template match="*[df:class(., 'topic/topic')]" priority="100" mode="map-driven-content-processing">
     <!-- This template is a general dispatch template that applies

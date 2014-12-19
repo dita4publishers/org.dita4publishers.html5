@@ -43,3 +43,8 @@ d4p.getDocumentationRoot = function ()
   var loc = window.location.pathname;
   return loc.substring(0, loc.lastIndexOf('/')) + '/' + (d4p.relativePath == null ? '' : d4p.relativePath);
 }
+
+d4p.mapIsChunked = function()
+{
+  return d4p.map != undefined && d4p.map.chunked != undefined && d4p.map.chunked === true ? true : false;
+}

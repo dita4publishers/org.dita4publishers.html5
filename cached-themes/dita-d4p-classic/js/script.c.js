@@ -10843,6 +10843,11 @@ d4p.getDocumentationRoot = function ()
   var loc = window.location.pathname;
   return loc.substring(0, loc.lastIndexOf('/')) + '/' + (d4p.relativePath == null ? '' : d4p.relativePath);
 }
+
+d4p.mapIsChunked = function()
+{
+  return d4p.map != undefined && d4p.map.chunked != undefined && d4p.map.chunked === true ? true : false;
+}
 /**
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
@@ -11070,14 +11075,6 @@ var navigation = {
     this.setCloseEvt();
   }
 };
-
-$(function() {
-  if(!$('body').hasClass('homepage'))
-  {
-    navigation.init();
-  }
-});
-
 /*!
  * jQuery UI 1.8.21
  *
@@ -27612,7 +27609,7 @@ function searchIdx()
   this.idx = lunr(function () {
     this.field('title', { boost: 10 })
     this.field('desc', { boost: 5 })
-    this.field('body')
+    this.field('keywords')
   });
   this.str;
   this.data = {};
@@ -27624,13 +27621,17 @@ function searchIdx()
  */
 searchIdx.prototype.getData = function()
 {
-  var self = this;
-  console.log(d4p.getDocumentationRoot() + 'search-index.json');
-  $.getJSON(d4p.getDocumentationRoot() + 'search-index.json', function( data ) {
-    self.data = data.idx;
-    $.each(self.data.topics, function( index, value ) {
-      self.idx.add(value);
-    })
+ var self = this;
+  $.ajax({
+  dataType: "json",
+  async: true,
+  url: d4p.getDocumentationRoot() + 'search-index.json',
+    success: function( data ) {
+      self.data = data.idx;
+      $.each(self.data.topics, function( index, value ) {
+        self.idx.add(value);
+      })
+    }
   });
 }
 
@@ -27683,37 +27684,6 @@ searchIdx.prototype.output = function()
 }
 
 
-$(function() {
-  var idx = new searchIdx(),
-  closeBtn = $('<button />').attr('id', 'searchClose').attr('class', 'float_right').append($('<span />').attr('class', 'fi fi-x')).append($('<span />').html(d4p.l.close).attr('class', 'hidden')).hide();
-
-  idx.getData();
-  idx.searchResultPlaceholder();
-
-  $('#search-text').after(closeBtn);
-
-  closeBtn.on('click', function(){
-    $('#page').children().show();
-    $('#search_result').hide();
-    $('#search-text').val('');
-    $(this).hide();
-   });
-
-  $( "#search" ).submit(function( event ) {
-    event.preventDefault();
-  });
-
-  $('#search-text').keyup(function( event ) {
-    if($(this).val().length > d4p.search.minlength)
-    {
-      idx.search($(this).val());
-      idx.output();
-      $('#page').children().hide();
-      $('#search_result').show();
-      $('#searchClose').show();
-    }
-  });
-});
 // JSLint settings:
 /*global
   ADAPT_CONFIG,
@@ -27874,6 +27844,12 @@ $.extend( $.fn.dataTable.defaults, {
 
 $(document).ready(function() {
 
+
+  if(!$('body').hasClass('homepage'))
+  {
+    navigation.init();
+  }
+
   $('table').each(function( index ) {
     var opts = jQuery.parseJSON($(this).attr('data-options'))
     if(opts.d4p_datatable.activate == '1')
@@ -27881,5 +27857,38 @@ $(document).ready(function() {
        $(this).DataTable(opts.d4p_datatable.options);
     }
   });
-  }
-);
+
+
+  var idx = new searchIdx(),
+  closeBtn = $('<button />').attr('id', 'searchClose').attr('class', 'float_right').append($('<span />').attr('class', 'fi fi-x')).append($('<span />').html(d4p.l.close).attr('class', 'hidden')).hide();
+
+  idx.getData();
+  idx.searchResultPlaceholder();
+
+  $('#search-text').after(closeBtn);
+
+  closeBtn.on('click', function(){
+    $('#page').children().show();
+    $('#search_result').hide();
+    $('#search-text').val('');
+    $(this).hide();
+   });
+
+  $( "#search" ).submit(function( event ) {
+    event.preventDefault();
+  });
+
+  $('#search-text').keyup(function( event ) {
+    if($(this).val().length > d4p.search.minlength)
+    {
+      idx.search($(this).val());
+      idx.output();
+      $('#page').children().hide();
+      $('#search_result').show();
+      $('#searchClose').show();
+    }
+  });
+
+
+
+});

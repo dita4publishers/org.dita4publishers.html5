@@ -61,25 +61,7 @@
     <xsl:param name="collected-data" as="element()" tunnel="yes"/>
     <xsl:param name="documentation-title" tunnel="yes" />
     <xsl:param name="is-root" as="xs:boolean" tunnel="yes" select="false()" />
-
-    <xsl:if test="not($is-root)">
-
-      <!-- this navigation block is shown only on mobile view -->
-      <nav class="mobile-nav">
-        <ul>
-          <li class="toggle-topbar menu-icon">
-            <a id="toggle-nav-content" href="#{$IDLOCALNAV}">
-              <xsl:call-template name="getString">
-                <xsl:with-param name="stringName" select="'menu'"/>
-              </xsl:call-template>
-            </a>
-          </li>
-        </ul>
-        <section class="nav-pub-title">
-          <xsl:value-of select="$documentation-title" />
-        </section>
-      </nav>
-    </xsl:if>
+    <xsl:param name="showTocEntry" as="xs:boolean" tunnel="yes" select="false()" />
 
     <nav id="{$IDLOCALNAV}" role="navigation" aria-label="Main navigation">
       <xsl:attribute name="class" select="$CLASSNAVIGATION"/>
@@ -99,9 +81,15 @@
 
         <xsl:if test="$listItems">
           <ul>
-             <li class="toc_link"><a href="index.html"><xsl:call-template name="getString">
-              <xsl:with-param name="stringName" select="'TOC'"/>
-            </xsl:call-template></a></li>
+            <xsl:if test="$showTocEntry">
+              <li class="toc_link">
+                <a href="index.html">
+                  <xsl:call-template name="getString">
+                    <xsl:with-param name="stringName" select="'TOC'"/>
+                  </xsl:call-template>
+                </a>
+              </li>
+            </xsl:if>
             <xsl:sequence select="$listItems"/>
           </ul>
         </xsl:if>
@@ -121,6 +109,8 @@
   <xsl:template match="*[df:isTopicRef(.)][not(@processing-role = 'resource-only')][not(@toc = 'no')]" mode="generate-html5-nav">
     <xsl:param name="tocDepth" as="xs:integer" tunnel="yes" select="0"/>
     <xsl:param name="rootMapDocUrl" as="xs:string" tunnel="yes"/>
+    <xsl:param name="isChunkedMap" as="xs:boolean" select="false()" tunnel="yes"/>
+    <xsl:param name="indexUri" as="xs:string" select="''" tunnel = "yes" />
 
     <xsl:if test="$tocDepth le $maxTocDepthInt">
       <xsl:variable name="topic" select="df:resolveTopicRef(.)" as="element()*"/>
@@ -131,7 +121,7 @@
         </xsl:when>
         <xsl:otherwise>
           <xsl:variable name="targetUri"
-            select="htmlutil:getTopicResultUrl($outdir, root($topic), $rootMapDocUrl)"
+            select="if($isChunkedMap) then concat($outdir, htmlutil:getTopicrefUrlHash(.)) else htmlutil:getTopicResultUrl($outdir, root($topic), $rootMapDocUrl)"
             as="xs:string"/>
           <xsl:variable name="relativeUri" select="relpath:getRelativePath($outdir, $targetUri)"
             as="xs:string"/>
@@ -164,15 +154,22 @@
                 </xsl:apply-templates>
               </xsl:variable>
               <xsl:if test="$listItems">
-                <ul>
-                  <xsl:sequence select="$listItems"/>
-                </ul>
+                <xsl:call-template name="nav-child-items">
+                  <xsl:with-param name="listItems" select="$listItems" />
+                </xsl:call-template>
               </xsl:if>
             </xsl:if>
           </li>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:if>
+  </xsl:template>
+
+  <xsl:template name="nav-child-items">
+    <xsl:param name="listItems" as="node()*" />
+    <ul>
+      <xsl:sequence select="$listItems"/>
+    </ul>
   </xsl:template>
 
   <xsl:template match="*[df:isTopicGroup(.)]" priority="20" mode="generate-html5-nav">
