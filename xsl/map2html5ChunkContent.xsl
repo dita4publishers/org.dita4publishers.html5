@@ -47,7 +47,6 @@
       <xsl:apply-templates select="$topics/*" mode="render"/>
     </xsl:variable>
 
-
     <xsl:result-document format="html5" href="{$indexUri}">
       <xsl:apply-templates mode="generate-html5-page" select=".">
         <xsl:with-param name="resultUri" as="xs:string" select="$indexUri" tunnel="yes"/>
@@ -64,8 +63,9 @@
     <xsl:apply-templates select="." />
   </xsl:template>
 
-   <xsl:template match="*[df:class(., 'topic/topic')]" mode="render">
+   <xsl:template match="*[df:class(., 'topic/topic')][not(ancestor::*[df:class(., 'topic/topic')])]" mode="render">
       <article>
+        <xsl:call-template name="set_an_anchor" />
         <xsl:apply-templates select="*" />
       </article>
    </xsl:template>
@@ -74,10 +74,6 @@
     <xsl:param name="rootMapDocUrl" as="xs:string" tunnel="yes"/>
     <xsl:param name="collected-data" as="element()" tunnel="yes"/>
     <xsl:param name="resultUri" as="xs:string" tunnel="yes"/>
-    <xsl:if test="false() and $debugBoolean">
-      <xsl:message> + [DEBUG] Handling topicref to "<xsl:sequence select="string(@href)"/>" in mode
-        generate-content</xsl:message>
-    </xsl:if>
 
     <xsl:variable name="topic" select="df:resolveTopicRef(.)" as="element()*"/>
 
@@ -87,11 +83,13 @@
             select="string(@href)"/>"</xsl:message>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:sequence select="$topic" />
+        <xsl:element name="{name($topic)}">
+           <xsl:copy-of select="$topic/@*"/>
+           <xsl:sequence select="$topic/*" />
+        </xsl:element>
       </xsl:otherwise>
     </xsl:choose>
 
   </xsl:template>
-
 
 </xsl:stylesheet>

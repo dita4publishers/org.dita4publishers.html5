@@ -121,7 +121,7 @@
         </xsl:when>
         <xsl:otherwise>
           <xsl:variable name="targetUri"
-            select="if($isChunkedMap) then concat($outdir, htmlutil:getTopicrefUrlHash(.)) else htmlutil:getTopicResultUrl($outdir, root($topic), $rootMapDocUrl)"
+            select="if($isChunkedMap) then concat($outdir, '#', df:getIdForElement(.)) else htmlutil:getTopicResultUrl($outdir, root($topic), $rootMapDocUrl)"
             as="xs:string"/>
           <xsl:variable name="relativeUri" select="relpath:getRelativePath($outdir, $targetUri)"
             as="xs:string"/>
