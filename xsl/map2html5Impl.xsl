@@ -23,10 +23,11 @@
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl"
   xmlns:df="http://dita2indesign.org/dita/functions"
-  xmlns:index-terms="http://dita4publishers.org/index-terms"
   xmlns:relpath="http://dita2indesign/functions/relpath"
   xmlns:mapdriven="http://dita4publishers.org/mapdriven"
-  exclude-result-prefixes="xs xd df relpath mapdriven index-terms java xsl mapdriven"
+  xmlns:htmlutil="http://dita4publishers.org/functions/htmlutil"
+  xmlns:index-terms="http://dita4publishers.org/index-terms"
+  exclude-result-prefixes="xs xd df relpath mapdriven index-terms java xsl mapdriven htmlutil"
   xmlns:java="org.dita.dost.util.ImgUtils"
   version="2.0">
 

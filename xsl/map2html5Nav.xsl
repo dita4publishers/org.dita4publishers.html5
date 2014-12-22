@@ -31,6 +31,20 @@
   xmlns:local="urn:functions:local"
   exclude-result-prefixes="local xs df xsl relpath htmlutil index-terms mapdriven glossdata enum">
 
+  <xsl:template name="navigation">
+    <xsl:param name="navigation" as="element()*"  tunnel="yes" />
+    <xsl:param name="is-root" as="xs:boolean"  tunnel="yes" select="false()" />
+    <xsl:param name="resultUri" as="xs:string" tunnel="yes" select="''" />
+    <xsl:if test="$OUTPUTDEFAULTNAVIGATION and $is-root = false()">
+    <xsl:variable name="navigation-fixed">
+      <xsl:apply-templates select="$navigation" mode="fix-navigation-href">
+        <xsl:with-param name="resultUri" select="$resultUri" />
+      </xsl:apply-templates>
+    </xsl:variable>
+    <xsl:sequence select="$navigation-fixed"/>
+    </xsl:if>
+  </xsl:template>
+
   <!--
     choose navigation markup type
     will be used later to offer alternate markup for navigation

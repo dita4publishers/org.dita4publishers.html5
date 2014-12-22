@@ -90,4 +90,5 @@
     <param name="generateIndex" expression="${generateIndex}" />
     <param name="generateSearchEngine" expression="${generateSearchEngine}" />
     <param name="navigationLeft" expression="${navigationLeft}" />
+    <param name="alternateFormat" expression="${alternateFormat}" />
 </params>

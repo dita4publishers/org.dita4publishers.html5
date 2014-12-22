@@ -2271,7 +2271,7 @@ ul li.collapsible {
   cursor: pointer;
 }
 
-ul li.collapsible.collapsed > ul, ul li.collapsible.active.collapsed  > ul, ul li.topichead.collapsible.collapsed > ul, ul li.collapsible ul li {
+ul li.collapsible.collapsed ul, ul li.collapsible.collapsed > ul, ul li.collapsible.active.collapsed  > ul, ul li.topichead.collapsible.collapsed > ul {
    display:none;
 }
 
@@ -2283,7 +2283,7 @@ ul li.collapsible {
   display:block;
 }
 
-li.collapsible span {
+li.collapsible span.ic {
   display:block;
   position:absolute;
   top:4px;
