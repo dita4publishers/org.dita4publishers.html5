@@ -175,8 +175,8 @@
   <xsl:template match="*" mode="generate-main">
     <xsl:param name="is-root" as="xs:boolean"  tunnel="yes" select="false()" />
     <xsl:param name="navigation" as="element()*"  tunnel="yes" />
-    <section id="page">
 
+    <section id="page">
       <div>
         <xsl:attribute name="class"><xsl:value-of select="concat('page', ' ', name(.), ' ', @outputclass, ' ', replace(replace(@class, '/', '-'), '-', ' '))" /></xsl:attribute>
 
@@ -216,10 +216,33 @@
 
         <xsl:call-template name="gen-endnotes"/>    <!-- include footnote-endnotes -->
 
+        <xsl:apply-templates select="." mode="generate-previous-next-topic-links"/>
+
         <xsl:apply-templates select="*[contains(@class,' ditaot-d/ditaval-endprop ')]" mode="out-of-line"/>
       </div>
     </section>
     <xsl:value-of select="$newline"/>
+  </xsl:template>
+
+   <!-- generate html5 footer, import from XML file -->
+  <xsl:template match="*" mode="generate-previous-next-topic-links">
+     <xsl:param name="topicref" as="element()*" tunnel="yes"/>
+
+     <footer id="topicsNPLinks">
+
+       <div id="footer_previous">
+            <xsl:call-template name="getPrevTopicReference">
+                <xsl:with-param name="topicref" select="$topicref" />
+            </xsl:call-template>
+       </div>
+
+       <div id="footer_next">
+          <xsl:call-template name="getNextTopicReference">
+                <xsl:with-param name="topicref" select="$topicref" />
+          </xsl:call-template>
+       </div>
+
+     </footer>
   </xsl:template>
 
   <!-- generate main container -->
@@ -239,26 +262,11 @@
     <xsl:param name="resultUri" as="xs:string" tunnel="yes" select="''" />
 
     <div id="{$IDSECTIONCONTAINER}" class="{$CLASSSECTIONCONTAINER}">
-
-      <xsl:if test="$OUTPUTDEFAULTNAVIGATION">
-        <xsl:choose>
-          <xsl:when test="$is-root">
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:variable name="navigation-fixed">
-              <xsl:apply-templates select="$navigation" mode="fix-navigation-href">
-                <xsl:with-param name="resultUri" select="$resultUri" />
-              </xsl:apply-templates>
-            </xsl:variable>
-            <xsl:sequence select="$navigation-fixed"/>
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:if>
-
+      <xsl:call-template name="navigation"/>
       <xsl:apply-templates select="." mode="generate-main-content"/>
-
       <div class="clearfix"></div>
     </div>
+
   </xsl:template>
 
    <!-- generate main content -->
@@ -320,7 +328,6 @@
         <xsl:call-template name="inline-breadcrumbs"/>
       </xsl:otherwise>
     </xsl:choose>
-
   </xsl:template>
 
 
@@ -333,6 +340,8 @@
     <xsl:sequence select="'&#x0a;'"/>
   </div>
   </xsl:template>
+
+
 
 
   <!--
