@@ -389,7 +389,7 @@
     <property name="map2html5.style" location="${d4p.html5.dir}/xsl/map2html5.xsl"/>
     <property name="args.xhtml.toc" value="index"/>
 
-    <xslt processor="trax"
+    <xslt 
       basedir="${dita.temp.dir}"
       destdir="${output.dir}"
       includesfile="${dita.temp.dir}${file.separator}${user.input.file.listfile}"
@@ -452,7 +452,7 @@
       <param name="html5sitetheme" expression="${html5.site.theme}"/>
       <param name="themedir" expression="${html5.themes.dir}"/>
       <param name="ouputdir" expression="${output.dir}"/>
-      <param name="inputdir" expression="${dita.input.dirname}"/>
+<!--      <param name="inputdir" expression="${dita.input.dirname}"/>-->
       <xmlcatalog refid="dita.catalog"></xmlcatalog>
   </xslt>
 

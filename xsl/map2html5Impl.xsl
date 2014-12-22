@@ -80,8 +80,12 @@
   <xsl:param name="outdir" select="./html5" />
   <!-- The directory containing the original input root map (not the
        the temporary directory containing the map we're already processing.
+       
+       NOTE: As of OT 2.0, there is no Ant parameter that provides the input directory,
+             so we use the @xtrf attribute to get the directory containing the input
+             map.
     -->
-  <xsl:param name="inputdir" select="relpath:getParent(document-uri(.))" as="xs:string"/>
+  <xsl:param name="inputdir" select="relpath:getParent(relpath:getParent(/*/@xtrf))" as="xs:string"/>
 
  <!--
     NOTE: Case of OUTEXT parameter matches case used in base HTML
@@ -303,7 +307,6 @@
 
       + CSS             = "<xsl:sequence select="$CSS"/>"
       + CSSPATH         = "<xsl:sequence select="$CSSPATH"/>"
-      + DITAEXT         = "<xsl:sequence select="$DITAEXT"/>"
       + FILEDIR         = "<xsl:sequence select="$FILEDIR"/>"
       + FILTERFILE      = "<xsl:sequence select="$FILTERFILE"/>"
       + KEYREF-FILE     = "<xsl:sequence select="$KEYREF-FILE"/>"

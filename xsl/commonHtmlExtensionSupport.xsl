@@ -31,8 +31,9 @@
   xmlns:java="org.dita.dost.util.ImgUtils"
   xmlns:json="http://json.org/"
   xmlns:related-links="http://dita-ot.sourceforge.net/ns/200709/related-links"
-  exclude-result-prefixes="random xs xd df relpath mapdriven index-terms java xsl mapdriven json related-links"
-  version="1.0">
+  xmlns:local="urn:functions:local"
+  exclude-result-prefixes="random xs xd df relpath mapdriven index-terms java xsl mapdriven json related-links local"
+  version="2.0">
 
   <!-- Process standard attributes that may appear anywhere. Previously this was "setclass" -->
   <xsl:template name="commonattributes">
@@ -98,9 +99,6 @@
       </xsl:call-template>
     </xsl:param>
 
-    <xsl:variable name="flagrules">
-      <xsl:call-template name="getrules"/>
-    </xsl:variable>
     <!-- note, attention, caution, fastpath, important, notice, remember, restriction, tip, warning, other -->
     <xsl:variable name="html5NoteElement">
       <xsl:choose>
@@ -118,15 +116,11 @@
 
       <xsl:attribute name="class" select="concat('note', ' ', $type, ' ', @importance)"/>
 
-      <xsl:call-template name="gen-style">
-        <xsl:with-param name="flagrules" select="$flagrules"/>
-      </xsl:call-template>
+      <xsl:call-template name="gen-style"/>
 
       <xsl:call-template name="setidaname"/>
 
-      <xsl:call-template name="start-flagit">
-        <xsl:with-param name="flagrules" select="$flagrules"/>
-      </xsl:call-template>
+      <xsl:call-template name="start-flagit"/>
 
       <span class="title">
         <xsl:value-of select="$title"/>
@@ -137,22 +131,15 @@
 
       <xsl:text> </xsl:text>
 
-      <xsl:call-template name="revblock">
-        <xsl:with-param name="flagrules" select="$flagrules"/>
-      </xsl:call-template>
+      <xsl:call-template name="revblock"/>
 
-      <xsl:call-template name="end-flagit">
-        <xsl:with-param name="flagrules" select="$flagrules"/>
-      </xsl:call-template>
+      <xsl:call-template name="end-flagit"/>
 
     </xsl:element>
   </xsl:template>
 
 
   <xsl:template match="*[contains(@class,' topic/image ')]" name="topic.image">
-  <xsl:variable name="flagrules">
-    <xsl:call-template name="getrules"/>
-  </xsl:variable>
   <!-- build any pre break indicated by style -->
   <xsl:choose>
     <xsl:when test="parent::fig[contains(@frame,'top ')]">
@@ -161,7 +148,7 @@
     <xsl:otherwise>
      <xsl:choose>
       <xsl:when test="(@placement='break')"><br/>
-        <xsl:call-template name="start-flagit"><xsl:with-param name="flagrules" select="$flagrules"/></xsl:call-template>
+        <xsl:call-template name="start-flagit"/>
       </xsl:when>
       <xsl:otherwise>
        <xsl:call-template name="flagcheck"/>
@@ -169,9 +156,7 @@
      </xsl:choose>
     </xsl:otherwise>
   </xsl:choose>
-  <xsl:call-template name="start-revflag">
-    <xsl:with-param name="flagrules" select="$flagrules"/>
-  </xsl:call-template>
+  <xsl:call-template name="start-revflag"/>
   <xsl:call-template name="setaname"/>
   <xsl:choose>
 
@@ -187,12 +172,8 @@
    </xsl:otherwise>
   </xsl:choose>
 
-  <xsl:call-template name="end-revflag">
-    <xsl:with-param name="flagrules" select="$flagrules"/>
-  </xsl:call-template>
-  <xsl:call-template name="end-flagit">
-    <xsl:with-param name="flagrules" select="$flagrules"></xsl:with-param>
-  </xsl:call-template>
+  <xsl:call-template name="end-revflag"/>
+  <xsl:call-template name="end-flagit"/>
   <!-- build any post break indicated by style -->
   <xsl:if test="not(@placement='inline')"><br/></xsl:if>
   <!-- image name for review -->
@@ -202,19 +183,9 @@
 <!-- @see https://bugzilla.mozilla.org/show_bug.cgi?id=276431-->
 <xsl:template name="topic-image">
 
-  <xsl:variable name="ends-with-svg">
-    <xsl:call-template name="ends-with">
-      <xsl:with-param name="text" select="@href"/>
-      <xsl:with-param name="with" select="'.svg'"/>
-    </xsl:call-template>
-  </xsl:variable>
+  <xsl:variable name="ends-with-svg" select="ends-with(@href, '.svg')" as="xs:boolean"/>
 
-  <xsl:variable name="ends-with-svgz">
-    <xsl:call-template name="ends-with">
-      <xsl:with-param name="text" select="@href"/>
-      <xsl:with-param name="with" select="'.svgz'"/>
-    </xsl:call-template>
-  </xsl:variable>
+  <xsl:variable name="ends-with-svgz" select="ends-with(@href, '.svgz')" as="xs:boolean"/>
 
   <xsl:variable name="scale-to-fit">
   <xsl:choose>
@@ -224,7 +195,7 @@
   </xsl:choose>
   </xsl:variable>
 
-  <xsl:variable name="isSVG" select="$ends-with-svg = 'true' or $ends-with-svgz = 'true'"/>
+  <xsl:variable name="isSVG" select="$ends-with-svg or $ends-with-svgz" as="xs:boolean"/>
 
 <xsl:choose>
  <xsl:when test="$isSVG">
@@ -349,7 +320,8 @@
         <xsl:value-of select= "@id"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:value-of select="concat('ID', random:getRandomNum())" />
+        <!-- NOTE: getRandomNum() is not available in OT 2.0. -->
+        <xsl:value-of select="concat('ID_', generate-id(.))" />
       </xsl:otherwise>
     </xsl:choose>
   </xsl:variable>
@@ -493,11 +465,23 @@
     <xsl:for-each select="descendant::*
      [contains(@class, ' topic/link ')]
      [(@role='parent' and
-          generate-id(.)=generate-id(key('link',concat(ancestor::*[contains(@class, ' topic/related-links ')]/parent::*[contains(@class, ' topic/topic ')]/@id, ' ', @href,@type,@role,@platform,@audience,@importance,@outputclass,@keyref,@scope,@format,@otherrole,@product,@otherprops,@rev,@class,child::*))[1])
-     ) or (@role='next' and
-          generate-id(.)=generate-id(key('link',concat(ancestor::*[contains(@class, ' topic/related-links ')]/parent::*[contains(@class, ' topic/topic ')]/@id, ' ', @href,@type,@role,@platform,@audience,@importance,@outputclass,@keyref,@scope,@format,@otherrole,@product,@otherprops,@rev,@class,child::*))[1])
-     ) or (@role='previous' and
-          generate-id(.)=generate-id(key('link',concat(ancestor::*[contains(@class, ' topic/related-links ')]/parent::*[contains(@class, ' topic/topic ')]/@id, ' ', @href,@type,@role,@platform,@audience,@importance,@outputclass,@keyref,@scope,@format,@otherrole,@product,@otherprops,@rev,@class,child::*))[1])
+       generate-id(.)=generate-id(
+          key('link',
+               concat(ancestor::*[contains(@class, ' topic/related-links ')]/parent::*[contains(@class, ' topic/topic ')]/@id, 
+                      ' ', 
+                      local:getLinkKey(.)))[1])) or 
+       (@role='next' and
+        generate-id(.)=generate-id(
+           key('link',
+               concat(ancestor::*[contains(@class, ' topic/related-links ')]/parent::*[contains(@class, ' topic/topic ')]/@id, 
+                      ' ', 
+                      local:getLinkKey(.)))[1])) or 
+       (@role='previous' and
+        generate-id(.)=generate-id(
+            key('link',
+                concat(ancestor::*[contains(@class, ' topic/related-links ')]/parent::*[contains(@class, ' topic/topic ')]/@id, 
+                       ' ',
+                       local:getLinkKey(.)))[1])
      )]/parent::*">
       <xsl:value-of select="$newline"/>
 
@@ -541,4 +525,30 @@
       <xsl:value-of select="$newline"/>
     </xsl:for-each>
   </xsl:template>
+  
+  <xsl:function name="local:getLinkKey" as="xs:string">
+    <xsl:param name="linkElem" as="element()"/>
+    <xsl:variable name="childContent">
+      <xsl:value-of select="$linkElem/*"></xsl:value-of>
+    </xsl:variable>
+    <xsl:variable name="result" 
+      select="concat($linkElem/@href,
+              $linkElem/@type,
+              $linkElem/@role,
+              $linkElem/@platform,
+              $linkElem/@audience,
+              $linkElem/@importance,
+              $linkElem/@outputclass,
+              $linkElem/@keyref,
+              $linkElem/@scope,
+              $linkElem/@format,
+              $linkElem/@otherrole,
+              $linkElem/@product,
+              $linkElem/@otherprops,
+              $linkElem/@rev,
+              $linkElem/@class,
+              normalize-space($childContent))"
+    />
+    <xsl:sequence select="$result"/>
+  </xsl:function>
 </xsl:stylesheet>
