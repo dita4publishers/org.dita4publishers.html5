@@ -165,6 +165,10 @@
   <xsl:param name="generateSearchEngine" select="'true'"/>
   <xsl:param name="generateSearchEngineBoolean" select="matches($generateSearchEngine, 'yes|true|on|1', 'i')"/>
   <xsl:param name="searchEngineMinLength" as="xs:integer" select="2"/>
+
+  <xsl:param name="navigationLeft" select="'true'"/>
+  <xsl:param name="navigationLeftBoolean" select="matches($generateFrameset, 'yes|true|on|1', 'i')"/>
+
   <!-- -->
 
   <xsl:param name="dita-css" select="'css/topic-html5.css'" as="xs:string"/>
@@ -438,15 +442,15 @@
       <xsl:apply-templates select="." mode="generate-graphic-map">
       </xsl:apply-templates>
     </xsl:variable>
-    
+
     <xsl:if test="false() or $debugBoolean">
       <xsl:message> + [DEBUG] Writing file <xsl:sequence select="relpath:newFile($outdir, 'graphicMap.xml')"/>...</xsl:message>
       <xsl:result-document href="{relpath:newFile($outdir, 'graphicMap.xml')}" format="graphic-map">
       <xsl:sequence select="$graphicMap"/>
     </xsl:result-document>
     </xsl:if>
-  
-    
+
+
     <xsl:message> + [INFO] Collecting data for index generation, enumeration, etc....</xsl:message>
     <!-- collected data -->
     <xsl:variable name="collected-data" as="element()">
@@ -553,7 +557,7 @@
           <xsl:with-param name="is-root" as="xs:boolean" select="false()" tunnel="yes"/>
         </xsl:apply-templates>
     </xsl:if>
-    
+
     <!--xsl:apply-templates select="." mode="generate-glossary">
       <xsl:with-param name="collected-data" as="element()" select="$collected-data" tunnel="yes"/>
     </xsl:apply-templates-->
