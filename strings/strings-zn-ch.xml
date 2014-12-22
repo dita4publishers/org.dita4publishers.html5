@@ -29,4 +29,10 @@
   <str name="SearchPlaceholder">Search Documentation</str>
   <str name="searchPageHeading">Search Results</str>
   <str name="close">Close</str>
+  <str name="previousTopic">Previous Topic</str>
+  <str name="nextTopic">Next Topic</str>
+  <str name="twitter">Twitter</str>
+  <str name="facebook">Facebook</str>
+  <str name="mail">Mail</str>
+  <str name="print">Print</str>
 </strings>
