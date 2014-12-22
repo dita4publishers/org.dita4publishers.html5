@@ -44,7 +44,7 @@ ul li.collapsible {
   display:block;
 }
 
-li.collapsible span {
+li.collapsible span.ic {
   display:block;
   position:absolute;
   top:4px;
