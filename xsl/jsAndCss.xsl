@@ -245,6 +245,8 @@
   <!-- output D4p javascript object -->
   <xsl:template name="d4p-variables">
     <xsl:param name="relativePath" tunnel="yes" as="xs:string*" select="''"/>
+    <xsl:param name="isChunkedMap" as="xs:boolean" select="false()" tunnel="yes"/>
+    <xsl:param name="is-root" as="xs:boolean"  tunnel="yes" select="false()" />
 
     <xsl:variable name="d4p-js-object">
       <d4p>
@@ -254,6 +256,10 @@
          <draft><xsl:value-of select="if(ISDRAFT) then 'true' else 'false'"/></draft>
          <nextTopicHref><xsl:call-template name="getNextTopicHref"/></nextTopicHref>
          <previousTopicHref><xsl:call-template name="getPrevTopicHref"/></previousTopicHref>
+         <root><xsl:value-of select="$is-root"/></root>
+         <map>
+           <chunked><xsl:value-of select="$isChunkedMap"/></chunked>
+         </map>
          <search>
            <minlength><xsl:value-of select="$searchEngineMinLength" /></minlength>
          </search>

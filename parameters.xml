@@ -89,4 +89,5 @@
     <param name="DBG" expression="${args.debug}" if="args.debug" />
     <param name="generateIndex" expression="${generateIndex}" />
     <param name="generateSearchEngine" expression="${generateSearchEngine}" />
+    <param name="navigationLeft" expression="${navigationLeft}" />
 </params>

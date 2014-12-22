@@ -422,11 +422,32 @@
     </condition>
 
     <antcall target="html5.copy.graphics">
-      <param name="do.copy.graphics"  value="${local.skip.copy.graphics}"/>
+      <param name="do.copy.graphics" value="${local.skip.copy.graphics}"/>
     </antcall>
   </target>
 
-  <target name="html5.copy.graphics" unless="skip.copy.graphics"
+  <target name="html5.copy.graphics.check">
+    <available file="${output.dir}/copy-graphics.xml" property="copy-graphic.file.exists"/>
+
+    <condition property="skip.copy.graphics" value="yes">
+      <or>
+        <not>
+          <isset property="copy-graphic.file.exists"/>
+        </not>
+        <equals arg1="${do.copy.graphics}" arg2="no" />
+      </or>
+    </condition>
+  </target>
+
+  <target name="html5.copy.graphics.report" if="skip.copy.graphics">
+    <echo>Skipping Copy graphics</echo>
+  </target>
+
+  <target name="html5.copy.graphics.report.notexists" unless="copy-graphic.file.exists">
+   <echo>copy-graphics.xml does not exists</echo>
+  </target>
+
+  <target name="html5.copy.graphics" unless="skip.copy.graphics" depends="html5.copy.graphics.check, html5.copy.graphics.report.notexists, html5.copy.graphics.report"
     description="Copies graphics from input to the output directory based on the graphic map generated during html5 generation">
     <mkdir dir="${output.dir}/images"/>
     <ant antfile="${output.dir}/copy-graphics.xml"/>
