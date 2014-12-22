@@ -2271,21 +2271,26 @@ ul li.collapsible {
   cursor: pointer;
 }
 
-ul li.collapsible.collapsed > ul, ul li.collapsible.active.collapsed  > ul, ul li.topichead.collapsible.collapsed > ul {
+ul li.collapsible.collapsed > ul, ul li.collapsible.active.collapsed  > ul, ul li.topichead.collapsible.collapsed > ul, ul li.collapsible ul li {
    display:none;
 }
 
 ul li.collapsible {
-    cursor: pointer;
+  cursor: pointer;
 }
 
-#local-navigation.forced ul
-{
+.forced ul, .forced ul li.collapsible.collapsed ul, ul li.collapsible.active > ul, ul li.topichead  > ul, ul li.collapsible.active ul li {
   display:block;
 }
 
-ul li.collapsible.active > ul, ul li.topichead  > ul {
+li.collapsible span {
   display:block;
+  position:absolute;
+  top:4px;
+  left:-20px;
+  font-weight: normal;
+  z-index: 1000;
+  font-size:0.8em;
 }
 /**
  * SyntaxHighlighter

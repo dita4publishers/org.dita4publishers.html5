@@ -10952,7 +10952,6 @@ var navigation = {
          self.toggleState($(this).parent());
         });
 
-        //self.toggleState($(this));
       }
     });
   },
@@ -11014,7 +11013,7 @@ var navigation = {
 
     $('#'+this.toolbar.id).append(btnExpand);
     $('#'+this.toolbar.id).append(btnCollapse);
-    $('#'+this.toolbar.id).append(btnClose);
+    //$('#'+this.toolbar.id).append(btnClose);
   },
 
     setButtonClickEvt: function ()
