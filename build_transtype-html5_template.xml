@@ -335,6 +335,18 @@
       </not>
     </condition>
 
+    <condition property="navigationLeft" value="yes">
+      <not>
+        <isset property="navigationLeft" />
+      </not>
+    </condition>
+
+    <condition property="alternateFormat" value="epub,pdf">
+      <not>
+        <isset property="alternateFormat" />
+      </not>
+    </condition>
+
     <!--xmlproperty file="${html5.site.config}" collapseAttributes="true" semanticAttributes="true" /-->
 
   </target>
