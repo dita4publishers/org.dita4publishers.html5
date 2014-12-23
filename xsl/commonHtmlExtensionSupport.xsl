@@ -33,7 +33,7 @@
   xmlns:related-links="http://dita-ot.sourceforge.net/ns/200709/related-links"
   xmlns:local="urn:functions:local"
   exclude-result-prefixes="random xs xd df relpath mapdriven index-terms java xsl mapdriven json related-links local"
-  version="2.0">
+  version="1.0">
 
   <!-- Process standard attributes that may appear anywhere. Previously this was "setclass" -->
   <xsl:template name="commonattributes">
@@ -467,19 +467,19 @@
      [(@role='parent' and
        generate-id(.)=generate-id(
           key('link',
-               concat(ancestor::*[contains(@class, ' topic/related-links ')]/parent::*[contains(@class, ' topic/topic ')]/@id, 
-                      ' ', 
-                      local:getLinkKey(.)))[1])) or 
+               concat(ancestor::*[contains(@class, ' topic/related-links ')]/parent::*[contains(@class, ' topic/topic ')]/@id,
+                      ' ',
+                      local:getLinkKey(.)))[1])) or
        (@role='next' and
         generate-id(.)=generate-id(
            key('link',
-               concat(ancestor::*[contains(@class, ' topic/related-links ')]/parent::*[contains(@class, ' topic/topic ')]/@id, 
-                      ' ', 
-                      local:getLinkKey(.)))[1])) or 
+               concat(ancestor::*[contains(@class, ' topic/related-links ')]/parent::*[contains(@class, ' topic/topic ')]/@id,
+                      ' ',
+                      local:getLinkKey(.)))[1])) or
        (@role='previous' and
         generate-id(.)=generate-id(
             key('link',
-                concat(ancestor::*[contains(@class, ' topic/related-links ')]/parent::*[contains(@class, ' topic/topic ')]/@id, 
+                concat(ancestor::*[contains(@class, ' topic/related-links ')]/parent::*[contains(@class, ' topic/topic ')]/@id,
                        ' ',
                        local:getLinkKey(.)))[1])
      )]/parent::*">
@@ -525,13 +525,13 @@
       <xsl:value-of select="$newline"/>
     </xsl:for-each>
   </xsl:template>
-  
+
   <xsl:function name="local:getLinkKey" as="xs:string">
     <xsl:param name="linkElem" as="element()"/>
     <xsl:variable name="childContent">
       <xsl:value-of select="$linkElem/*"></xsl:value-of>
     </xsl:variable>
-    <xsl:variable name="result" 
+    <xsl:variable name="result"
       select="concat($linkElem/@href,
               $linkElem/@type,
               $linkElem/@role,
