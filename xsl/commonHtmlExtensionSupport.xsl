@@ -33,7 +33,7 @@
   xmlns:related-links="http://dita-ot.sourceforge.net/ns/200709/related-links"
   xmlns:local="urn:functions:local"
   exclude-result-prefixes="random xs xd df relpath mapdriven index-terms java xsl mapdriven json related-links local"
-  version="1.0">
+  version="2.0">
 
   <!-- Process standard attributes that may appear anywhere. Previously this was "setclass" -->
   <xsl:template name="commonattributes">
