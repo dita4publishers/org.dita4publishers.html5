@@ -314,7 +314,7 @@
         <xsl:value-of select="text()[1]" />
         </span>
       </xsl:if>
-      <xsl:apply-templates select="*" mode="fix-navigation-href"/>
+      <xsl:apply-templates mode="fix-navigation-href"/>
     </li>
   </xsl:template>
 

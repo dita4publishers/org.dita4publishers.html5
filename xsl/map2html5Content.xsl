@@ -125,7 +125,7 @@
     </xsl:variable>
 
 
-    <xsl:if test="true() and $debugBoolean">
+    <xsl:if test="$debugBoolean">
       <xsl:result-document href="{concat($outdir, '/', 'htmlNoNamespace/', relpath:getName($resultUri))}"
       > </xsl:result-document>
     </xsl:if>
