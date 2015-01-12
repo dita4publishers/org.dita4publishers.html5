@@ -53,7 +53,7 @@
        "
     />
 
-    <xsl:message> + [INFO] Generating index document <xsl:sequence select="$indexUri"/>...</xsl:message>
+    <xsl:message> + [INFO] Generating root index HTML document <xsl:sequence select="$indexUri"/>...</xsl:message>
    <xsl:result-document format="html5" href="{$indexUri}">
       <xsl:apply-templates mode="generate-html5-page" select=".">
         <xsl:with-param name="resultUri" as="xs:string" select="$indexUri" tunnel="yes"/>

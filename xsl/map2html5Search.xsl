@@ -55,7 +55,11 @@
   </xsl:template>
 
 
-  <xsl:template match="*[df:isTopicRef(.)]" mode="generate-search-index">
+  <xsl:template mode="generate-search-index"
+                match="*[df:isTopicRef(.)]
+                          [not(@scope = ('peer', 'external'))]
+                          [not(@format) or @format = ('dita')]
+    " >
     <xsl:param name="rootMapDocUrl" as="xs:string" tunnel="yes"/>
     <xsl:param name="collected-data" as="element()" tunnel="yes"/>
 

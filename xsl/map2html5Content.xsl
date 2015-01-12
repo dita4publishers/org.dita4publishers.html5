@@ -45,11 +45,14 @@
   </xsl:template>
 
 
-  <xsl:template match="*[df:isTopicRef(.)]" mode="generate-content">
+  <xsl:template mode="generate-content" 
+                match="*[df:isTopicRef(.)]
+                          [not(@scope = ('peer', 'external'))]
+                          [not(@format) or (@format = 'dita')]"
+    >
     <xsl:param name="rootMapDocUrl" as="xs:string" tunnel="yes"/>
     <xsl:param name="collected-data" as="element()" tunnel="yes"/>
-
-    <xsl:if test="false() and $debugBoolean">
+    <xsl:if test="$debugBoolean">
       <xsl:message> + [DEBUG] Handling topicref to "<xsl:sequence select="string(@href)"/>" in mode
         generate-content</xsl:message>
     </xsl:if>

@@ -120,12 +120,17 @@
   <xsl:template mode="generate-html5-nav" match="*[df:class(., 'topic/title')][not(@toc = 'no')]"/>
 
   <!-- Convert each topicref to a ToC entry. -->
-  <xsl:template match="*[df:isTopicRef(.)][not(@processing-role = 'resource-only')][not(@toc = 'no')]" mode="generate-html5-nav">
+  <xsl:template  mode="generate-html5-nav" 
+                 match="*[df:isTopicRef(.)]
+                           [not(@processing-role = 'resource-only')]
+                           [not(@toc = 'no')]
+                           [not(@format) or @format = ('dita')]
+                           [not(@scope) or not(string(@scope) = ('peer', 'external'))]">
     <xsl:param name="tocDepth" as="xs:integer" tunnel="yes" select="0"/>
     <xsl:param name="rootMapDocUrl" as="xs:string" tunnel="yes"/>
     <xsl:param name="isChunkedMap" as="xs:boolean" select="false()" tunnel="yes"/>
     <xsl:param name="indexUri" as="xs:string" select="''" tunnel = "yes" />
-
+    
     <xsl:if test="$tocDepth le $maxTocDepthInt">
       <xsl:variable name="topic" select="df:resolveTopicRef(.)" as="element()*"/>
       <xsl:choose>

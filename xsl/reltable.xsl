@@ -31,7 +31,7 @@
     />
 
     <xsl:if test="$ancestorsTopicRef">
-      <xsl:for-each select="$ancestorsTopicRef">
+      <xsl:for-each select="$ancestorsTopicRef[not(@scope = ('peer', 'external'))]">
         <xsl:variable name="topic" as="element()*" select="df:resolveTopicRef(.)" />
         <xsl:variable name="resultUri" as="xs:string" select="concat($relativePath, relpath:getRelativePath($outdir, htmlutil:getTopicResultUrl($outdir, root($topic), $rootMapDocUrl)))" />
         <xsl:variable name="title">

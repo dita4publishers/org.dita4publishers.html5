@@ -50,8 +50,8 @@
    
   </xsl:template>
   
-<xsl:template match="*" mode="generate-audience-select">
-  <xsl:apply-templates select="*" mode="generate-audience-select"/>
+  <xsl:template match="*" mode="generate-audience-select">
+    <xsl:apply-templates select="*" mode="#current"/>
   </xsl:template>
 
  <xsl:template match="*[contains(@class, ' topic/audience ')]" mode="generate-audience-select">
