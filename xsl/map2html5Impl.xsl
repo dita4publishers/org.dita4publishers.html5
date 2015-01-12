@@ -34,6 +34,7 @@
   <xsl:import href="plugin:org.dita-community.common.xslt:xsl/relpath_util.xsl"/>
 
   <xsl:import href="plugin:org.dita4publishers.common.xslt:xsl/reportParametersBase.xsl"/>
+  <xsl:import href="plugin:org.dita4publishers.common.html:xsl/char127To160Map.xsl"/>
   <xsl:import href="plugin:org.dita4publishers.common.html:xsl/html-generation-utils.xsl"/>
   <xsl:import href="plugin:org.dita4publishers.common.mapdriven:xsl/dataCollection.xsl"/>
 
