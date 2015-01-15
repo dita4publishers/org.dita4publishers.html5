@@ -84,7 +84,7 @@
   <xsl:param name="outdir" select="./html5" />
   <!-- The directory containing the original input root map (not the
        the temporary directory containing the map we're already processing.
-       
+
        NOTE: As of OT 2.0, there is no Ant parameter that provides the input directory,
              so we use the @xtrf attribute to get the directory containing the input
              map.
@@ -210,7 +210,7 @@
   <xsl:param name="IDLOCALNAV" select="'home'" />
   <xsl:param name="GRIDPREFIX" select="'grid_'" />
   <xsl:param name="CLASSSCREENREADER" select="'screen-reader'" />
-
+  <xsl:param name="uplevels" select="''" />
   <xsl:param name="HTTPABSOLUTEURI" select="''" />
   <xsl:param name="OUTPUTDEFAULTNAVIGATION" select="true()" />
 
@@ -445,6 +445,7 @@
     <!-- collected data -->
     <xsl:variable name="graphicMap" as="element()">
       <xsl:apply-templates select="." mode="generate-graphic-map">
+        <xsl:with-param name="uplevels" select="$uplevels" as="xs:string" tunnel="yes" />
       </xsl:apply-templates>
     </xsl:variable>
 
