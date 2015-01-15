@@ -120,7 +120,7 @@
   <xsl:template mode="generate-html5-nav" match="*[df:class(., 'topic/title')][not(@toc = 'no')]"/>
 
   <!-- Convert each topicref to a ToC entry. -->
-  <xsl:template  mode="generate-html5-nav" 
+  <xsl:template  mode="generate-html5-nav"
                  match="*[df:isTopicRef(.)]
                            [not(@processing-role = 'resource-only')]
                            [not(@toc = 'no')]
@@ -130,7 +130,7 @@
     <xsl:param name="rootMapDocUrl" as="xs:string" tunnel="yes"/>
     <xsl:param name="isChunkedMap" as="xs:boolean" select="false()" tunnel="yes"/>
     <xsl:param name="indexUri" as="xs:string" select="''" tunnel = "yes" />
-    
+
     <xsl:if test="$tocDepth le $maxTocDepthInt">
       <xsl:variable name="topic" select="df:resolveTopicRef(.)" as="element()*"/>
       <xsl:choose>
@@ -140,7 +140,7 @@
         </xsl:when>
         <xsl:otherwise>
           <xsl:variable name="targetUri"
-            select="if($isChunkedMap) then concat($outdir, '#', df:getIdForElement(.)) else htmlutil:getTopicResultUrl($outdir, root($topic), $rootMapDocUrl)"
+            select="if($isChunkedMap) then concat($outdir, '#', df:getIdForElement(.)) else concat(htmlutil:getTopicResultUrl($outdir, root($topic), $rootMapDocUrl), '#', df:getIdForElement(.))"
             as="xs:string"/>
           <xsl:variable name="relativeUri" select="relpath:getRelativePath($outdir, $targetUri)"
             as="xs:string"/>
