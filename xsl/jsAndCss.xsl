@@ -48,12 +48,20 @@
 
   <!-- used to generate the css links -->
   <xsl:template match="*" mode="generate-css-js">
-    <xsl:call-template name="d4p-variables"/>
-    <xsl:apply-templates select="." mode="generate-d4p-css-js"/>
+    <xsl:param name="location" as="xs:string?" select="'head'"/>
+
+    <xsl:if test="$location = 'head'">
+      <xsl:call-template name="d4p-variables"/>
+    </xsl:if>
+
+    <xsl:apply-templates select="." mode="generate-d4p-css-js">
+          <xsl:with-param name="location" as="xs:string" select="$location" tunnel="yes" />
+    </xsl:apply-templates>
   </xsl:template>
 
   <!-- this template is used to change the output when debug mode = 0 -->
   <xsl:template match="*" mode="generate-d4p-css-js">
+    <xsl:param name="location" as="xs:string?" />
     <xsl:choose>
       <xsl:when test="$DBG='yes'">
         <xsl:apply-templates select="$HTML5THEMECONFIGDOC/html5/tag" mode="generate-d4p-uncompressed-css-js"/>
@@ -70,109 +78,118 @@
 
   <!-- This template render ons script element per script element declared in the theme config.xml -->
   <xsl:template match="tag[count(source/file) &gt; 0 ][output != 'no']" mode="generate-d4p-uncompressed-css-js">
-
     <xsl:param name="relativePath" as="xs:string" select="''" tunnel="yes"/>
+    <xsl:param name="location" as="xs:string" tunnel="yes"/>
 
-    <xsl:variable name="attributes">
-      <xsl:for-each select="attributes/*">
-        <xsl:if test="name(.) != 'href'">
-          <attribute name="{name(.)}" value="{.}"/>
+    <xsl:variable name="tagLocation" select="if (boolean(@location)) then string(@location) else 'head'"/>
+
+    <xsl:if test="$location = $tagLocation">
+
+      <xsl:variable name="attributes">
+        <xsl:for-each select="attributes/*">
+          <xsl:if test="name(.) != 'href'">
+            <attribute name="{name(.)}" value="{.}"/>
+          </xsl:if>
+        </xsl:for-each>
+      </xsl:variable>
+
+      <xsl:variable name="name">
+        <xsl:call-template name="theme-get-tag-name">
+          <xsl:with-param name="name" select="name" />
+        </xsl:call-template>
+      </xsl:variable>
+
+      <xsl:for-each select="./source/file">
+
+        <xsl:variable name="extension" select="relpath:getExtension(@path)"/>
+
+        <xsl:if test="prefix and prefix != ''">
+          <xsl:value-of select="prefix" disable-output-escaping="yes"/>
         </xsl:if>
+
+        <xsl:element name="{$name}">
+
+          <xsl:for-each select="$attributes/*">
+            <xsl:attribute name="{@name}" select="@value"/>
+          </xsl:for-each>
+
+          <xsl:if test="$extension = 'css'">
+            <xsl:attribute name="href" select="relpath:assets-uri($relativePath, @path)" />
+          </xsl:if>
+
+          <xsl:if test="$extension = 'js'">
+            <xsl:attribute name="src" select="relpath:assets-uri($relativePath, @path)" />
+          </xsl:if>
+
+        </xsl:element>
+
+        <xsl:if test="suffix and suffix != ''">
+          <xsl:value-of select="suffix" disable-output-escaping="yes"/>
+        </xsl:if>
+
+        <xsl:value-of select="$newline"/>
       </xsl:for-each>
-    </xsl:variable>
 
-    <xsl:variable name="name">
-      <xsl:call-template name="theme-get-tag-name">
-        <xsl:with-param name="name" select="name" />
-      </xsl:call-template>
-    </xsl:variable>
+    </xsl:if>
+  </xsl:template>
 
-    <xsl:for-each select="./source/file">
+  <!-- This template render ons script element per script element declared in the theme config.xml -->
+  <xsl:template match="tag[count(source/file) = 0 ][output != 'no']" mode="generate-d4p-uncompressed-css-js">
+    <xsl:param name="relativePath" as="xs:string" select="''" tunnel="yes"/>
+    <xsl:param name="location" as="xs:string" tunnel="yes"/>
 
-      <xsl:variable name="extension" select="relpath:getExtension(@path)"/>
+    <xsl:variable name="tagLocation" select="if (boolean(@location)) then  string(@location) else 'head'"/>
+
+    <xsl:if test="$location = $tagLocation">
+
+      <xsl:variable name="attributes">
+        <xsl:for-each select="attributes/*">
+          <attribute name="{name(.)}" value="{.}"/>
+        </xsl:for-each>
+      </xsl:variable>
+
+      <xsl:variable name="extension">
+        <xsl:choose>
+
+          <xsl:when test="attributes/href">
+            <xsl:value-of select="relpath:getExtension(@path)"/>
+          </xsl:when>
+
+          <xsl:when test="attributes/src">
+             <xsl:value-of select="relpath:getExtension(@path)"/>
+          </xsl:when>
+
+          <xsl:otherwise>
+             <xsl:value-of select="relpath:getExtension(@path)"/>
+          </xsl:otherwise>
+
+        </xsl:choose>
+      </xsl:variable>
+
+      <xsl:variable name="name">
+        <xsl:call-template name="theme-get-tag-name">
+            <xsl:with-param name="name" select="name" />
+        </xsl:call-template>
+      </xsl:variable>
 
       <xsl:if test="prefix and prefix != ''">
         <xsl:value-of select="prefix" disable-output-escaping="yes"/>
       </xsl:if>
 
       <xsl:element name="{$name}">
-
         <xsl:for-each select="$attributes/*">
           <xsl:attribute name="{@name}" select="@value"/>
         </xsl:for-each>
 
-        <xsl:if test="$extension = 'css'">
-          <xsl:attribute name="href" select="relpath:assets-uri($relativePath, @path)" />
-        </xsl:if>
-
-        <xsl:if test="$extension = 'js'">
-          <xsl:attribute name="src" select="relpath:assets-uri($relativePath, @path)" />
-        </xsl:if>
-
+        <xsl:value-of select="value"  disable-output-escaping="yes" />
       </xsl:element>
 
       <xsl:if test="suffix and suffix != ''">
-        <xsl:value-of select="suffix" disable-output-escaping="yes"/>
+        <xsl:value-of select="suffix"/>
       </xsl:if>
 
       <xsl:value-of select="$newline"/>
-    </xsl:for-each>
-
-  </xsl:template>
-
-  <!-- This template render ons script element per script element declared in the theme config.xml -->
-  <xsl:template match="tag[count(source/file) = 0 ][output != 'no']" mode="generate-d4p-uncompressed-css-js">
-
-    <xsl:param name="relativePath" as="xs:string" select="''" tunnel="yes"/>
-
-    <xsl:variable name="attributes">
-      <xsl:for-each select="attributes/*">
-        <attribute name="{name(.)}" value="{.}"/>
-      </xsl:for-each>
-    </xsl:variable>
-
-    <xsl:variable name="extension">
-      <xsl:choose>
-
-        <xsl:when test="attributes/href">
-          <xsl:value-of select="relpath:getExtension(@path)"/>
-        </xsl:when>
-
-        <xsl:when test="attributes/src">
-           <xsl:value-of select="relpath:getExtension(@path)"/>
-        </xsl:when>
-
-        <xsl:otherwise>
-           <xsl:value-of select="relpath:getExtension(@path)"/>
-        </xsl:otherwise>
-
-      </xsl:choose>
-    </xsl:variable>
-
-    <xsl:variable name="name">
-      <xsl:call-template name="theme-get-tag-name">
-          <xsl:with-param name="name" select="name" />
-      </xsl:call-template>
-    </xsl:variable>
-
-    <xsl:if test="prefix and prefix != ''">
-      <xsl:value-of select="prefix" disable-output-escaping="yes"/>
     </xsl:if>
-
-    <xsl:element name="{$name}">
-      <xsl:for-each select="$attributes/*">
-        <xsl:attribute name="{@name}" select="@value"/>
-      </xsl:for-each>
-
-      <xsl:value-of select="value"  disable-output-escaping="yes" />
-    </xsl:element>
-
-    <xsl:if test="suffix and suffix != ''">
-      <xsl:value-of select="suffix"/>
-    </xsl:if>
-
-    <xsl:value-of select="$newline"/>
-
   </xsl:template>
 
   <!-- When a tag specify an external file, the rendering code is the samne than in the uncompressed generate-d4p-uncompressed-css-js mode -->
@@ -182,53 +199,57 @@
 
   <!-- Compressed mode use the information from filename -->
   <xsl:template match="tag[count(source/file) &gt; 0 ][output != 'no']" mode="generate-d4p-compressed-css-js">
-
     <xsl:param name="relativePath" as="xs:string" select="''" tunnel="yes"/>
+    <xsl:param name="location" as="xs:string" tunnel="yes"/>
 
-    <xsl:variable name="filename" as="xs:string" select="filename" />
-    <xsl:variable name="extension" select="relpath:getExtension($filename)"/>
+    <xsl:variable name="tagLocation" select="if (boolean(@location)) then  string(@location) else 'head'"/>
 
-    <xsl:variable name="name">
-      <xsl:call-template name="theme-get-tag-name">
-        <xsl:with-param name="name" select="name" />
-      </xsl:call-template>
-    </xsl:variable>
+    <xsl:if test="$location = $tagLocation">
 
-    <xsl:variable name="dir">
-      <xsl:choose>
-        <xsl:when test="$extension = 'css'">css</xsl:when>
-        <xsl:when test="$extension = 'js'">js</xsl:when>
-        <xsl:otherwise>unknown</xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
+      <xsl:variable name="filename" as="xs:string" select="filename" />
+      <xsl:variable name="extension" select="relpath:getExtension($filename)"/>
 
-    <xsl:if test="prefix and prefix != ''">
-      <xsl:value-of select="prefix" disable-output-escaping="yes"/>
-    </xsl:if>
+      <xsl:variable name="name">
+        <xsl:call-template name="theme-get-tag-name">
+          <xsl:with-param name="name" select="name" />
+        </xsl:call-template>
+      </xsl:variable>
 
-    <xsl:element name="{$name}">
+      <xsl:variable name="dir">
+        <xsl:choose>
+          <xsl:when test="$extension = 'css'">css</xsl:when>
+          <xsl:when test="$extension = 'js'">js</xsl:when>
+          <xsl:otherwise>unknown</xsl:otherwise>
+        </xsl:choose>
+      </xsl:variable>
 
-      <xsl:for-each select="attributes/*">
-        <xsl:attribute name="{name(.)}" select="."/>
-      </xsl:for-each>
-
-      <xsl:if test="not(attributes/href) and $extension = 'css'">
-        <xsl:attribute name="href" select="relpath:fixRelativePath($relativePath, concat($HTML5THEMEDIR, '/', $siteTheme, '/', $extension, '/', filename))" />
+      <xsl:if test="prefix and prefix != ''">
+        <xsl:value-of select="prefix" disable-output-escaping="yes"/>
       </xsl:if>
 
-      <xsl:if test="not(attributes/src) and $extension = 'js'">
-        <xsl:attribute name="src" select="relpath:fixRelativePath($relativePath, concat($HTML5THEMEDIR, '/', $siteTheme, '/', $extension, '/', filename))" />
+      <xsl:element name="{$name}">
+
+        <xsl:for-each select="attributes/*">
+          <xsl:attribute name="{name(.)}" select="."/>
+        </xsl:for-each>
+
+        <xsl:if test="not(attributes/href) and $extension = 'css'">
+          <xsl:attribute name="href" select="relpath:fixRelativePath($relativePath, concat($HTML5THEMEDIR, '/', $siteTheme, '/', $extension, '/', filename))" />
+        </xsl:if>
+
+        <xsl:if test="not(attributes/src) and $extension = 'js'">
+          <xsl:attribute name="src" select="relpath:fixRelativePath($relativePath, concat($HTML5THEMEDIR, '/', $siteTheme, '/', $extension, '/', filename))" />
+        </xsl:if>
+
+        <xsl:value-of select="value" />
+
+      </xsl:element>
+      <xsl:if test="suffix and suffix != ''">
+        <xsl:value-of select="suffix" disable-output-escaping="yes"/>
       </xsl:if>
+      <xsl:value-of select="$newline"/>
 
-      <xsl:value-of select="value" />
-
-    </xsl:element>
-    <xsl:if test="suffix and suffix != ''">
-      <xsl:value-of select="suffix" disable-output-escaping="yes"/>
-    </xsl:if>
-    <xsl:value-of select="$newline"/>
-
-
+   </xsl:if>
   </xsl:template>
 
   <!-- Swicth tage name -->
