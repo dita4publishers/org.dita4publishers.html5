@@ -95,9 +95,18 @@
   <xsl:param name="topicref" as="element()*" tunnel="yes"/>
   <xsl:param name="rootMapDocUrl" as="xs:string" tunnel="yes"/>
   <xsl:param name="relativePath" as="xs:string" select="''" tunnel="yes"/>
+  
+  <xsl:message> + [DEBUG] getNextTopicReference: <xsl:sequence select="df:reportTopicref($topicref)"/></xsl:message>
 
   <xsl:variable name="siblingTopicRef" select="if ($topicref)
-             then ($topicref/child::*[df:isTopicRef(.)][1] | $topicref/following::*[df:isTopicRef(.)][1])[1]
+             then ($topicref/child::*[
+                      df:isTopicRef(.) and 
+                      not(ancestor::*[contains(@chunk, 'to-content')]) and 
+                      not(@processing-role = 'resource-only')][1] |
+                   $topicref/following::*[
+                      df:isTopicRef(.) and 
+                      not(ancestor::*[contains(@chunk, 'to-content')]) and 
+                      not(@processing-role = 'resource-only')][1])[1]
              else ()" as="element()?"
   />
 
@@ -150,7 +159,14 @@
       </xsl:when>
       <xsl:otherwise>
         <xsl:variable name="siblingTopicRef" select="if ($topicref)
-            then ($topicref/child::*[df:isTopicRef(.)][1] | $topicref/following::*[df:isTopicRef(.)][1])[1]
+            then ($topicref/child::*[
+                     df:isTopicRef(.) and 
+                     not(ancestor::*[contains(@chunk, 'to-content')]) and 
+                     not(@processing-role = 'resource-only')][1] | 
+                  $topicref/following::*[
+                     df:isTopicRef(.) and 
+                     not(ancestor::*[contains(@chunk, 'to-content')]) and 
+                     not(@processing-role = 'resource-only')][1])[1]
             else ()" as="element()?"
         />
 
@@ -183,7 +199,14 @@
     <xsl:param name="relativePath" as="xs:string" select="''" tunnel="yes"/>
     <xsl:variable name="siblingTopicRef" select="
           if ($topicref)
-             then ($topicref/preceding::*[df:isTopicRef(.)][1] | $topicref/ancestor::*[df:isTopicRef(.)][1])[last()]
+             then ($topicref/preceding::*[
+                      df:isTopicRef(.) and 
+                      not(ancestor::*[contains(@chunk, 'to-content')]) and 
+                      not(@processing-role = 'resource-only')][1] | 
+                   $topicref/ancestor::*[
+                      df:isTopicRef(.) and 
+                      not(ancestor::*[contains(@chunk, 'to-content')]) and 
+                      not(@processing-role = 'resource-only')][1])[last()]
              else ()" as="element()?"
     />
 
@@ -224,7 +247,14 @@
 
     <xsl:variable name="siblingTopicRef" select="
           if ($topicref)
-             then ($topicref/preceding::*[df:isTopicRef(.)][1] | $topicref/ancestor::*[df:isTopicRef(.)][1])[last()]
+             then ($topicref/preceding::*[
+                      df:isTopicRef(.) and 
+                      not(ancestor::*[contains(@chunk, 'to-content')]) and 
+                      not(@processing-role = 'resource-only')][1] |
+                   $topicref/ancestor::*[
+                      df:isTopicRef(.) and 
+                      not(ancestor::*[contains(@chunk, 'to-content')]) and 
+                      not(@processing-role = 'resource-only')][1])[last()]
              else ()" as="element()?"
     />
 
