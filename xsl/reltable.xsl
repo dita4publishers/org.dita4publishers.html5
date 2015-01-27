@@ -96,17 +96,9 @@
   <xsl:param name="rootMapDocUrl" as="xs:string" tunnel="yes"/>
   <xsl:param name="relativePath" as="xs:string" select="''" tunnel="yes"/>
   
-  <xsl:message> + [DEBUG] getNextTopicReference: <xsl:sequence select="df:reportTopicref($topicref)"/></xsl:message>
-
   <xsl:variable name="siblingTopicRef" select="if ($topicref)
-             then ($topicref/child::*[
-                      df:isTopicRef(.) and 
-                      not(ancestor::*[contains(@chunk, 'to-content')]) and 
-                      not(@processing-role = 'resource-only')][1] |
-                   $topicref/following::*[
-                      df:isTopicRef(.) and 
-                      not(ancestor::*[contains(@chunk, 'to-content')]) and 
-                      not(@processing-role = 'resource-only')][1])[1]
+             then ($topicref/child::*[df:isNavigationTopicref(.)][1] |
+                   $topicref/following::*[df:isNavigationTopicref(.)][1])[1]
              else ()" as="element()?"
   />
 
@@ -159,14 +151,8 @@
       </xsl:when>
       <xsl:otherwise>
         <xsl:variable name="siblingTopicRef" select="if ($topicref)
-            then ($topicref/child::*[
-                     df:isTopicRef(.) and 
-                     not(ancestor::*[contains(@chunk, 'to-content')]) and 
-                     not(@processing-role = 'resource-only')][1] | 
-                  $topicref/following::*[
-                     df:isTopicRef(.) and 
-                     not(ancestor::*[contains(@chunk, 'to-content')]) and 
-                     not(@processing-role = 'resource-only')][1])[1]
+            then ($topicref/child::*[df:isNavigationTopicref(.)][1] | 
+                  $topicref/following::*[df:isNavigationTopicref(.)][1])[1]
             else ()" as="element()?"
         />
 
@@ -199,14 +185,8 @@
     <xsl:param name="relativePath" as="xs:string" select="''" tunnel="yes"/>
     <xsl:variable name="siblingTopicRef" select="
           if ($topicref)
-             then ($topicref/preceding::*[
-                      df:isTopicRef(.) and 
-                      not(ancestor::*[contains(@chunk, 'to-content')]) and 
-                      not(@processing-role = 'resource-only')][1] | 
-                   $topicref/ancestor::*[
-                      df:isTopicRef(.) and 
-                      not(ancestor::*[contains(@chunk, 'to-content')]) and 
-                      not(@processing-role = 'resource-only')][1])[last()]
+             then ($topicref/preceding::*[df:isNavigationTopicref(.)][1] | 
+                   $topicref/ancestor::*[df:isNavigationTopicref(.)][1])[last()]
              else ()" as="element()?"
     />
 
@@ -247,14 +227,8 @@
 
     <xsl:variable name="siblingTopicRef" select="
           if ($topicref)
-             then ($topicref/preceding::*[
-                      df:isTopicRef(.) and 
-                      not(ancestor::*[contains(@chunk, 'to-content')]) and 
-                      not(@processing-role = 'resource-only')][1] |
-                   $topicref/ancestor::*[
-                      df:isTopicRef(.) and 
-                      not(ancestor::*[contains(@chunk, 'to-content')]) and 
-                      not(@processing-role = 'resource-only')][1])[last()]
+             then ($topicref/preceding::*[df:isNavigationTopicref(.)][1] |
+                   $topicref/ancestor::*[df:isNavigationTopicref(.)][1])[last()]
              else ()" as="element()?"
     />
 
@@ -289,5 +263,16 @@
     <xsl:param name="title" as="xs:string"/>
     <a href="{$href}" class="{$role}" rel="internal"><xsl:value-of select="$title"/></a>
   </xsl:template>
+  
+  <!-- Return true if the topicref is a normal-role reference to a chunk-root topic -->
+  <xsl:function name="df:isNavigationTopicref" as="xs:boolean">
+    <xsl:param name="context" as="element()"/>
+    <xsl:variable name="result" as="xs:boolean"
+      select="df:isTopicRef($context) and 
+                     not($context/ancestor::*[contains(@chunk, 'to-content')]) and 
+                     not($context/@processing-role = 'resource-only')"
+    />
+    <xsl:sequence select="$result"></xsl:sequence>
+  </xsl:function>
 
  </xsl:stylesheet>
