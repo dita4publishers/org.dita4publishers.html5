@@ -32,6 +32,14 @@ function searchIdx()
 /**
  * Request data serverside
  */
+searchIdx.prototype.setResultElemId = function(id)
+{
+  this.parentId = id
+}
+
+/**
+ * Request data serverside
+ */
 searchIdx.prototype.getData = function()
 {
  var self = this;
@@ -39,11 +47,14 @@ searchIdx.prototype.getData = function()
   dataType: "json",
   async: true,
   url: d4p.getDocumentationRoot() + 'search-index.json',
-    success: function( data ) {
-      self.data = data.idx;
+    success: function(data) {
+      self.data = data.idx      
       $.each(self.data.topics, function( index, value ) {
-        self.idx.add(value);
+        self.idx.add(value)
       })
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+      alert("jqXHR: " + jqXHR.status + "\ntextStatus: " + textStatus + "\nerrorThrown: " + errorThrown)
     }
   });
 }
@@ -64,7 +75,7 @@ searchIdx.prototype.searchResultPlaceholder = function()
 {
    var title = $('<h1/>').html(d4p.l.searchPageHeading),
    container = $('<div/>').attr('id', 'search_container');
-   $('#page').append($('<div />').attr('id', 'search_result').attr('class', 'page').append(title).append(container).hide());
+   $('#'+this.parentId).append($('<div />').attr('id', 'search_result').attr('class', 'page').append(title).append(container).hide());
 }
 
 /**
@@ -81,19 +92,22 @@ searchIdx.prototype.highlight = function(e)
 /**
  * output the search
  */
+/**
+ * output the search
+ */
 searchIdx.prototype.output = function()
 {
   var self = this;
   $('#search_container').html('');
-  $.each(this.searched, function( index, obj ) {
-      var a = $('<a/>').attr('href', d4p.getDocumentationRoot() + self.data.topics[obj.ref].href),
+  for (var index in this.searched) {
+    var obj = this.searched[index],
+    a = $('<a/>').attr('href', d4p.getDocumentationRoot() + self.data.topics[obj.ref].href),
       title = $('<h2 />').html(self.data.topics[obj.ref].title),
       desc = $('<p/>').html(self.data.topics[obj.ref].desc),
       hr = $('<hr />');
       self.highlight(desc);
       a.append(title);
       $('#search_container').append(a).append(desc).append(hr);
-  })
-}
-
+  }
+};
 
