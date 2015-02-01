@@ -173,6 +173,12 @@
            >
 		<arg value="-v"/>
         <arg path="${fromfile}"/>
+        <!-- Need to add  2 dash before each options-->
+        <!--arg value="nomunge"/-->
+        <!--arg value="disable-optimizations"/-->
+        <!--arg value="preserve-semi"/-->
+        <arg value="--charset"/>
+        <arg value="utf8"/>
         <arg value="-o"/>
         <arg path="${tofile}"/>
        </java>
