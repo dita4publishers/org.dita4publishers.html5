@@ -308,7 +308,7 @@
       <file path="modules/modernizr/modernizr.custom.18138.js" />
 
       <!--file path="modules/prefixFree/prefixFree.js" /-->
-      <file path="modules/jQuery/jquery-1.11.1.js" />
+      <file path="modules/jQuery/jquery.js" />
 
       <!-- d4p methods -->
       <file path="modules/d4p/js/d4p.js"/>
@@ -339,8 +339,8 @@
       <file path="modules/DataTables-1.10.4/media/js/jquery.dataTables.js" />
 
       <!-- jQuery Cycle -->
-      <file path="modules/jQuery-widgets/cycle/js/cycle.js" />
-      <file path="modules/jQuery-widgets/cycle/js/jquery.cycle.js" />
+      <!--file path="modules/jQuery-widgets/cycle/js/cycle.js" />
+      <file path="modules/jQuery-widgets/cycle/js/jquery.cycle.js" /-->
 
       <!-- search engine : lunr -->
       <file path="modules/lunr/lunr.js" />
