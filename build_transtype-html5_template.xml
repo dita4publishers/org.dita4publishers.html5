@@ -335,6 +335,12 @@
       </not>
     </condition>
 
+    <condition property="showTocEntry" value="yes">
+      <not>
+        <isset property="showTocEntry" />
+      </not>
+    </condition>
+
     <condition property="navigationLeft" value="yes">
       <not>
         <isset property="navigationLeft" />
@@ -344,6 +350,12 @@
     <condition property="alternateFormat" value="epub,pdf">
       <not>
         <isset property="alternateFormat" />
+      </not>
+    </condition>
+
+    <condition property="indexIsFirstTopic" value="false">
+      <not>
+        <isset property="indexIsFirstTopic" />
       </not>
     </condition>
 
@@ -401,7 +413,7 @@
     <property name="map2html5.style" location="${d4p.html5.dir}/xsl/map2html5.xsl"/>
     <property name="args.xhtml.toc" value="index"/>
 
-    <xslt 
+    <xslt
       basedir="${dita.temp.dir}"
       destdir="${output.dir}"
       includesfile="${dita.temp.dir}${file.separator}${user.input.file.listfile}"
@@ -465,10 +477,12 @@
     <ant antfile="${output.dir}/copy-graphics.xml"/>
   </target>
 
-
+  <target name="theme-xml-preprocess-cleanup">
+    <delete dir="${html5.theme.dir}"/>
+  </target>
 
    <!-- FIXME: Move to xsl code directly -->
-  <target name="theme-xml-preprocess" description="Process theme" depends="compressor.install">
+  <target name="theme-xml-preprocess" description="Process theme" depends="theme-xml-preprocess-cleanup, compressor.install" unless="args.debug">
 
   <property name="theme.preprocess.style" location="${d4p.html5.dir}/xsl/theme/theme-preprocess.xsl"/>
 
