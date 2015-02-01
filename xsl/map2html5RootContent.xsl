@@ -29,10 +29,86 @@
 >
 
   <!-- generate root pages -->
-   <xsl:template match="*[df:class(., 'map/map')]" mode="generate-root-pages">
+  <xsl:template match="*[df:class(., 'map/map')]" mode="generate-root-pages">
     <xsl:param name="uniqueTopicRefs" as="element()*" tunnel="yes"/>
-    <xsl:apply-templates select="." mode="generate-root-nav-page"/>
+    <xsl:param name="rootMapDocUrl" as="xs:string" tunnel="yes"/>
+
+    <xsl:choose>
+      <xsl:when test="$indexIsFirstTopicBoolean">
+        <xsl:apply-templates select="./*[1]" mode="generate-root-first-topic-page"/>
+      </xsl:when>
+      <xsl:otherwise>
+         <xsl:apply-templates select="." mode="generate-root-nav-page"/>
+      </xsl:otherwise>
+    </xsl:choose>
+
   </xsl:template>
+
+   <xsl:template match="*" mode="generate-root-pages"/>
+
+   <xsl:template mode="generate-root-first-topic-page" match="*[df:isTopicRef(.)]">
+    <xsl:param name="rootMapDocUrl" as="xs:string" tunnel="yes"/>
+    <xsl:param name="collected-data" as="element()" tunnel="yes"/>
+
+    <xsl:if test="$debugBoolean">
+      <xsl:message> + [DEBUG] Handling topicref to "<xsl:sequence select="string(@href)"/>" in mode
+        generate-content</xsl:message>
+    </xsl:if>
+
+    <xsl:variable name="topic" select="df:resolveTopicRef(.)" as="element()*"/>
+
+    <xsl:choose>
+      <xsl:when test="not($topic)">
+        <xsl:message> + [WARNING] generate-content: Failed to resolve topic reference to href "<xsl:sequence
+            select="string(@href)"/>"</xsl:message>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:variable name="topicRelativeUri" select="htmlutil:getTopicResultUrl('', root($topic), $rootMapDocUrl)"
+          as="xs:string"/>
+
+        <xsl:variable name="tempTopic" as="document-node()">
+          <xsl:document>
+            <xsl:apply-templates select="$topic" mode="href-fixup">
+              <xsl:with-param name="topicResultUri" select="$indexUri" tunnel="yes"/>
+            </xsl:apply-templates>
+         </xsl:document>
+        </xsl:variable>
+
+        <xsl:apply-templates select="$tempTopic" mode="#current">
+          <xsl:with-param name="topicref" as="element()*" select="." tunnel="yes"/>
+          <xsl:with-param name="collected-data" select="$collected-data" as="element()" tunnel="yes"/>
+          <xsl:with-param name="topicRelativeUri" select="$topicRelativeUri" tunnel="yes"/>
+        </xsl:apply-templates>
+
+
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <xsl:template match="*[df:class(., 'topic/topic')]" mode="generate-root-first-topic-page">
+    <!-- This template generates the output file for a referenced topic.
+    -->
+    <xsl:param name="rootMapDocUrl" as="xs:string" tunnel="yes"/>
+    <!-- The topicref that referenced the topic -->
+    <xsl:param name="topicref" as="element()*" tunnel="yes"/>
+    <!-- Enumerables structure: -->
+    <xsl:param name="collected-data" as="element()" tunnel="yes"/>
+
+
+    <xsl:message> + [INFO] Writing first topic to HTML file "<xsl:sequence select="$indexUri"/>"...</xsl:message>
+
+     <xsl:result-document format="html5" href="{$indexUri}">
+      <xsl:apply-templates mode="generate-html5-page" select=".">
+        <xsl:with-param name="resultUri" as="xs:string" select="$indexUri" tunnel="yes"/>
+        <xsl:with-param name="is-root" as="xs:boolean" select="false()" tunnel="yes"/>
+        <xsl:with-param name="relativePath" select="''" as="xs:string" tunnel="yes"/>
+      </xsl:apply-templates>
+    </xsl:result-document>
+
+     <xsl:message> + [INFO] Done !</xsl:message>
+
+  </xsl:template>
+
 
   <xsl:template match="*[df:class(., 'map/map')]" mode="generate-root-nav-page">
     <!-- Generate the root output page. By default this page contains the root
@@ -57,7 +133,7 @@
    <xsl:result-document format="html5" href="{$indexUri}">
       <xsl:apply-templates mode="generate-html5-page" select=".">
         <xsl:with-param name="resultUri" as="xs:string" select="$indexUri" tunnel="yes"/>
-        <xsl:with-param name="is-root" as="xs:boolean" select="true()"/>
+        <xsl:with-param name="is-root" as="xs:boolean" select="true()"  tunnel="yes"/>
         <xsl:with-param name="firstTopicUri" as="xs:string?" tunnel="yes" select="$initialTopicUri" />
       </xsl:apply-templates>
     </xsl:result-document>

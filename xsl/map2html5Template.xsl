@@ -89,7 +89,7 @@
 
   <!-- define class attribute -->
   <xsl:template match="*" mode="set-body-class-attr">
-    <xsl:param name="is-root" as="xs:boolean"  tunnel="yes" select="false()" />
+    <xsl:param name="is-root" as="xs:boolean" tunnel="yes" select="false()" />
     <xsl:attribute name = "class">
       <xsl:call-template name="getLowerCaseLang"/>
         <xsl:sequence select="' '"/>
@@ -137,8 +137,10 @@
         <xsl:with-param name="stringName" select="'SearchPlaceholder'"/>
       </xsl:call-template>
     </xsl:variable>
-    <form id="search">
-      <input id="search-text" type="text" autocomplete="off" placeholder="{$placeholder}" name="search" />
+    <form id="search" role="search">
+      <div class="form-group">
+        <input id="search-text" type="text" autocomplete="off" class="form-control" placeholder="Search"/>
+      </div>
     </form>
   </xsl:template>
 
@@ -195,6 +197,7 @@
 
         <!-- Include a user's XSL call here to generate a toc based on what's a child of topic -->
         <xsl:call-template name="gen-user-sidetoc"/>
+
         <xsl:choose>
           <xsl:when test="$is-root">
               <h1><xsl:call-template name="getString">
@@ -203,7 +206,7 @@
                <xsl:sequence select="$navigation"/>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:apply-templates select="*" />
+            <xsl:apply-templates />
           </xsl:otherwise>
         </xsl:choose>
 
