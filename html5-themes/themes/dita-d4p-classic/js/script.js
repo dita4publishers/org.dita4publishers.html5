@@ -23,7 +23,7 @@ $(document).ready(function() {
 
   var idx = new searchIdx(),
   closeBtn = $('<button />').attr('id', 'searchClose').attr('class', 'float_right').append($('<span />').attr('class', 'fi fi-x')).append($('<span />').html(d4p.l.close).attr('class', 'hidden')).hide();
-
+  idx.setResultElemId('page');
   idx.getData();
   idx.searchResultPlaceholder();
 
