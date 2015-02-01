@@ -92,4 +92,6 @@
     <param name="navigationLeft" expression="${navigationLeft}" />
     <param name="alternateFormat" expression="${alternateFormat}" />
     <param name="uplevels" expression="${uplevels}" />
+    <param name="indexIsFirstTopic" expression="${indexIsFirstTopic}" />
+    <param name="showTocEntry" expression="${showTocEntry}" />
 </params>

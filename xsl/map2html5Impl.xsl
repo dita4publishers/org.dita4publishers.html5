@@ -153,6 +153,11 @@
     select="matches($generateGlossary, 'yes|true|on|1', 'i')"
   />
 
+  <xsl:param name="showTocEntry" as="xs:string" select="'yes'"/>
+  <xsl:variable name="showTocEntryBoolean"
+    select="matches($showTocEntry, 'yes|true|on|1', 'i')"
+  />
+
 
   <!-- value for @class on <body> of the generated static TOC HTML document -->
   <xsl:param name="staticTocBodyOutputclass" select="''" as="xs:string"/>
@@ -173,9 +178,10 @@
   <xsl:param name="searchEngineMinLength" as="xs:integer" select="2"/>
 
   <xsl:param name="navigationLeft" select="'true'"/>
-  <xsl:param name="navigationLeftBoolean" select="matches($generateFrameset, 'yes|true|on|1', 'i')"/>
+  <xsl:param name="navigationLeftBoolean" select="matches($navigationLeft, 'yes|true|on|1', 'i')"/>
 
-  <!-- -->
+  <xsl:param name="indexIsFirstTopic" select="'false'"/>
+  <xsl:param name="indexIsFirstTopicBoolean" select="matches($indexIsFirstTopic, 'yes|true|on|1', 'i')"/>
 
   <xsl:param name="dita-css" select="'css/topic-html5.css'" as="xs:string"/>
   <xsl:param name="TRANSTYPE" select="'html5'" />
@@ -529,7 +535,7 @@
         <xsl:with-param name="has-index" as="xs:boolean" select="$has-index" tunnel="yes" />
         <xsl:with-param name="documentation-title" select="$documentation-title" tunnel="yes"/>
         <xsl:with-param name="audienceSelect"  select="$audienceSelect" tunnel="yes"/>
-        <xsl:with-param name="showTocEntry" as="xs:boolean" tunnel="yes" select="true()" />
+        <xsl:with-param name="showTocEntry" as="xs:boolean" tunnel="yes" select="$showTocEntryBoolean" />
       </xsl:apply-templates>
     </xsl:variable>
 
@@ -538,9 +544,10 @@
         <xsl:with-param name="collected-data" as="element()" select="$collected-data" tunnel="yes"/>
         <xsl:with-param name="uniqueTopicRefs" as="element()*" select="$uniqueTopicRefs" tunnel="yes"/>
         <xsl:with-param name="navigation" as="element()*" select="$navigation" tunnel="yes"/>
+        <xsl:with-param name="baseUri" as="xs:string" select="@xtrf" tunnel="yes"/>
         <xsl:with-param name="documentation-title" select="$documentation-title" tunnel="yes"/>
-        <xsl:with-param name="is-root" as="xs:boolean" select="true()" tunnel="yes"/>
         <xsl:with-param name="audienceSelect"  select="$audienceSelect" tunnel="yes"/>
+        <xsl:with-param name="indexUri" as="xs:string" select="$indexUri" tunnel = "yes" />
     </xsl:apply-templates>
 
     <xsl:message> + [INFO] Generating content pages...</xsl:message>
