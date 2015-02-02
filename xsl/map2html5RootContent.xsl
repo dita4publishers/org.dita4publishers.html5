@@ -35,7 +35,8 @@
 
     <xsl:choose>
       <xsl:when test="$indexIsFirstTopicBoolean">
-        <xsl:apply-templates select="./*[1]" mode="generate-root-first-topic-page"/>
+        <xsl:apply-templates select="./*[df:isTopicRef(.)][not(contains(@class, ' mapgroup-d/keydef '))][not(@scope = ('peer', 'external'))]
+                          [not(@format) or (@format = 'dita')][1]" mode="generate-root-first-topic-page"/>
       </xsl:when>
       <xsl:otherwise>
          <xsl:apply-templates select="." mode="generate-root-nav-page"/>
