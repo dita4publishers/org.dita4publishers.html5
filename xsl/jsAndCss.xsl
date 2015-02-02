@@ -269,6 +269,7 @@
     <xsl:param name="isChunkedMap" as="xs:boolean" select="false()" tunnel="yes"/>
     <xsl:param name="is-root" as="xs:boolean"  tunnel="yes" select="false()" />
     <xsl:param name="topicref" as="element()*" tunnel="yes"/>
+    <xsl:param name="documentation-title" as="xs:string" select="''" tunnel="yes" />
 
     <xsl:variable name="d4p-js-object">
       <d4p>
@@ -283,6 +284,7 @@
            <chunked><xsl:sequence select="string($topicref/ancestor-or-self::*[1]/@chunk)"/></chunked>
          </topic>
          <map>
+           <title><xsl:value-of select="$documentation-title"/></title>
            <chunked><xsl:value-of select="$isChunkedMap"/></chunked>
          </map>
          <search>
