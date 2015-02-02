@@ -32,8 +32,8 @@
   xmlns:json="http://json.org/"
   xmlns:related-links="http://dita-ot.sourceforge.net/ns/200709/related-links"
   xmlns:local="urn:functions:local"
-  exclude-result-prefixes="random xs xd df relpath mapdriven index-terms java xsl mapdriven json related-links local"
-  version="2.0">
+  exclude-result-prefixes="random xs xd df relpath mapdriven  index-terms java xsl mapdriven json related-links local"
+  version="1.0">
 
   <!-- Process standard attributes that may appear anywhere. Previously this was "setclass" -->
   <xsl:template name="commonattributes">
@@ -57,7 +57,6 @@
   </xsl:template>
 
   <xsl:template match="*[contains(@class, ' topic/desc ')]" mode="set-data-attr">
-
     <xsl:apply-templates select="*" mode="#current"/>
   </xsl:template>
 
@@ -115,11 +114,8 @@
     <xsl:element name="{$html5NoteElement}">
 
       <xsl:attribute name="class" select="concat('note', ' ', $type, ' ', @importance)"/>
-
       <xsl:call-template name="gen-style"/>
-
       <xsl:call-template name="setidaname"/>
-
       <xsl:call-template name="start-flagit"/>
 
       <span class="title">
@@ -215,7 +211,7 @@
               </xsl:if>
             </xsl:with-param>
           </xsl:call-template>
-           <xsl:apply-templates select="@height|@width"/>
+
     </object>
       </xsl:when>
 <xsl:otherwise>
@@ -226,7 +222,7 @@
 
     <xsl:call-template name="setid"/>
 
-    <xsl:apply-templates select="@href|@height|@width"/>
+    <xsl:apply-templates select="@href"/>
     <!-- Add by Alan for Bug:#2900417 on Date: 2009-11-23 begin -->
     <xsl:apply-templates select="@scale"/>
     <!-- Add by Alan for Bug:#2900417 on Date: 2009-11-23 end   -->
@@ -254,32 +250,6 @@
     <xsl:variable name="baseUri" as="xs:string"
       select="relpath:getParent($xtrf)"/>
 
-    <xsl:variable name="width">
-      <xsl:choose>
-        <xsl:when test="not(contains(../@href,'://'))">
-          <xsl:value-of select="java:getWidth($baseUri, string(../@origHref))"/>
-        </xsl:when>
-        <xsl:otherwise/>
-      </xsl:choose>
-    </xsl:variable>
-
-    <xsl:variable name="height">
-      <xsl:choose>
-        <xsl:when test="not(contains(../@href,'://'))">
-          <xsl:value-of select="java:getHeight($baseUri, string(../@origHref))"/>
-        </xsl:when>
-        <xsl:otherwise/>
-      </xsl:choose>
-    </xsl:variable>
-
-    <xsl:if test="not(../@width) and not(../@height)">
-      <xsl:attribute name="height">
-        <xsl:value-of select="format-number(floor(number($height) * number(.) div 100),'#.##')"/>
-      </xsl:attribute>
-      <xsl:attribute name="width">
-        <xsl:value-of select="format-number(floor(number($width) * number(.) div 100),'#.##')"/>
-      </xsl:attribute>
-    </xsl:if>
      <xsl:attribute name="class" select="../@align" />
   </xsl:template>
 
