@@ -57,6 +57,7 @@
     <xsl:apply-templates select="." mode="generate-d4p-css-js">
           <xsl:with-param name="location" as="xs:string" select="$location" tunnel="yes" />
     </xsl:apply-templates>
+
   </xsl:template>
 
   <!-- this template is used to change the output when debug mode = 0 -->
@@ -223,6 +224,8 @@
         </xsl:choose>
       </xsl:variable>
 
+      <xsl:variable name="path" select="concat($html5absolulteuri, $HTML5THEMEDIR, '/', $siteTheme, '/', $extension, '/', $filename)"/>
+
       <xsl:if test="prefix and prefix != ''">
         <xsl:value-of select="prefix" disable-output-escaping="yes"/>
       </xsl:if>
@@ -234,11 +237,11 @@
         </xsl:for-each>
 
         <xsl:if test="not(attributes/href) and $extension = 'css'">
-          <xsl:attribute name="href" select="relpath:fixRelativePath($relativePath, concat($HTML5THEMEDIR, '/', $siteTheme, '/', $extension, '/', filename))" />
+          <xsl:attribute name="href" select="if($html5absolulteuri = '') then relpath:fixRelativePath($relativePath, $path) else $path" />
         </xsl:if>
 
         <xsl:if test="not(attributes/src) and $extension = 'js'">
-          <xsl:attribute name="src" select="relpath:fixRelativePath($relativePath, concat($HTML5THEMEDIR, '/', $siteTheme, '/', $extension, '/', filename))" />
+          <xsl:attribute name="src" select="if($html5absolulteuri = '') then relpath:fixRelativePath($relativePath, $path) else $path" />
         </xsl:if>
 
         <xsl:value-of select="value" />
@@ -322,6 +325,7 @@
   <xsl:function name="relpath:assets-uri" as="xs:string">
     <xsl:param name="relativePath" as="xs:string*"/>
     <xsl:param name="path" as="xs:string*"/>
+
 
     <xsl:variable name="pathwithdir">
       <xsl:choose>
