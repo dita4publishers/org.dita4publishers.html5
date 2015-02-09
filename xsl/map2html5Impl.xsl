@@ -221,6 +221,8 @@
   <xsl:param name="OUTPUTDEFAULTNAVIGATION" select="true()" />
 
   <xsl:variable name="maxTocDepthInt" select="xs:integer($maxTocDepth)" as="xs:integer"/>
+  <xsl:variable name="version" select="if(/map/topicmeta/prodinfo/vrmlist/vrm/@version) then /map/topicmeta/prodinfo/vrmlist/vrm/@version else ''" as="xs:string"/>
+
 
   <xsl:variable name="platform" as="xs:string"
     select="

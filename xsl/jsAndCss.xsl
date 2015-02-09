@@ -285,6 +285,9 @@
          </topic>
          <map>
            <title><xsl:value-of select="$documentation-title"/></title>
+           <xsl:if test="$version != ''">
+             <version><xsl:value-of select="$version"/></version>
+           </xsl:if>
            <chunked><xsl:value-of select="$isChunkedMap"/></chunked>
          </map>
          <search>
