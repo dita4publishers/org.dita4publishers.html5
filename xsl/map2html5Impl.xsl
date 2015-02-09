@@ -217,7 +217,7 @@
   <xsl:param name="GRIDPREFIX" select="'grid_'" />
   <xsl:param name="CLASSSCREENREADER" select="'screen-reader'" />
   <xsl:param name="uplevels" select="''" />
-  <xsl:param name="HTTPABSOLUTEURI" select="''" />
+  <xsl:param name="html5absolulteuri" select="''" />
   <xsl:param name="OUTPUTDEFAULTNAVIGATION" select="true()" />
 
   <xsl:variable name="maxTocDepthInt" select="xs:integer($maxTocDepth)" as="xs:integer"/>

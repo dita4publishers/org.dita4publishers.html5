@@ -325,8 +325,8 @@
 
     <xsl:variable name="pathwithdir">
       <xsl:choose>
-        <xsl:when test="$HTTPABSOLUTEURI != ''">
-          <xsl:value-of select="concat($HTTPABSOLUTEURI, $HTML5THEMEDIR, '/', $path)"/>
+        <xsl:when test="$html5absolulteuri != ''">
+          <xsl:value-of select="concat($html5absolulteuri, $HTML5THEMEDIR, '/', $path)"/>
         </xsl:when>
         <xsl:otherwise>
           <xsl:value-of select="relpath:fixRelativePath($relativePath, concat($HTML5THEMEDIR, '/', $path))" />
