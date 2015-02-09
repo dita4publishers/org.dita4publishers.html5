@@ -93,6 +93,13 @@
       </or>
     </condition>
 
+    <condition property="dita.map.html5.no.package" value="yes">
+      <or>
+        <isset property="dita.map.html5.get.package" />
+        <isset property="dita.map.html5.do.package" />
+      </or>
+    </condition>
+
     <condition property="html5.copy.assets" value="yes">
       <and>
         <not>
@@ -378,7 +385,7 @@
    <antcall target="theme-xml-preprocess" inheritAll="yes" />
   </target>
 
-  <target name="dita.map.html5.get.package" unless="dita.map.html5.do.package">
+  <target name="dita.map.html5.get.package" unless="dita.map.html5.no.package">
    <antcall target="package.get" inheritAll="yes" />
   </target>
 
