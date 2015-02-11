@@ -139,10 +139,12 @@
               "<xsl:sequence select="string(@href)"/>"</xsl:message>
         </xsl:when>
         <xsl:otherwise>
+
+          <xsl:variable name="hash" select="if(./@chunk) then '' else df:getIdForElement(.)"/>
           <xsl:variable name="targetUri"
-            select="if($isChunkedMap) then concat($outdir, '#', df:getIdForElement(.)) else concat(htmlutil:getTopicResultUrl($outdir, root($topic), $rootMapDocUrl), '#', df:getIdForElement(.))"
+            select="htmlutil:getTopicResultUrl($outdir, root($topic), $rootMapDocUrl)"
             as="xs:string"/>
-          <xsl:variable name="relativeUri" select="relpath:getRelativePath($outdir, $targetUri)"
+          <xsl:variable name="relativeUri" select="if($hash != '') then concat(relpath:getRelativePath($outdir, $targetUri), '#', $hash) else relpath:getRelativePath($outdir, $targetUri)"
             as="xs:string"/>
           <xsl:variable name="enumeration" as="xs:string?">
             <xsl:apply-templates select="." mode="enumeration"/>
