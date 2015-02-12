@@ -37,6 +37,7 @@
   <xsl:param name="script" select="''" />
   <xsl:param name="outputdir" select="''" />
   <xsl:param name="themedir" select="''" />
+  <xsl:param name="buildnumber" select="''" />
 
   <xsl:output method="xml" indent="yes"/>
 
@@ -116,7 +117,7 @@
     </xsl:variable>
 
 
-    <package type="{$type}" theme="{$html5sitetheme}" filelist="{$filelist}" to="{substring-before($filename, concat('.', $extension))}" />
+    <package type="{$type}" theme="{$html5sitetheme}" filelist="{$filelist}" to="{substring-before($filename, concat('.', $extension))}" version="{$buildnumber}" />
 
   </xsl:template>
 

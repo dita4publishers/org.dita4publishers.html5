@@ -488,10 +488,38 @@
     <delete dir="${html5.theme.dir}"/>
   </target>
 
-   <!-- FIXME: Move to xsl code directly -->
-  <target name="theme-xml-preprocess" description="Process theme" depends="theme-xml-preprocess-cleanup, compressor.install" unless="args.debug">
+  <target name="theme.check.version.file">
+    <dirname property="config.dir" file="${html5.site.config}"/>
+    <available file="${config.dir}/${html5.theme.version.file}" property="theme.version.file.exists"/>
+  </target>
 
-  <property name="theme.preprocess.style" location="${d4p.html5.dir}/xsl/theme/theme-preprocess.xsl"/>
+  <target name="theme.create.version.file" depends="theme.check.version.file, theme.read.version.file" unless="theme.version.file.exists">
+    <propertyfile  file="${config.dir}/${html5.theme.version.file}">
+      <entry key="build.major.number" type="int" value="1" />
+      <entry key="build.minor.number" type="int"  value="1" />
+      <entry key="build.revision.number" type="int" value="1" />
+    </propertyfile>
+  </target>
+
+  <target name="theme.read.version.file" depends="theme.check.version.file" if="theme.version.file.exists">
+    <propertyfile  file="${config.dir}/${html5.theme.version.file}"/>
+  </target>
+
+   <!-- FIXME: Move to xsl code directly -->
+  <target name="theme-xml-preprocess" description="Process theme" depends="theme-xml-preprocess-cleanup, compressor.install, theme.create.version.file" unless="args.debug">
+
+    <propertyfile file="${config.dir}/${html5.theme.version.file}">
+      <entry key="build.revision.number" type="int" operation="+" value="1"/>
+    </propertyfile>
+
+    <property file="${config.dir}/${html5.theme.version.file}"/>
+    <property name="build.number" value="${build.major.number}.${build.minor.number}.${build.revision.number}"/>
+
+    <echo>
+      Theme Build number is ${build.number}
+    </echo>
+
+    <property name="theme.preprocess.style" location="${d4p.html5.dir}/xsl/theme/theme-preprocess.xsl"/>
 
     <mkdir dir="${output.dir}/ant/" />
 
@@ -506,7 +534,7 @@
       <param name="html5sitetheme" expression="${html5.site.theme}"/>
       <param name="themedir" expression="${html5.themes.dir}"/>
       <param name="ouputdir" expression="${output.dir}"/>
-<!--      <param name="inputdir" expression="${dita.input.dirname}"/>-->
+      <param name="buildnumber" expression="${build.number}"/>
       <xmlcatalog refid="dita.catalog"></xmlcatalog>
   </xslt>
 

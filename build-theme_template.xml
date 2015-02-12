@@ -46,12 +46,14 @@
     <attribute name="filelist"/>
     <attribute name="to"/>
     <attribute name="theme" />
+    <attribute name="version" />
     <sequential>
         <antcall target="package.compress">
           <param name="type" value="@{type}"/>
           <param name="filelist" value="@{filelist}"/>
           <param name="to" value="@{to}"/>
           <param name="html5.site.theme" value="@{theme}"/>
+          <param name="version" value="@{version}"/>
         </antcall>
     </sequential>
   </macrodef>
@@ -163,6 +165,7 @@
 	 <echo> +++ Compressing concatenated file
            ${fromfile}
            to ${tofile}
+           version ${version}
            </echo>
 
      <java jar="${theme.builder.dir}${file.separator}${compressor.path}"
@@ -206,7 +209,6 @@
   </target>
 
   <target name="package.prepare" unless="package.prepared">
-
     <mkdir dir="${html5.temp.libs.dir}" />
     <echo>  +  copy into ${html5.temp.libs.dir} files from "${theme.builder.dir}${file.separator}${html5.libs.dir}</echo>
     <!-- copy main library -->
