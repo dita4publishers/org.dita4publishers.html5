@@ -36,12 +36,12 @@
     <xsl:param name="is-root" as="xs:boolean"  tunnel="yes" select="false()" />
     <xsl:param name="resultUri" as="xs:string" tunnel="yes" select="''" />
     <xsl:if test="$OUTPUTDEFAULTNAVIGATION and $is-root = false()">
-    <xsl:variable name="navigation-fixed">
-      <xsl:apply-templates select="$navigation" mode="fix-navigation-href">
-        <xsl:with-param name="resultUri" select="$resultUri" />
-      </xsl:apply-templates>
-    </xsl:variable>
-    <xsl:sequence select="$navigation-fixed"/>
+      <xsl:variable name="navigation-fixed">
+        <xsl:apply-templates select="$navigation" mode="fix-navigation-href">
+          <xsl:with-param name="resultUri" select="$resultUri" />
+        </xsl:apply-templates>
+      </xsl:variable>
+      <xsl:sequence select="$navigation-fixed"/>
     </xsl:if>
   </xsl:template>
 
@@ -57,7 +57,6 @@
 
   <xsl:template match="*[df:class(., 'map/map')]" mode="generate-html5-nav">
     <xsl:param name="collected-data" as="element()" tunnel="yes"/>
-
     <xsl:message> + [INFO] Generating HTML5 navigation structure...</xsl:message>
 
     <xsl:apply-templates mode="generate-html5-nav"/>
@@ -77,13 +76,8 @@
     <xsl:param name="is-root" as="xs:boolean" tunnel="yes" select="false()" />
     <xsl:param name="showTocEntry" as="xs:boolean" tunnel="yes" select="false()" />
 
-    <nav id="{$IDLOCALNAV}" role="navigation" aria-label="Main navigation">
-      <xsl:attribute name="class" select="$CLASSNAVIGATION"/>
-
-        <div id="nav-content">
-
-          <xsl:variable name="listItems" as="node()*">
-            <xsl:apply-templates mode="generate-html5-nav"
+    <xsl:variable name="listItems" as="node()*">
+        <xsl:apply-templates mode="generate-html5-nav"
               select=".
               except (
               *[df:class(., 'topic/title')],
@@ -91,18 +85,20 @@
               *[df:class(., 'map/reltable')]
               )"
             />
-          </xsl:variable>
+    </xsl:variable>
 
+    <xsl:variable name="indexName">
+      <xsl:call-template name="getString">
+        <xsl:with-param name="stringName" select="'TOC'"/>
+      </xsl:call-template>
+    </xsl:variable>
+
+    <nav id="{$IDLOCALNAV}" class="{$CLASSNAVIGATION}" role="navigation" aria-label="Main navigation">
+      <div id="nav-content">
         <xsl:if test="$listItems">
           <ul>
             <xsl:if test="$showTocEntry">
-              <li class="toc_link">
-                <a href="index.html">
-                  <xsl:call-template name="getString">
-                    <xsl:with-param name="stringName" select="'TOC'"/>
-                  </xsl:call-template>
-                </a>
-              </li>
+              <li><a href="index.html"><xsl:value-of select="$indexName"/></a></li>
             </xsl:if>
             <xsl:sequence select="$listItems"/>
           </ul>
@@ -112,9 +108,7 @@
   </xsl:template>
 
   <xsl:template mode="generate-html5-nav-page-markup" match="*[df:class(., 'topic/title')][not(@toc = 'no')]">
-    <h2 class="nav-pub-title">
-      <xsl:apply-templates/>
-    </h2>
+    <h2 class="nav-pub-title"><xsl:apply-templates/></h2>
   </xsl:template>
 
   <xsl:template mode="generate-html5-nav" match="*[df:class(., 'topic/title')][not(@toc = 'no')]"/>
@@ -150,26 +144,20 @@
             <xsl:apply-templates select="." mode="enumeration"/>
           </xsl:variable>
           <xsl:variable name="self" select="generate-id(.)" as="xs:string"/>
+          <xsl:variable name="title"><xsl:apply-templates select="." mode="nav-point-title"/></xsl:variable>
+          <xsl:variable name="enum">
+            <xsl:if test="$enumeration and $enumeration != ''">
+              <span class="enumeration enumeration{$tocDepth}"><xsl:sequence select="$enumeration"/></span>
+            </xsl:if>
+          </xsl:variable>
 
-          <!-- Use UL for navigation structure -->
-
-          <li>
-            <a href="{$relativeUri}">
-              <!-- target="{$contenttarget}" -->
-              <xsl:if test="$enumeration and $enumeration != ''">
-                <span class="enumeration enumeration{$tocDepth}">
-                  <xsl:sequence select="$enumeration"/>
-                </span>
-              </xsl:if>
-              <xsl:apply-templates select="." mode="nav-point-title"/>
-            </a>
-            <xsl:if test="$topic/*[df:class(., 'topic/topic')], *[df:class(., 'map/topicref')][not(@processing-role = 'resource-only')]">
-              <xsl:variable name="listItems" as="node()*">
-                <!-- Any subordinate topics in the currently-referenced topic are
+          <!-- Any subordinate topics in the currently-referenced topic are
               reflected in the ToC before any subordinate topicrefs.
             -->
-                <xsl:apply-templates mode="#current"
-                  select="$topic/*[df:class(., 'topic/topic')], *[df:class(., 'map/topicref')][not(@processing-role = 'resource-only')]">
+          <xsl:variable name="children">
+            <xsl:if test="$topic/*[df:class(., 'topic/topic')], *[df:class(., 'map/topicref')][not(@processing-role = 'resource-only')]">
+              <xsl:variable name="listItems" as="node()*">
+                <xsl:apply-templates mode="#current" select="$topic/*[df:class(., 'topic/topic')], *[df:class(., 'map/topicref')][not(@processing-role = 'resource-only')]">
                   <xsl:with-param name="tocDepth" as="xs:integer" tunnel="yes"
                     select="$tocDepth + 1"/>
                 </xsl:apply-templates>
@@ -180,7 +168,8 @@
                 </xsl:call-template>
               </xsl:if>
             </xsl:if>
-          </li>
+          </xsl:variable>
+          <li><a href="{$relativeUri}"><xsl:sequence select="$enum"/><xsl:sequence select="$title"/><xsl:sequence select="$children"/></a></li>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:if>
@@ -216,27 +205,21 @@
 
     <xsl:if test="$tocDepth le $maxTocDepthInt">
       <xsl:variable name="navPointId" as="xs:string" select="generate-id(.)"/>
-      <li id="{$navPointId}" class="topichead">
-        <span>
-          <xsl:sequence select="df:getNavtitleForTopicref(.)"/>
-        </span>
-        <xsl:variable name="listItems" as="node()*">
-          <xsl:apply-templates select="*[df:class(., 'map/topicref')][not(@processing-role = 'resource-only')]" mode="#current">
-            <xsl:with-param name="tocDepth" as="xs:integer" tunnel="yes" select="$tocDepth + 1"/>
-          </xsl:apply-templates>
-        </xsl:variable>
+      <xsl:variable name="listItems" as="node()*">
+        <xsl:apply-templates select="*[df:class(., 'map/topicref')][not(@processing-role = 'resource-only')]" mode="#current">
+          <xsl:with-param name="tocDepth" as="xs:integer" tunnel="yes" select="$tocDepth + 1"/>
+        </xsl:apply-templates>
+      </xsl:variable>
+      <xsl:variable name="listItemSeq">
         <xsl:if test="$listItems">
           <ul>
             <xsl:sequence select="$listItems"/>
           </ul>
         </xsl:if>
-      </li>
+      </xsl:variable>
+      <li id="{$navPointId}" class="topichead"><span><xsl:sequence select="df:getNavtitleForTopicref(.)"/></span><xsl:sequence select="$listItemSeq"/></li>
     </xsl:if>
   </xsl:template>
-
-
-
-
 
   <xsl:template match="*[df:class(., 'topic/tm')]" mode="generate-html5-nav">
     <xsl:apply-templates mode="#current"/>
@@ -298,7 +281,6 @@
       </xsl:choose>
     </xsl:variable>
 
-
     <xsl:variable name="activeTrailClass">
       <xsl:choose>
         <xsl:when test="$isActiveTrail">
@@ -313,24 +295,29 @@
       </xsl:choose>
     </xsl:variable>
 
+    <xsl:variable name="class" select="concat(@class, $hasChildClass, $activeTrailClass)"/>
+
+    <xsl:variable name="title">
+      <xsl:if test="text()[1]">
+        <span class="navtitle"><xsl:value-of select="text()[1]" /></span>
+       </xsl:if>
+    </xsl:variable>
 
     <li>
-      <xsl:attribute name="class" select="concat(@class, $hasChildClass, $activeTrailClass)"/>
-      <xsl:if test="text()[1]">
-        <span class="navtitle">
-        <xsl:value-of select="text()[1]" />
-        </span>
+      <xsl:if test="$class != ''">
+       <xsl:attribute name="class" select="$class" />
       </xsl:if>
+      <xsl:sequence select="$title"/>
       <xsl:apply-templates mode="fix-navigation-href"/>
     </li>
   </xsl:template>
 
 
   <xsl:template match="a" mode="fix-navigation-href">
-   <xsl:param name="topicRelativeUri" as="xs:string" select="''" tunnel="yes"/>
+    <xsl:param name="topicRelativeUri" as="xs:string" select="''" tunnel="yes"/>
     <xsl:param name="relativePath" as="xs:string" select="''" tunnel="yes"/>
 
-   <xsl:variable name="isSelected" select="@href=$topicRelativeUri"/>
+    <xsl:variable name="isSelected" select="@href=$topicRelativeUri"/>
 
     <xsl:variable name="prefix">
       <xsl:choose>
@@ -343,16 +330,12 @@
         <xsl:otherwise>
           <xsl:value-of select="$relativePath"/>
         </xsl:otherwise>
-
       </xsl:choose>
     </xsl:variable>
-  <a>
-    <xsl:if test="$isSelected">
-      <xsl:attribute name="class" select="'selected'" />
-    </xsl:if>
-      <xsl:attribute name="href" select="concat($prefix, @href)"/>
-      <xsl:sequence select="node()" />
-    </a>
+
+    <xsl:variable name="class" as="xs:string" select="if($isSelected) then 'selected' else ''"/>
+
+    <a class="{$class}" href="{concat($prefix, @href)}"><xsl:sequence select="node()" /></a>
   </xsl:template>
 
   <xsl:template match="mapdriven:collected-data" mode="generate-html5-nav">
@@ -371,9 +354,7 @@
   <xsl:template match="index-terms:index-terms" mode="generate-html5-nav">
     <xsl:param name="has-index" as="xs:boolean" tunnel="yes" />
     <xsl:if test="$has-index">
-      <li>
-        <a href="generated-index.html">Index</a>
-      </li>
+      <li><a href="generated-index.html">Index</a></li>
       <xsl:apply-templates select="index-terms:grouped-and-sorted" mode="#current"/>
     </xsl:if>
   </xsl:template>

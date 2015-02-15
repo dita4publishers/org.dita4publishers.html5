@@ -45,7 +45,7 @@
   </xsl:template>
 
 
-  <xsl:template mode="generate-content" 
+  <xsl:template mode="generate-content"
                 match="*[df:isTopicRef(.)]
                           [not(@scope = ('peer', 'external'))]
                           [not(@format) or (@format = 'dita')]"
@@ -133,7 +133,7 @@
       > </xsl:result-document>
     </xsl:if>
 
-    <xsl:result-document format="html5" href="{$resultUri}">
+    <xsl:result-document format="{$xsloutput}" href="{$resultUri}">
       <xsl:apply-templates mode="generate-html5-page" select=".">
         <xsl:with-param name="relativePath" select="$relativePath" as="xs:string" tunnel="yes"/>
         <xsl:with-param name="resultUri" as="xs:string" select="$resultUri" tunnel="yes"/>

@@ -366,6 +366,14 @@
       </not>
     </condition>
 
+    <condition property="html5.output.size.strategy" value="true">
+      <not>
+        <isset property="html5.output.size.strategy" />
+      </not>
+    </condition>
+
+
+
     <!--xmlproperty file="${html5.site.config}" collapseAttributes="true" semanticAttributes="true" /-->
 
   </target>

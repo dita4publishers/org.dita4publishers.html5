@@ -69,7 +69,7 @@
 
       <xsl:result-document
         href="{$resultUri}"
-        format="html5"
+        format="{$xsloutput}"
         exclude-result-prefixes="index-terms"
       >
         <xsl:apply-templates mode="generate-html5-page" select=".">

@@ -28,6 +28,9 @@
   exclude-result-prefixes="df xs relpath htmlutil xd dc"
   version="2.0">
 
+
+  <xsl:output name="html5" method="html" indent="yes" encoding="utf-8" doctype-system="about:legacy-compat" omit-xml-declaration="yes"/>
+  <xsl:output name="html5-no-indent" method="html" indent="no" encoding="utf-8" doctype-system="about:legacy-compat" omit-xml-declaration="yes"/>
   <xsl:output name="indented-xml" method="xml" indent="yes" omit-xml-declaration="yes"/>
 
   <xsl:template mode="toc-title" match="*[df:isTopicRef(.)] | *[df:isTopicHead(.)]">

@@ -131,7 +131,7 @@
     />
 
     <xsl:message> + [INFO] Generating root index HTML document <xsl:sequence select="$indexUri"/>...</xsl:message>
-   <xsl:result-document format="html5" href="{$indexUri}">
+   <xsl:result-document format="{$xsloutput}" href="{$indexUri}">
       <xsl:apply-templates mode="generate-html5-page" select=".">
         <xsl:with-param name="resultUri" as="xs:string" select="$indexUri" tunnel="yes"/>
         <xsl:with-param name="is-root" as="xs:boolean" select="true()"  tunnel="yes"/>

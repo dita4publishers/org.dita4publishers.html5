@@ -94,4 +94,5 @@
     <param name="uplevels" expression="${uplevels}" />
     <param name="indexIsFirstTopic" expression="${indexIsFirstTopic}" />
     <param name="showTocEntry" expression="${showTocEntry}" />
+    <param name="html5outputsizestrategy" expression="${html5.output.size.strategy}" />
 </params>

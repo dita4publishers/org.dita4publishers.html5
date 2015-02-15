@@ -220,8 +220,34 @@
   <xsl:param name="html5absolulteuri" select="''" />
   <xsl:param name="OUTPUTDEFAULTNAVIGATION" select="true()" />
 
+  <xsl:param name="html5outputsizestrategy" select="'yes'"/>
+  <xsl:param name="html5outputsizestrategyBoolean" select="matches($html5outputsizestrategy, 'yes|true|on|1', 'i')"/>
+
   <xsl:variable name="maxTocDepthInt" select="xs:integer($maxTocDepth)" as="xs:integer"/>
   <xsl:variable name="version" select="if(/map/topicmeta/prodinfo/vrmlist/vrm/@version) then /map/topicmeta/prodinfo/vrmlist/vrm/@version else ''" as="xs:string"/>
+
+  <xsl:variable name="xsloutput">
+    <xsl:choose>
+      <xsl:when test="$html5outputsizestrategyBoolean and not($ISDRAFT)">
+        <xsl:value-of select="'html5-no-indent'"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="'html5'"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
+
+  <xsl:variable name="newline">
+   <xsl:choose>
+      <xsl:when test="$html5outputsizestrategyBoolean and not($ISDRAFT)">
+        <xsl:value-of select="''"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:text>
+</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
 
 
   <xsl:variable name="platform" as="xs:string"
@@ -245,6 +271,7 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:variable>
+
 
   <xsl:variable name="imagesOutputPath">
     <xsl:choose>
@@ -338,7 +365,6 @@
 
 
 
-  <xsl:output name="html5" method="html" indent="yes" encoding="utf-8" doctype-system="about:legacy-compat" omit-xml-declaration="yes"/>
 
   <xsl:template match="/">
     <xsl:message> + [INFO] Using DITA for Publishers HTML5 transformation type
