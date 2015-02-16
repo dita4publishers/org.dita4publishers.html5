@@ -169,7 +169,7 @@
               </xsl:if>
             </xsl:if>
           </xsl:variable>
-          <li><a href="{$relativeUri}"><xsl:sequence select="$enum"/><xsl:sequence select="$title"/><xsl:sequence select="$children"/></a></li>
+          <li><a href="{$relativeUri}"><xsl:sequence select="$enum"/><xsl:sequence select="$title"/></a><xsl:sequence select="$children"/></li>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:if>
@@ -273,10 +273,10 @@
     <xsl:variable name="hasChildClass">
       <xsl:choose>
         <xsl:when test="$hasChild">
-          <xsl:value-of select="' collapsible '"/>
+          <xsl:value-of select="'collapsible '"/>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:value-of select="' no-child '"/>
+          <xsl:value-of select="'no-child '"/>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
@@ -333,7 +333,7 @@
       </xsl:choose>
     </xsl:variable>
 
-    <xsl:variable name="class" as="xs:string" select="if($isSelected) then 'selected' else ''"/>
+    <xsl:variable name="class" as="xs:string" select="if($isSelected) then ' selected' else ''"/>
 
     <a class="{$class}" href="{concat($prefix, @href)}"><xsl:sequence select="node()" /></a>
   </xsl:template>
