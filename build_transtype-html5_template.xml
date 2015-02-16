@@ -24,6 +24,9 @@
   <import file="build-theme.xml" />
   <import file="compressor-install.xml" />
 
+  <property file="${dita.plugin.org.dita4publishers.html5.dir}/build_info.properties"/>
+  <property name="html5.plugin.version" value="${build.major.number}.${build.minor.number}.${build.revision.number}"/>
+
   <target name="dita2d4p-html5"
     unless="noMap"
     xmlns:dita="http://dita-ot.sourceforge.net"
@@ -47,6 +50,7 @@
   </target>
 
   <target name="dita.map.html5.init" description="Initialize HTML5 plugin properties">
+
 
     <condition property="http.absolute.uri" value="">
       <not>

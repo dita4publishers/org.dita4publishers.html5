@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="project" default="all">
+
+<property file="build_info.properties"/>
+<property name="build.number" value="${build.major.number}.${build.minor.number}.${build.revision.number}"/>
+
+<target name="current-number">
+ <echo>Current build number:${build.number}</echo>
+</target>
+
+<target name="compile">
+   <antcall target="revision"></antcall>
+</target>
+
+<target name="dist">
+  <antcall target="minor"></antcall>
+</target>
+
+<target name="revision">
+    <propertyfile  file="build_info.properties">
+            <entry key="build.revision.number" type="int" operation="+" value="1"/>
+    </propertyfile>
+</target>
+
+<target name="minor">
+    <propertyfile  file="build_info.properties">
+            <entry key="build.minor.number" type="int" operation="+" value="1" />
+            <entry key="build.revision.number" type="int" value="0" />
+    </propertyfile>
+</target>
+
+<target name="major">
+    <propertyfile  file="build_info.properties">
+            <entry key="build.major.number" type="int" operation="+" value="1" />
+            <entry key="build.minor.number" type="int" value="0" />
+            <entry key="build.revision.number" type="int" value="0"/>
+    </propertyfile>
+</target>
+
+<target name="all">
+    <propertyfile  file="build_info.properties">
+            <entry key="build.major.number" type="int" operation="+" value="1" />
+            <entry key="build.minor.number" type="int" operation="+" value="1" />
+            <entry key="build.revision.number" type="int" operation="+" value="1"/>
+    </propertyfile>
+</target>
+
+</project>
