@@ -169,7 +169,7 @@
               </xsl:if>
             </xsl:if>
           </xsl:variable>
-          <li><a href="{$relativeUri}"><xsl:sequence select="$enum"/><xsl:sequence select="$title"/></a><xsl:sequence select="$children"/></li>
+          <li><a href="{$relativeUri}"><xsl:sequence select="$enum"/><xsl:sequence select="normalize-space($title)"/></a><xsl:sequence select="$children"/></li>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:if>
@@ -217,7 +217,7 @@
           </ul>
         </xsl:if>
       </xsl:variable>
-      <li id="{$navPointId}" class="topichead"><span><xsl:sequence select="df:getNavtitleForTopicref(.)"/></span><xsl:sequence select="$listItemSeq"/></li>
+      <li id="{$navPointId}" class="topichead"><span><xsl:sequence select="normalize-space(df:getNavtitleForTopicref(.))"/></span><xsl:sequence select="$listItemSeq"/></li>
     </xsl:if>
   </xsl:template>
 

@@ -657,4 +657,31 @@
       <xsl:message> + [DEBUG] enumeration: catch-all template. Element="<xsl:sequence select="name(.)"/></xsl:message>
     </xsl:if>
   </xsl:template>
+
+  <!-- to be placed -->
+   <xsl:function name="df:cleanNewLine" as="node()*">
+    <xsl:param name="tree" as="node()*"/>
+    <xsl:choose>
+      <xsl:when test="$html5outputsizestrategyBoolean and not($ISDRAFT)">
+        <xsl:apply-templates select="$tree" mode="clean-linebreaks"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:sequence select="$tree"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:function>
+
+
+  <xsl:template match="@*|node()" mode="clean-linebreaks">
+    <xsl:copy>
+      <xsl:apply-templates select="@*|node()" mode="#current"/>
+     </xsl:copy>
+  </xsl:template>
+
+  <xsl:template match="*/text()[normalize-space()]"  mode="clean-linebreaks">
+    <xsl:value-of select="normalize-space()"/>
+  </xsl:template>
+
+  <xsl:template match="*/text()[not(normalize-space())]"  mode="clean-linebreaks"/>
+
 </xsl:stylesheet>
