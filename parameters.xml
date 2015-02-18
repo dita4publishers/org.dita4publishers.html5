@@ -95,4 +95,6 @@
     <param name="indexIsFirstTopic" expression="${indexIsFirstTopic}" />
     <param name="showTocEntry" expression="${showTocEntry}" />
     <param name="html5outputsizestrategy" expression="${html5.output.size.strategy}" />
+    <param name="maxTocDepth" expression="${d4p.max.toc.depth}" />
+
 </params>
