@@ -271,6 +271,18 @@
       <fileset refid="html5.fonts.path" />
     </copy>
 
+    <fileset id="html5.others.dir"  dir="${html5.theme.config.dir}/${html5.site.theme}">
+     <include name="**"/>
+     <exclude name="css"/>
+     <exclude name="img"/>
+     <exclude name="fonts"/>
+   </fileset>
+
+   <copy todir="${html5.temp.theme.dir}" failonerror="false" force="true">
+      <fileset refid="html5.others.dir" />
+   </copy>
+
+
   </target>
 
   <target name="store.builded.theme.dir" unless="html5.theme.exists">
