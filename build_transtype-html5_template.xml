@@ -139,6 +139,13 @@
       </not>
     </condition>
 
+    <condition property="d4p.max.toc.depth" value="5">
+      <not>
+        <isset property="d4p.max.toc.depth" />
+      </not>
+    </condition>
+
+
     <condition property="out.ext" value=".html">
       <not>
         <isset property="out.ext" />
