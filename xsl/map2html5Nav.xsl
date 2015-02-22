@@ -273,10 +273,10 @@
     <xsl:variable name="hasChildClass">
       <xsl:choose>
         <xsl:when test="$hasChild">
-          <xsl:value-of select="'collapsible '"/>
+          <xsl:value-of select="'collapsible'"/>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:value-of select="'no-child '"/>
+          <xsl:value-of select="''"/>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
@@ -318,24 +318,22 @@
     <xsl:param name="relativePath" as="xs:string" select="''" tunnel="yes"/>
 
     <xsl:variable name="isSelected" select="@href=$topicRelativeUri"/>
-
-    <xsl:variable name="prefix">
-      <xsl:choose>
-        <xsl:when test="substring(@href, 1, 1) = '#'">
-          <xsl:value-of select="''"/>
-        </xsl:when>
-        <xsl:when test="substring(@href, 1, 1) = '/'">
-          <xsl:value-of select="''"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:value-of select="$relativePath"/>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
-
+    <xsl:variable name="hash" as="xs:string" select="substring-after(@href, '#')"/>
+    <xsl:variable name="finalHash" as="xs:string" select="if($hash != '') then concat('#', $hash) else ''"/>
+    <xsl:variable name="parentTopicDir" as="xs:string" select="relpath:getParent($topicRelativeUri)"/>
+    <xsl:variable name="filename" as="xs:string" select="relpath:getName(@href)"/>
+    <xsl:variable name="finalUriDir" as="xs:string" select="relpath:getParent(@href)"/>
+    <xsl:variable name="relDir" as="xs:string" select="relpath:getRelativePath($parentTopicDir, $finalUriDir)"/>
+    <xsl:variable name="finalFilename" as="xs:string" select="if($hash = '') then $filename else ''"/>
+    <xsl:variable name="finalRelDir" as="xs:string" select="if($relDir != '') then concat($relDir, '/') else ''"/>
     <xsl:variable name="class" as="xs:string" select="if($isSelected) then ' selected' else ''"/>
 
-    <a class="{$class}" href="{concat($prefix, @href)}"><xsl:sequence select="node()" /></a>
+    <a href="{concat($finalRelDir, $finalFilename, $finalHash)}">
+      <xsl:if test="$class != ''">
+        <xsl:attribute name="class" select="$class"/>
+      </xsl:if>
+      <xsl:sequence select="node()" />
+    </a>
   </xsl:template>
 
   <xsl:template match="mapdriven:collected-data" mode="generate-html5-nav">
