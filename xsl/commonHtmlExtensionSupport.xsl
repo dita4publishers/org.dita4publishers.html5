@@ -524,7 +524,11 @@
 
 <!-- section processor - div with no generated title -->
 <xsl:template match="*[contains(@class, ' topic/section ')]" name="topic.section">
+  <xsl:variable name="sectionID"  select="df:getIdForElement(.)"/>
   <div class="section">
+    <xsl:if test="$sectionID">
+      <xsl:attribute name="id" select="concat($sectionID, '_section')"/>
+    </xsl:if>
     <xsl:call-template name="commonattributes"/>
     <xsl:call-template name="set_an_anchor" />
     <xsl:apply-templates select="."  mode="section-fmt" />
@@ -550,10 +554,15 @@
       </xsl:choose>
   </xsl:param>
 
-<section class="{concat('nested', $nestlevel, ' ', @outputclass)}">
- <xsl:call-template name="gen-topic"/>
- <xsl:apply-templates/>
-</section><xsl:value-of select="$newline"/>
+  <xsl:variable name="sectionID"  select="df:getIdForElement(.)"/>
+
+  <section class="{concat('nested', $nestlevel, ' ', @outputclass)}">
+    <xsl:if test="$sectionID">
+      <xsl:attribute name="id" select="concat($sectionID, '_section')"/>
+    </xsl:if>
+    <xsl:call-template name="gen-topic"/>
+    <xsl:apply-templates/>
+  </section><xsl:value-of select="$newline"/>
 </xsl:template>
 
 <xsl:template name="gen-topic">
