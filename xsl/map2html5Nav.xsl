@@ -267,7 +267,7 @@
 
   <xsl:template match="li" mode="fix-navigation-href">
     <xsl:param name="topicRelativeUri" as="xs:string" select="''" tunnel="yes"/>
-    <xsl:variable name="isActiveTrail" select="descendant::*[contains(@href, $topicRelativeUri)]"/>
+    <xsl:variable name="isActiveTrail" select="descendant::*[@href = $topicRelativeUri]"/>
     <xsl:variable name="hasChild" select="descendant::li"/>
 
     <xsl:variable name="hasChildClass">
