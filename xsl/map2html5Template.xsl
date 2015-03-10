@@ -209,7 +209,10 @@
                <xsl:sequence select="$navigation"/>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:apply-templates />
+            <xsl:variable name="content">
+              <xsl:apply-templates />
+            </xsl:variable>
+            <xsl:apply-templates select="$content"  mode="clean-linebreaks"/>
           </xsl:otherwise>
         </xsl:choose>
 
@@ -303,7 +306,7 @@
               </xsl:otherwise>
               </xsl:choose>
             </article>
-      <div class="clear" /><xsl:sequence select="'&#x0a;'"/>
+      <div class="clear" /><xsl:sequence select="$newline"/>
     </div>
   </xsl:template>
 
@@ -316,7 +319,10 @@
       <xsl:otherwise>
         <nav id="content-toolbar" class="toolbar hide-for-small">
           <xsl:if test="contains($include.roles, ' next ') or contains($include.roles, ' previous ') or contains($include.roles, ' parent ')">
-            <xsl:call-template name="next-prev-parent-links"/><!--handle next and previous links-->
+            <xsl:variable name="content">
+              <xsl:call-template name="next-prev-parent-links"/><!--handle next and previous links-->
+            </xsl:variable>
+            <xsl:apply-templates select="$content"  mode="clean-linebreaks"/>
           </xsl:if>
         </nav>
       </xsl:otherwise>
@@ -343,7 +349,7 @@
     <div id="footer-container" class="grid_12">
     <xsl:call-template name="gen-user-footer"/>
     <xsl:call-template name="processFTR"/>
-    <xsl:sequence select="'&#x0a;'"/>
+    <xsl:sequence select="$newline"/>
   </div>
   </xsl:template>
 

@@ -224,6 +224,8 @@
         </xsl:choose>
       </xsl:variable>
 
+      <xsl:variable name="content" select="value" />
+
       <xsl:variable name="path" select="concat($html5absolulteuri, $HTML5THEMEDIR, '/', $siteTheme, '/', $extension, '/', $filename)"/>
 
       <xsl:if test="prefix and prefix != ''">
@@ -244,7 +246,7 @@
           <xsl:attribute name="src" select="if($html5absolulteuri = '') then relpath:fixRelativePath($relativePath, $path) else $path" />
         </xsl:if>
 
-        <xsl:value-of select="value" />
+        <xsl:value-of select="translate(string($content), '&#10;', '')" />
 
       </xsl:element>
       <xsl:if test="suffix and suffix != ''">

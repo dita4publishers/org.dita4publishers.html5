@@ -10885,6 +10885,11 @@ d4p.mapIsChunked = function()
 {
   return d4p.map != undefined && d4p.map.chunked != undefined && d4p.map.chunked === true ? true : false;
 }
+
+d4p.topicIsChunked = function()
+{
+  return d4p.topic.chunked != undefined;
+}
 /**
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");

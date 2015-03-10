@@ -257,14 +257,14 @@
         var ADAPT_CONFIG = {
           // Where is your CSS?
           path: d4p.relativePath + d4p.cssGridPath,
-
+          
           // false = Only run once, when page first loads.
           // true = Change on window resize and page tilt.
           dynamic: true,
-
+          
           // Optional callback... myCallback(i, width)
           callback: doc_resize,
-
+          
           // First range entry is the minimum.
           // Last range entry is the maximum.
           // Separate ranges by "to" keyword.
