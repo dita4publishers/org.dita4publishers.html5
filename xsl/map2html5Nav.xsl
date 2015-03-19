@@ -267,7 +267,7 @@
 
   <xsl:template match="li" mode="fix-navigation-href">
     <xsl:param name="topicRelativeUri" as="xs:string" select="''" tunnel="yes"/>
-    <xsl:variable name="isActiveTrail" select="descendant::*[@href = $topicRelativeUri]"/>
+    <xsl:variable name="isActiveTrail" select="descendant::*[contains(@href, $topicRelativeUri)]"/>
     <xsl:variable name="hasChild" select="descendant::li"/>
 
     <xsl:variable name="hasChildClass">
@@ -316,19 +316,31 @@
   <xsl:template match="a" mode="fix-navigation-href">
     <xsl:param name="topicRelativeUri" as="xs:string" select="''" tunnel="yes"/>
     <xsl:param name="relativePath" as="xs:string" select="''" tunnel="yes"/>
+    
+    <xsl:message> + [DEBUG] fix-navigation-href: topicRelativeUri="<xsl:value-of select="$topicRelativeUri"/>"</xsl:message>
+    <xsl:message> + [DEBUG] fix-navigation-href: relativePath="<xsl:value-of select="$relativePath"/>"</xsl:message>
 
     <xsl:variable name="isSelected" select="@href=$topicRelativeUri"/>
-    <xsl:variable name="hash" as="xs:string" select="substring-after(@href, '#')"/>
-    <xsl:variable name="finalHash" as="xs:string" select="if($hash != '') then concat('#', $hash) else ''"/>
+    <xsl:variable name="finalHash" as="xs:string" 
+      select="if (relpath:getFragmentId(@href)) 
+                 then concat('#', relpath:getFragmentId(@href)) 
+                 else ''"
+    />
     <xsl:variable name="parentTopicDir" as="xs:string" select="relpath:getParent($topicRelativeUri)"/>
+    <xsl:message> + [DEBUG] fix-navigation-href: parentTopicDir="<xsl:value-of select="$parentTopicDir"/>"</xsl:message>
     <xsl:variable name="filename" as="xs:string" select="relpath:getName(@href)"/>
     <xsl:variable name="finalUriDir" as="xs:string" select="relpath:getParent(@href)"/>
+    <xsl:message> + [DEBUG] fix-navigation-href: finalUriDir="<xsl:value-of select="$finalUriDir"/>"</xsl:message>
     <xsl:variable name="relDir" as="xs:string" select="relpath:getRelativePath($parentTopicDir, $finalUriDir)"/>
-    <xsl:variable name="finalFilename" as="xs:string" select="if($hash = '') then $filename else ''"/>
-    <xsl:variable name="finalRelDir" as="xs:string" select="if($relDir != '') then concat($relDir, '/') else ''"/>
+    <xsl:message> + [DEBUG] fix-navigation-href: relDir="<xsl:value-of select="$relDir"/>"</xsl:message>
+    <xsl:variable name="finalFilename" as="xs:string" select="$filename"/><!-- Fragment ID can't affect target file -->
     <xsl:variable name="class" as="xs:string" select="if($isSelected) then ' selected' else ''"/>
+    <xsl:variable name="resultUri" as="xs:string" 
+      select="concat(relpath:newFile($relDir, $finalFilename), $finalHash)"
+    />
+    <xsl:message> + [DEBUG] fix-navigation-href: resultUri="<xsl:value-of select="$resultUri"/>"</xsl:message>
 
-    <a href="{concat($finalRelDir, $finalFilename, $finalHash)}">
+    <a href="{$resultUri}">
       <xsl:if test="$class != ''">
         <xsl:attribute name="class" select="$class"/>
       </xsl:if>
