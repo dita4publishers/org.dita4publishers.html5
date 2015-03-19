@@ -134,21 +134,26 @@
               "<xsl:sequence select="string(@href)"/>"</xsl:message>
         </xsl:when>
         <xsl:otherwise>
-
-          <xsl:variable name="hash" select="if(./@chunk) then '' else df:getIdForElement(.)"/>
-          <xsl:variable name="targetUri"
-            select="htmlutil:getTopicResultUrl($outdir, root($topic), $rootMapDocUrl)"
-            as="xs:string"/>
+          
           <xsl:variable name="enumeration" as="xs:string?">
             <xsl:apply-templates select="." mode="enumeration"/>
           </xsl:variable>
-          <xsl:variable name="self" select="generate-id(.)" as="xs:string"/>
           <xsl:variable name="title"><xsl:apply-templates select="." mode="nav-point-title"/></xsl:variable>
           <xsl:variable name="enum">
             <xsl:if test="$enumeration and $enumeration != ''">
               <span class="enumeration enumeration{$tocDepth}"><xsl:sequence select="$enumeration"/></span>
             </xsl:if>
           </xsl:variable>
+
+
+          <xsl:variable name="baseTargetUri" as="xs:string" 
+            select="htmlutil:getTopicResultUrl($outdir, root($topic), $rootMapDocUrl)"
+          />
+          <xsl:variable name="targetUri" as="xs:string"
+            select="if (df:topicrefIsInChunk(.))
+                       then concat($baseTargetUri, '#', local:getIdForHtmlSection(.))
+                       else $baseTargetUri"
+          />
 
           <!-- Any subordinate topics in the currently-referenced topic are
               reflected in the ToC before any subordinate topicrefs.

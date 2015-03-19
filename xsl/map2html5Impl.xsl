@@ -380,6 +380,7 @@
 
     <xsl:apply-templates select="." mode="report-parameters"/>
 
+    <!-- If entire map is one big chunk we need to operate a little differently -->
     <xsl:variable name="isChunkedMap" as="xs:boolean" select="df:mapIsChunkToContent(.)" />
 
     <xsl:apply-templates select="." mode="html5-impl" />

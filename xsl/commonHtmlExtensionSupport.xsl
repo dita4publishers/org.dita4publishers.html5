@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!--
+<?xml version="1.0" encoding="utf-8"?>
        Licensed to the Apache Software Foundation (ASF) under one
        or more contributor license agreements.  See the NOTICE file
        distributed with this work for additional information
@@ -524,11 +524,7 @@
 
 <!-- section processor - div with no generated title -->
 <xsl:template match="*[contains(@class, ' topic/section ')]" name="topic.section">
-  <xsl:variable name="sectionID"  select="df:getIdForElement(.)"/>
-  <div class="section">
-    <xsl:if test="$sectionID">
-      <xsl:attribute name="id" select="concat($sectionID, '_section')"/>
-    </xsl:if>
+  <div class="section" id="{local:getIdForHtmlSection(.)}">
     <xsl:call-template name="commonattributes"/>
     <xsl:call-template name="set_an_anchor" />
     <xsl:apply-templates select="."  mode="section-fmt" />
@@ -554,12 +550,9 @@
       </xsl:choose>
   </xsl:param>
 
-  <xsl:variable name="sectionID"  select="df:getIdForElement(.)"/>
-
-  <section class="{concat('nested', $nestlevel, ' ', @outputclass)}">
-    <xsl:if test="$sectionID">
-      <xsl:attribute name="id" select="concat($sectionID, '_section')"/>
-    </xsl:if>
+  <section class="{concat('nested', $nestlevel, ' ', @outputclass)}" 
+    id="{local:getIdForHtmlSection(.)}"
+  >
     <xsl:call-template name="gen-topic"/>
     <xsl:apply-templates/>
   </section><xsl:value-of select="$newline"/>
@@ -589,7 +582,14 @@
 
 </xsl:template>
 
-
+<xsl:function name="local:getIdForHtmlSection" as="xs:string">
+  <!-- ID to use on HTML <section> elements generated from various DITA elements -->
+  <xsl:param name="context"/>
+  <xsl:variable name="result" as="xs:string"
+    select="concat(df:getIdForElement($context), '_section')"
+  />
+  <xsl:sequence select="$result"/>
+</xsl:function>
 
 </xsl:stylesheet>
 
