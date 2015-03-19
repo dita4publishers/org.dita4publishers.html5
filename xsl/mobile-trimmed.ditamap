@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE map PUBLIC "-//OASIS//DTD DITA Map//EN" "map.dtd">
+<map title="Oculus Mobile Developer Guide">
+ <!-- Metadata and Variables -->
+ <title>Oculus Mobile Developer Guide</title>
+ <topicmeta>
+  <copyright>
+   <copyryear year="2015"/>
+   <copyrholder>Oculus VR</copyrholder>
+  </copyright>
+  <prodinfo>
+   <prodname>Gear VR</prodname>
+   <vrmlist>
+    <vrm version="latest"/>
+   </vrmlist>
+  </prodinfo>
+  <data
+      name="pdf-location"
+      href="../../../../../workspace/oculus/sample-data/en-us/mobile/pdfs/mobile.pdf"
+      scope="external"
+      format="pdf"/>
+ </topicmeta>
+ <!-- <keydef keys="variables" href="shared/variables.xml" processing-role="resource-only" toc="no"/> -->
+
+
+ <!-- Introduction and Prerequisites -->
+ <topicref
+    href="../../../../../workspace/oculus/sample-data/en-us/mobile/latest/concepts/book_intro.xml">
+    <topicref
+      href="../../../../../workspace/oculus/sample-data/en-us/mobile/latest/mobile_intro.ditamap"
+      format="ditamap"/>
+  </topicref>
+
+
+ <!-- Device and Environment Setup -->
+ <topicref
+    href="../../../../../workspace/oculus/sample-data/en-us/mobile/latest/concepts/book_dev_intro.xml">
+    <topicref
+      href="../../../../../workspace/oculus/sample-data/en-us/mobile/latest/mobile_setup.ditamap"
+      format="ditamap"/>
+  </topicref>
+
+
+ <!-- Unity Development Guide  -->
+ <topicref
+    href="../../../../../workspace/oculus/sample-data/en-us/mobile/latest/concepts/book_unity.xml">
+    <topicref
+      href="../../../../../workspace/oculus/sample-data/en-us/mobile/latest/mobile_unity_bestpractices.ditamap"
+      format="ditamap"/>
+  </topicref>
+ 
+  
+ <!-- Native Development -->
+ <topicref
+    href="../../../../../workspace/oculus/sample-data/en-us/mobile/latest/concepts/book_native.xml">
+    <topicref
+      href="../../../../../workspace/oculus/sample-data/en-us/mobile/latest/mobile_native.ditamap"
+      format="ditamap"/>
+    <topicref
+      href="../../../../../workspace/oculus/sample-data/en-us/mobile/latest/concepts/book_soundmanager.xml">
+      <topicref
+        href="../../../../../workspace/oculus/sample-data/en-us/mobile/latest/mobile_n_soundmanager.ditamap"
+        format="ditamap"/>
+    </topicref>
+  </topicref>
+ 
+
+ <!-- Basic VR Development -->
+ <topicref
+    href="../../../../../workspace/oculus/sample-data/en-us/mobile/latest/concepts/book_perf.xml">
+    <topicref
+      href="../../../../../workspace/oculus/sample-data/en-us/mobile/latest/mobile_perf.ditamap"
+      format="ditamap"/>
+  </topicref>
+
+
+ <!-- VR Media -->
+ <topicref
+    href="../../../../../workspace/oculus/sample-data/en-us/mobile/latest/concepts/book_assets.xml">
+    <topicref
+      href="../../../../../workspace/oculus/sample-data/en-us/mobile/latest/concepts/media_intro.xml">
+      <topicref
+        href="../../../../../workspace/oculus/sample-data/en-us/mobile/latest/mobile_media_creation_guidelines.ditamap"
+        format="ditamap"/>
+    </topicref>
+    <topicref
+      href="../../../../../workspace/oculus/sample-data/en-us/mobile/latest/concepts/native_mediaapp_intro.xml">
+      <topicref
+        href="../../../../../workspace/oculus/sample-data/en-us/mobile/latest/concepts/mobile_vr_mediaapps.xml"/>
+    </topicref>
+    <topicref
+      href="../../../../../workspace/oculus/sample-data/en-us/mobile/latest/concepts/movietheater_intro.xml">
+      <topicref
+        href="../../../../../workspace/oculus/sample-data/en-us/mobile/latest/mobile_movtheaterfbx.ditamap"
+        format="ditamap"/>
+    </topicref>
+    <topicref
+      href="../../../../../workspace/oculus/sample-data/en-us/mobile/latest/concepts/fbxconverter_intro.xml">
+      <topicref
+        href="../../../../../workspace/oculus/sample-data/en-us/mobile/latest/mobile_fbxconverter.ditamap"
+        format="ditamap"/>
+    </topicref>
+  </topicref>
+
+
+ <!-- Testing -->
+ <topicref
+    href="../../../../../workspace/oculus/sample-data/en-us/mobile/latest/concepts/book_testing.xml">
+    <topicref
+      href="../../../../../workspace/oculus/sample-data/en-us/mobile/latest/concepts/book_anddebug.xml">
+      <topicref
+        href="../../../../../workspace/oculus/sample-data/en-us/mobile/latest/mobile_android_debug.ditamap"
+        format="ditamap"/>
+    </topicref>
+    <topicref
+      href="../../../../../workspace/oculus/sample-data/en-us/mobile/latest/concepts/book_perfanalysis.xml">
+      <topicref
+        href="../../../../../workspace/oculus/sample-data/en-us/mobile/latest/mobile_perf_analysis.ditamap"
+        format="ditamap"/>
+    </topicref>
+  </topicref>
+ 
+
+ <!-- Troubleshooting -->
+
+
+ <!-- Application Submission -->
+ <topicref
+    href="../../../../../workspace/oculus/sample-data/en-us/mobile/latest/concepts/book_appsubm.xml">
+    <topicref
+      href="../../../../../workspace/oculus/sample-data/en-us/mobile/latest/mobile_app_subm.ditamap"
+      format="ditamap"/>
+  </topicref>
+
+
+ <!-- SDK Migration  -->
+ <topicref
+    href="../../../../../workspace/oculus/sample-data/en-us/mobile/latest/concepts/book_migration.xml">
+    <topicref
+      href="../../../../../workspace/oculus/sample-data/en-us/mobile/latest/mobile_sdk_migration.ditamap"
+      format="ditamap"/>
+  </topicref>
+ 
+</map>

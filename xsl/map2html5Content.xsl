@@ -52,7 +52,7 @@
     >
     <xsl:param name="rootMapDocUrl" as="xs:string" tunnel="yes"/>
     <xsl:param name="collected-data" as="element()" tunnel="yes"/>
-    <xsl:if test="$debugBoolean">
+    <xsl:if test="true() or $debugBoolean">
       <xsl:message> + [DEBUG] Handling topicref to "<xsl:sequence select="string(@href)"/>" in mode
         generate-content</xsl:message>
     </xsl:if>
@@ -67,17 +67,17 @@
       <xsl:otherwise>
         <xsl:variable name="topicResultUri" select="htmlutil:getTopicResultUrl($outdir, root($topic), $rootMapDocUrl)"
           as="xs:string"/>
-        <xsl:variable name="topicRelativeUri" select="htmlutil:getTopicResultUrl('', root($topic), $rootMapDocUrl)"
+        <xsl:variable name="topicRelativeUri" select="relpath:getRelativePath($outdir, $topicResultUri)"
           as="xs:string"/>
 
         <xsl:variable name="tempTopic" as="document-node()">
-        <xsl:document>
-          <xsl:apply-templates select="$topic" mode="href-fixup">
-            <xsl:with-param name="topicResultUri" select="$topicResultUri" tunnel="yes"/>
-          </xsl:apply-templates>
-     </xsl:document>
+          <xsl:document>
+            <xsl:apply-templates select="$topic" mode="href-fixup">
+              <xsl:with-param name="topicResultUri" select="$topicResultUri" tunnel="yes"/>
+            </xsl:apply-templates>
+         </xsl:document>
         </xsl:variable>
-
+        
         <xsl:apply-templates select="$tempTopic" mode="#current">
           <xsl:with-param name="topicref" as="element()*" select="." tunnel="yes"/>
           <xsl:with-param name="collected-data" select="$collected-data" as="element()" tunnel="yes"/>

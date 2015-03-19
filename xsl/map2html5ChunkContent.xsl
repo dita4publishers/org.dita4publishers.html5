@@ -84,8 +84,7 @@
       </xsl:when>
       <xsl:otherwise>
         <xsl:element name="{name($topic)}">
-           <xsl:copy-of select="$topic/@*"/>
-           <xsl:sequence select="$topic/*" />
+           <xsl:sequence select="$topic/@*, $topic/node()" />
         </xsl:element>
       </xsl:otherwise>
     </xsl:choose>

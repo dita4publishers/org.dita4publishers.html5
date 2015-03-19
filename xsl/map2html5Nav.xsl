@@ -35,6 +35,7 @@
     <xsl:param name="navigation" as="element()*"  tunnel="yes" />
     <xsl:param name="is-root" as="xs:boolean"  tunnel="yes" select="false()" />
     <xsl:param name="resultUri" as="xs:string" tunnel="yes" select="''" />
+    
     <xsl:if test="$OUTPUTDEFAULTNAVIGATION and $is-root = false()">
       <xsl:variable name="navigation-fixed">
         <xsl:apply-templates select="$navigation" mode="fix-navigation-href">
@@ -138,8 +139,6 @@
           <xsl:variable name="targetUri"
             select="htmlutil:getTopicResultUrl($outdir, root($topic), $rootMapDocUrl)"
             as="xs:string"/>
-          <xsl:variable name="relativeUri" select="if($hash != '') then concat(relpath:getRelativePath($outdir, $targetUri), '#', $hash) else relpath:getRelativePath($outdir, $targetUri)"
-            as="xs:string"/>
           <xsl:variable name="enumeration" as="xs:string?">
             <xsl:apply-templates select="." mode="enumeration"/>
           </xsl:variable>
@@ -169,7 +168,11 @@
               </xsl:if>
             </xsl:if>
           </xsl:variable>
-          <li><a href="{$relativeUri}"><xsl:sequence select="$enum"/><xsl:sequence select="normalize-space($title)"/></a><xsl:sequence select="$children"/></li>
+          <!-- NOTE: The navigation is generated using an absolute URI so that per-HTML-file
+                     processing can easily determine the correct relative path from that HTML
+                     file to each target HTML file.
+            -->
+          <li><a href="{$targetUri}"><xsl:sequence select="$enum"/><xsl:sequence select="normalize-space($title)"/></a><xsl:sequence select="$children"/></li>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:if>
@@ -266,8 +269,34 @@
   </xsl:template>
 
   <xsl:template match="li" mode="fix-navigation-href">
-    <xsl:param name="topicRelativeUri" as="xs:string" select="''" tunnel="yes"/>
-    <xsl:variable name="isActiveTrail" select="descendant::*[contains(@href, $topicRelativeUri)]"/>
+    <xsl:param name="resultUri" as="xs:string" tunnel="yes" select="''" /><!-- Result URI of the topic we're processing -->
+    
+    <xsl:variable name="href" as="xs:string" select="a/@href"/>
+    
+
+    <xsl:variable name="isSelected" select="$href = $resultUri"/>
+    <xsl:variable name="fragmentID" as="xs:string" 
+      select="if (relpath:getFragmentId($href)) 
+                 then concat('#', relpath:getFragmentId($href)) 
+                 else ''"
+    />
+    
+    <xsl:variable name="targetResourcePart" as="xs:string" select="relpath:getResourcePartOfUri($href)"/>
+    <!-- Parameters to getRelativePath are:
+      
+         source: the directory we are starting *from*
+         target: the directory we are going *to*
+         
+      -->
+    <xsl:variable name="relPathToDir" as="xs:string" 
+      select="relpath:getRelativePath(relpath:getParent($targetResourcePart), relpath:getParent($resultUri))"
+    />
+    <xsl:variable name="relPath" as="xs:string" 
+      select="concat($relPathToDir, relpath:getName($targetResourcePart))"
+    />
+    <xsl:variable name="targetRelativeUri" as="xs:string" select="concat($relPath, $fragmentID)"/>
+    
+    <xsl:variable name="isActiveTrail" select="descendant::*[ends-with(@href, $targetRelativeUri)]"/>
     <xsl:variable name="hasChild" select="descendant::li"/>
 
     <xsl:variable name="hasChildClass">
@@ -308,39 +337,21 @@
        <xsl:attribute name="class" select="$class" />
       </xsl:if>
       <xsl:sequence select="$title"/>
-      <xsl:apply-templates mode="fix-navigation-href"/>
+      <xsl:apply-templates mode="fix-navigation-href">
+        <xsl:with-param name="isSelected" as="xs:boolean" select="$isSelected"/>
+        <xsl:with-param name="targetRelativeUri" as="xs:string" select="$targetRelativeUri"/>
+      </xsl:apply-templates>
     </li>
   </xsl:template>
 
 
   <xsl:template match="a" mode="fix-navigation-href">
-    <xsl:param name="topicRelativeUri" as="xs:string" select="''" tunnel="yes"/>
-    <xsl:param name="relativePath" as="xs:string" select="''" tunnel="yes"/>
+    <xsl:param name="isSelected" as="xs:boolean" select="false()"/>
+    <xsl:param name="targetRelativeUri" as="xs:string" select="'uri-not-set'"/>
     
-    <xsl:message> + [DEBUG] fix-navigation-href: topicRelativeUri="<xsl:value-of select="$topicRelativeUri"/>"</xsl:message>
-    <xsl:message> + [DEBUG] fix-navigation-href: relativePath="<xsl:value-of select="$relativePath"/>"</xsl:message>
-
-    <xsl:variable name="isSelected" select="@href=$topicRelativeUri"/>
-    <xsl:variable name="finalHash" as="xs:string" 
-      select="if (relpath:getFragmentId(@href)) 
-                 then concat('#', relpath:getFragmentId(@href)) 
-                 else ''"
-    />
-    <xsl:variable name="parentTopicDir" as="xs:string" select="relpath:getParent($topicRelativeUri)"/>
-    <xsl:message> + [DEBUG] fix-navigation-href: parentTopicDir="<xsl:value-of select="$parentTopicDir"/>"</xsl:message>
-    <xsl:variable name="filename" as="xs:string" select="relpath:getName(@href)"/>
-    <xsl:variable name="finalUriDir" as="xs:string" select="relpath:getParent(@href)"/>
-    <xsl:message> + [DEBUG] fix-navigation-href: finalUriDir="<xsl:value-of select="$finalUriDir"/>"</xsl:message>
-    <xsl:variable name="relDir" as="xs:string" select="relpath:getRelativePath($parentTopicDir, $finalUriDir)"/>
-    <xsl:message> + [DEBUG] fix-navigation-href: relDir="<xsl:value-of select="$relDir"/>"</xsl:message>
-    <xsl:variable name="finalFilename" as="xs:string" select="$filename"/><!-- Fragment ID can't affect target file -->
     <xsl:variable name="class" as="xs:string" select="if($isSelected) then ' selected' else ''"/>
-    <xsl:variable name="resultUri" as="xs:string" 
-      select="concat(relpath:newFile($relDir, $finalFilename), $finalHash)"
-    />
-    <xsl:message> + [DEBUG] fix-navigation-href: resultUri="<xsl:value-of select="$resultUri"/>"</xsl:message>
 
-    <a href="{$resultUri}">
+    <a href="{$targetRelativeUri}">
       <xsl:if test="$class != ''">
         <xsl:attribute name="class" select="$class"/>
       </xsl:if>
