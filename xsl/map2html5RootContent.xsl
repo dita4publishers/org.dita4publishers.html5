@@ -64,9 +64,6 @@
             select="string(@href)"/>"</xsl:message>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:variable name="topicRelativeUri" select="htmlutil:getTopicResultUrl('', root($topic), $rootMapDocUrl)"
-          as="xs:string"/>
-
         <xsl:variable name="tempTopic" as="document-node()">
           <xsl:document>
             <xsl:apply-templates select="$topic" mode="href-fixup">
@@ -78,7 +75,6 @@
         <xsl:apply-templates select="$tempTopic" mode="#current">
           <xsl:with-param name="topicref" as="element()*" select="." tunnel="yes"/>
           <xsl:with-param name="collected-data" select="$collected-data" as="element()" tunnel="yes"/>
-          <xsl:with-param name="topicRelativeUri" select="$topicRelativeUri" tunnel="yes"/>
         </xsl:apply-templates>
 
 
@@ -95,14 +91,14 @@
     <!-- Enumerables structure: -->
     <xsl:param name="collected-data" as="element()" tunnel="yes"/>
 
+    <xsl:variable name="resultUri" as="xs:string" select="relpath:newFile($outdir, $indexUri)"/>
 
-    <xsl:message> + [INFO] Writing first topic to HTML file "<xsl:sequence select="$indexUri"/>"...</xsl:message>
+    <xsl:message> + [INFO] Writing first topic to HTML file "<xsl:sequence select="$resultUri"/>"...</xsl:message>
 
      <xsl:result-document format="html5" href="{$indexUri}">
       <xsl:apply-templates mode="generate-html5-page" select=".">
-        <xsl:with-param name="resultUri" as="xs:string" select="$indexUri" tunnel="yes"/>
+        <xsl:with-param name="resultUri" as="xs:string" select="$resultUri" tunnel="yes"/>
         <xsl:with-param name="is-root" as="xs:boolean" select="false()" tunnel="yes"/>
-        <xsl:with-param name="relativePath" select="''" as="xs:string" tunnel="yes"/>
       </xsl:apply-templates>
     </xsl:result-document>
 
@@ -129,10 +125,10 @@
        else htmlutil:getInitialTopicrefUri($uniqueTopicRefs, $topicsOutputPath, $outdir, $rootMapDocUrl)
        "
     />
-
     <xsl:message> + [INFO] Generating root index HTML document <xsl:sequence select="$indexUri"/>...</xsl:message>
    <xsl:result-document format="{$xsloutput}" href="{$indexUri}">
       <xsl:apply-templates mode="generate-html5-page" select=".">
+        <xsl:with-param name="doDebug" as="xs:boolean" tunnel="yes" select="$debugBoolean"/>
         <xsl:with-param name="resultUri" as="xs:string" select="$indexUri" tunnel="yes"/>
         <xsl:with-param name="is-root" as="xs:boolean" select="true()"  tunnel="yes"/>
         <xsl:with-param name="firstTopicUri" as="xs:string?" tunnel="yes" select="$initialTopicUri" />

@@ -271,7 +271,9 @@
     <xsl:param name="resultUri" as="xs:string" tunnel="yes" select="''" />
 
     <div id="{$IDSECTIONCONTAINER}" class="{$CLASSSECTIONCONTAINER}">
-      <xsl:call-template name="navigation"/>
+      <xsl:call-template name="navigation">
+        <xsl:with-param name="doDebug" as="xs:boolean" tunnel="yes" select="$debugBoolean"/>
+      </xsl:call-template>
       <xsl:apply-templates select="." mode="generate-main-content"/>
       <div class="clearfix"></div>
     </div>
