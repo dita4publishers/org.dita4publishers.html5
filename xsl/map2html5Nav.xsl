@@ -283,19 +283,11 @@
     <xsl:param name="doDebug" as="xs:boolean" tunnel="yes" select="$debugBoolean"/>
     <xsl:param name="resultUri" as="xs:string" tunnel="yes" select="''" /><!-- Result URI of the topic we're processing -->
 
+    <!-- no href in case of topihead for example -->
     <xsl:variable name="href" as="xs:string" select="if(a/@href) then a/@href else ''"/>
-
-    <xsl:if test="$href = ''">
-      <xsl:message>
-         + [DEBUG] fix-navigation-href: no link found under li
-
-         <xsl:sequence select="."/>
-
-      </xsl:message>
-    </xsl:if>
+    <xsl:variable name="resultUriFilename" as="xs:string" select="relpath:getName($resultUri)"/>
 
 
-    <xsl:variable name="isSelected" select="$href = $resultUri"/>
     <xsl:variable name="fragmentID" as="xs:string"
       select="if (relpath:getFragmentId($href))
                  then concat('#', relpath:getFragmentId($href))
@@ -309,7 +301,7 @@
          target: the directory we are going *to*
 
       -->
-    <xsl:variable name="parentResultUri" select="relpath:getRelativePath($outdir, $resultUri)"/>
+    <xsl:variable name="parentResultUri" as="xs:string" select="relpath:getRelativePath($outdir, $resultUri)"/>
     <xsl:variable name="relPathToDir" as="xs:string"
       select="relpath:getRelativePath(relpath:getParent($parentResultUri), relpath:getParent($targetResourcePart))"
     />
@@ -329,11 +321,15 @@
       + [DEBUG] fix-navigation-href:               href="<xsl:value-of select="$href"/>"
       + [DEBUG] fix-navigation-href:  targetRelativeUri="<xsl:value-of select="$targetRelativeUri"/>" (relPath + fragmentID)
       + [DEBUG] fix-navigation-href:  targetRelativeUri="<xsl:value-of select="$targetRelativeUri"/>"
+      + [DEBUG] fix-navigation-href:  resultUriFilename="<xsl:value-of select="$resultUriFilename"/>"
+
       </xsl:message>
     </xsl:if>
 
-    <xsl:variable name="isActiveTrail" select="descendant::*[ends-with(@href, $targetRelativeUri)]"/>
-    <xsl:variable name="hasChild" select="descendant::li"/>
+
+    <xsl:variable name="isSelected" select="relpath:getName($href) = $resultUriFilename"/>
+    <xsl:variable name="isActiveTrail"  select="descendant::a[ends-with(@href, $resultUriFilename)]"/>
+    <xsl:variable name="hasChild"  select="descendant::li"/>
 
     <xsl:variable name="hasChildClass">
       <xsl:choose>
