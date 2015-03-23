@@ -76,7 +76,7 @@
          <xsl:with-param name="relativePath" select="''" as="xs:string" tunnel="yes"/>
          <xsl:with-param name="content" select="$topic-content" tunnel="yes"/>
          <xsl:with-param name="topic-title" select="'Index'" tunnel="yes"/>
-         <xsl:with-param name="result-uri" select="$resultUri" tunnel="yes"/>
+         <xsl:with-param name="resultUri" as="xs:string" select="$resultUri" tunnel="yes"/>
         </xsl:apply-templates>
       </xsl:result-document>
 
