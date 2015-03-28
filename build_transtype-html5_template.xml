@@ -36,7 +36,8 @@
     d4p.map-driven-build-init,
     build-init,
     dc-preprocess,
-    html5"
+    html5
+    html5.cleanup"
     dita:extension="depends org.dita.dost.platform.InsertDependsAction">
   </target>
 
@@ -559,6 +560,23 @@
 
   <ant antfile="${output.dir}/ant/compressor.xml"/>
 
+  </target>
+
+  <target name="html5.cleanup" unless="args.debug">
+    <!-- Delete theme compression file -->
+    <delete file="${output.dir}/ant/compressor.xml"/>
+
+    <!-- Delete theme compression file -->
+    <delete file="${output.dir}/ant/compressor.xml"/>
+
+    <!-- Delete copy-graphics.xml -->
+    <delete file="${output.dir}/copy-graphics.xml"/>
+
+     <!-- Delete dita.list -->
+    <delete file="${output.dir}/dita.list"/>
+
+    <!-- Delete dita.list -->
+    <delete file="${output.dir}/dita.xml.properties"/>
   </target>
 
 
