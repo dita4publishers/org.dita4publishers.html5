@@ -451,7 +451,7 @@
         <xsl:with-param name="indexUri" as="xs:string" select="$indexUri" tunnel = "yes" />
       </xsl:apply-templates>
     </xsl:variable>
-    
+
     <xsl:apply-templates select="." mode="generate-chunked-map-content">
       <xsl:with-param name="collected-data" as="element()" select="$collected-data" tunnel="yes"/>
       <xsl:with-param name="uniqueTopicRefs" as="element()*" select="$chunkTopicrefs" tunnel="yes"/>
@@ -567,11 +567,11 @@
         <xsl:with-param name="showTocEntry" as="xs:boolean" tunnel="yes" select="$showTocEntryBoolean" />
       </xsl:apply-templates>
     </xsl:variable>
-    
+
 <!--    <xsl:message> + [DEBUG] standard-map-processing: navigation:
 <xsl:sequence select="$navigation"/>
     </xsl:message>
--->    
+-->
 
     <xsl:message> + [INFO] Generating root pages...</xsl:message>
     <xsl:apply-templates select="." mode="generate-root-pages">
@@ -683,11 +683,5 @@
       <xsl:apply-templates select="@*|node()" mode="#current"/>
      </xsl:copy>
   </xsl:template>
-
-  <xsl:template match="*/text()[normalize-space()]"  mode="clean-linebreaks">
-    <xsl:value-of select="normalize-space()"/>
-  </xsl:template>
-
-  <xsl:template match="*/text()[not(normalize-space())]"  mode="clean-linebreaks"/>
 
 </xsl:stylesheet>

@@ -152,17 +152,19 @@
     <head>
       <xsl:apply-templates select="." mode="gen-head-title" />
       <xsl:apply-templates select="." mode="gen-user-top-head" />
-
       <meta charset="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
       <!-- Dublin core metadata, schema -->
       <link rel="schema.DC" href="http://purl.org/dc/terms/" />
       <xsl:call-template name="getMeta"/>
+      <xsl:apply-templates mode="getTopicMeta"/>
       <xsl:call-template name="copyright"/>
       <xsl:apply-templates select="." mode="generate-css-js"/>
       <xsl:apply-templates select="." mode="gen-user-bottom-head" />
     </head>
   </xsl:template>
+
+
 
   <!-- generate body -->
   <xsl:template match="*" mode="generate-body">

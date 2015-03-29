@@ -31,6 +31,17 @@
   version="2.0">
 
 
+  <xsl:template match="*" mode="getTopicMeta">
+    <xsl:apply-templates mode="#current"/>
+  </xsl:template>
+
+   <xsl:template match="text()" mode="getTopicMeta"/>
+
+  <xsl:template match="*[contains(@class, 'topic/data')]" mode="getTopicMeta">
+    <xsl:if test="@name and @value">
+      <meta name="{@name}" content="{@value}"/>
+    </xsl:if>
+  </xsl:template>
 
   <xsl:template match="*[contains(@class,' topic/pre ')][contains(@class,' pr-d/codeblock ')]">
     <xsl:if test="contains(@frame,'top')"><hr /></xsl:if>
