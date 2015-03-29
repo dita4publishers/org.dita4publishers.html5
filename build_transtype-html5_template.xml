@@ -36,8 +36,7 @@
     d4p.map-driven-build-init,
     build-init,
     dc-preprocess,
-    html5
-    html5.cleanup"
+    html5"
     dita:extension="depends org.dita.dost.platform.InsertDependsAction">
   </target>
 
@@ -475,6 +474,8 @@
     <antcall target="html5.copy.graphics">
       <param name="do.copy.graphics" value="${local.skip.copy.graphics}"/>
     </antcall>
+
+    <antcall target="html5.cleanup"/>
   </target>
 
   <target name="html5.copy.graphics.check">
