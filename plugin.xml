@@ -24,8 +24,8 @@
   <require plugin="org.dita-community.preprocess-extensions"/>
   <require plugin="org.dita4publishers.common.mapdriven"/>
   <require plugin="org.dita4publishers.common.xslt"/>
-  <require plugin="org.dita4publishers.math"/>
   <require plugin="org.dita4publishers.math-d.html"/>
+  <require plugin="org.dita4publishers.media-d.html"/>
   <require plugin="org.dita4publishers.json"/>
   
   <feature extension="package.support.name" value="Eliot Kimber"/>
