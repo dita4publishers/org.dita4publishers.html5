@@ -301,14 +301,16 @@
          target: the directory we are going *to*
 
       -->
+    <xsl:variable name="filename" as="xs:string" select="relpath:getName($targetResourcePart)"/>
+
+    <xsl:variable name="finalFilename" as="xs:string" select="if($filename = $html5IndexFilename or ($fragmentID != '' and $resultUriFilename = $filename)) then '' else $filename"/>
     <xsl:variable name="parentResultUri" as="xs:string" select="relpath:getRelativePath($outdir, $resultUri)"/>
-    <xsl:variable name="relPathToDir" as="xs:string"
-      select="relpath:getRelativePath(relpath:getParent($parentResultUri), relpath:getParent($targetResourcePart))"
+    <xsl:variable name="relPathToDir" as="xs:string" select="relpath:getRelativePath(relpath:getParent($parentResultUri), relpath:getParent($targetResourcePart))"
     />
-    <xsl:variable name="targetRelativeUri" as="xs:string" select="concat($relPathToDir, if($relPathToDir != '') then '/' else '', relpath:getName($targetResourcePart), $fragmentID)"/>
+    <xsl:variable name="targetRelativeUri" as="xs:string" select="concat($relPathToDir, if($relPathToDir != '') then '/' else '', $finalFilename, $fragmentID)"/>
 
 
-    <xsl:if test="$doDebug">
+    <xsl:if test="$doDebug or true()">
 
       <xsl:message>
       + [DEBUG] fix-navigation-href:          resultUri="<xsl:value-of select="$resultUri"/>"
@@ -321,6 +323,7 @@
       + [DEBUG] fix-navigation-href:               href="<xsl:value-of select="$href"/>"
       + [DEBUG] fix-navigation-href:  targetRelativeUri="<xsl:value-of select="$targetRelativeUri"/>" (relPath + fragmentID)
       + [DEBUG] fix-navigation-href:  targetRelativeUri="<xsl:value-of select="$targetRelativeUri"/>"
+      + [DEBUG] fix-navigation-href:           filename="<xsl:value-of select="$filename"/>"
       + [DEBUG] fix-navigation-href:  resultUriFilename="<xsl:value-of select="$resultUriFilename"/>"
 
       </xsl:message>
