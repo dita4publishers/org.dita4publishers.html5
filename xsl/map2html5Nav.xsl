@@ -310,7 +310,7 @@
     <xsl:variable name="targetRelativeUri" as="xs:string" select="concat($relPathToDir, if($relPathToDir != '') then '/' else '', $finalFilename, $fragmentID)"/>
 
 
-    <xsl:if test="$doDebug or true()">
+    <xsl:if test="$doDebug">
 
       <xsl:message>
       + [DEBUG] fix-navigation-href:          resultUri="<xsl:value-of select="$resultUri"/>"
