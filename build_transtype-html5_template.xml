@@ -215,6 +215,12 @@
       </not>
     </condition>
 
+    <condition property="html5.index.filename" value="index">
+      <not>
+        <isset property="html5.index.filename" />
+      </not>
+    </condition>
+
     <condition property="css.output.dir" value="css">
       <not>
         <isset property="args.css.output.dir" />

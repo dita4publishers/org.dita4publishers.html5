@@ -219,6 +219,7 @@
   <xsl:param name="uplevels" select="''" />
   <xsl:param name="html5absolulteuri" select="''" />
   <xsl:param name="OUTPUTDEFAULTNAVIGATION" select="true()" />
+  <xsl:param name="html5IndexFilename" select="'index'" />
 
   <xsl:param name="html5outputsizestrategy" select="'yes'"/>
   <xsl:param name="html5outputsizestrategyBoolean" select="matches($html5outputsizestrategy, 'yes|true|on|1', 'i')"/>
@@ -287,7 +288,7 @@
   </xsl:variable>
 
 
-  <xsl:variable name="indexUri" as="xs:string" select="concat('index', $OUTEXT)"/>
+  <xsl:variable name="indexUri" as="xs:string" select="concat($html5IndexFilename, $OUTEXT)"/>
   <xsl:variable name="HTML5THEMECONFIGDOC" select="document($HTML5THEMECONFIG)" />
 
   <xsl:variable name="TEMPLATELANG">
