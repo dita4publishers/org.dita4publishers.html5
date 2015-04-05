@@ -33,17 +33,27 @@
     <xsl:if test="$ancestorsTopicRef">
       <xsl:for-each select="$ancestorsTopicRef[not(@scope = ('peer', 'external'))]">
         <xsl:variable name="topic" as="element()*" select="df:resolveTopicRef(.)" />
-        <xsl:variable name="resultUri" as="xs:string" select="concat($relativePath, relpath:getRelativePath($outdir, htmlutil:getTopicResultUrl($outdir, root($topic), $rootMapDocUrl)))" />
-        <xsl:variable name="title">
-          <xsl:apply-templates select="." mode="nav-point-title"/>
-        </xsl:variable>
-
-        <xsl:call-template name="breadcrumbs-format-links">
-          <xsl:with-param name="title" as="xs:string" select="$title"/>
-          <xsl:with-param name="href" as="xs:string" select="$resultUri"/>
-        </xsl:call-template>
-
-        <xsl:value-of select="$newline"/>
+        <xsl:choose>
+          <xsl:when test="$topic">
+            <xsl:variable name="resultUri" as="xs:string" 
+              select="concat($relativePath, 
+                             relpath:getRelativePath($outdir, 
+                                 htmlutil:getTopicResultUrl($outdir, root($topic), $rootMapDocUrl)))" />
+            <xsl:variable name="title">
+              <xsl:apply-templates select="." mode="nav-point-title"/>
+            </xsl:variable>
+    
+            <xsl:call-template name="breadcrumbs-format-links">
+              <xsl:with-param name="title" as="xs:string" select="$title"/>
+              <xsl:with-param name="href" as="xs:string" select="$resultUri"/>
+            </xsl:call-template>
+    
+            <xsl:value-of select="$newline"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:message> - [WARN] inline-breadcrumbs: Unable to resolve topicref for topicref <xsl:value-of select="df:reportTopicref(.)"/></xsl:message>
+          </xsl:otherwise>
+        </xsl:choose>
 
       </xsl:for-each>
     </xsl:if>
