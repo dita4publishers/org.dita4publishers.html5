@@ -40,11 +40,18 @@
     <xsl:param name="default-output-class"/>
     <xsl:apply-templates select="@xml:lang"/>
     <xsl:apply-templates select="@dir"/>
+    <xsl:apply-templates select="@keyref"/>
     <xsl:apply-templates select="*[contains(@class, ' ditaot-d/ditaval-startprop ')]/@outputclass" mode="add-ditaval-style"/>
 
     <xsl:apply-templates select="." mode="set-output-class">
       <xsl:with-param name="default" select="$default-output-class"/>
     </xsl:apply-templates>
+  </xsl:template>
+
+  <xsl:template match="@keyref">
+    <xsl:if test="$outputKeyrefBoolean">
+      <xsl:attribute name="data-keyref"><xsl:value-of select="."/></xsl:attribute>
+    </xsl:if>
   </xsl:template>
 
   <xsl:template match="*" mode="set-data-attr" />
@@ -550,7 +557,7 @@
       </xsl:choose>
   </xsl:param>
 
-  <section class="{concat('nested', $nestlevel, ' ', @outputclass)}" 
+  <section class="{concat('nested', $nestlevel, ' ', @outputclass)}"
     id="{local:getIdForHtmlSection(.)}"
   >
     <xsl:call-template name="gen-topic"/>

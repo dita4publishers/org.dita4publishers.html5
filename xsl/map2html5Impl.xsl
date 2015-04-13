@@ -224,6 +224,9 @@
   <xsl:param name="html5outputsizestrategy" select="'yes'"/>
   <xsl:param name="html5outputsizestrategyBoolean" select="matches($html5outputsizestrategy, 'yes|true|on|1', 'i')"/>
 
+  <xsl:param name="outputKeyref" select="'yes'"/>
+  <xsl:param name="outputKeyrefBoolean" select="matches($html5outputsizestrategy, 'yes|true|on|1', 'i')"/>
+
   <xsl:variable name="maxTocDepthInt" select="xs:integer($maxTocDepth)" as="xs:integer"/>
   <xsl:variable name="version" select="if(/map/topicmeta/prodinfo/vrmlist/vrm/@version) then /map/topicmeta/prodinfo/vrmlist/vrm/@version else ''" as="xs:string"/>
 
