@@ -529,14 +529,24 @@
     <xsl:sequence select="$result"/>
   </xsl:function>
 
-<!-- section processor - div with no generated title -->
-<xsl:template match="*[contains(@class, ' topic/section ')]" name="topic.section">
-  <div class="section" id="{local:getIdForHtmlSection(.)}">
-    <xsl:call-template name="commonattributes"/>
-    <xsl:call-template name="set_an_anchor" />
-    <xsl:apply-templates select="."  mode="section-fmt" />
-  </div><xsl:value-of select="$newline"/>
-</xsl:template>
+  <!-- section processor - div with no generated title -->
+  <xsl:template match="*[contains(@class, ' topic/section ')]" name="topic.section">
+    <xsl:choose>
+      <xsl:when test="$html5AnchorStrategyBoolean">
+         <div class="section" id="{local:getIdForHtmlSection(.)}">
+           <xsl:call-template name="commonattributes"/>
+           <xsl:call-template name="set_an_anchor" />
+           <xsl:apply-templates select="."  mode="section-fmt" />
+         </div><xsl:value-of select="$newline"/>
+      </xsl:when>
+      <xsl:otherwise>
+       <div class="section" id="{df:getIdForElement(.)}">
+         <xsl:call-template name="commonattributes"/>
+         <xsl:apply-templates select="."  mode="section-fmt" />
+       </div><xsl:value-of select="$newline"/>
+       </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
 
   <xsl:template name="set_an_anchor">
     <xsl:variable name="anchorid" select="df:getIdForElement(.)"/>
@@ -557,13 +567,23 @@
       </xsl:choose>
   </xsl:param>
 
-  <section class="{concat('nested', $nestlevel, ' ', @outputclass)}"
-    id="{local:getIdForHtmlSection(.)}"
-  >
-    <xsl:call-template name="gen-topic"/>
-    <xsl:apply-templates/>
-  </section><xsl:value-of select="$newline"/>
-</xsl:template>
+   <xsl:choose>
+      <xsl:when test="$html5AnchorStrategyBoolean">
+          <section class="{concat('nested', $nestlevel, ' ', @outputclass)}" id="{local:getIdForHtmlSection(.)}">
+            <xsl:call-template name="set_an_anchor" />
+            <xsl:call-template name="gen-topic"/>
+            <xsl:apply-templates/>
+          </section><xsl:value-of select="$newline"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <section class="{concat('nested', $nestlevel, ' ', @outputclass)}" id="{df:getIdForElement(.)}">
+          <xsl:call-template name="set_an_anchor" />
+          <xsl:call-template name="gen-topic"/>
+          <xsl:apply-templates/>
+        </section><xsl:value-of select="$newline"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
 
 <xsl:template name="gen-topic">
   <xsl:param name="nestlevel">
@@ -573,8 +593,6 @@
           <xsl:otherwise><xsl:value-of select="count(ancestor::*[contains(@class, ' topic/topic ')])"/></xsl:otherwise>
       </xsl:choose>
   </xsl:param>
-
- <xsl:call-template name="set_an_anchor" />
 
  <xsl:choose>
    <xsl:when test="parent::dita and not(preceding-sibling::*)">

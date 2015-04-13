@@ -383,6 +383,12 @@
       </not>
     </condition>
 
+    <condition property="html5.anchor.strategy" value="false">
+      <not>
+        <isset property="html5.anchor.strategy" />
+      </not>
+    </condition>
+
     <condition property="html5.output.size.strategy" value="true">
       <not>
         <isset property="html5.output.size.strategy" />

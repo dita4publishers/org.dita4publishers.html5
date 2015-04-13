@@ -224,6 +224,10 @@
   <xsl:param name="html5outputsizestrategy" select="'yes'"/>
   <xsl:param name="html5outputsizestrategyBoolean" select="matches($html5outputsizestrategy, 'yes|true|on|1', 'i')"/>
 
+  <xsl:param name="html5AnchorStrategy" select="'yes'"/>
+  <xsl:param name="html5AnchorStrategyBoolean" select="matches($html5outputsizestrategy, 'yes|true|on|1', 'i')"/>
+
+
   <xsl:param name="outputKeyref" select="'yes'"/>
   <xsl:param name="outputKeyrefBoolean" select="matches($html5outputsizestrategy, 'yes|true|on|1', 'i')"/>
 
