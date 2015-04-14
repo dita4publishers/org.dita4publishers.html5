@@ -17,9 +17,7 @@
        specific language governing permissions and limitations
        under the License.
 -->
-
 <xsl:stylesheet
-
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl"
@@ -159,20 +157,21 @@
      </xsl:choose>
     </xsl:otherwise>
   </xsl:choose>
+
   <xsl:call-template name="start-revflag"/>
   <xsl:call-template name="setaname"/>
+
   <xsl:choose>
 
-
-   <xsl:when test="@placement='break'"><!--Align only works for break-->
+    <xsl:when test="@placement='break'"><!--Align only works for break-->
       <div class="block wide">
        <xsl:call-template name="topic-image"/>
       </div>
-   </xsl:when>
+    </xsl:when>
 
-   <xsl:otherwise>
-    <xsl:call-template name="topic-image"/>
-   </xsl:otherwise>
+    <xsl:otherwise>
+      <xsl:call-template name="topic-image"/>
+    </xsl:otherwise>
   </xsl:choose>
 
   <xsl:call-template name="end-revflag"/>
@@ -187,15 +186,13 @@
 <xsl:template name="topic-image">
 
   <xsl:variable name="ends-with-svg" select="ends-with(@href, '.svg')" as="xs:boolean"/>
-
   <xsl:variable name="ends-with-svgz" select="ends-with(@href, '.svgz')" as="xs:boolean"/>
-
   <xsl:variable name="scale-to-fit">
-  <xsl:choose>
-    <xsl:when test="@scalefit='yes'">
-      <xsl:value-of select="'d4p-ui-scale2fit'" />
-    </xsl:when>
-  </xsl:choose>
+    <xsl:choose>
+      <xsl:when test="@scalefit='yes'">
+        <xsl:value-of select="'d4p-ui-scale2fit'" />
+      </xsl:when>
+    </xsl:choose>
   </xsl:variable>
 
   <xsl:variable name="isSVG" select="$ends-with-svg or $ends-with-svgz" as="xs:boolean"/>
@@ -540,10 +537,10 @@
          </div><xsl:value-of select="$newline"/>
       </xsl:when>
       <xsl:otherwise>
-       <div class="section" id="{df:getIdForElement(.)}">
-         <xsl:call-template name="commonattributes"/>
-         <xsl:apply-templates select="."  mode="section-fmt" />
-       </div><xsl:value-of select="$newline"/>
+         <div class="section" id="{df:getIdForElement(.)}">
+            <xsl:call-template name="commonattributes"/>
+            <xsl:apply-templates select="."  mode="section-fmt" />
+         </div><xsl:value-of select="$newline"/>
        </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -551,33 +548,31 @@
   <xsl:template name="set_an_anchor">
     <xsl:variable name="anchorid" select="df:getIdForElement(.)"/>
     <a>
-      <xsl:attribute name="name" select="$anchorid"/>
       <xsl:attribute name="id" select="$anchorid"/>
       <xsl:attribute name="class" select="'anchor'"/>
     </a>
   </xsl:template>
 
   <!-- child topics get a div wrapper and fall through -->
-<xsl:template match="*[contains(@class, ' topic/topic ')]" mode="child.topic" name="child.topic">
-  <xsl:param name="nestlevel">
+  <xsl:template match="*[contains(@class, ' topic/topic ')]" mode="child.topic" name="child.topic">
+    <xsl:param name="nestlevel">
       <xsl:choose>
           <!-- Limit depth for historical reasons, could allow any depth. Previously limit was 5. -->
           <xsl:when test="count(ancestor::*[contains(@class, ' topic/topic ')]) > 9">9</xsl:when>
           <xsl:otherwise><xsl:value-of select="count(ancestor::*[contains(@class, ' topic/topic ')])"/></xsl:otherwise>
       </xsl:choose>
-  </xsl:param>
+    </xsl:param>
 
-   <xsl:choose>
+    <xsl:choose>
       <xsl:when test="$html5AnchorStrategyBoolean">
-          <section class="{concat('nested', $nestlevel, ' ', @outputclass)}" id="{local:getIdForHtmlSection(.)}">
-            <xsl:call-template name="set_an_anchor" />
-            <xsl:call-template name="gen-topic"/>
-            <xsl:apply-templates/>
-          </section><xsl:value-of select="$newline"/>
+        <section class="{concat('nested', $nestlevel, ' ', @outputclass)}" id="{local:getIdForHtmlSection(.)}">
+          <xsl:call-template name="set_an_anchor" />
+          <xsl:call-template name="gen-topic"/>
+          <xsl:apply-templates/>
+        </section><xsl:value-of select="$newline"/>
       </xsl:when>
       <xsl:otherwise>
         <section class="{concat('nested', $nestlevel, ' ', @outputclass)}" id="{df:getIdForElement(.)}">
-          <xsl:call-template name="set_an_anchor" />
           <xsl:call-template name="gen-topic"/>
           <xsl:apply-templates/>
         </section><xsl:value-of select="$newline"/>
@@ -585,36 +580,34 @@
     </xsl:choose>
   </xsl:template>
 
-<xsl:template name="gen-topic">
-  <xsl:param name="nestlevel">
+  <xsl:template name="gen-topic">
+    <xsl:param name="nestlevel">
       <xsl:choose>
           <!-- Limit depth for historical reasons, could allow any depth. Previously limit was 5. -->
           <xsl:when test="count(ancestor::*[contains(@class, ' topic/topic ')]) > 9">9</xsl:when>
           <xsl:otherwise><xsl:value-of select="count(ancestor::*[contains(@class, ' topic/topic ')])"/></xsl:otherwise>
       </xsl:choose>
-  </xsl:param>
+    </xsl:param>
 
- <xsl:choose>
-   <xsl:when test="parent::dita and not(preceding-sibling::*)">
-     <!-- Do not reset xml:lang if it is already set on <html> -->
-     <!-- Moved outputclass to the body tag -->
-     <!-- Keep ditaval based styling at this point (replace DITA-OT 1.6 and earlier call to gen-style) -->
-     <xsl:apply-templates select="*[contains(@class, ' ditaot-d/ditaval-startprop ')]/@outputclass" mode="add-ditaval-style"/>
-   </xsl:when>
-   <xsl:otherwise>
-   </xsl:otherwise>
- </xsl:choose>
+    <xsl:choose>
+      <xsl:when test="parent::dita and not(preceding-sibling::*)">
+        <!-- Do not reset xml:lang if it is already set on <html> -->
+        <!-- Moved outputclass to the body tag -->
+        <!-- Keep ditaval based styling at this point (replace DITA-OT 1.6 and earlier call to gen-style) -->
+        <xsl:apply-templates select="*[contains(@class, ' ditaot-d/ditaval-startprop ')]/@outputclass" mode="add-ditaval-style"/>
+      </xsl:when>
+      <xsl:otherwise>
+      </xsl:otherwise>
+    </xsl:choose>
 
-</xsl:template>
+  </xsl:template>
 
-<xsl:function name="local:getIdForHtmlSection" as="xs:string">
-  <!-- ID to use on HTML <section> elements generated from various DITA elements -->
-  <xsl:param name="context"/>
-  <xsl:variable name="result" as="xs:string"
-    select="concat(df:getIdForElement($context), '_section')"
-  />
-  <xsl:sequence select="$result"/>
-</xsl:function>
+  <xsl:function name="local:getIdForHtmlSection" as="xs:string">
+    <!-- ID to use on HTML <section> elements generated from various DITA elements -->
+    <xsl:param name="context"/>
+    <xsl:variable name="result" as="xs:string" select="concat(df:getIdForElement($context), '_section')" />
+    <xsl:sequence select="$result"/>
+  </xsl:function>
 
 </xsl:stylesheet>
 

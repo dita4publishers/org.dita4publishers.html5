@@ -185,7 +185,6 @@
 
     <section id="page">
       <div>
-        <xsl:attribute name="class"><xsl:value-of select="concat('page', ' ', name(.), ' ', @outputclass, ' ', replace(replace(@class, '/', '-'), '-', ' '))" /></xsl:attribute>
 
        <xsl:call-template name="set_an_anchor" />
 
