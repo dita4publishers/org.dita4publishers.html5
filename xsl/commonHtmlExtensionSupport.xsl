@@ -555,10 +555,6 @@
       </xsl:choose>
     </xsl:param>
 
-    <xsl:message>
-      <xsl:sequence select="$html5AnchorStrategyBoolean"/>
-    </xsl:message>
-
     <xsl:choose>
       <xsl:when test="$html5AnchorStrategyBoolean">
         <section class="{concat('nested', $nestlevel, ' ', @outputclass)}" id="{local:getIdForHtmlSection(.)}">
