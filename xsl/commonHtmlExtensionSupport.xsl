@@ -545,14 +545,6 @@
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template name="set_an_anchor">
-    <xsl:variable name="anchorid" select="df:getIdForElement(.)"/>
-    <a>
-      <xsl:attribute name="id" select="$anchorid"/>
-      <xsl:attribute name="class" select="'anchor'"/>
-    </a>
-  </xsl:template>
-
   <!-- child topics get a div wrapper and fall through -->
   <xsl:template match="*[contains(@class, ' topic/topic ')]" mode="child.topic" name="child.topic">
     <xsl:param name="nestlevel">
@@ -562,6 +554,10 @@
           <xsl:otherwise><xsl:value-of select="count(ancestor::*[contains(@class, ' topic/topic ')])"/></xsl:otherwise>
       </xsl:choose>
     </xsl:param>
+
+    <xsl:message>
+      <xsl:sequence select="$html5AnchorStrategyBoolean"/>
+    </xsl:message>
 
     <xsl:choose>
       <xsl:when test="$html5AnchorStrategyBoolean">
@@ -578,6 +574,14 @@
         </section><xsl:value-of select="$newline"/>
       </xsl:otherwise>
     </xsl:choose>
+  </xsl:template>
+
+  <xsl:template name="set_an_anchor">
+    <xsl:variable name="anchorid" select="df:getIdForElement(.)"/>
+    <a>
+      <xsl:attribute name="id" select="$anchorid"/>
+      <xsl:attribute name="class" select="'anchor'"/>
+    </a>
   </xsl:template>
 
   <xsl:template name="gen-topic">
