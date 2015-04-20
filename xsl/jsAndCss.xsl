@@ -276,14 +276,24 @@
     <xsl:param name="topicref" as="element()*" tunnel="yes"/>
     <xsl:param name="documentation-title" as="xs:string" select="''" tunnel="yes" />
 
+    <xsl:variable name="nextTopicHref" as="xs:string?">
+       <xsl:call-template name="getNextTopicHref"/>
+    </xsl:variable>
+    <xsl:variable name="previousTopicHref" as="xs:string?">
+       <xsl:call-template name="getPrevTopicHref"/>
+    </xsl:variable>
+    <xsl:variable name="strippedNextTopicHref" select="replace($nextTopicHref, $OUTEXT, $jsOutExt)"/>
+    <xsl:variable name="strippedPreviousTopicHref" select="replace($previousTopicHref, $OUTEXT, $jsOutExt)"/>
+
     <xsl:variable name="d4p-js-object">
       <d4p>
          <relativePath><xsl:value-of select="$relativePath" /></relativePath>
          <dev><xsl:value-of select="if($DBG='yes') then 'true' else 'false'"/></dev>
          <debug><xsl:value-of select="if($DBG='yes') then 'true' else 'false'"/></debug>
          <draft><xsl:value-of select="if(ISDRAFT) then 'true' else 'false'"/></draft>
-         <nextTopicHref><xsl:call-template name="getNextTopicHref"/></nextTopicHref>
-         <previousTopicHref><xsl:call-template name="getPrevTopicHref"/></previousTopicHref>
+         <nextTopicHref><xsl:sequence select="$strippedNextTopicHref"/></nextTopicHref>
+         <previousTopicHref><xsl:sequence select="$strippedPreviousTopicHref"/></previousTopicHref>
+         <ext><xsl:value-of select="$jsOutExt"/></ext>
          <root><xsl:value-of select="$is-root"/></root>
          <topic>
            <chunked><xsl:sequence select="string($topicref/ancestor-or-self::*[1]/@chunk)"/></chunked>

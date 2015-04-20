@@ -97,6 +97,7 @@
     transformation type.
   -->
   <xsl:param name="OUTEXT" select="'.html'" as="xs:string"/>
+  <xsl:param name="jsOutExt" select="$OUTEXT"/>
   <xsl:param name="tempdir" select="./temp" as="xs:string"/>
 
  <!--
