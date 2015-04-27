@@ -279,6 +279,12 @@
     </xsl:copy>
   </xsl:template>
 
+  <xsl:template match="text()[not(string-length(normalize-space()))]"  mode="fix-navigation-href"/>
+
+  <xsl:template match="text()[string-length(normalize-space()) > 0]"  mode="fix-navigation-href">
+    <xsl:value-of select="translate(.,'&#xA;&#xD;', '  ')"/>
+  </xsl:template>
+
   <xsl:template match="li" mode="fix-navigation-href">
     <xsl:param name="doDebug" as="xs:boolean" tunnel="yes" select="$debugBoolean"/>
     <xsl:param name="resultUri" as="xs:string" tunnel="yes" select="''" /><!-- Result URI of the topic we're processing -->

@@ -68,6 +68,7 @@
   <xsl:include href="audience.xsl"/>
   <xsl:include href="map2html5Index.xsl"/>
   <xsl:include href="reltable.xsl"/>
+  <xsl:include href="cleanup.xsl"/>
 
   <xsl:variable name="include.roles" select="concat(' ', normalize-space($include.rellinks), ' ')"/>
 
@@ -96,6 +97,7 @@
     transformation type.
   -->
   <xsl:param name="OUTEXT" select="'.html'" as="xs:string"/>
+  <xsl:param name="jsOutExt" select="$OUTEXT"/>
   <xsl:param name="tempdir" select="./temp" as="xs:string"/>
 
  <!--
@@ -223,6 +225,13 @@
 
   <xsl:param name="html5outputsizestrategy" select="'yes'"/>
   <xsl:param name="html5outputsizestrategyBoolean" select="matches($html5outputsizestrategy, 'yes|true|on|1', 'i')"/>
+
+  <xsl:param name="html5AnchorStrategy" select="'yes'"/>
+  <xsl:param name="html5AnchorStrategyBoolean" select="matches($html5AnchorStrategy, 'yes|true|on|1', 'i')"/>
+
+
+  <xsl:param name="outputKeyref" select="'yes'"/>
+  <xsl:param name="outputKeyrefBoolean" select="matches($html5outputsizestrategy, 'yes|true|on|1', 'i')"/>
 
   <xsl:variable name="maxTocDepthInt" select="xs:integer($maxTocDepth)" as="xs:integer"/>
   <xsl:variable name="version" select="if(/map/topicmeta/prodinfo/vrmlist/vrm/@version) then /map/topicmeta/prodinfo/vrmlist/vrm/@version else ''" as="xs:string"/>
@@ -663,26 +672,6 @@
     <xsl:if test="false() and $debugBoolean">
       <xsl:message> + [DEBUG] enumeration: catch-all template. Element="<xsl:sequence select="name(.)"/></xsl:message>
     </xsl:if>
-  </xsl:template>
-
-  <!-- to be placed -->
-   <xsl:function name="df:cleanNewLine" as="node()*">
-    <xsl:param name="tree" as="node()*"/>
-    <xsl:choose>
-      <xsl:when test="$html5outputsizestrategyBoolean and not($ISDRAFT)">
-        <xsl:apply-templates select="$tree" mode="clean-linebreaks"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:sequence select="$tree"/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:function>
-
-
-  <xsl:template match="@*|node()" mode="clean-linebreaks">
-    <xsl:copy>
-      <xsl:apply-templates select="@*|node()" mode="#current"/>
-     </xsl:copy>
   </xsl:template>
 
 </xsl:stylesheet>
