@@ -42,16 +42,29 @@
   </xsl:function>
 
   <xsl:template match="@*|node()" mode="clean-linebreaks">
-    <xsl:copy>
-      <xsl:apply-templates select="@*|node()" mode="#current"/>
-     </xsl:copy>
+    <xsl:copy><xsl:apply-templates select="@*|node()" mode="#current"/></xsl:copy>
   </xsl:template>
 
-  <xsl:template match="text()[not(string-length(normalize-space()))]"  mode="clean-linebreak"/>
+  <!--xsl:template match="text()" mode="clean-linebreaks">
+  <xsl:message>clean: <xsl:value-of select="."/></xsl:message>
+    <xsl:value-of select="translate(.,'&#x20;&#x9;&#xD;&#xA;','')"/>
+  </xsl:template-->
 
-  <xsl:template match="text()[string-length(normalize-space()) > 0]"  mode="clean-linebreak">
-    <xsl:value-of select="translate(.,'&#xA;&#xD;', '  ')"/>
+  <!-- Thanks to Dimitre Novatchev -->
+  <xsl:template match="text()[not(string-length(normalize-space()))]"  mode="clean-linebreaks"/>
+
+  <xsl:template match="text()[string-length(normalize-space()) > 0]"  mode="clean-linebreaks">
+    <xsl:value-of select="translate(.,'&#x20;&#x9;&#xD;&#xA;', '  ')"/>
   </xsl:template>
 
+  <xsl:template match="processing-instruction()|comment()"  mode="clean-linebreaks" priority="10"/>
+
+  <xsl:template match="pre" mode="clean-linebreaks">
+    <xsl:copy><xsl:apply-templates select="@*|node()" mode="full-copy" /></xsl:copy>
+  </xsl:template>
+
+  <xsl:template match="@*|node()|text|processing-instruction()|comment()" mode="full-copy">
+    <xsl:copy><xsl:apply-templates select="@*|node()" mode="#current"/></xsl:copy>
+  </xsl:template>
 
 </xsl:stylesheet>
