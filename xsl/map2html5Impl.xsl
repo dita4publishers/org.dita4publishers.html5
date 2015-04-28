@@ -304,6 +304,8 @@
    <xsl:apply-templates select="/map" mode="mapAttributes" />
   </xsl:variable>
 
+  <xsl:variable name="DEFAULTLANG" select="$TEMPLATELANG"/>
+
   <xsl:template match="*" mode="mapAttributes" >
     <xsl:call-template name="getLowerCaseLang"/>
   </xsl:template>
