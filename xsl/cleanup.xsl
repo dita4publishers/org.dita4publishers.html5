@@ -31,6 +31,13 @@
 
   <xsl:function name="df:cleanNewLine" as="node()*">
     <xsl:param name="tree" as="node()*"/>
+     <xsl:call-template name="cleanup-tree">
+       <xsl:with-param name="tree" select="$tree" as="node()*"/>
+     </xsl:call-template>
+  </xsl:function>
+
+  <xsl:template name="cleanup-tree">
+    <xsl:param name="tree" as="node()*"/>
     <xsl:choose>
       <xsl:when test="$html5outputsizestrategyBoolean and not($ISDRAFT)">
         <xsl:apply-templates select="$tree" mode="clean-linebreaks"/>
@@ -39,7 +46,7 @@
         <xsl:sequence select="$tree"/>
       </xsl:otherwise>
     </xsl:choose>
-  </xsl:function>
+  </xsl:template>
 
   <xsl:template match="@*|node()" mode="clean-linebreaks">
     <xsl:copy><xsl:apply-templates select="@*|node()" mode="#current"/></xsl:copy>
