@@ -33,6 +33,26 @@
   exclude-result-prefixes="random xs xd df relpath mapdriven  index-terms java xsl mapdriven json related-links local"
   version="1.0">
 
+  <xsl:template name="getLowerCaseLang">
+    <xsl:variable name="ancestorlangUpper">
+      <!-- the current xml:lang value (en-us if none found) -->
+      <xsl:choose>
+        <xsl:when test="ancestor-or-self::*/@xml:lang">
+          <xsl:value-of select="ancestor-or-self::*[@xml:lang][1]/@xml:lang"/>
+        </xsl:when>
+        <xsl:when test="$TEMPLATELANG != ''">
+          <xsl:value-of select="$TEMPLATELANG"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="$DEFAULTLANG"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:call-template name="convert-to-lower">
+      <!-- ensure lowercase for comparisons -->
+      <xsl:with-param name="inputval" select="$ancestorlangUpper"/>
+    </xsl:call-template>
+  </xsl:template>
   <!-- Process standard attributes that may appear anywhere. Previously this was "setclass" -->
   <xsl:template name="commonattributes">
     <xsl:param name="default-output-class"/>

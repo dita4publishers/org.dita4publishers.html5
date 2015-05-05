@@ -224,6 +224,7 @@
   <xsl:param name="html5absolulteuri" select="''" />
   <xsl:param name="OUTPUTDEFAULTNAVIGATION" select="true()" />
   <xsl:param name="html5IndexFilename" select="'index'" />
+  <xsl:param name="alternateFormat" select="''"/>
 
   <xsl:param name="html5outputsizestrategy" select="'yes'"/>
   <xsl:param name="html5outputsizestrategyBoolean" select="matches($html5outputsizestrategy, 'yes|true|on|1', 'i')"/>
@@ -306,7 +307,6 @@
    <xsl:apply-templates select="/map" mode="mapAttributes" />
   </xsl:variable>
 
-<!--  <xsl:variable name="DEFAULTLANG" select="$TEMPLATELANG"/>-->
 
   <xsl:template match="*" mode="mapAttributes" >
     <xsl:call-template name="getLowerCaseLang"/>
