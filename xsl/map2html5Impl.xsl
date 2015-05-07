@@ -303,14 +303,8 @@
   <xsl:variable name="indexUri" as="xs:string" select="concat($html5IndexFilename, $OUTEXT)"/>
   <xsl:variable name="HTML5THEMECONFIGDOC" select="document($HTML5THEMECONFIG)" />
 
-  <xsl:variable name="TEMPLATELANG">
-   <xsl:apply-templates select="/map" mode="mapAttributes" />
-  </xsl:variable>
+  <xsl:variable name="TEMPLATELANG" select="if(/map/@xml:lang) then /map/@xml:lang else 'en-us'"/>
 
-
-  <xsl:template match="*" mode="mapAttributes" >
-    <xsl:call-template name="getLowerCaseLang"/>
-  </xsl:template>
 
   <xsl:template name="report-parameters" match="*" mode="report-parameters">
     <xsl:param name="effectiveCoverGraphicUri" select="''" as="xs:string" tunnel="yes"/>
@@ -376,8 +370,6 @@
       ==========================================
     </xsl:message>
   </xsl:template>
-
-
 
 
   <xsl:template match="/">
