@@ -285,11 +285,6 @@
     <xsl:value-of select="translate(.,'&#xA;&#xD;', '  ')"/>
   </xsl:template>
 
-  <xsl:function name="relpath:stripAnchor">
-    <xsl:param name="href" as="xs:string"/>
-    <xsl:sequence select="if(contains($href, '#')) then substring-before($href, '#') else $href"/>
-  </xsl:function>
-
   <xsl:template match="li" mode="fix-navigation-href">
     <xsl:param name="doDebug" as="xs:boolean" tunnel="yes" select="$debugBoolean"/>
     <xsl:param name="resultUri" as="xs:string" tunnel="yes" select="''" /><!-- Result URI of the topic we're processing -->
@@ -340,11 +335,10 @@
       </xsl:message>
     </xsl:if>
 
-    <xsl:variable name="relativePath" select="substring-after($resultUri, $outdir)"/>
-    <xsl:variable name="isActiveTrail"  select="if(./descendant-or-self::a[relpath:stripAnchor(@href) = $relativePath]) then true() else false()"/>
-    <xsl:variable name="isSelected" select="if(not(contains(a/@href, '#')) and a/@href = $relativePath) then true() else false()"/>
 
-    <xsl:variable name="hasChild" select="descendant::li"/>
+    <xsl:variable name="isSelected" select="relpath:getName($href) = $resultUriFilename"/>
+    <xsl:variable name="isActiveTrail"  select="descendant::a[ends-with(@href, $resultUriFilename)]"/>
+    <xsl:variable name="hasChild"  select="descendant::li"/>
 
     <xsl:variable name="hasChildClass">
       <xsl:choose>
@@ -446,9 +440,8 @@
            index-terms:index-term"
     mode="generate-html5-nav">
     <xsl:param name="parentId" as="xs:string" tunnel="yes"/>
-    <xsl:call-template name="construct-tree-item-for-group-or-term">
-      <xsl:with-param name="parentId" select="$parentId" as="xs:string"/>
-    </xsl:call-template>
+    
+    <xsl:call-template name="construct-tree-item-for-group-or-term"/>
     <xsl:apply-templates select="index-terms:* except index-terms:label " mode="#current">
       <xsl:with-param name="parentId" as="xs:string" tunnel="yes" select="generate-id(.)"/>
     </xsl:apply-templates>
@@ -456,9 +449,7 @@
 
   <xsl:template match="index-terms:see-also" mode="generate-html5-nav">
     <xsl:param name="parentId" as="xs:string" tunnel="yes"/>
-    <xsl:call-template name="construct-tree-item-for-group-or-term">
-      <xsl:with-param name="parentId" select="$parentId" as="xs:string"/>
-    </xsl:call-template>
+    <xsl:call-template name="construct-tree-item-for-group-or-term"/>
   </xsl:template>
 
   <xsl:template match="index-terms:see-also/index-terms:label"
@@ -469,9 +460,7 @@
 
   <xsl:template match="index-terms:see" mode="generate-dynamic-toc">
     <xsl:param name="parentId" as="xs:string" tunnel="yes"/>
-    <xsl:call-template name="construct-tree-item-for-group-or-term">
-      <xsl:with-param name="parentId" select="$parentId" as="xs:string"/>
-    </xsl:call-template>
+    <xsl:call-template name="construct-tree-item-for-group-or-term"/>
   </xsl:template>
 
   <xsl:template match="index-terms:see/index-terms:label"
@@ -505,7 +494,6 @@
 
     <xsl:call-template name="makeJsTextNode">
       <xsl:with-param name="linkObjId" select="$self"/>
-      <xsl:with-param name="parentId" select="$parentId" tunnel="yes"/>
     </xsl:call-template>
 
     <xsl:apply-templates select="index-terms:index-term" mode="#current">
