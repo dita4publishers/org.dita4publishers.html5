@@ -241,15 +241,11 @@
      <footer id="topicsNPLinks">
 
        <div id="footer_previous">
-            <xsl:call-template name="getPrevTopicReference">
-                <xsl:with-param name="topicref" select="$topicref" />
-            </xsl:call-template>
+            <xsl:call-template name="getPrevTopicReference"/>
        </div>
 
        <div id="footer_next">
-          <xsl:call-template name="getNextTopicReference">
-                <xsl:with-param name="topicref" select="$topicref" />
-          </xsl:call-template>
+          <xsl:call-template name="getNextTopicReference"/>
        </div>
 
      </footer>
