@@ -39,7 +39,9 @@
   <xsl:import href="plugin:org.dita4publishers.common.mapdriven:xsl/dataCollection.xsl"/>
 
   <!-- Import the base HTML output generation transform. -->
-  <xsl:import href="plugin:org.dita.xhtml:xsl/dita2xhtml.xsl"/>
+  <xsl:import href="plugin:org.dita.xhtml:xsl/dita2html-base.xsl"/>
+  <xsl:import href="plugin:org.dita.xhtml:xsl/xslhtml/dita2html5Impl.xsl"/>
+  <xsl:import href="plugin:org.dita.xhtml:xsl/xslhtml/hi-d2html5.xsl"/>
 
   <xsl:import href="plugin:org.dita4publishers.common.xslt:xsl/graphicMap2AntCopyScript.xsl"/>
   <xsl:import href="plugin:org.dita4publishers.common.xslt:xsl/map2graphicMap.xsl"/>
@@ -301,14 +303,8 @@
   <xsl:variable name="indexUri" as="xs:string" select="concat($html5IndexFilename, $OUTEXT)"/>
   <xsl:variable name="HTML5THEMECONFIGDOC" select="document($HTML5THEMECONFIG)" />
 
-  <xsl:variable name="TEMPLATELANG">
-   <xsl:apply-templates select="/map" mode="mapAttributes" />
-  </xsl:variable>
+  <xsl:variable name="TEMPLATELANG" select="if(/map/@xml:lang) then /map/@xml:lang else 'en-us'"/>
 
-
-  <xsl:template match="*" mode="mapAttributes" >
-    <xsl:call-template name="getLowerCaseLang"/>
-  </xsl:template>
 
   <xsl:template name="report-parameters" match="*" mode="report-parameters">
     <xsl:param name="effectiveCoverGraphicUri" select="''" as="xs:string" tunnel="yes"/>
@@ -374,8 +370,6 @@
       ==========================================
     </xsl:message>
   </xsl:template>
-
-
 
 
   <xsl:template match="/">
@@ -528,16 +522,6 @@
         <xsl:apply-templates select="." mode="generate-root-page-header" />
     </xsl:variable>
 
-    <xsl:message> + [INFO] Generating audience selector...</xsl:message>
-    <xsl:variable name="audienceSelect">
-      <xsl:apply-templates select="." mode="generate-audience-select">
-        <xsl:with-param name="collected-data" as="element()" select="$collected-data" tunnel="yes"/>
-        <xsl:with-param name="uniqueTopicRefs" as="element()*" select="$uniqueTopicRefs" tunnel="yes"/>
-        <xsl:with-param name="documentation-title" as="xs:string" select="$documentation-title" tunnel="yes"/>
-        <xsl:with-param name="is-root" as="xs:boolean" select="true()" tunnel="yes"/>
-      </xsl:apply-templates>
-    </xsl:variable>
-
     <xsl:if test="$generateSearchEngineBoolean">
       <xsl:message> + [INFO] Generating search engine index...</xsl:message>
       <xsl:apply-templates select="." mode="generate-search-index">
@@ -575,7 +559,6 @@
         <xsl:with-param name="uniqueTopicRefs" as="element()*" select="$uniqueTopicRefs" tunnel="yes"/>
         <xsl:with-param name="has-index" as="xs:boolean" select="$has-index" tunnel="yes" />
         <xsl:with-param name="documentation-title" select="$documentation-title" tunnel="yes"/>
-        <xsl:with-param name="audienceSelect"  select="$audienceSelect" tunnel="yes"/>
         <xsl:with-param name="showTocEntry" as="xs:boolean" tunnel="yes" select="$showTocEntryBoolean" />
       </xsl:apply-templates>
     </xsl:variable>
@@ -592,7 +575,6 @@
         <xsl:with-param name="navigation" as="element()*" select="$navigation" tunnel="yes"/>
         <xsl:with-param name="baseUri" as="xs:string" select="@xtrf" tunnel="yes"/>
         <xsl:with-param name="documentation-title" select="$documentation-title" tunnel="yes"/>
-        <xsl:with-param name="audienceSelect"  select="$audienceSelect" tunnel="yes"/>
         <xsl:with-param name="indexUri" as="xs:string" select="$indexUri" tunnel = "yes" />
     </xsl:apply-templates>
 
@@ -605,7 +587,6 @@
       <xsl:with-param name="documentation-title" select="$documentation-title" tunnel="yes"/>
       <xsl:with-param name="has-index" as="xs:boolean" select="$has-index" tunnel="yes" />
       <xsl:with-param name="is-root" as="xs:boolean" select="false()" tunnel="yes"/>
-      <xsl:with-param name="audienceSelect"  select="$audienceSelect" tunnel="yes"/>
       <xsl:with-param name="map-metadata" select="$map-metadata" tunnel="yes"/>
     </xsl:apply-templates>
 

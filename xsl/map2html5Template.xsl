@@ -29,9 +29,15 @@
   version="2.0">
 
 
-  <xsl:output name="html5" method="html" indent="yes" encoding="utf-8" doctype-system="about:legacy-compat" omit-xml-declaration="yes"/>
-  <xsl:output name="html5-no-indent" method="html" indent="no" encoding="utf-8" doctype-system="about:legacy-compat" omit-xml-declaration="yes"/>
-  <xsl:output name="indented-xml" method="xml" indent="yes" omit-xml-declaration="yes"/>
+  <xsl:output name="html5" method="html" indent="yes" encoding="utf-8"
+    use-character-maps="chars-127to160"
+    doctype-system="about:legacy-compat" omit-xml-declaration="yes"/>
+  <xsl:output name="html5-no-indent" method="html" indent="no" encoding="utf-8"
+    use-character-maps="chars-127to160"
+    doctype-system="about:legacy-compat" omit-xml-declaration="yes"/>
+  <xsl:output name="indented-xml" method="xml" indent="yes" omit-xml-declaration="yes"
+    use-character-maps="chars-127to160"
+  />
 
   <xsl:template mode="toc-title" match="*[df:isTopicRef(.)] | *[df:isTopicHead(.)]">
     <xsl:variable name="titleValue" select="df:getNavtitleForTopicref(.)"/>
@@ -241,15 +247,11 @@
      <footer id="topicsNPLinks">
 
        <div id="footer_previous">
-            <xsl:call-template name="getPrevTopicReference">
-                <xsl:with-param name="topicref" select="$topicref" />
-            </xsl:call-template>
+            <xsl:call-template name="getPrevTopicReference"/>
        </div>
 
        <div id="footer_next">
-          <xsl:call-template name="getNextTopicReference">
-                <xsl:with-param name="topicref" select="$topicref" />
-          </xsl:call-template>
+          <xsl:call-template name="getNextTopicReference"/>
        </div>
 
      </footer>

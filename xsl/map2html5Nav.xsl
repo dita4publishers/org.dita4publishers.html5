@@ -440,9 +440,8 @@
            index-terms:index-term"
     mode="generate-html5-nav">
     <xsl:param name="parentId" as="xs:string" tunnel="yes"/>
-    <xsl:call-template name="construct-tree-item-for-group-or-term">
-      <xsl:with-param name="parentId" select="$parentId" as="xs:string"/>
-    </xsl:call-template>
+    
+    <xsl:call-template name="construct-tree-item-for-group-or-term"/>
     <xsl:apply-templates select="index-terms:* except index-terms:label " mode="#current">
       <xsl:with-param name="parentId" as="xs:string" tunnel="yes" select="generate-id(.)"/>
     </xsl:apply-templates>
@@ -450,9 +449,7 @@
 
   <xsl:template match="index-terms:see-also" mode="generate-html5-nav">
     <xsl:param name="parentId" as="xs:string" tunnel="yes"/>
-    <xsl:call-template name="construct-tree-item-for-group-or-term">
-      <xsl:with-param name="parentId" select="$parentId" as="xs:string"/>
-    </xsl:call-template>
+    <xsl:call-template name="construct-tree-item-for-group-or-term"/>
   </xsl:template>
 
   <xsl:template match="index-terms:see-also/index-terms:label"
@@ -463,9 +460,7 @@
 
   <xsl:template match="index-terms:see" mode="generate-dynamic-toc">
     <xsl:param name="parentId" as="xs:string" tunnel="yes"/>
-    <xsl:call-template name="construct-tree-item-for-group-or-term">
-      <xsl:with-param name="parentId" select="$parentId" as="xs:string"/>
-    </xsl:call-template>
+    <xsl:call-template name="construct-tree-item-for-group-or-term"/>
   </xsl:template>
 
   <xsl:template match="index-terms:see/index-terms:label"
@@ -499,7 +494,6 @@
 
     <xsl:call-template name="makeJsTextNode">
       <xsl:with-param name="linkObjId" select="$self"/>
-      <xsl:with-param name="parentId" select="$parentId" tunnel="yes"/>
     </xsl:call-template>
 
     <xsl:apply-templates select="index-terms:index-term" mode="#current">
