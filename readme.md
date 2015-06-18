@@ -8,11 +8,23 @@ the Web site. You can configure the theme you want or use any HTML5 library or d
 The HTML5 plugin depends on the following other plugins:
 
 * The [DITA Community org.dita-community.common.html](https://github.com/dita-community/org.dita-community.common.xslt) plugin
+* The [DITA Community org.dita-community.preprocess-extensions](https://github.com/dita-community/org.dita-community.preprocess-extensions) plugin
 * The [D4P org.dita4publishers.common.mapdriven](https://github.com/dita4publishers/org.dita4publishers.common.mapdriven) plugin
 * The [D4P org.dita4publishers.common.xslt"](https://github.com/dita4publishers/org.dita4publishers.common.xslt) plugin
 * The [D4P org.dita4publishers.json"](https://github.com/dita4publishers/org.dita4publishers.json) plugin
 
 All these plugins are provided in the main DITA for Publishers distribution or you can install each plugin individually.
+
+NOTE: Currently only works with the 1.8.5 Open Toolkit due to dependencies
+on the org.dita-community.adjust-copy-to plugin, which only works with 1.8.5.
+Work is under way to remove this limitation so the transform will work with
+OT 1.7.5, 1.8.5, and 2.1+.
+
+Updates
+-------
+
+18 June 2015: Take @copy-to into account for result files.  
+
 
 Installation
 ------------
