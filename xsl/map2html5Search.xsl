@@ -76,7 +76,8 @@
             select="string(@href)"/>"</xsl:message>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:variable name="topicResultUri" select="htmlutil:getTopicResultUrl('', root($topic), $rootMapDocUrl)"
+        <xsl:variable name="topicResultUri" 
+          select="htmlutil:getTopicResultUrl2('', root($topic), ., $rootMapDocUrl)"
           as="xs:string"/>
         <xsl:variable name="number"><xsl:number value="position()" format="1" /></xsl:variable>
 

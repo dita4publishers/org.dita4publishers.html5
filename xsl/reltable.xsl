@@ -37,8 +37,8 @@
           <xsl:when test="$topic">
             <xsl:variable name="resultUri" as="xs:string" 
               select="concat($relativePath, 
-                             relpath:getRelativePath($outdir, 
-                                 htmlutil:getTopicResultUrl($outdir, root($topic), $rootMapDocUrl)))" />
+                   relpath:getRelativePath($outdir, 
+                       htmlutil:getTopicResultUrl2($outdir, root($topic), ., $rootMapDocUrl)))" />
             <xsl:variable name="title">
               <xsl:apply-templates select="." mode="nav-point-title"/>
             </xsl:variable>
@@ -131,7 +131,7 @@
           <xsl:value-of
             select="relpath:newFile($relativePath,
                            relpath:getRelativePath($outdir,
-                             htmlutil:getTopicResultUrl($outdir, root($topic), $rootMapDocUrl)))"
+                             htmlutil:getTopicResultUrl2($outdir, root($topic), $siblingTopicRef, $rootMapDocUrl)))"
           />
         </xsl:variable>
 
@@ -179,7 +179,9 @@
                      something.
             -->
 
-              <xsl:value-of select="htmlutil:getTopicResultUrl($outdir, root($topic), $rootMapDocUrl)" />
+              <xsl:value-of 
+                select="htmlutil:getTopicResultUrl2($outdir, root($topic), $siblingTopicRef, $rootMapDocUrl)" 
+              />
             </xsl:variable>
             <xsl:value-of select="relpath:getRelativePath($outdir, $resultUri)" />
           </xsl:if>
@@ -213,7 +215,8 @@
                        something.
       -->
 
-        <xsl:value-of select="concat($relativePath, relpath:getRelativePath($outdir, htmlutil:getTopicResultUrl($outdir, root($topic), $rootMapDocUrl)))" />
+        <xsl:value-of select="concat($relativePath, relpath:getRelativePath($outdir,
+          htmlutil:getTopicResultUrl2($outdir, root($topic), $siblingTopicRef, $rootMapDocUrl)))" />
       </xsl:variable>
 
       <xsl:variable name="title">
@@ -255,7 +258,9 @@
                      something.
       -->
 
-        <xsl:value-of select="relpath:getRelativePath($outdir, htmlutil:getTopicResultUrl($outdir, root($topic), $rootMapDocUrl))" />
+        <xsl:value-of 
+          select="relpath:getRelativePath($outdir, 
+          htmlutil:getTopicResultUrl2($outdir, root($topic), $siblingTopicRef, $rootMapDocUrl))" />
       </xsl:variable>
 
       <xsl:variable name="title">

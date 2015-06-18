@@ -157,7 +157,11 @@
       <xsl:text>, </xsl:text>
     </xsl:if>
     <xsl:variable name="topic" select="document(relpath:getResourcePartOfUri(@source-uri))" as="document-node()"/>
-    <xsl:variable name="targetUri" select="htmlutil:getTopicResultUrl($outdir, $topic, $rootMapDocUrl)"
+    <!-- FIXME: Need to have topicref here so we can use getTopicResultUrl2 and take
+                @copy-to into account.
+      -->
+    <xsl:variable name="targetUri" 
+      select="htmlutil:getTopicResultUrl($outdir, $topic, $rootMapDocUrl)"
       as="xs:string"/>
     <xsl:variable name="relativeUri" select="relpath:getRelativePath($outdir, $targetUri)" as="xs:string"/>
 

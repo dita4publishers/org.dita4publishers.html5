@@ -65,7 +65,8 @@
             select="string(@href)"/>"</xsl:message>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:variable name="topicResultUri" select="htmlutil:getTopicResultUrl($outdir, root($topic), $rootMapDocUrl)"
+        <xsl:variable name="topicResultUri" 
+          select="htmlutil:getTopicResultUrl2($outdir, root($topic), ., $rootMapDocUrl)"
           as="xs:string"/>
         <xsl:variable name="topicRelativeUri" select="relpath:getRelativePath($outdir, $topicResultUri)"
           as="xs:string"/>
