@@ -304,8 +304,7 @@
   <xsl:variable name="HTML5THEMECONFIGDOC" select="document($HTML5THEMECONFIG)" />
 
   <xsl:variable name="TEMPLATELANG" select="if(/map/@xml:lang) then /map/@xml:lang else 'en-us'"/>
-
-
+  
   <xsl:template name="report-parameters" match="*" mode="report-parameters">
     <xsl:param name="effectiveCoverGraphicUri" select="''" as="xs:string" tunnel="yes"/>
     <xsl:message>

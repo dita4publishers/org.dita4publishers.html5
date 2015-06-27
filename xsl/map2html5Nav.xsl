@@ -104,6 +104,7 @@
         <xsl:if test="$listItems">
           <ul>
             <xsl:if test="$showTocEntry">
+              <!-- FIXME: Need to parameterize the name of the primary index file -->
               <li><a href="index.html"><xsl:value-of select="$indexName"/></a></li>
             </xsl:if>
             <xsl:sequence select="$listItems"/>
@@ -184,7 +185,7 @@
                      file to each target HTML file.
             -->
 
-          <li><a href="{$targetUri}"><xsl:sequence select="$enum"/><xsl:sequence select="normalize-space($title)"/></a><xsl:sequence select="$children"/></li>
+          <li id="{generate-id(.)}"><a href="{$targetUri}"><xsl:sequence select="$enum"/><xsl:sequence select="normalize-space($title)"/></a><xsl:sequence select="$children"/></li>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:if>
@@ -289,6 +290,7 @@
   <xsl:template match="li" mode="fix-navigation-href">
     <xsl:param name="doDebug" as="xs:boolean" tunnel="yes" select="$debugBoolean"/>
     <xsl:param name="resultUri" as="xs:string" tunnel="yes" select="''" /><!-- Result URI of the topic we're processing -->
+    <xsl:param name="topicref" as="element()?" tunnel="yes"/>
 
     <!-- no href in case of topihead for example -->
     <xsl:variable name="href" as="xs:string" select="if(a/@href) then a/@href else ''"/>
@@ -338,7 +340,9 @@
 
 
     <xsl:variable name="isSelected" select="relpath:getName($href) = $resultUriFilename"/>
-    <xsl:variable name="isActiveTrail"  select="descendant::a[ends-with(@href, $resultUriFilename)]"/>
+    <xsl:variable name="isActiveTrail"  
+      select="descendant::li[@id = generate-id($topicref)]"
+    />
     <xsl:variable name="hasChild"  select="descendant::li"/>
 
     <xsl:variable name="hasChildClass">
