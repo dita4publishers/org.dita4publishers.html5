@@ -29,6 +29,10 @@
   version="2.0">
 
 
+  <!-- Default output should be HTML5 -->
+  <xsl:output method="html" indent="yes" encoding="utf-8"
+    use-character-maps="chars-127to160"
+    doctype-system="about:legacy-compat" omit-xml-declaration="yes"/>
   <xsl:output name="html5" method="html" indent="yes" encoding="utf-8"
     use-character-maps="chars-127to160"
     doctype-system="about:legacy-compat" omit-xml-declaration="yes"/>
