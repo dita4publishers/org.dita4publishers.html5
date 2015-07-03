@@ -341,7 +341,7 @@
 
     <xsl:variable name="isSelected" select="relpath:getName($href) = $resultUriFilename"/>
     <xsl:variable name="isActiveTrail"  
-      select="descendant::li[@id = generate-id($topicref)]"
+      select="descendant-or-self::li[@id = generate-id($topicref)]"
     />
     <xsl:variable name="hasChild"  select="descendant::li"/>
 
