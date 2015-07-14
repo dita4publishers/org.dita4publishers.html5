@@ -10,7 +10,7 @@
   <mapref href="keys.ditamap"/>
   <mapref href="keys-external.ditamap"/>
   
-  <chapter keys="chapter-html5-intro" keyref="html5-intro" collection-type="sequence">
+  <chapter keys="chapter-html5-intro" keyref="html5-intro" collection-type="sequence" chunk="select-topic to-content">
     <topicref keys="html5-gs" keyref="html5-getting-started-topic">
       <topicref keys="html5-gs-requirements" keyref="html5-requirements"/>
       <topicref keys="html5-gs-download" keyref="html5-download"/>
