@@ -584,7 +584,8 @@
         </section><xsl:value-of select="$newline"/>
       </xsl:when>
       <xsl:otherwise>
-        <section class="{concat('nested', $nestlevel, ' ', @outputclass)}" id="{df:getIdForElement(.)}">
+        <section class="{concat('nested', $nestlevel, ' ', @outputclass)}" id="{local:getIdForHtmlSection(.)}">
+          <xsl:call-template name="set_an_anchor" />
           <xsl:call-template name="gen-topic"/>
           <xsl:apply-templates/>
         </section><xsl:value-of select="$newline"/>
