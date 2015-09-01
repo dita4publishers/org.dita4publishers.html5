@@ -322,8 +322,8 @@
 
   <xsl:call-template name="setaname"/>
 
-  <table id="{$id}">
-
+  <table>
+    <xsl:call-template name="setid"/>
     <xsl:variable name="colsep">
       <xsl:choose>
         <xsl:when test="*[contains(@class, ' topic/tgroup ')]/@colsep"><xsl:value-of select="*[contains(@class, ' topic/tgroup ')]/@colsep"/></xsl:when>
