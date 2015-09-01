@@ -308,18 +308,6 @@
 
   <xsl:apply-templates select="*[contains(@class, ' ditaot-d/ditaval-startprop ')]" mode="out-of-line"/>
 
-  <xsl:variable name="id">
-    <xsl:choose>
-      <xsl:when test="@id">
-        <xsl:value-of select= "@id"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <!-- NOTE: getRandomNum() is not available in OT 2.0. -->
-        <xsl:value-of select="concat('ID_', generate-id(.))" />
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:variable>
-
   <xsl:call-template name="setaname"/>
 
   <table>
