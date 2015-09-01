@@ -64,6 +64,10 @@
   </xsl:template>
 
   <!-- Thanks to Dimitre Novatchev -->
+  <xsl:template match="text()[normalize-space()='']" mode="clean-linebreaks" priority="20">
+    <xsl:sequence select="' '"/>
+  </xsl:template>
+
   <xsl:template match="text()[not(string-length(normalize-space()))]"  mode="clean-linebreaks" priority="10"/>
 
   <xsl:template match="text()[string-length(normalize-space()) > 0]"  mode="clean-linebreaks" priority="10">
