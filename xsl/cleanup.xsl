@@ -64,19 +64,36 @@
   </xsl:template>
 
   <!-- Thanks to Dimitre Novatchev -->
-  <xsl:template match="text()[normalize-space()='']" mode="clean-linebreaks" priority="20">
+    
+  <xsl:template match="text()[not(string-length(normalize-space()))]"  mode="clean-linebreaks" priority="10">
+    <!-- String is only whitespace, replace with single space. -->
     <xsl:sequence select="' '"/>
   </xsl:template>
 
-  <xsl:template match="text()[not(string-length(normalize-space()))]"  mode="clean-linebreaks" priority="10"/>
-
   <xsl:template match="text()[string-length(normalize-space()) > 0]"  mode="clean-linebreaks" priority="10">
-    <xsl:value-of select="translate(.,'&#x20;&#xD;&#xA;', '  ')"/>
+    <!-- Squeeze out spaces while preserving any leading or trailing spaces. -->
+    <xsl:variable name="step1" as="xs:string"
+      select="translate(., '&#x0a;&#x0d;', ' ')"
+    />
+    <xsl:variable name="prespace" as="xs:string"
+      select="if (starts-with($step1, ' '))
+                 then ' '
+                 else ''"
+    />
+    <xsl:variable name="postspace" as="xs:string"
+      select="if (ends-with($step1, ' '))
+                 then ' '
+                 else ''"
+    />
+    <xsl:variable name="result" as="xs:string"
+      select="concat($prespace, normalize-space($step1), $postspace)"
+    />
+    <xsl:sequence select="$result"/>
   </xsl:template>
 
   <xsl:template match="processing-instruction()|comment()"  mode="clean-linebreaks" priority="10"/>
 
-  <xsl:template match="pre" mode="clean-linebreaks" priority="20">
+  <xsl:template match="pre" mode="clean-linebreaks" priority="200">
     <xsl:sequence select="."/>
   </xsl:template>
 
