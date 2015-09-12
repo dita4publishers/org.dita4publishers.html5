@@ -407,7 +407,10 @@
   <xsl:template match="/*[df:class(., 'map/map')]" mode="chunked-map-processing">
      <xsl:param name="doDebug" as="xs:boolean" tunnel="yes" select="false()"/>
      <xsl:param name="isChunkedMap" as="xs:boolean" tunnel="yes" />
-    <!-- this is intended to allow developper to add custom hook -->
+    
+    <xsl:variable name="doDebug" as="xs:boolean" select="true()"/>
+    
+    <!-- this is intended to allow developer to add custom hook -->
     <xsl:message>  + [INFO] Processing Chunked Map</xsl:message>
 
      <xsl:variable name="chunkTopicrefs" as="element()*" select="df:getUniqueTopicrefsFromChunkedMap(.)"/>
