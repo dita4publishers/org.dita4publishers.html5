@@ -104,8 +104,7 @@
         <xsl:if test="$listItems">
           <ul>
             <xsl:if test="$showTocEntry">
-              <!-- FIXME: Need to parameterize the name of the primary index file -->
-              <li><a href="index.html"><xsl:value-of select="$indexName"/></a></li>
+              <li><a href="{$indexUri}"><xsl:value-of select="$indexName"/></a></li>
             </xsl:if>
             <xsl:sequence select="$listItems"/>
           </ul>
@@ -291,7 +290,7 @@
     <xsl:param name="doDebug" as="xs:boolean" tunnel="yes" select="$debugBoolean"/>
     <xsl:param name="resultUri" as="xs:string" tunnel="yes" select="''" /><!-- Result URI of the topic we're processing -->
     <xsl:param name="topicref" as="element()?" tunnel="yes"/>
-
+    <xsl:param name="isChunkedMap" as="xs:boolean" tunnel="yes"/>
     <!-- no href in case of topihead for example -->
     <xsl:variable name="href" as="xs:string" select="if(a/@href) then a/@href else ''"/>
     <xsl:variable name="resultUriFilename" as="xs:string" select="relpath:getName($resultUri)"/>
@@ -312,13 +311,36 @@
       -->
     <xsl:variable name="filename" as="xs:string" select="relpath:getName($targetResourcePart)"/>
 
-    <xsl:variable name="finalFilename" as="xs:string" select="if($filename = $html5IndexFilename or ($fragmentID != '' and $resultUriFilename = $filename)) then '' else $filename"/>
-    <xsl:variable name="parentResultUri" as="xs:string" select="relpath:getRelativePath($outdir, $resultUri)"/>
-    <xsl:variable name="relPathToDir" as="xs:string" select="relpath:getRelativePath(relpath:getParent($parentResultUri), relpath:getParent($targetResourcePart))"
+    <!-- If we are in a chunked map then the result file is the main navigation file (e.g,
+         index.html) and all references are relative regardless of what the 
+         topicref points to. This is because the chunked content is output as the index.html
+         file.
+      -->
+    <xsl:variable name="finalFilename" as="xs:string" 
+      select="if ($filename = $html5IndexFilename 
+                  or ($fragmentID != '' and $resultUriFilename = $filename)
+                  or ($isChunkedMap)
+                  ) 
+                then '' 
+                else $filename"
     />
-    <xsl:variable name="targetRelativeUri" as="xs:string" select="concat($relPathToDir, if($relPathToDir != '') then '/' else '', $finalFilename, $fragmentID)"/>
+    <xsl:variable name="parentResultUri" as="xs:string" 
+      select="relpath:getRelativePath($outdir, $resultUri)"
+    />
+    <xsl:variable name="relPathToDir" as="xs:string"
+      select="relpath:getRelativePath(relpath:getParent($parentResultUri),
+                                      relpath:getParent($targetResourcePart))"
+    />
+    <xsl:variable name="targetRelativeUri" as="xs:string" 
+      select="concat($relPathToDir, 
+                     if ($relPathToDir != '') 
+                        then '/' 
+                        else '', 
+                     $finalFilename, 
+                     $fragmentID)"
+    />
 
-
+    <xsl:variable name="doDebug" as="xs:boolean" select="true()"/>
     <xsl:if test="$doDebug">
 
       <xsl:message>
