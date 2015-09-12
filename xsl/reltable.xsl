@@ -279,15 +279,4 @@
     <a href="{$href}" class="{$role}" rel="internal"><xsl:value-of select="$title"/></a>
   </xsl:template>
   
-  <!-- Return true if the topicref is a normal-role reference to a chunk-root topic -->
-  <xsl:function name="df:isNavigationTopicref" as="xs:boolean">
-    <xsl:param name="context" as="element()"/>
-    <xsl:variable name="result" as="xs:boolean"
-      select="df:isTopicRef($context) and 
-                     not($context/ancestor::*[contains(@chunk, 'to-content')]) and 
-                     not($context/@processing-role = 'resource-only')"
-    />
-    <xsl:sequence select="$result"></xsl:sequence>
-  </xsl:function>
-
  </xsl:stylesheet>
