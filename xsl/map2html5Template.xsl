@@ -140,7 +140,7 @@
       <section class="grid_4 search-box">
         <xsl:apply-templates select="." mode="gen-search-box" />
       </section>
-      <secion class="clearfix" />
+      <section class="clearfix" />
     </header>
   </xsl:template>
 
