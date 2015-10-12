@@ -238,7 +238,7 @@
       <rel>stylesheet</rel>
       <type>text/css</type>
       <media>screen, projection, print</media>
-      <src>http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML</src>
+      <href>http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML</href>
     </attributes>
     <value></value>
   </tag>

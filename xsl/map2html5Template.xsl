@@ -152,7 +152,7 @@
     </xsl:variable>
     <form id="search" role="search">
       <div class="form-group">
-        <input id="search-text" type="text" autocomplete="off" class="form-control" placeholder="Search"/>
+        <input id="search-text" type="text" autocomplete="off" class="form-control" placeholder="Search" />
       </div>
     </form>
   </xsl:template>
