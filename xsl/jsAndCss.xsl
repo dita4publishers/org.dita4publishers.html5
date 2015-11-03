@@ -26,7 +26,7 @@
   xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl"
   xmlns:dc="http://purl.org/dc/elements/1.1/"
   xmlns:json="http://json.org/"
-  exclude-result-prefixes="df xs relpath htmlutil xd dc json"
+  exclude-result-prefixes="#all"
   version="2.0">
   <!-- =============================================================
 

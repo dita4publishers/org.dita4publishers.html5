@@ -30,7 +30,7 @@
   xmlns:json="http://json.org/"
   xmlns:related-links="http://dita-ot.sourceforge.net/ns/200709/related-links"
   xmlns:local="urn:functions:local"
-  exclude-result-prefixes="random xs xd df relpath mapdriven  index-terms java xsl mapdriven json related-links local"
+  exclude-result-prefixes="#all"
   version="1.0">
 
   <xsl:template name="getLowerCaseLang">

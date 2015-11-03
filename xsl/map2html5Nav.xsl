@@ -29,7 +29,7 @@
   xmlns:mapdriven="http://dita4publishers.org/mapdriven"
   xmlns:enum="http://dita4publishers.org/enumerables"
   xmlns:local="urn:functions:local"
-  exclude-result-prefixes="local xs df xsl relpath htmlutil index-terms mapdriven glossdata enum">
+  exclude-result-prefixes="#all">
 
   <xsl:template name="navigation">
     <xsl:param name="doDebug" as="xs:boolean" tunnel="yes" select="$debugBoolean"/>

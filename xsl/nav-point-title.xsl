@@ -26,7 +26,7 @@
   xmlns:index-terms="http://dita4publishers.org/index-terms"
   xmlns:relpath="http://dita2indesign/functions/relpath"
   xmlns:mapdriven="http://dita4publishers.org/mapdriven"
-  exclude-result-prefixes="xs xd df relpath mapdriven index-terms java xsl mapdriven"
+  exclude-result-prefixes="#all"
   xmlns:java="org.dita.dost.util.ImgUtils"
   version="2.0">
 
