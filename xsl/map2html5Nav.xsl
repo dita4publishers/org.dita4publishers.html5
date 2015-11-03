@@ -232,7 +232,7 @@
           </ul>
         </xsl:if>
       </xsl:variable>
-      <li id="{$navPointId}" class="topichead"><span><xsl:sequence select="normalize-space(df:getNavtitleForTopicref(.))"/></span><xsl:sequence select="$listItemSeq"/></li>
+      <li id="{$navPointId}" class="topichead "><span><xsl:sequence select="normalize-space(df:getNavtitleForTopicref(.))"/></span><xsl:sequence select="$listItemSeq"/></li>
     </xsl:if>
   </xsl:template>
 
@@ -340,7 +340,6 @@
                      $fragmentID)"
     />
 
-    <xsl:variable name="doDebug" as="xs:boolean" select="true()"/>
     <xsl:if test="$doDebug">
 
       <xsl:message>
