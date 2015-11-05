@@ -78,26 +78,28 @@
 
   <!-- page links are intented to be used for screen reader -->
   <xsl:template name="gen-page-links">
-    <ul id="page-links" class="hidden">
-      <li><a id="skip-to-content" href="#{$IDMAINCONTENT}">
-            <xsl:call-template name="getString">
-              <xsl:with-param name="stringName" select="'SkipToContent'"/>
-            </xsl:call-template>
-          </a>
-      </li>
-      <li><a id="skip-to-localnav" href="#local-navigation">
-            <xsl:call-template name="getString">
-              <xsl:with-param name="stringName" select="'SkipToLocalNav'"/>
-            </xsl:call-template>
-          </a>
-      </li>
-      <li><a id="skip-to-footer" href="#footer">
-            <xsl:call-template name="getString">
-              <xsl:with-param name="stringName" select="'SkipToFooter'"/>
-            </xsl:call-template>
-          </a>
-      </li>
-    </ul>
+    <xsl:if test="$html5ForceAccessibilityBoolean">
+      <ul id="page-links" class="hidden">
+        <li><a id="skip-to-content" href="#{$IDMAINCONTENT}">
+              <xsl:call-template name="getString">
+                <xsl:with-param name="stringName" select="'SkipToContent'"/>
+              </xsl:call-template>
+            </a>
+        </li>
+        <li><a id="skip-to-localnav" href="#local-navigation">
+              <xsl:call-template name="getString">
+                <xsl:with-param name="stringName" select="'SkipToLocalNav'"/>
+              </xsl:call-template>
+            </a>
+        </li>
+        <li><a id="skip-to-footer" href="#footer">
+              <xsl:call-template name="getString">
+                <xsl:with-param name="stringName" select="'SkipToFooter'"/>
+              </xsl:call-template>
+            </a>
+        </li>
+      </ul>
+    </xsl:if>
   </xsl:template>
 
   <!-- define class attribute -->

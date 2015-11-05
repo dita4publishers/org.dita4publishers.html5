@@ -98,6 +98,7 @@
     <param name="maxTocDepth" expression="${d4p.max.toc.depth}" />
     <param name="html5IndexFilename" expression="${html5.index.filename}"/>
     <param name="html5AnchorStrategy" expression="${html5.anchor.strategy}"/>
+    <param name="html5ForceAccessibility" expression="${html5.accessibility}"/>
 
     <param name="outputKeyref" expression="${html5.output.keyref}"/>
 </params>

@@ -33,6 +33,12 @@
   exclude-result-prefixes="#all"
   version="1.0">
 
+  <xsl:template match="*" mode="add-link-target-attribute">
+    <xsl:if test="$html5ForceAccessibilityBoolean and (@scope='external' or @type='external' or (@format='PDF' or @format='pdf') and not(@scope='local'))">
+      <xsl:attribute name="target">_blank</xsl:attribute>
+    </xsl:if>
+  </xsl:template>
+
   <xsl:template name="getLowerCaseLang">
     <xsl:variable name="ancestorlangUpper">
       <!-- the current xml:lang value (en-us if none found) -->
@@ -53,6 +59,7 @@
       <xsl:with-param name="inputval" select="$ancestorlangUpper"/>
     </xsl:call-template>
   </xsl:template>
+
   <!-- Process standard attributes that may appear anywhere. Previously this was "setclass" -->
   <xsl:template name="commonattributes">
     <xsl:param name="default-output-class"/>
@@ -62,8 +69,9 @@
     <xsl:apply-templates select="*[contains(@class, ' ditaot-d/ditaval-startprop ')]/@outputclass" mode="add-ditaval-style"/>
 
     <xsl:apply-templates select="." mode="set-output-class">
-      <xsl:with-param name="default" select="$default-output-class"/>
+      <xsl:with-param name="default" select="concat($default-output-class, ' ', @scope)"/>
     </xsl:apply-templates>
+
   </xsl:template>
 
   <xsl:template match="@keyref">
@@ -71,6 +79,7 @@
       <xsl:attribute name="data-keyref"><xsl:value-of select="."/></xsl:attribute>
     </xsl:if>
   </xsl:template>
+
 
   <xsl:template match="*" mode="set-data-attr" />
 

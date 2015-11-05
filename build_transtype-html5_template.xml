@@ -395,7 +395,11 @@
       </not>
     </condition>
 
-
+    <condition property="html5.accessibility" value="false">
+      <not>
+        <isset property="html5.accessibility" />
+      </not>
+    </condition>
 
     <!--xmlproperty file="${html5.site.config}" collapseAttributes="true" semanticAttributes="true" /-->
 

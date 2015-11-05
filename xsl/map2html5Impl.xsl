@@ -232,6 +232,9 @@
   <xsl:param name="html5AnchorStrategy" select="'yes'"/>
   <xsl:param name="html5AnchorStrategyBoolean" select="matches($html5AnchorStrategy, 'yes|true|on|1', 'i')"/>
 
+  <xsl:param name="html5ForceAccessibility" select="'false'"/>
+  <xsl:param name="html5ForceAccessibilityBoolean" select="matches($html5ForceAccessibility, 'yes|true|on|1', 'i')"/>
+
 
   <xsl:param name="outputKeyref" select="'yes'"/>
   <xsl:param name="outputKeyrefBoolean" select="matches($html5outputsizestrategy, 'yes|true|on|1', 'i')"/>
