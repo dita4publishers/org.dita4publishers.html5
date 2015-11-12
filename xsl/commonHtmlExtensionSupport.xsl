@@ -62,14 +62,18 @@
 
   <!-- Process standard attributes that may appear anywhere. Previously this was "setclass" -->
   <xsl:template name="commonattributes">
+
     <xsl:param name="default-output-class"/>
+    
+    <xsl:variable name="class" as="xs:string" select="if((@scope='external' or @type='external') and not(starts-with(@href, 'mailto'))) then ' external' else ''"/>
+
     <xsl:apply-templates select="@xml:lang"/>
     <xsl:apply-templates select="@dir"/>
     <xsl:apply-templates select="@keyref"/>
     <xsl:apply-templates select="*[contains(@class, ' ditaot-d/ditaval-startprop ')]/@outputclass" mode="add-ditaval-style"/>
 
     <xsl:apply-templates select="." mode="set-output-class">
-      <xsl:with-param name="default" select="concat($default-output-class, ' ', @scope)"/>
+      <xsl:with-param name="default" select="concat($default-output-class, $class)"/>
     </xsl:apply-templates>
 
   </xsl:template>
@@ -623,7 +627,16 @@
   <xsl:function name="local:getIdForHtmlSection" as="xs:string">
     <!-- ID to use on HTML <section> elements generated from various DITA elements -->
     <xsl:param name="context"/>
-    <xsl:variable name="result" as="xs:string" select="concat(df:getIdForElement($context), '_section')" />
+    <xsl:variable name="result" as="xs:string">
+    <xsl:choose>
+      <xsl:when test="$html5AnchorStrategyBoolean">
+       <xsl:sequence  select="concat(df:getIdForElement($context), '_section')" />
+      </xsl:when>
+      <xsl:otherwise>
+         <xsl:sequence select="df:getIdForElement($context)" />
+      </xsl:otherwise>
+    </xsl:choose>
+   </xsl:variable>
     <xsl:sequence select="$result"/>
   </xsl:function>
 
