@@ -1296,6 +1296,24 @@ ul.simple { list-style-type: none; }
 
 
 /* Adding small capitals and variations on that in various combinations. */
+.smallcaps {
+    font-variant: small-caps;
+}
+.smallcapitals {
+    font-variant: small-caps;
+}
+
+/* I did spot the first small at the top, this shouldn't break things,
+   but disable the following two if there is a problem.  Will begin
+   with them commented out until certain. */
+/*
+.small.caps {
+    font-variant: small-caps;
+}
+.small.capitals {
+    font-variant: small-caps;
+}
+*/
 .sc {
     font-variant: small-caps;
 }
