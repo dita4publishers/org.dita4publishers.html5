@@ -1303,6 +1303,18 @@ ul.simple { list-style-type: none; }
     font-variant: small-caps;
 }
 
+.overlined { 
+    text-decoration: overline; 
+}
+
+.linethrough {
+    text-decoration: line-through;
+}
+
+.strikethrough {
+    text-decoration: line-through;
+}
+
 /* I did spot the first small at the top, this shouldn't break things,
    but disable the following two if there is a problem.  Will begin
    with them commented out until certain. */
