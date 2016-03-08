@@ -116,10 +116,10 @@
       <xsl:message>parentPath is: <xsl:value-of select="$parentPath"/></xsl:message>
       <xsl:message>relativePath is: <xsl:value-of select="$relativePath"/></xsl:message>
     <xsl:message>topic-title is: <xsl:value-of select="$topic-title"/></xsl:message-->
-
-    <xsl:message> + [INFO] Writing topic <xsl:sequence select="document-uri(root(.))"/> to HTML file "<xsl:sequence
+    <xsl:if test="$debugBoolean">
+      <xsl:message  > + [INFO] Writing topic <xsl:sequence select="document-uri(root(.))"/> to HTML file "<xsl:sequence
         select="$resultUri"/>"...</xsl:message>
-
+    </xsl:if>
 
     <xsl:variable name="htmlNoNamespace" as="node()*">
       <xsl:apply-templates select="." mode="map-driven-content-processing">

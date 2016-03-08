@@ -168,6 +168,9 @@
 
   <xsl:param name="contenttarget" select="'contentwin'"/>
 
+  <xsl:param name="debugBoolean" select="matches($debug, 'yes|true|on|1', 'i')"/>
+
+
   <xsl:param name="generateDynamicToc" select="'true'"/>
   <xsl:param name="generateDynamicTocBoolean" select="matches($generateDynamicToc, 'yes|true|on|1', 'i')"/>
 
@@ -310,62 +313,64 @@
   
   <xsl:template name="report-parameters" match="*" mode="report-parameters">
     <xsl:param name="effectiveCoverGraphicUri" select="''" as="xs:string" tunnel="yes"/>
-    <xsl:message>
-      ==========================================
-      Plugin version: ^version^ - build ^buildnumber^ at ^timestamp^
+    
+      <xsl:message>
+        ==========================================
+        Plugin version: ^version^ - build ^buildnumber^ at ^timestamp^
 
-      HTML5 Parameters:
+        HTML5 Parameters:
 
-      + CLASSMAINCONTAINER = "<xsl:sequence select="$CLASSMAINCONTAINER"/>"
-      + CLASSNAVIGATION    = "<xsl:sequence select="$CLASSNAVIGATION"/>"
-      + CLASSSECTIONCONTAINER= "<xsl:sequence select="$CLASSSECTIONCONTAINER"/>"
-      + CSSTHEME           = "<xsl:sequence select="$CSSTHEME"/>"
-      + IDMAINCONTAINER    = "<xsl:sequence select="$IDMAINCONTAINER"/>"
-      + IDSECTIONCONTAINER = "<xsl:sequence select="$IDSECTIONCONTAINER"/>"
-      + inputdir           = "<xsl:sequence select="$inputdir"/>"
-      + jsoptions          = "<xsl:sequence select="$jsoptions"/>"
-      + JS                 = "<xsl:sequence select="$JS"/>"
-      + JSONVARFILE        = "<xsl:sequence select="$JSONVARFILE"/>"
-      + cssOutputDir       = "<xsl:sequence select="$cssOutputDir"/>"
-      + fileOrganizationStrategy = "<xsl:sequence select="$fileOrganizationStrategy"/>"
-      + generateGlossary   = "<xsl:sequence select="$generateGlossary"/>"
-      + generateFrameset   = "<xsl:sequence select="$generateFrameset"/>"
-      + generateIndex      = "<xsl:sequence select="$generateIndex"/>
-      + generateStaticToc  = "<xsl:sequence select="$generateStaticToc"/>"
-      + imagesOutputDir    = "<xsl:sequence select="$imagesOutputDir"/>"
-      + inputFileNameParam = "<xsl:sequence select="$inputFileNameParam"/>"
-      + mathJaxUseCDNLink  = "<xsl:sequence select="$mathJaxUseCDNLink"/>"
-      + mathJaxUseLocalLink= "<xsl:sequence select="$mathJaxUseLocalLink"/>"
-      + mathJaxLocalJavascriptUri= "<xsl:sequence select="$mathJaxLocalJavascriptUri"/>"
-      + mathJaxConfigParam = "<xsl:sequence select="$mathJaxConfigParam"/>"
-      + NAVIGATIONMARKUP   = "<xsl:sequence select="$NAVIGATIONMARKUP"/>"
-      + outdir             = "<xsl:sequence select="$outdir"/>"
-      + OUTEXT             = "<xsl:sequence select="$OUTEXT"/>"
-      + tempdir            = "<xsl:sequence select="$tempdir"/>"
-      + titleOnlyTopicClassSpec = "<xsl:sequence select="$titleOnlyTopicClassSpec"/>"
-      + titleOnlyTopicTitleClassSpec = "<xsl:sequence select="$titleOnlyTopicTitleClassSpec"/>"
-      + topicsOutputDir    = "<xsl:sequence select="$topicsOutputDir"/>"
+        + CLASSMAINCONTAINER = "<xsl:sequence select="$CLASSMAINCONTAINER"/>"
+        + CLASSNAVIGATION    = "<xsl:sequence select="$CLASSNAVIGATION"/>"
+        + CLASSSECTIONCONTAINER= "<xsl:sequence select="$CLASSSECTIONCONTAINER"/>"
+        + CSSTHEME           = "<xsl:sequence select="$CSSTHEME"/>"
+        + IDMAINCONTAINER    = "<xsl:sequence select="$IDMAINCONTAINER"/>"
+        + IDSECTIONCONTAINER = "<xsl:sequence select="$IDSECTIONCONTAINER"/>"
+        + inputdir           = "<xsl:sequence select="$inputdir"/>"
+        + jsoptions          = "<xsl:sequence select="$jsoptions"/>"
+        + JS                 = "<xsl:sequence select="$JS"/>"
+        + JSONVARFILE        = "<xsl:sequence select="$JSONVARFILE"/>"
+        + cssOutputDir       = "<xsl:sequence select="$cssOutputDir"/>"
+        + fileOrganizationStrategy = "<xsl:sequence select="$fileOrganizationStrategy"/>"
+        + generateGlossary   = "<xsl:sequence select="$generateGlossary"/>"
+        + generateFrameset   = "<xsl:sequence select="$generateFrameset"/>"
+        + generateIndex      = "<xsl:sequence select="$generateIndex"/>
+        + generateStaticToc  = "<xsl:sequence select="$generateStaticToc"/>"
+        + imagesOutputDir    = "<xsl:sequence select="$imagesOutputDir"/>"
+        + inputFileNameParam = "<xsl:sequence select="$inputFileNameParam"/>"
+        + mathJaxUseCDNLink  = "<xsl:sequence select="$mathJaxUseCDNLink"/>"
+        + mathJaxUseLocalLink= "<xsl:sequence select="$mathJaxUseLocalLink"/>"
+        + mathJaxLocalJavascriptUri= "<xsl:sequence select="$mathJaxLocalJavascriptUri"/>"
+        + mathJaxConfigParam = "<xsl:sequence select="$mathJaxConfigParam"/>"
+        + NAVIGATIONMARKUP   = "<xsl:sequence select="$NAVIGATIONMARKUP"/>"
+        + outdir             = "<xsl:sequence select="$outdir"/>"
+        + OUTEXT             = "<xsl:sequence select="$OUTEXT"/>"
+        + tempdir            = "<xsl:sequence select="$tempdir"/>"
+        + titleOnlyTopicClassSpec = "<xsl:sequence select="$titleOnlyTopicClassSpec"/>"
+        + titleOnlyTopicTitleClassSpec = "<xsl:sequence select="$titleOnlyTopicTitleClassSpec"/>"
+        + topicsOutputDir    = "<xsl:sequence select="$topicsOutputDir"/>"
 
-      DITA2HTML parameters:
+        DITA2HTML parameters:
 
-      + CSS             = "<xsl:sequence select="$CSS"/>"
-      + CSSPATH         = "<xsl:sequence select="$CSSPATH"/>"
-      + FILEDIR         = "<xsl:sequence select="$FILEDIR"/>"
-      + FILTERFILE      = "<xsl:sequence select="$FILTERFILE"/>"
-      + KEYREF-FILE     = "<xsl:sequence select="$KEYREF-FILE"/>"
-      + OUTPUTDIR       = "<xsl:sequence select="$OUTPUTDIR"/>"
-      + PATH2PROJ       = "<xsl:sequence select="$PATH2PROJ"/>"
-      + WORKDIR         = "<xsl:sequence select="$WORKDIR"/>"
+        + CSS             = "<xsl:sequence select="$CSS"/>"
+        + CSSPATH         = "<xsl:sequence select="$CSSPATH"/>"
+        + FILEDIR         = "<xsl:sequence select="$FILEDIR"/>"
+        + FILTERFILE      = "<xsl:sequence select="$FILTERFILE"/>"
+        + KEYREF-FILE     = "<xsl:sequence select="$KEYREF-FILE"/>"
+        + OUTPUTDIR       = "<xsl:sequence select="$OUTPUTDIR"/>"
+        + PATH2PROJ       = "<xsl:sequence select="$PATH2PROJ"/>"
+        + WORKDIR         = "<xsl:sequence select="$WORKDIR"/>"
 
-      + debug           = "<xsl:sequence select="$debug"/>"
+        + debug           = "<xsl:sequence select="$debug"/>"
 
-      Global Variables:
+        Global Variables:
 
-      + topicsOutputPath = "<xsl:sequence select="$topicsOutputPath"/>"
-      + imagesOutputPath = "<xsl:sequence select="$imagesOutputPath"/>"
-      + platform         = "<xsl:sequence select="$platform"/>"
-      + debugBoolean     = "<xsl:sequence select="$debugBoolean"/>"
-    </xsl:message>
+        + topicsOutputPath = "<xsl:sequence select="$topicsOutputPath"/>"
+        + imagesOutputPath = "<xsl:sequence select="$imagesOutputPath"/>"
+        + platform         = "<xsl:sequence select="$platform"/>"
+        + debugBoolean     = "<xsl:sequence select="$debugBoolean"/>"
+      </xsl:message>
+    
     <xsl:next-match/>
     <xsl:apply-imports/>
     <xsl:message>
@@ -414,9 +419,10 @@
     <xsl:variable name="doDebug" as="xs:boolean" select="true()"/>
     
     <!-- this is intended to allow developer to add custom hook -->
-    <xsl:message>  + [INFO] Processing Chunked Map</xsl:message>
-
-     <xsl:variable name="chunkTopicrefs" as="element()*" select="df:getUniqueTopicrefsFromChunkedMap(.)"/>
+    <xsl:if test="$doDebug">
+      <xsl:message>  + [INFO] Processing Chunked Map</xsl:message>
+    </xsl:if>
+    <xsl:variable name="chunkTopicrefs" as="element()*" select="df:getUniqueTopicrefsFromChunkedMap(.)"/>
 
     <xsl:if test="$doDebug">
       <xsl:message> + [DEBUG] chunkRootTopicref=

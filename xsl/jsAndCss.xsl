@@ -64,7 +64,7 @@
   <xsl:template match="*" mode="generate-d4p-css-js">
     <xsl:param name="location" as="xs:string?" />
     <xsl:choose>
-      <xsl:when test="$DBG='yes'">
+      <xsl:when test="$debugBoolean">
         <xsl:apply-templates select="$HTML5THEMECONFIGDOC/html5/tag" mode="generate-d4p-uncompressed-css-js"/>
       </xsl:when>
       <xsl:otherwise>
@@ -288,8 +288,8 @@
     <xsl:variable name="d4p-js-object">
       <d4p>
          <relativePath><xsl:value-of select="$relativePath" /></relativePath>
-         <dev><xsl:value-of select="if($DBG='yes') then 'true' else 'false'"/></dev>
-         <debug><xsl:value-of select="if($DBG='yes') then 'true' else 'false'"/></debug>
+         <dev><xsl:value-of select="if($debugBoolean) then 'true' else 'false'"/></dev>
+         <debug><xsl:value-of select="if($debugBoolean) then 'true' else 'false'"/></debug>
          <draft><xsl:value-of select="if(ISDRAFT) then 'true' else 'false'"/></draft>
          <nextTopicHref><xsl:sequence select="$strippedNextTopicHref"/></nextTopicHref>
          <previousTopicHref><xsl:sequence select="$strippedPreviousTopicHref"/></previousTopicHref>

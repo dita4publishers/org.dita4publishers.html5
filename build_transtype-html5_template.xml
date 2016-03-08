@@ -51,6 +51,12 @@
 
   <target name="dita.map.html5.init" description="Initialize HTML5 plugin properties">
 
+    <condition property="debug" value="false">
+      <not>
+        <isset property="debug" />
+      </not>
+    </condition>
+
 
     <condition property="http.absolute.uri" value="">
       <not>

@@ -86,7 +86,6 @@
     <param name="BASEDIR" expression="${basedir}" />
     <param name="FILTERFILE" expression="${dita.input.valfile.url}" if="dita.input.valfile" />
     <param name="html5absolulteuri" expression="${http.absolute.uri}" if="http.absolute.uri" />
-    <param name="DBG" expression="${args.debug}" if="args.debug" />
     <param name="generateIndex" expression="${generateIndex}" />
     <param name="generateSearchEngine" expression="${generateSearchEngine}" />
     <param name="navigationLeft" expression="${navigationLeft}" />
