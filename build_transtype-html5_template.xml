@@ -232,7 +232,10 @@
         <isset property="args.css.output.dir" />
       </not>
     </condition>
-
+    <condition property="css.output.dir" value="${args.css.output.dir}">
+      <isset property="args.css.output.dir" />
+    </condition>
+    
     <!-- the html5.themes.output.dir change in debug mode -->
     <condition property="html5.themes.output.dir" value="${html5.libs.dir}">
       <isset property="args.debug" />
