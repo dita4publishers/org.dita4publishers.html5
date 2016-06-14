@@ -342,6 +342,7 @@
         + mathJaxUseLocalLink= "<xsl:sequence select="$mathJaxUseLocalLink"/>"
         + mathJaxLocalJavascriptUri= "<xsl:sequence select="$mathJaxLocalJavascriptUri"/>"
         + mathJaxConfigParam = "<xsl:sequence select="$mathJaxConfigParam"/>"
+        + maxTocDepth        = "<xsl:sequence select="$maxTocDepth"/>" (<xsl:value-of select="$maxTocDepthInt"/>)
         + NAVIGATIONMARKUP   = "<xsl:sequence select="$NAVIGATIONMARKUP"/>"
         + outdir             = "<xsl:sequence select="$outdir"/>"
         + OUTEXT             = "<xsl:sequence select="$OUTEXT"/>"
