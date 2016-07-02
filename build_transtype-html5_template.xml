@@ -24,6 +24,8 @@
   <import file="build-theme.xml" />
   <import file="compressor-install.xml" />
 
+  <property name="preprocess.dc-adjust-copy-to.skip" value="true" />
+
   <property file="${dita.plugin.org.dita4publishers.html5.dir}/build_info.properties"/>
   <property name="html5.plugin.version" value="${build.major.number}.${build.minor.number}.${build.revision.number}"/>
 
@@ -461,8 +463,15 @@
       </not>
     </condition>
 
+    <!--condition property="map2html5.style" value="${d4p.html5.dir}/xsl/map2html5-OT2.xsl">
+        <isset property="isOT2" />
+    </condition-->
+
     <property name="map2html5.style" location="${d4p.html5.dir}/xsl/map2html5.xsl"/>
+
     <property name="args.xhtml.toc" value="index"/>
+
+   
 
     <xslt
       basedir="${dita.temp.dir}"
@@ -484,6 +493,7 @@
        <dita:extension id="dita.html5.map" behavior="org.dita.dost.platform.InsertAction" />
        <dita:extension id="dita.conductor.xhtml.param" behavior="org.dita.dost.platform.InsertAction"/>
 
+       <sysproperty key="otversion" value="${otversion}"/>
        <mapper
          type="glob"
          from="${user.input.file}"
