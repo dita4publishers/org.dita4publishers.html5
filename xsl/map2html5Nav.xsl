@@ -20,6 +20,7 @@
 
 <xsl:stylesheet
   version="2.0"
+  xmlns:dita-ot="http://dita-ot.sourceforge.net/ns/201007/dita-ot"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:df="http://dita2indesign.org/dita/functions" xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:relpath="http://dita2indesign/functions/relpath"
@@ -94,9 +95,7 @@
     </xsl:variable>
 
     <xsl:variable name="indexName">
-      <xsl:call-template name="getString">
-        <xsl:with-param name="stringName" select="'TOC'"/>
-      </xsl:call-template>
+      <xsl:sequence select="dita-ot:get-variable(., 'TOC')"/>
     </xsl:variable>
 
     <nav id="{$IDLOCALNAV}" class="{$CLASSNAVIGATION}" role="navigation" aria-label="Main navigation">

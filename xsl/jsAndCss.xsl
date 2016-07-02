@@ -18,6 +18,7 @@
    under the License.
 -->
 <xsl:stylesheet
+  xmlns:dita-ot="http://dita-ot.sourceforge.net/ns/201007/dita-ot"
   xmlns:df="http://dita2indesign.org/dita/functions"
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -309,13 +310,11 @@
            <minlength><xsl:value-of select="$searchEngineMinLength" /></minlength>
          </search>
          <xsl:if test="$HTML5THEMECONFIGDOC/html5/d4p/l">
-           <l>
-             <xsl:for-each select="$HTML5THEMECONFIGDOC/html5/d4p/l/var">
-               <xsl:element name="{@name}">
-                 <xsl:call-template name="getString">
-                   <xsl:with-param name="stringName" select="@string"/>
-                </xsl:call-template>
-               </xsl:element>
+          <l>
+            <xsl:for-each select="$HTML5THEMECONFIGDOC/html5/d4p/l/var">
+              <xsl:element name="{@name}">
+                <xsl:sequence select="dita-ot:get-variable(., @string)"/>
+              </xsl:element>
              </xsl:for-each>
            </l>
           </xsl:if>

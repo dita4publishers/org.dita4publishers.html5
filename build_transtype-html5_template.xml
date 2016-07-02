@@ -17,7 +17,7 @@
     specific language governing permissions and limitations
     under the License.
 -->
-<project name="dita2html5" default="dita2d4p-html5" xmlns:dita="http://dita-ot.sourceforge.net">
+<project name="dita2d4p-html5" default="dita2d4p-html5" xmlns:dita="http://dita-ot.sourceforge.net">
 
   <dirname property="ditaot.dir" file="${d4p.html5.dir}/../../"/>
 

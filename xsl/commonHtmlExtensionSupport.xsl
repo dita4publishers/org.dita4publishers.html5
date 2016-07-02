@@ -18,6 +18,7 @@
        under the License.
 -->
 <xsl:stylesheet
+  xmlns:dita-ot="http://dita-ot.sourceforge.net/ns/201007/dita-ot"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl"
@@ -32,6 +33,9 @@
   xmlns:local="urn:functions:local"
   exclude-result-prefixes="#all"
   version="1.0">
+
+  <!-- Omit prereq links from unordered related-links (handled by mode="prereqs" template). -->
+  <xsl:key name="omit-from-unordered-links" match="*[@importance='required' and (not(@role) or @role='sibling' or @role='friend' or @role='cousin')]" use="1"/>
 
   <xsl:template match="*" mode="add-link-target-attribute">
     <xsl:if test="$html5ForceAccessibilityBoolean and (@scope='external' or @type='external' or (@format='PDF' or @format='pdf') and not(@scope='local'))">
@@ -54,10 +58,9 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    <xsl:call-template name="convert-to-lower">
-      <!-- ensure lowercase for comparisons -->
-      <xsl:with-param name="inputval" select="$ancestorlangUpper"/>
-    </xsl:call-template>
+
+    <xsl:sequence select="lower-case($ancestorlangUpper)"/>
+
   </xsl:template>
 
   <!-- Process standard attributes that may appear anywhere. Previously this was "setclass" -->
@@ -128,12 +131,7 @@
     <xsl:param name="type" select="@type"/>
 
     <xsl:param name="title">
-      <xsl:call-template name="getString">
-        <!-- For the parameter, turn "note" into "Note", caution => Caution, etc -->
-        <xsl:with-param name="stringName"
-             select="concat(translate(substring($type, 1, 1),'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ'),
-                            substring($type, 2))"/>
-      </xsl:call-template>
+      <xsl:sequence select="dita-ot:get-variable(., concat(lower-case(substring($type, 1, 1)), substring($type, 2)))"/>
     </xsl:param>
 
     <!-- note, attention, caution, fastpath, important, notice, remember, restriction, tip, warning, other -->
@@ -152,46 +150,21 @@
     <xsl:element name="{$html5NoteElement}">
 
       <xsl:attribute name="class" select="concat('note', ' ', $type, ' ', @importance)"/>
-      <xsl:call-template name="gen-style"/>
-      <xsl:call-template name="setidaname"/>
-      <xsl:call-template name="start-flagit"/>
+      <xsl:call-template name="setidaname"/>>
 
       <span class="title">
         <xsl:value-of select="$title"/>
-        <xsl:call-template name="getString">
-          <xsl:with-param name="stringName" select="'ColonSymbol'"/>
-        </xsl:call-template>
+        <xsl:sequence select="dita-ot:get-variable(., 'ColonSymbol')"/>
       </span>
 
       <xsl:text> </xsl:text>
-
-      <xsl:call-template name="revblock"/>
-
-      <xsl:call-template name="end-flagit"/>
 
     </xsl:element>
   </xsl:template>
 
 
   <xsl:template match="*[contains(@class,' topic/image ')]" name="topic.image">
-  <!-- build any pre break indicated by style -->
-  <xsl:choose>
-    <xsl:when test="parent::fig[contains(@frame,'top ')]">
-      <!-- NOP if there is already a break implied by a parent property -->
-    </xsl:when>
-    <xsl:otherwise>
-     <xsl:choose>
-      <xsl:when test="(@placement='break')"><br/>
-        <xsl:call-template name="start-flagit"/>
-      </xsl:when>
-      <xsl:otherwise>
-       <xsl:call-template name="flagcheck"/>
-      </xsl:otherwise>
-     </xsl:choose>
-    </xsl:otherwise>
-  </xsl:choose>
-
-  <xsl:call-template name="start-revflag"/>
+ 
   <xsl:call-template name="setaname"/>
 
   <xsl:choose>
@@ -207,8 +180,6 @@
     </xsl:otherwise>
   </xsl:choose>
 
-  <xsl:call-template name="end-revflag"/>
-  <xsl:call-template name="end-flagit"/>
   <!-- build any post break indicated by style -->
   <xsl:if test="not(@placement='inline')"><br/></xsl:if>
   <!-- image name for review -->

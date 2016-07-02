@@ -19,6 +19,7 @@
 -->
 <xsl:stylesheet
   xmlns:df="http://dita2indesign.org/dita/functions"
+  xmlns:dita-ot="http://dita-ot.sourceforge.net/ns/201007/dita-ot"
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:relpath="http://dita2indesign/functions/relpath"
@@ -80,23 +81,20 @@
   <xsl:template name="gen-page-links">
     <xsl:if test="$html5ForceAccessibilityBoolean">
       <ul id="page-links" class="hidden">
-        <li><a id="skip-to-content" href="#{$IDMAINCONTENT}">
-              <xsl:call-template name="getString">
-                <xsl:with-param name="stringName" select="'SkipToContent'"/>
-              </xsl:call-template>
+        <li>
+          <a id="skip-to-content" href="#{$IDMAINCONTENT}">
+            <xsl:sequence select="dita-ot:get-variable(., 'SkipToContent')"/>
+          </a>
+        </li>
+        <li>
+          <a id="skip-to-localnav" href="#local-navigation">
+             <xsl:sequence select="dita-ot:get-variable(., 'SkipToLocalNav')"/>
             </a>
         </li>
-        <li><a id="skip-to-localnav" href="#local-navigation">
-              <xsl:call-template name="getString">
-                <xsl:with-param name="stringName" select="'SkipToLocalNav'"/>
-              </xsl:call-template>
-            </a>
-        </li>
-        <li><a id="skip-to-footer" href="#footer">
-              <xsl:call-template name="getString">
-                <xsl:with-param name="stringName" select="'SkipToFooter'"/>
-              </xsl:call-template>
-            </a>
+        <li>
+          <a id="skip-to-footer" href="#footer">
+            <xsl:sequence select="dita-ot:get-variable(.,'SkipToFooter')"/>
+          </a>
         </li>
       </ul>
     </xsl:if>
@@ -123,9 +121,7 @@
   <xsl:template match="*" mode="set-initial-content">
     <noscript>
       <p>
-        <xsl:call-template name="getString">
-          <xsl:with-param name="stringName" select="'turnJavascriptOn'"/>
-        </xsl:call-template>
+        <xsl:sequence select="dita-ot:get-variable(.,'turnJavascriptOn')"/>
       </p>
     </noscript>
   </xsl:template>
@@ -148,9 +144,7 @@
 
   <xsl:template match="*" mode="gen-search-box">
     <xsl:variable name="placeholder">
-      <xsl:call-template name="getString">
-        <xsl:with-param name="stringName" select="'SearchPlaceholder'"/>
-      </xsl:call-template>
+      <xsl:sequence select="dita-ot:get-variable(., 'SearchPlaceholder')"/>
     </xsl:variable>
     <form id="search" role="search">
       <div class="form-group">
@@ -216,10 +210,10 @@
 
         <xsl:choose>
           <xsl:when test="$is-root">
-              <h1><xsl:call-template name="getString">
-                <xsl:with-param name="stringName" select="'TOC'"/>
-              </xsl:call-template></h1>
-               <xsl:sequence select="$navigation"/>
+            <h1>
+              <xsl:sequence select="dita-ot:get-variable(., 'TOC')"/>
+            </h1>
+            <xsl:sequence select="$navigation"/>
           </xsl:when>
           <xsl:otherwise>
             <xsl:variable name="content">

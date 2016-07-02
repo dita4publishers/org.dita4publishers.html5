@@ -20,6 +20,7 @@
 
 <xsl:stylesheet
   xmlns:df="http://dita2indesign.org/dita/functions"
+  xmlns:dita-ot="http://dita-ot.sourceforge.net/ns/201007/dita-ot"
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:relpath="http://dita2indesign/functions/relpath"
@@ -38,9 +39,9 @@
     <xsl:message> + [INFO] Generating audience select </xsl:message>
     <span id="audience-widget">       
         <button class="audienceBtn">
-          <span class="hidden"><xsl:call-template name="getString">
-                    <xsl:with-param name="stringName" select="'chooseAudience'"/>
-                </xsl:call-template></span>
+          <span class="hidden">
+            <xsl:sequence select="dita-ot:get-variable(., 'chooseAudience')"/>
+          </span>
         </button>
 
     <ul id="audience-select">
