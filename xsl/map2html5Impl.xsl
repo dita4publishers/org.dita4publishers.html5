@@ -51,6 +51,8 @@
   <xsl:import href="plugin:org.dita4publishers.json:xsl/xml2json/xml-to-json.xsl"/>
   <xsl:import href="plugin:org.dita.base:xsl/common/dita-utilities.xsl"/>
 
+  <xsl:import href="plugin:org.dita4publishers.common.html:xsl/functions-2.3.1.xsl"/>
+  
   <xsl:include href="plugin:org.dita4publishers.common.html:xsl/commonHtmlOverrides.xsl"/>
   <xsl:include href="plugin:org.dita4publishers.common.html:xsl/commonHtmlEnumeration.xsl"/>
   <xsl:include href="plugin:org.dita4publishers.common.html:xsl/commonHtmlBookmapEnumeration.xsl"/>
