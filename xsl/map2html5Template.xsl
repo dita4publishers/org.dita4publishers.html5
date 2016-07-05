@@ -104,16 +104,16 @@
   <xsl:template match="*" mode="set-body-class-attr">
     <xsl:param name="is-root" as="xs:boolean" tunnel="yes" select="false()" />
     <xsl:attribute name = "class">
-      <xsl:call-template name="getLowerCaseLang"/>
+      <!--xsl:call-template name="getLowerCaseLang"/-->
+      <xsl:sequence select="' '"/>
+      <xsl:value-of select="$siteTheme" />
+      <xsl:sequence select="' '"/>
+      <xsl:value-of select="$BODYCLASS" />
+      <xsl:apply-templates select="." mode="gen-user-body-class"/>
+      <xsl:if test="$is-root">
         <xsl:sequence select="' '"/>
-        <xsl:value-of select="$siteTheme" />
-        <xsl:sequence select="' '"/>
-        <xsl:value-of select="$BODYCLASS" />
-        <xsl:apply-templates select="." mode="gen-user-body-class"/>
-        <xsl:if test="$is-root">
-          <xsl:sequence select="' '"/>
-          <xsl:value-of select="$CLASSHOMEPAGE"/>
-        </xsl:if>
+        <xsl:value-of select="$CLASSHOMEPAGE"/>
+      </xsl:if>
     </xsl:attribute>
   </xsl:template>
 

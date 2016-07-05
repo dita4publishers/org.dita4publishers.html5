@@ -47,9 +47,9 @@
     <xsl:variable name="ancestorlangUpper">
       <!-- the current xml:lang value (en-us if none found) -->
       <xsl:choose>
-        <xsl:when test="ancestor-or-self::*/@xml:lang">
+        <!--xsl:when test="ancestor-or-self::*/@xml:lang">
           <xsl:value-of select="ancestor-or-self::*[@xml:lang][1]/@xml:lang"/>
-        </xsl:when>
+        </xsl:when-->
         <xsl:when test="$TEMPLATELANG != ''">
           <xsl:value-of select="$TEMPLATELANG"/>
         </xsl:when>
