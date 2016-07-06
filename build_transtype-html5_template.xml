@@ -481,6 +481,9 @@
       style="${map2html5.style}"
       filenameparameter="inputFileNameParam"
     >
+    <factory name="net.sf.saxon.TransformerFactoryImpl">
+<attribute name="http://saxon.sf.net/feature/traceListenerClass" value="net.sf.saxon.trace.TimedTraceListener"></attribute>
+</factory>
       <dita:extension id="dita.conductor.xhtml.param" behavior="org.dita.dost.platform.InsertAction"/>
       <dita:extension id="d4p.common.html.param" behavior="org.dita.dost.platform.InsertAction"/>
 
