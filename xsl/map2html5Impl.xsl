@@ -31,7 +31,8 @@
   xmlns:java="org.dita.dost.util.ImgUtils"
   version="2.0">
 
-  <xsl:import href="plugin:org.dita4publishers.common.html:xsl/functions-2.3.1.xsl"/>
+  <!-- put first to be overridden by recent plugin -->
+  <xsl:import href="plugin:org.dita4publishers.common.html:xsl/functions-lt-2.3.1.xsl"/>
 
   <xsl:import href="plugin:org.dita-community.common.xslt:xsl/relpath_util.xsl"/>
 
@@ -384,7 +385,7 @@
 
 
   <xsl:template match="/">
-    <xsl:message> + [INFO] Using DITA for Publishers HTML5 transformation type
+    <xsl:message> + [INFO] Using DITA for Publishers HTML5 transformation type (for OT2.x)
   </xsl:message>
 
     <xsl:apply-templates>
