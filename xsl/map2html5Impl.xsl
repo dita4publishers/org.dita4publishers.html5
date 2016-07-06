@@ -32,7 +32,6 @@
   version="2.0">
 
   <!-- put first to be overridden by recent plugin -->
-  <xsl:import href="plugin:org.dita4publishers.common.html:xsl/functions-lt-2.3.1.xsl"/>
 
   <xsl:import href="plugin:org.dita-community.common.xslt:xsl/relpath_util.xsl"/>
 
@@ -54,7 +53,11 @@
   <xsl:import href="plugin:org.dita4publishers.json:xsl/xml2json/xml-to-json.xsl"/>
   <xsl:import href="plugin:org.dita.base:xsl/common/dita-utilities.xsl"/>
 
-  
+  <xsl:import 
+    href="plugin:org.dita4publishers.common.html:xsl/functions-lt-2.3.1.xsl"
+    use-when="system-property('otversion') = '2.2.5'"
+  />
+
   <xsl:include href="plugin:org.dita4publishers.common.html:xsl/commonHtmlOverrides.xsl"/>
   <xsl:include href="plugin:org.dita4publishers.common.html:xsl/commonHtmlEnumeration.xsl"/>
   <xsl:include href="plugin:org.dita4publishers.common.html:xsl/commonHtmlBookmapEnumeration.xsl"/>
