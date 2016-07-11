@@ -499,7 +499,8 @@
        <dita:extension id="dita.html5.map" behavior="org.dita.dost.platform.InsertAction" />
        <dita:extension id="dita.conductor.xhtml.param" behavior="org.dita.dost.platform.InsertAction"/>
 
-       <sysproperty key="otversion" value="${otversion}"/>
+       <sysproperty key="otshortversion" value="${otshortversion}"/>
+       <sysproperty key="otmajorversion" value="${otmajorversion}"/>
        <mapper
          type="glob"
          from="${user.input.file}"
