@@ -64,6 +64,10 @@
     href="plugin:org.dita4publishers.common.html:xsl/functions-lt-2.3.1.xsl"
     use-when="number(system-property('otshortversion')) &gt;= 2.1"
   />
+    <xsl:import 
+    href="plugin:org.dita4publishers.common.html:xsl/functions-lt-2.xsl"
+    use-when="number(system-property('otmajorversion')) = 1"
+  />
 
   <xsl:include href="plugin:org.dita4publishers.common.html:xsl/commonHtmlOverrides.xsl"
               use-when="number(system-property('otshortversion')) &gt;= 2"
