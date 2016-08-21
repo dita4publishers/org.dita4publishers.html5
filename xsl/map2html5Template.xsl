@@ -25,7 +25,7 @@
   xmlns:htmlutil="http://dita4publishers.org/functions/htmlutil"
   xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl"
   xmlns:dc="http://purl.org/dc/elements/1.1/"
-  exclude-result-prefixes="df xs relpath htmlutil xd dc"
+  exclude-result-prefixes="#all"
   version="2.0">
 
 
@@ -195,7 +195,8 @@
 
     <section id="page">
       <div>
-
+       
+       <xsl:call-template name="commonattributes"/>
        <xsl:call-template name="set_an_anchor" />
 
         <!-- Already put xml:lang on <html>; do not copy to body with commonattributes -->

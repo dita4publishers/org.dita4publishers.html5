@@ -16,7 +16,8 @@
   xmlns:java="org.dita.dost.util.ImgUtils"
   xmlns:ditamsg="http://dita-ot.sourceforge.net/ns/200704/ditamsg"
   xmlns:related-links="http://dita-ot.sourceforge.net/ns/200709/related-links"
-  exclude-result-prefixes="xs xd df relpath mapdriven index-terms java xsl mapdriven related-links ditamsg">
+  exclude-result-prefixes="#all"
+ >
 
 
 

@@ -19,7 +19,9 @@
 -->
 <xsl:stylesheet version="2.0"
                 xmlns:dc="http://purl.org/dc/elements/1.1/"
-                xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                exclude-result-prefixes="#all"
+                >
 
  <xsl:import href="map2html5Impl.xsl"/>
 

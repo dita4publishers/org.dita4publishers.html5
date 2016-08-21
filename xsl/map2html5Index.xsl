@@ -27,7 +27,7 @@
   xmlns:htmlutil="http://dita4publishers.org/functions/htmlutil"
   xmlns:local="urn:functions:local"
   xmlns="http://www.w3.org/1999/xhtml"
-  exclude-result-prefixes="local xs df xsl relpath index-terms htmlutil"
+  exclude-result-prefixes="#all"
   >
 
 
