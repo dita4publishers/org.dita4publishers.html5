@@ -29,7 +29,8 @@
   xmlns:mapdriven="http://dita4publishers.org/mapdriven"
   xmlns:enum="http://dita4publishers.org/enumerables"
   xmlns:local="urn:functions:local"
-  exclude-result-prefixes="local xs df xsl relpath htmlutil index-terms mapdriven glossdata enum">
+  exclude-result-prefixes="#all"
+ >
 
   <xsl:template name="navigation">
     <xsl:param name="doDebug" as="xs:boolean" tunnel="yes" select="$debugBoolean"/>
@@ -267,7 +268,7 @@
   </xsl:template>
 
   <xsl:template match="*[df:class(., 'topic/title')]//text()" mode="generate-html5-nav">
-    <xsl:copy/>
+    <xsl:copy copy-namespaces="no"/>
   </xsl:template>
 
   <xsl:template match="*[df:class(., 'map/map')]" mode="generate-html5-nav-script-includes"/>
@@ -275,7 +276,7 @@
   <xsl:template match="text()" mode="generate-html5-nav"/>
 
   <xsl:template match="@*|node()" mode="fix-navigation-href">
-    <xsl:copy>
+    <xsl:copy copy-namespaces="no">
       <xsl:apply-templates select="@*|node()" mode="fix-navigation-href"/>
     </xsl:copy>
   </xsl:template>
@@ -341,7 +342,7 @@
     />
 
     <xsl:variable name="doDebug" as="xs:boolean" select="true()"/>
-    <xsl:if test="$doDebug">
+    <xsl:if test="false()">
 
       <xsl:message>
       + [DEBUG] fix-navigation-href:          resultUri="<xsl:value-of select="$resultUri"/>"

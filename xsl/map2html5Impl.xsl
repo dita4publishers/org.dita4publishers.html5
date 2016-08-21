@@ -27,12 +27,12 @@
   xmlns:mapdriven="http://dita4publishers.org/mapdriven"
   xmlns:htmlutil="http://dita4publishers.org/functions/htmlutil"
   xmlns:index-terms="http://dita4publishers.org/index-terms"
-  exclude-result-prefixes="xs xd df relpath mapdriven index-terms java xsl mapdriven htmlutil"
+  exclude-result-prefixes="#all"
   xmlns:java="org.dita.dost.util.ImgUtils"
   version="2.0">
 
   <xsl:import href="plugin:org.dita-community.common.xslt:xsl/relpath_util.xsl"/>
-  <xsl:import href="plugin:org.dita-community.common.mapdriven:xsl/dataCollection.xsl"/>
+  <xsl:import href="plugin:org.dita4publishers.common.mapdriven:xsl/dataCollection.xsl"/>
 
   <xsl:import href="plugin:org.dita4publishers.common.xslt:xsl/reportParametersBase.xsl"/>
   <xsl:import href="plugin:org.dita4publishers.common.html:xsl/char127To160Map.xsl"/>

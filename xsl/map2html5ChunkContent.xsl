@@ -24,7 +24,7 @@
   xmlns:relpath="http://dita2indesign/functions/relpath"
   xmlns:htmlutil="http://dita4publishers.org/functions/htmlutil"
   xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl"
-  exclude-result-prefixes="df xs relpath htmlutil xd"
+  exclude-result-prefixes="#all"
   version="2.0"
 >
 
