@@ -138,7 +138,7 @@
       <section class="grid_4 search-box">
         <xsl:apply-templates select="." mode="gen-search-box" />
       </section>
-      <secion class="clearfix" />
+      <section class="clearfix" />
     </header>
   </xsl:template>
 
@@ -148,7 +148,7 @@
     </xsl:variable>
     <form id="search" role="search">
       <div class="form-group">
-        <input id="search-text" type="text" autocomplete="off" class="form-control" placeholder="Search"/>
+        <input id="search-text" type="text" autocomplete="off" class="form-control" placeholder="Search" />
       </div>
     </form>
   </xsl:template>
@@ -191,7 +191,8 @@
 
     <section id="page">
       <div>
-
+       
+       <xsl:call-template name="commonattributes"/>
        <xsl:call-template name="set_an_anchor" />
 
         <!-- Already put xml:lang on <html>; do not copy to body with commonattributes -->

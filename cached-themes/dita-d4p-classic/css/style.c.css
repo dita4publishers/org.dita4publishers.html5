@@ -1294,6 +1294,251 @@ ul.simple { list-style-type: none; }
 .var { font-style: italic; }
 .shortcut { text-decoration: underline; }
 
+
+/* Adding small capitals and variations on that in various combinations. */
+.smallcaps {
+    font-variant: small-caps;
+}
+.smallcapitals {
+    font-variant: small-caps;
+}
+
+.overlined { 
+    text-decoration: overline; 
+}
+
+.linethrough {
+    text-decoration: line-through;
+}
+
+.strikethrough {
+    text-decoration: line-through;
+}
+
+/* I did spot the first small at the top, this shouldn't break things,
+   but disable the following two if there is a problem.  Will begin
+   with them commented out until certain. */
+/*
+.small.caps {
+    font-variant: small-caps;
+}
+.small.capitals {
+    font-variant: small-caps;
+}
+*/
+.sc {
+    font-variant: small-caps;
+}
+.sci {
+    font-variant: small-caps;
+    font-style: italic;
+}
+.scb {
+    font-variant: small-caps;
+    font-weight: bold;
+}
+.scu {
+    font-variant: small-caps;
+    text-decoration: underline;
+}
+.sco {
+    font-variant: small-caps;
+    text-decoration: overline;
+}
+/* I could make excuses for the "r" like "right through" but really I
+   just wanted it for word games later. */
+.scr {
+    font-variant: small-caps;
+    text-decoration: line-through;
+}
+/* This in conjunction with pipes also enables counting big numbers in
+   Roman numerals (up to around 100 million or so). */
+.scou {
+    font-variant: small-caps;
+    text-decoration: overline;
+    text-decoration: underline;
+}
+.scour {
+    font-variant: small-caps;
+    text-decoration: overline;
+    text-decoration: underline;
+    text-decoration: line-through;
+}
+.scouri {
+    font-variant: small-caps;
+    text-decoration: overline;
+    text-decoration: underline;
+    text-decoration: line-through;
+    font-style: italic;
+}
+.scourb {
+    font-variant: small-caps;
+    text-decoration: overline;
+    text-decoration: underline;
+    text-decoration: line-through;
+    font-weight: bold;
+}
+.scourib {
+    font-variant: small-caps;
+    text-decoration: overline;
+    text-decoration: underline;
+    text-decoration: line-through;
+    font-style: italic;
+    font-weight: bold;
+}
+.scib {
+    font-variant: small-caps;
+    font-style: italic;
+    font-weight: bold;
+}
+.scub {
+    font-variant: small-caps;
+    text-decoration: underline;
+    font-weight: bold;
+}
+/* yeah, not quite a match, but very easy to remember */
+.scuba {
+    font-variant: small-caps;
+    text-decoration: underline;
+    font-weight: bold;
+    font-style: italic;
+}
+/* And for those who plan mnemonics with the first letters too ... */
+.scubi {
+    font-variant: small-caps;
+    text-decoration: underline;
+    font-weight: bold;
+    font-style: italic;
+}
+/* More a descriptive match. */
+.scrub {
+    font-variant: small-caps;
+    text-decoration: line-through;
+    text-decoration: underline;
+    font-weight: bold;
+}
+/* For fans of Withnail and I (and to follow the one above). */
+.scruba {
+    font-variant: small-caps;
+    text-decoration: line-through;
+    text-decoration: underline;
+    font-weight: bold;
+    font-style: italic;
+}
+/* Accommodating the mnemonics again. */
+.scrubi {
+    font-variant: small-caps;
+    text-decoration: line-through;
+    text-decoration: underline;
+    font-weight: bold;
+    font-style: italic;
+}
+/* Almost like "cyber" (making it appropriate for a change). */
+.scibur {
+    font-variant: small-caps;
+    text-decoration: line-through;
+    text-decoration: underline;
+    font-weight: bold;
+    font-style: italic;
+}
+/* And this match is kind of obvious. */
+.scribu {
+    font-variant: small-caps;
+    text-decoration: line-through;
+    text-decoration: underline;
+    font-weight: bold;
+    font-style: italic;
+}
+/* As is this. */
+.scrib {
+    font-variant: small-caps;
+    text-decoration: line-through;
+    font-weight: bold;
+    font-style: italic;
+}
+.scrb {
+    font-variant: small-caps;
+    text-decoration: line-through;
+    font-weight: bold;
+}
+.scri {
+    font-variant: small-caps;
+    text-decoration: line-through;
+    font-style: italic;
+}
+.risc {
+    font-variant: small-caps;
+    text-decoration: line-through;
+    font-style: italic;
+}
+.scru {
+    font-variant: small-caps;
+    text-decoration: line-through;
+    text-decoration: underline;
+}
+/* 
+  Making sure Roman Numeral options are all available.  
+
+  Many of these are covered by UTF-8 0x2160 to 0x217f, but this method
+  is usually quicker, easier and more consistent with the font in use
+  at the time.  Essentially it's just the overline and pipes to both
+  sides, but people will inevitably want the underline to go with it
+  regardless.
+*/
+.rnu {
+    text-decoration: underline;    
+}
+.rno {
+    text-decoration: overline;
+}
+.rnou {
+    text-decoration: overline;
+    text-decoration: underline;    
+}
+.rnub {
+    text-decoration: underline;
+    font-weight: bold;
+}
+.rnob {
+    text-decoration: overline;
+    font-weight: bold;
+}
+.rnoub {
+    text-decoration: overline;
+    text-decoration: underline;    
+    font-weight: bold;
+}
+.rnui {
+    text-decoration: underline;
+    font-style: italic;
+}
+.rnoi {
+    text-decoration: overline;
+    font-style: italic;
+}
+.rnoui {
+    text-decoration: overline;
+    text-decoration: underline;    
+    font-style: italic;
+}
+.rnuib {
+    text-decoration: underline;
+    font-style: italic;
+    font-weight: bold;
+}
+.rnoib {
+    text-decoration: overline;
+    font-style: italic;
+    font-weight: bold;
+}
+.rnouib {
+    text-decoration: overline;
+    text-decoration: underline;    
+    font-style: italic;
+    font-weight: bold;
+}
+
+
 /* Default of bold for definition list terms */
 .dlterm { font-weight: bold; }
 

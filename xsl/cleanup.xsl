@@ -54,7 +54,7 @@
   </xsl:template>
 
   <xsl:template match="*" mode="clean-linebreaks" priority="10">
-    <xsl:copy>
+    <xsl:copy copy-namespaces="no">
       <xsl:apply-templates select="@*|node()" mode="#current"/>
     </xsl:copy>
   </xsl:template>

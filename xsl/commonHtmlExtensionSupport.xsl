@@ -32,13 +32,19 @@
   xmlns:related-links="http://dita-ot.sourceforge.net/ns/200709/related-links"
   xmlns:local="urn:functions:local"
   exclude-result-prefixes="#all"
-  version="1.0">
+  version="2.0">
 
   <!-- Omit prereq links from unordered related-links (handled by mode="prereqs" template). -->
-  <xsl:key name="omit-from-unordered-links" match="*[@importance='required' and (not(@role) or @role='sibling' or @role='friend' or @role='cousin')]" use="1"/>
+  <xsl:key name="omit-from-unordered-links" 
+           match="*[@importance='required' and 
+                    (not(@role) or @role= ('sibling', 'friend', 'cousin'))]"
+                    use="1"/>
 
   <xsl:template match="*" mode="add-link-target-attribute">
-    <xsl:if test="$html5ForceAccessibilityBoolean and (@scope='external' or @type='external' or (@format='PDF' or @format='pdf') and not(@scope='local'))">
+    <xsl:if test="$html5ForceAccessibilityBoolean and 
+                  ((@scope='external' or @type='external') or 
+                   (matches(@format, 'pdf', 'i')) and 
+                   not(@scope='local'))">
       <xsl:attribute name="target">_blank</xsl:attribute>
     </xsl:if>
   </xsl:template>
@@ -67,8 +73,7 @@
   <xsl:template name="commonattributes">
 
     <xsl:param name="default-output-class"/>
-    
-    <xsl:variable name="class" as="xs:string" select="if((@scope='external' or @type='external') and not(starts-with(@href, 'mailto'))) then ' external' else ''"/>
+    <xsl:param name="parent-class" as="xs:string" select="''" tunnel="yes"/>
 
     <xsl:apply-templates select="@xml:lang"/>
     <xsl:apply-templates select="@dir"/>
@@ -76,11 +81,67 @@
     <xsl:apply-templates select="*[contains(@class, ' ditaot-d/ditaval-startprop ')]/@outputclass" mode="add-ditaval-style"/>
 
     <xsl:apply-templates select="." mode="set-output-class">
-      <xsl:with-param name="default" select="concat($default-output-class, $class)"/>
+      <xsl:with-param name="default" select="$default-output-class"/>
+      <xsl:with-param name="parent-class" select="$parent-class"/>
     </xsl:apply-templates>
 
   </xsl:template>
 
+
+  <!-- Set the class attribute on the resulting output element. The default for a class of elements
+     may be passed in with $default, but that default can be overridden with mode="get-output-class". -->
+<xsl:template match="*" mode="set-output-class">
+  <xsl:param name="default"/>
+  <xsl:param name="parent-class" as="xs:string" select="''" tunnel="yes"/>
+
+  <xsl:variable name="output-class">
+    <xsl:apply-templates select="." mode="get-output-class"/>
+  </xsl:variable>
+
+  <xsl:variable name="draft-revs">
+    <!-- If draft is on, add revisions to default class. Simplifies processing in DITA-OT 1.6 and earlier
+         that created an extra div or span around revised content, just to hold @class with revs. -->
+    <xsl:if test="$DRAFT = 'yes'">
+      <xsl:for-each select="*[contains(@class, ' ditaot-d/ditaval-startprop ')]/revprop">
+        <xsl:value-of select="@val"/>
+        <xsl:text> </xsl:text>
+      </xsl:for-each>
+    </xsl:if>
+  </xsl:variable>
+  <xsl:variable name="using-output-class">
+    <xsl:choose>
+      <xsl:when test="string-length(normalize-space($output-class)) > 0"><xsl:value-of select="$output-class"/></xsl:when>
+      <xsl:when test="string-length(normalize-space($default)) > 0"><xsl:value-of select="$default"/></xsl:when>
+      <xsl:when test="string-length(normalize-space($parent-class)) > 0"><xsl:value-of select="$parent-class"/></xsl:when>
+    </xsl:choose>
+    <xsl:if test="$draft-revs != ''">
+      <xsl:text> </xsl:text>
+      <xsl:value-of select="normalize-space($draft-revs)"/>
+    </xsl:if>
+  </xsl:variable>
+  <xsl:variable name="ancestry">
+    <xsl:if test="$PRESERVE-DITA-CLASS = 'yes'">
+      <xsl:apply-templates select="." mode="get-element-ancestry"/>
+    </xsl:if>
+  </xsl:variable>
+  <xsl:variable name="outputclass-attribute">
+    <xsl:apply-templates select="@outputclass" mode="get-value-for-class"/>
+  </xsl:variable>
+  <!-- Revised design with DITA-OT 1.5: include class ancestry if requested; 
+       combine user output class with element default, giving priority to the user value. -->
+  <xsl:if test="string-length(normalize-space(concat($outputclass-attribute, $using-output-class, $ancestry))) > 0">
+    <xsl:attribute name="class">
+      <xsl:value-of select="$ancestry"/>
+      <xsl:if test="string-length(normalize-space($ancestry)) > 0 and 
+                    string-length(normalize-space($using-output-class)) > 0"><xsl:text> </xsl:text></xsl:if>
+      <xsl:value-of select="normalize-space($using-output-class)"/>
+      <xsl:if test="string-length(normalize-space(concat($ancestry, $using-output-class))) > 0 and
+                    string-length(normalize-space($outputclass-attribute)) > 0"><xsl:text> </xsl:text></xsl:if>
+      <xsl:value-of select="$outputclass-attribute"/>
+    </xsl:attribute>
+  </xsl:if>
+</xsl:template>
+ 
   <xsl:template match="@keyref">
     <xsl:if test="$outputKeyrefBoolean">
       <xsl:attribute name="data-keyref"><xsl:value-of select="."/></xsl:attribute>
@@ -127,11 +188,93 @@
     </xsl:if>
   </xsl:template>
 
+
+ <!-- DL entry -->
+<xsl:template match="*[contains(@class, ' topic/dlentry ')]" name="topic.dlentry">
+  <xsl:apply-templates>
+     <xsl:with-param name="parent-class" as="xs:string" select="if(string-length(normalize-space(@rev)) &gt; 0) then concat('props_rev_dlentry_', translate(@rev, '.', '_')) else ''" tunnel="yes"/>
+  </xsl:apply-templates>
+</xsl:template>
+
+
+<!-- DT term -->
+<xsl:template match="*[contains(@class, ' topic/dt ')]" name="topic.dt" priority="50">
+   <xsl:param name="parent-class" tunnel="yes" as="xs:string" select="''"/>
+  <xsl:variable name="keys" select="@keyref"/>
+  <xsl:variable name="keydef" select="$keydefs//*[contains(@keys, $keys)]"/>
+  <xsl:choose>
+    <xsl:when test="@keyref and $keydef">
+      <xsl:variable name="updatedTarget">
+        <xsl:apply-templates select="." mode="find-keyref-target">
+          <!--xsl:with-param name="target" select="$keydef/@href"/-->
+        </xsl:apply-templates>
+      </xsl:variable>
+      <xsl:choose>
+        <xsl:when test="normalize-space($updatedTarget) != $OUTEXT">
+          <a href="{$updatedTarget}">
+            <xsl:apply-templates select="." mode="output-dt">
+              <xsl:with-param name="parent-class" select="$parent-class" tunnel="yes"/>
+            </xsl:apply-templates>
+          </a>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:apply-templates select="." mode="output-dt"> <xsl:with-param name="parent-class" select="$parent-class" tunnel="yes"/>
+            </xsl:apply-templates>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:apply-templates select="." mode="output-dt"> <xsl:with-param name="parent-class" select="$parent-class" tunnel="yes"/>
+        </xsl:apply-templates>
+      </xsl:otherwise>
+  </xsl:choose>
+  <xsl:value-of select="$newline"/>
+</xsl:template>
+
+  <!-- SF Patch 2185423: condensed code so that dt processing is not repeated for keyref or when $dtcount!=1
+     Code could be reduced further by compressing the flagging templates. -->
+<xsl:template match="*[contains(@class, ' topic/dt ')]" mode="output-dt">
+  <xsl:param name="parent-class" tunnel="yes" as="xs:string" select="''"/>
+  <!-- insert a blank line before only the first DT in a DLENTRY; count which DT this is -->
+  <xsl:variable name="dtcount"><xsl:number count="*[contains(@class, ' topic/dt ')]"/></xsl:variable>
+  <xsl:variable name="dt-class">
+    <xsl:choose>
+      <!-- handle non-compact list items -->
+      <xsl:when test="$dtcount = 1 and ../../@compact = 'no'">dltermexpand</xsl:when>
+      <xsl:otherwise>dlterm</xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
+  <dt>
+    <xsl:call-template name="commonattributes">
+      <xsl:with-param name="default-output-class" select="concat($dt-class, ' ', $parent-class)"/>
+    </xsl:call-template>
+    <!-- Get xml:lang and ditaval styling from DLENTRY, then override with local -->
+    <xsl:apply-templates select="../@xml:lang"/> 
+    <xsl:apply-templates select="../*[contains(@class, ' ditaot-d/ditaval-startprop ')]/@outputclass" mode="add-ditaval-style"/>
+  
+    <xsl:call-template name="setidaname"/>
+    <!-- handle ID on a DLENTRY -->
+    <xsl:if test="$dtcount = 1 and parent::*/@id">
+      <xsl:call-template name="parent-id"/>
+    </xsl:if>
+    <!-- Use flags from parent dlentry, if present -->
+    <xsl:apply-templates select="../*[contains(@class, ' ditaot-d/ditaval-startprop ')]" mode="out-of-line"/>
+    <xsl:apply-templates/>
+    <xsl:apply-templates select="../*[contains(@class, ' ditaot-d/ditaval-endprop ')]" mode="out-of-line"/>
+    <xsl:apply-templates select="." mode="pull-in-title">
+      <xsl:with-param name="type" select="' dt '"/>
+      <xsl:with-param name="displaytext">
+        <xsl:apply-templates select="."  mode="dita-ot:text-only"/>
+      </xsl:with-param>
+    </xsl:apply-templates>
+  </dt>
+</xsl:template>
+
   <xsl:template match="*" mode="process.note.common-processing">
     <xsl:param name="type" select="@type"/>
 
     <xsl:param name="title">
-      <xsl:sequence select="dita-ot:get-variable(., concat(lower-case(substring($type, 1, 1)), substring($type, 2)))"/>
+      <xsl:sequence select="dita-ot:get-variable(., concat(upper-case(substring($type, 1, 1)), substring($type, 2)))"/>
     </xsl:param>
 
     <!-- note, attention, caution, fastpath, important, notice, remember, restriction, tip, warning, other -->
@@ -149,8 +292,13 @@
 
     <xsl:element name="{$html5NoteElement}">
 
-      <xsl:attribute name="class" select="concat('note', ' ', $type, ' ', @importance)"/>
-      <xsl:call-template name="setidaname"/>>
+      <xsl:call-template name="commonattributes">
+        <xsl:with-param name="default-output-class" select="concat('note', ' ', $type, ' ', @importance)"/>
+      </xsl:call-template>
+
+      <xsl:call-template name="gen-style"/>
+      <xsl:call-template name="setidaname"/>
+      <xsl:call-template name="start-flagit"/>
 
       <span class="title">
         <xsl:value-of select="$title"/>
@@ -549,15 +697,20 @@
 
     <xsl:choose>
       <xsl:when test="$html5AnchorStrategyBoolean">
-        <section class="{concat('nested', $nestlevel, ' ', @outputclass)}" id="{local:getIdForHtmlSection(.)}">
+        <section id="{local:getIdForHtmlSection(.)}">
+          <xsl:call-template name="commonattributes">
+            <xsl:with-param name="default-output-class" select="concat('nested', $nestlevel, ' ', @outputclass)" />
+          </xsl:call-template>
           <xsl:call-template name="set_an_anchor" />
           <xsl:call-template name="gen-topic"/>
           <xsl:apply-templates/>
         </section><xsl:value-of select="$newline"/>
       </xsl:when>
       <xsl:otherwise>
-        <section class="{concat('nested', $nestlevel, ' ', @outputclass)}" id="{local:getIdForHtmlSection(.)}">
-          <xsl:call-template name="commonattributes"/>
+        <section id="{local:getIdForHtmlSection(.)}">
+          <xsl:call-template name="commonattributes">
+            <xsl:with-param name="default-output-class" select="concat('nested', $nestlevel, ' ', @outputclass)" />
+          </xsl:call-template>
           <xsl:call-template name="gen-topic"/>
           <xsl:apply-templates/>
         </section><xsl:value-of select="$newline"/>

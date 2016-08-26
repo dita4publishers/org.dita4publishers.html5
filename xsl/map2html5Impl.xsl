@@ -34,23 +34,26 @@
   <!-- put first to be overridden by recent plugin -->
 
   <xsl:import href="plugin:org.dita-community.common.xslt:xsl/relpath_util.xsl"/>
+  <xsl:import href="plugin:org.dita4publishers.common.mapdriven:xsl/dataCollection.xsl"/>
 
   <xsl:import href="plugin:org.dita4publishers.common.xslt:xsl/reportParametersBase.xsl"/>
   <xsl:import href="plugin:org.dita4publishers.common.html:xsl/char127To160Map.xsl"/>
   <xsl:import href="plugin:org.dita4publishers.common.html:xsl/html-generation-utils.xsl"/>
-  <xsl:import href="plugin:org.dita4publishers.common.mapdriven:xsl/dataCollection.xsl"/>
 
   <!-- Import the base HTML output generation transform. -->
   <xsl:import href="plugin:org.dita.xhtml:xsl/dita2html-base.xsl"/>
 
-  <!--xsl:import href="plugin:org.dita.html5:xsl/xslhtml/dita2html5Impl.xsl" use-when="system-property('otshortversion') = '2.3.1'"/>
-  <xsl:import href="plugin:org.dita.html5:xsl/xslhtml/hi-d2html5.xsl" use-when="system-property('otshortversion') = '2.3.1'"/-->
-
-  <xsl:import href="plugin:org.dita.html5:xsl/xslhtml/dita2html5Impl.xsl" use-when="number(system-property('otshortversion')) &gt;= 2.2"/>
+<!-- WEK: Something clearly not complete about these two sets of conditional imports:
+    
+    <xsl:import href="plugin:org.dita.html5:xsl/xslhtml/dita2html5Impl.xsl" use-when="number(system-property('otshortversion')) &gt;= 2.2"/>
   <xsl:import href="plugin:org.dita.html5:xsl/xslhtml/hi-d2html5.xsl" use-when="number(system-property('otshortversion')) &gt;= 2.2"/>
 
   <xsl:import href="plugin:org.dita.xhtml:xsl/xslhtml/dita2html5Impl.xsl" use-when="number(system-property('otshortversion')) &lt; 2.2"/>
   <xsl:import href="plugin:org.dita.xhtml:xsl/xslhtml/hi-d2html5.xsl" use-when="number(system-property('otshortversion')) &lt; 2.2"/>
+-->
+  <xsl:import href="plugin:org.dita.xhtml:xsl/xslhtml/dita2html5Impl.xsl"/>
+  <xsl:import href="plugin:org.dita.xhtml:xsl/xslhtml/hi-d2html5.xsl"/>
+  <xsl:import href="plugin:org.dita4publishers.common.mapdriven:xsl/mapdrivenEnumerationD4P.xsl"/>
 
   <xsl:import href="plugin:org.dita4publishers.common.xslt:xsl/graphicMap2AntCopyScript.xsl"/>
   <xsl:import href="plugin:org.dita4publishers.common.xslt:xsl/map2graphicMap.xsl"/>
@@ -62,7 +65,7 @@
 
   <xsl:import 
     href="plugin:org.dita4publishers.common.html:xsl/functions-lt-2.3.1.xsl"
-    use-when="number(system-property('otshortversion')) &gt;= 2.1"
+    use-when="number(system-property('otshortversion')) ge 2.1"
   />
     <xsl:import 
     href="plugin:org.dita4publishers.common.html:xsl/functions-lt-2.xsl"
@@ -70,10 +73,10 @@
   />
 
   <xsl:include href="plugin:org.dita4publishers.common.html:xsl/commonHtmlOverrides.xsl"
-              use-when="number(system-property('otshortversion')) &gt;= 2"
+              use-when="number(system-property('otshortversion')) ge 2"
   />
   <xsl:include href="plugin:org.dita4publishers.common.html:xsl/commonHtmlOverrides-1.8.xsl"
-              use-when="number(system-property('otshortversion')) &lt; 2"
+              use-when="number(system-property('otshortversion')) lt 2"
   />
   <xsl:include href="plugin:org.dita4publishers.common.html:xsl/commonHtmlEnumeration.xsl"/>
   <xsl:include href="plugin:org.dita4publishers.common.html:xsl/commonHtmlBookmapEnumeration.xsl"/>

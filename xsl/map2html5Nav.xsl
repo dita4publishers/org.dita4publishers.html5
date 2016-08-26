@@ -30,7 +30,8 @@
   xmlns:mapdriven="http://dita4publishers.org/mapdriven"
   xmlns:enum="http://dita4publishers.org/enumerables"
   xmlns:local="urn:functions:local"
-  exclude-result-prefixes="#all">
+  exclude-result-prefixes="#all"
+ >
 
   <xsl:template name="navigation">
     <xsl:param name="doDebug" as="xs:boolean" tunnel="yes" select="$debugBoolean"/>
@@ -266,7 +267,7 @@
   </xsl:template>
 
   <xsl:template match="*[df:class(., 'topic/title')]//text()" mode="generate-html5-nav">
-    <xsl:copy/>
+    <xsl:copy copy-namespaces="no"/>
   </xsl:template>
 
   <xsl:template match="*[df:class(., 'map/map')]" mode="generate-html5-nav-script-includes"/>
@@ -274,7 +275,7 @@
   <xsl:template match="text()" mode="generate-html5-nav"/>
 
   <xsl:template match="@*|node()" mode="fix-navigation-href">
-    <xsl:copy>
+    <xsl:copy copy-namespaces="no">
       <xsl:apply-templates select="@*|node()" mode="fix-navigation-href"/>
     </xsl:copy>
   </xsl:template>
@@ -340,7 +341,6 @@
     />
 
     <xsl:if test="$doDebug">
-
       <xsl:message>
       + [DEBUG] fix-navigation-href:          resultUri="<xsl:value-of select="$resultUri"/>"
       + [DEBUG] fix-navigation-href:    parentResultUri="<xsl:value-of select="$parentResultUri"/>"
@@ -351,7 +351,6 @@
       + [DEBUG] fix-navigation-href:       relPathToDir="<xsl:value-of select="$relPathToDir"/>"
       + [DEBUG] fix-navigation-href:               href="<xsl:value-of select="$href"/>"
       + [DEBUG] fix-navigation-href:  targetRelativeUri="<xsl:value-of select="$targetRelativeUri"/>" (relPath + fragmentID)
-      + [DEBUG] fix-navigation-href:  targetRelativeUri="<xsl:value-of select="$targetRelativeUri"/>"
       + [DEBUG] fix-navigation-href:           filename="<xsl:value-of select="$filename"/>"
       + [DEBUG] fix-navigation-href:  resultUriFilename="<xsl:value-of select="$resultUriFilename"/>"
 
