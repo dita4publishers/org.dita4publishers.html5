@@ -306,7 +306,11 @@
       </span>
 
       <xsl:text> </xsl:text>
-
+      <xsl:apply-templates select="*[contains(@class, ' ditaot-d/ditaval-startprop ')]/revprop" mode="ditaval-outputflag"/>
+      <xsl:apply-templates/>
+      <!-- Normal end flags and revision end flags both go out after the content. -->
+      <xsl:apply-templates select="*[contains(@class, ' ditaot-d/ditaval-endprop ')]" mode="out-of-line"/>
+      
     </xsl:element>
   </xsl:template>
 
