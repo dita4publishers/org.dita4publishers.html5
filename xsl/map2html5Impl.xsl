@@ -33,6 +33,7 @@
 
   <!-- put first to be overridden by recent plugin -->
 
+  <xsl:import href="plugin:org.dita-community.common.xslt:xsl/dita-support-lib.xsl"/>
   <xsl:import href="plugin:org.dita-community.common.xslt:xsl/relpath_util.xsl"/>
   <xsl:import href="plugin:org.dita4publishers.common.mapdriven:xsl/dataCollection.xsl"/>
 
@@ -41,18 +42,9 @@
   <xsl:import href="plugin:org.dita4publishers.common.html:xsl/html-generation-utils.xsl"/>
 
   <!-- Import the base HTML output generation transform. -->
-  <xsl:import href="plugin:org.dita.xhtml:xsl/dita2html-base.xsl"/>
+  <xsl:import href="plugin:org.dita.html5:xsl/dita2html5impl.xsl"/>
 
-<!-- WEK: Something clearly not complete about these two sets of conditional imports:
-    
-    <xsl:import href="plugin:org.dita.html5:xsl/xslhtml/dita2html5Impl.xsl" use-when="number(system-property('otshortversion')) &gt;= 2.2"/>
-  <xsl:import href="plugin:org.dita.html5:xsl/xslhtml/hi-d2html5.xsl" use-when="number(system-property('otshortversion')) &gt;= 2.2"/>
-
-  <xsl:import href="plugin:org.dita.xhtml:xsl/xslhtml/dita2html5Impl.xsl" use-when="number(system-property('otshortversion')) &lt; 2.2"/>
-  <xsl:import href="plugin:org.dita.xhtml:xsl/xslhtml/hi-d2html5.xsl" use-when="number(system-property('otshortversion')) &lt; 2.2"/>
--->
-  <xsl:import href="plugin:org.dita.xhtml:xsl/xslhtml/dita2html5Impl.xsl"/>
-  <xsl:import href="plugin:org.dita.xhtml:xsl/xslhtml/hi-d2html5.xsl"/>
+  <xsl:import href="plugin:org.dita.html5:xsl/hi-d.xsl"/>
   <xsl:import href="plugin:org.dita4publishers.common.mapdriven:xsl/mapdrivenEnumerationD4P.xsl"/>
 
   <xsl:import href="plugin:org.dita4publishers.common.xslt:xsl/graphicMap2AntCopyScript.xsl"/>
@@ -364,10 +356,6 @@
         + generateStaticToc  = "<xsl:sequence select="$generateStaticToc"/>"
         + imagesOutputDir    = "<xsl:sequence select="$imagesOutputDir"/>"
         + inputFileNameParam = "<xsl:sequence select="$inputFileNameParam"/>"
-        + mathJaxUseCDNLink  = "<xsl:sequence select="$mathJaxUseCDNLink"/>"
-        + mathJaxUseLocalLink= "<xsl:sequence select="$mathJaxUseLocalLink"/>"
-        + mathJaxLocalJavascriptUri= "<xsl:sequence select="$mathJaxLocalJavascriptUri"/>"
-        + mathJaxConfigParam = "<xsl:sequence select="$mathJaxConfigParam"/>"
         + maxTocDepth        = "<xsl:sequence select="$maxTocDepth"/>" (<xsl:value-of select="$maxTocDepthInt"/>)
         + NAVIGATIONMARKUP   = "<xsl:sequence select="$NAVIGATIONMARKUP"/>"
         + outdir             = "<xsl:sequence select="$outdir"/>"
@@ -383,7 +371,6 @@
         + CSSPATH         = "<xsl:sequence select="$CSSPATH"/>"
         + FILEDIR         = "<xsl:sequence select="$FILEDIR"/>"
         + FILTERFILE      = "<xsl:sequence select="$FILTERFILE"/>"
-        + KEYREF-FILE     = "<xsl:sequence select="$KEYREF-FILE"/>"
         + OUTPUTDIR       = "<xsl:sequence select="$OUTPUTDIR"/>"
         + PATH2PROJ       = "<xsl:sequence select="$PATH2PROJ"/>"
         + WORKDIR         = "<xsl:sequence select="$WORKDIR"/>"

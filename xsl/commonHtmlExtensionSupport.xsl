@@ -197,114 +197,35 @@
 </xsl:template>
 
 
-<!-- DT term -->
-<xsl:template match="*[contains(@class, ' topic/dt ')]" name="topic.dt" priority="50">
-   <xsl:param name="parent-class" tunnel="yes" as="xs:string" select="''"/>
-  <xsl:variable name="keys" select="@keyref"/>
-  <xsl:variable name="keydef" select="$keydefs//*[contains(@keys, $keys)]"/>
-  <xsl:choose>
-    <xsl:when test="@keyref and $keydef">
-      <xsl:variable name="updatedTarget">
-        <xsl:apply-templates select="." mode="find-keyref-target">
-          <!--xsl:with-param name="target" select="$keydef/@href"/-->
-        </xsl:apply-templates>
-      </xsl:variable>
-      <xsl:choose>
-        <xsl:when test="normalize-space($updatedTarget) != $OUTEXT">
-          <a href="{$updatedTarget}">
-            <xsl:apply-templates select="." mode="output-dt">
-              <xsl:with-param name="parent-class" select="$parent-class" tunnel="yes"/>
-            </xsl:apply-templates>
-          </a>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:apply-templates select="." mode="output-dt"> <xsl:with-param name="parent-class" select="$parent-class" tunnel="yes"/>
-            </xsl:apply-templates>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:when>
-    <xsl:otherwise>
-      <xsl:apply-templates select="." mode="output-dt"> <xsl:with-param name="parent-class" select="$parent-class" tunnel="yes"/>
-        </xsl:apply-templates>
-      </xsl:otherwise>
-  </xsl:choose>
-  <xsl:value-of select="$newline"/>
-</xsl:template>
-
-  <!-- SF Patch 2185423: condensed code so that dt processing is not repeated for keyref or when $dtcount!=1
-     Code could be reduced further by compressing the flagging templates. -->
-<xsl:template match="*[contains(@class, ' topic/dt ')]" mode="output-dt">
-  <xsl:param name="parent-class" tunnel="yes" as="xs:string" select="''"/>
-  <!-- insert a blank line before only the first DT in a DLENTRY; count which DT this is -->
-  <xsl:variable name="dtcount"><xsl:number count="*[contains(@class, ' topic/dt ')]"/></xsl:variable>
-  <xsl:variable name="dt-class">
-    <xsl:choose>
-      <!-- handle non-compact list items -->
-      <xsl:when test="$dtcount = 1 and ../../@compact = 'no'">dltermexpand</xsl:when>
-      <xsl:otherwise>dlterm</xsl:otherwise>
-    </xsl:choose>
-  </xsl:variable>
-  <dt>
-    <xsl:call-template name="commonattributes">
-      <xsl:with-param name="default-output-class" select="concat($dt-class, ' ', $parent-class)"/>
-    </xsl:call-template>
-    <!-- Get xml:lang and ditaval styling from DLENTRY, then override with local -->
-    <xsl:apply-templates select="../@xml:lang"/> 
-    <xsl:apply-templates select="../*[contains(@class, ' ditaot-d/ditaval-startprop ')]/@outputclass" mode="add-ditaval-style"/>
-  
-    <xsl:call-template name="setidaname"/>
-    <!-- handle ID on a DLENTRY -->
-    <xsl:if test="$dtcount = 1 and parent::*/@id">
-      <xsl:call-template name="parent-id"/>
-    </xsl:if>
-    <!-- Use flags from parent dlentry, if present -->
-    <xsl:apply-templates select="../*[contains(@class, ' ditaot-d/ditaval-startprop ')]" mode="out-of-line"/>
-    <xsl:apply-templates/>
-    <xsl:apply-templates select="../*[contains(@class, ' ditaot-d/ditaval-endprop ')]" mode="out-of-line"/>
-    <xsl:apply-templates select="." mode="pull-in-title">
-      <xsl:with-param name="type" select="' dt '"/>
-      <xsl:with-param name="displaytext">
-        <xsl:apply-templates select="."  mode="dita-ot:text-only"/>
-      </xsl:with-param>
-    </xsl:apply-templates>
-  </dt>
-</xsl:template>
-
   <xsl:template match="*" mode="process.note.common-processing">
     <xsl:param name="type" select="@type"/>
-
     <xsl:param name="title">
-      <xsl:sequence select="dita-ot:get-variable(., concat(upper-case(substring($type, 1, 1)), substring($type, 2)))"/>
+      <xsl:call-template name="getVariable">
+        <xsl:with-param name="id" select="concat(upper-case(substring($type, 1, 1)), substring($type, 2))"/>
+      </xsl:call-template>
     </xsl:param>
-
+    
     <!-- note, attention, caution, fastpath, important, notice, remember, restriction, tip, warning, other -->
-    <xsl:variable name="html5NoteElement">
-      <xsl:choose>
-        <xsl:when test="@importance='low' or @importance='obsolete'">
-          <xsl:value-of select="'details'" />
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:value-of select="'aside'" />
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
-
+    <xsl:variable name="html5NoteElement" 
+      select="if (@importance='low' or @importance='obsolete')
+                 then 'details'
+                 else 'aside'"
+    />
 
     <xsl:element name="{$html5NoteElement}">
 
       <xsl:call-template name="commonattributes">
-        <xsl:with-param name="default-output-class" select="concat('note', ' ', $type, ' ', @importance)"/>
+        <xsl:with-param name="default-output-class" select="string-join(($type, concat('note_', $type)), ' ')"/>
       </xsl:call-template>
-
-      <xsl:call-template name="gen-style"/>
       <xsl:call-template name="setidaname"/>
-      <xsl:call-template name="start-flagit"/>
-
-      <span class="title">
-        <xsl:value-of select="$title"/>
-        <xsl:sequence select="dita-ot:get-variable(., 'ColonSymbol')"/>
+      <!-- Normal flags go before the generated title; revision flags only go on the content. -->
+      <xsl:apply-templates select="*[contains(@class, ' ditaot-d/ditaval-startprop ')]/prop" mode="ditaval-outputflag"/>
+      <span class="note__title">
+        <xsl:copy-of select="$title"/>
+        <xsl:call-template name="getVariable">
+          <xsl:with-param name="id" select="'ColonSymbol'"/>
+        </xsl:call-template>
       </span>
-
       <xsl:text> </xsl:text>
       <xsl:apply-templates select="*[contains(@class, ' ditaot-d/ditaval-startprop ')]/revprop" mode="ditaval-outputflag"/>
       <xsl:apply-templates/>
@@ -414,31 +335,6 @@
   </xsl:template>
 
 
-  <!-- Function to look up a target in the keyref file -->
-  <xsl:template match="*" mode="find-keyref-target">
-    <xsl:param name="relativePath" as="xs:string" select="''" tunnel="yes"/>
-    <xsl:param name="keys" select="@keyref"/>
-    <xsl:param name="target">
-      <xsl:value-of select="$keydefs//*[@keys = $keys]/@href"/>
-    </xsl:param>
-
-    <xsl:choose>
-      <xsl:when test="contains($target, '://')">
-        <xsl:value-of select="$target"/>
-      </xsl:when>
-      <!-- edited  on 2010-12-17 for keyref bug:3114411 start-->
-      <xsl:when test="contains($target, '#')">
-        <xsl:value-of select="concat($relativePath, substring-before(substring-before($target, '#'), '.'), $OUTEXT, '#', substring-after($target, '#'))"/>
-      </xsl:when>
-      <xsl:when test="$target = ''">
-        <xsl:value-of select="$OUTEXT"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:value-of select="concat($relativePath, substring-before($target, '.'), $OUTEXT)"/>
-      </xsl:otherwise>
-      <!-- edited  on 2010-12-17 for keyref bug:3114411 end-->
-    </xsl:choose>
-  </xsl:template>
 
  <xsl:template name="dotable">
 

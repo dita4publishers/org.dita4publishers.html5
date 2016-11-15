@@ -37,7 +37,7 @@
     set.properties,
     d4p.map-driven-build-init,
     build-init,
-    dc-preprocess,
+    preprocess,
     html5"
     dita:extension="depends org.dita.dost.platform.InsertDependsAction">
   </target>
