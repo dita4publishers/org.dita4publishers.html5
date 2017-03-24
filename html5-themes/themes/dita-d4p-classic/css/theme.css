@@ -658,3 +658,7 @@ li.topichead {
 .float_left
   float:left;
 }
+
+img.inline {
+  display: inline;
+}
