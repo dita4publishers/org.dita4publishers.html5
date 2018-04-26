@@ -127,25 +127,6 @@
         select="$resultUri"/>"...</xsl:message>
     </xsl:if>
 
-    <xsl:variable name="htmlNoNamespace" as="node()*">
-      <xsl:apply-templates select="." mode="map-driven-content-processing">
-        <xsl:with-param name="topicref" select="$topicref" as="element()?" tunnel="yes"/>
-        <xsl:with-param name="collected-data" select="$collected-data" as="element()" tunnel="yes"/>
-      </xsl:apply-templates>
-    </xsl:variable>
-    
-    <xsl:if test="$doDebug">
-      <xsl:variable name="force-resolution" as="xs:string" select="$htmlNoNamespace"/>
-      <xsl:variable name="stopTime" as="xs:integer" select="date:getTime(date:new())"/>
-      <xsl:message> + [TIMING] htmlNoNamespace took <xsl:value-of select="($stopTime - $startTime) div 1000"/> seconds</xsl:message>
-    </xsl:if>
-
-
-    <xsl:if test="$debugBoolean">
-      <xsl:result-document href="{concat($outdir, '/', 'htmlNoNamespace/', relpath:getName($resultUri))}"
-      > </xsl:result-document>
-    </xsl:if>
-    
     <xsl:variable name="generatePageStartTime" as="xs:integer" select="date:getTime(date:new())"/>
 
     <xsl:result-document format="{$xsloutput}" href="{$resultUri}">
@@ -157,7 +138,6 @@
     </xsl:result-document>
     
     <xsl:if test="$doDebug">
-      <xsl:variable name="force-resolution" as="xs:string" select="$htmlNoNamespace"/>
       <xsl:variable name="stopTime" as="xs:integer" select="date:getTime(date:new())"/>
       <xsl:message> + [TIMING] generate-html5-page took <xsl:value-of select="($stopTime - $generatePageStartTime) div 1000"/> seconds</xsl:message>
       <xsl:message> + [TIMING] Total generation time: <xsl:value-of select="($stopTime - $startTime) div 1000"/> seconds</xsl:message>
