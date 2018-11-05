@@ -59,7 +59,7 @@
     </pre>
     <xsl:apply-templates select="*[contains(@class,' ditaot-d/ditaval-endprop ')]" mode="out-of-line"/>
     <xsl:if test="contains(@frame,'bot')"><hr /></xsl:if>
-    <xsl:value-of select="$newline"/>
+    <xsl:value-of select="'&#x0a;'"/>
   </xsl:template>
 
   <xsl:template match="*[contains(@class,' topic/data-about ')]" mode="html5-data-attributes">

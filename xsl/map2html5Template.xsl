@@ -197,7 +197,7 @@
 
         <!-- Already put xml:lang on <html>; do not copy to body with commonattributes -->
         <xsl:apply-templates select="*[contains(@class,' ditaot-d/ditaval-startprop ')]/@outputclass" mode="add-ditaval-style"/>
-        <xsl:value-of select="$newline"/>
+        <xsl:value-of select="'&#x0a;'"/>
 
         <xsl:apply-templates select="*[contains(@class,' ditaot-d/ditaval-startprop ')]" mode="out-of-line"/>
 
@@ -238,7 +238,7 @@
         <xsl:apply-templates select="*[contains(@class,' ditaot-d/ditaval-endprop ')]" mode="out-of-line"/>
       </div>
     </section>
-    <xsl:value-of select="$newline"/>
+    <xsl:value-of select="'&#x0a;'"/>
   </xsl:template>
 
    <!-- generate html5 footer, import from XML file -->
@@ -312,7 +312,7 @@
               </xsl:otherwise>
               </xsl:choose>
             </article>
-      <div class="clear" /><xsl:sequence select="$newline"/>
+      <div class="clear" /><xsl:sequence select="'&#x0a;'"/>
     </div>
   </xsl:template>
 
@@ -355,7 +355,7 @@
     <div id="footer-container" class="grid_12">
     <xsl:call-template name="gen-user-footer"/>
     <xsl:call-template name="processFTR"/>
-    <xsl:sequence select="$newline"/>
+    <xsl:sequence select="'&#x0a;'"/>
   </div>
   </xsl:template>
 

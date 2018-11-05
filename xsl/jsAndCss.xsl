@@ -129,7 +129,7 @@
           <xsl:value-of select="suffix" disable-output-escaping="yes"/>
         </xsl:if>
 
-        <xsl:value-of select="$newline"/>
+        <xsl:value-of select="'&#x0a;'"/>
       </xsl:for-each>
 
     </xsl:if>
@@ -190,7 +190,7 @@
         <xsl:value-of select="suffix"/>
       </xsl:if>
 
-      <xsl:value-of select="$newline"/>
+      <xsl:value-of select="'&#x0a;'"/>
     </xsl:if>
   </xsl:template>
 
@@ -253,7 +253,7 @@
       <xsl:if test="suffix and suffix != ''">
         <xsl:value-of select="suffix" disable-output-escaping="yes"/>
       </xsl:if>
-      <xsl:value-of select="$newline"/>
+      <xsl:value-of select="'&#x0a;'"/>
 
    </xsl:if>
   </xsl:template>
@@ -325,7 +325,7 @@
 
     <script type="text/javascript">
       <xsl:text>var d4p = </xsl:text><xsl:value-of select="json:generate($d4p-js-object/d4p)"/>
-    </script><xsl:value-of select="$newline"/>
+    </script><xsl:value-of select="'&#x0a;'"/>
 
   </xsl:template>
 

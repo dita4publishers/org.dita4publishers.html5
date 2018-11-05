@@ -49,7 +49,7 @@
               <xsl:with-param name="href" as="xs:string" select="$resultUri"/>
             </xsl:call-template>
     
-            <xsl:value-of select="$newline"/>
+            <xsl:value-of select="'&#x0a;'"/>
           </xsl:when>
           <xsl:otherwise>
             <xsl:message> - [WARN] inline-breadcrumbs: Unable to resolve topicref for topicref <xsl:value-of select="df:reportTopicref(.)"/></xsl:message>
@@ -98,7 +98,7 @@
         <span class="{$icon}"></span><span class="{$CLASSSCREENREADER}"><xsl:value-of select="linktext" /></span>
     </a>
   </div>
-  <xsl:value-of select="$newline"/>
+  <xsl:value-of select="'&#x0a;'"/>
 </xsl:template>
 
 

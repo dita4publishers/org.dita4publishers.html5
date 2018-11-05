@@ -436,7 +436,7 @@
     <xsl:call-template name="place-tbl-lbl"/>
     <!-- title and desc are processed elsewhere -->
     <xsl:apply-templates select="*[contains(@class, ' topic/tgroup ')]"/>
-    </table><xsl:value-of select="$newline"/>
+    </table><xsl:value-of select="'&#x0a;'"/>
     <xsl:apply-templates select="*[contains(@class, ' ditaot-d/ditaval-endprop ')]" mode="out-of-line"/>
 </xsl:template>
 
@@ -497,9 +497,9 @@
                        ' ',
                        local:getLinkKey(.)))[1])
      )]/parent::*">
-      <xsl:value-of select="$newline"/>
+      <xsl:value-of select="'&#x0a;'"/>
 
-      <div class="familylinks"><xsl:value-of select="$newline"/>
+      <div class="familylinks"><xsl:value-of select="'&#x0a;'"/>
 
       <xsl:if test="$NOPARENTLINK='no' and contains($include.roles, ' parent ')">
         <xsl:choose>
@@ -536,7 +536,7 @@
           </xsl:for-each>
         </xsl:if>
       </div>
-      <xsl:value-of select="$newline"/>
+      <xsl:value-of select="'&#x0a;'"/>
     </xsl:for-each>
   </xsl:template>
 
@@ -574,13 +574,13 @@
            <xsl:call-template name="commonattributes"/>
            <xsl:call-template name="set_an_anchor" />
            <xsl:apply-templates select="."  mode="section-fmt" />
-         </div><xsl:value-of select="$newline"/>
+         </div><xsl:value-of select="'&#x0a;'"/>
       </xsl:when>
       <xsl:otherwise>
          <div class="section" id="{df:getIdForElement(.)}">
             <xsl:call-template name="commonattributes"/>
             <xsl:apply-templates select="."  mode="section-fmt" />
-         </div><xsl:value-of select="$newline"/>
+         </div><xsl:value-of select="'&#x0a;'"/>
        </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -604,7 +604,7 @@
           <xsl:call-template name="set_an_anchor" />
           <xsl:call-template name="gen-topic"/>
           <xsl:apply-templates/>
-        </section><xsl:value-of select="$newline"/>
+        </section><xsl:value-of select="'&#x0a;'"/>
       </xsl:when>
       <xsl:otherwise>
         <section id="{local:getIdForHtmlSection(.)}">
@@ -613,7 +613,7 @@
           </xsl:call-template>
           <xsl:call-template name="gen-topic"/>
           <xsl:apply-templates/>
-        </section><xsl:value-of select="$newline"/>
+        </section><xsl:value-of select="'&#x0a;'"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
