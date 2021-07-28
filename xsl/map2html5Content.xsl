@@ -104,9 +104,6 @@
     <xsl:param name="resultUri" as="xs:string" tunnel="yes"/>
     <xsl:param name="doDebug" as="xs:boolean" tunnel="yes" select="false()"/>
     
-    <xsl:variable name="startTime" select="date:getTime(date:new())" as="xs:integer"/>
-    
-
     <xsl:variable name="docUri" select="relpath:toUrl(@xtrf)" as="xs:string"/>
     <xsl:variable name="parentDocUri" select="relpath:getParent($resultUri)" as="xs:string"/>
 
@@ -127,8 +124,6 @@
         select="$resultUri"/>"...</xsl:message>
     </xsl:if>
 
-    <xsl:variable name="generatePageStartTime" as="xs:integer" select="date:getTime(date:new())"/>
-
     <xsl:result-document format="{$xsloutput}" href="{$resultUri}">
       <xsl:apply-templates mode="generate-html5-page" select=".">
         <xsl:with-param name="relativePath" select="$relativePath" as="xs:string" tunnel="yes"/>
@@ -136,15 +131,6 @@
         <xsl:with-param name="topicref" select="$topicref" as="element()?" tunnel="yes"/>
       </xsl:apply-templates>
     </xsl:result-document>
-    
-    <xsl:if test="$doDebug">
-      <xsl:variable name="stopTime" as="xs:integer" select="date:getTime(date:new())"/>
-      <xsl:message> + [TIMING] generate-html5-page took <xsl:value-of select="($stopTime - $generatePageStartTime) div 1000"/> seconds</xsl:message>
-      <xsl:message> + [TIMING] Total generation time: <xsl:value-of select="($stopTime - $startTime) div 1000"/> seconds</xsl:message>
-      <xsl:variable name="phase1" as="xs:integer" select="$stopTime - $generatePageStartTime"/>
-      <xsl:variable name="full" as="xs:integer" select="$stopTime - $startTime"/>
-      <xsl:message> + [TIMING] CSV: generate-content,<xsl:sequence select="$phase1"/>,<xsl:sequence select="$full"/>,<xsl:sequence select="$resultUri"></xsl:sequence></xsl:message>
-    </xsl:if>
     
   </xsl:template>
 
