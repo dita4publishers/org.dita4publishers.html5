@@ -32,7 +32,7 @@
   xmlns:related-links="http://dita-ot.sourceforge.net/ns/200709/related-links"
   xmlns:local="urn:functions:local"
   exclude-result-prefixes="#all"
-  version="2.0">
+  version="3.0">
 
   <!-- Omit prereq links from unordered related-links (handled by mode="prereqs" template). -->
   <xsl:key name="omit-from-unordered-links" 
@@ -466,7 +466,7 @@
       <xsl:apply-templates select="." mode="related-links:group-unordered-links">
         <xsl:with-param name="nodes" select="descendant::*[contains(@class, ' topic/link ')]
        [count(. | key('omit-from-unordered-links', 1)) != count(key('omit-from-unordered-links', 1))]
-       [generate-id(.)=generate-id((key('hideduplicates', concat(ancestor::*[contains(@class, ' topic/related-links ')]/parent::*[contains(@class, ' topic/topic ')]/@id, ' ',@href,@scope,@audience,@platform,@product,@otherprops,@rev,@type,normalize-space(child::*))))[1])]"/>
+       [generate-id(.)=generate-id((key('hideduplicates', local:getLinkKey(.)))[1])]"/>
       </xsl:apply-templates>
 
       <!--linklists - last but not least, create all the linklists and their links, with no sorting or re-ordering-->
@@ -542,10 +542,10 @@
 
   <xsl:function name="local:getLinkKey" as="xs:string">
     <xsl:param name="linkElem" as="element()"/>
-    <xsl:variable name="childContent">
-      <xsl:value-of select="$linkElem/*"></xsl:value-of>
+    <xsl:variable name="childContent" as="xs:string">
+      <xsl:value-of select="$linkElem/*"/>
     </xsl:variable>
-    <xsl:variable name="result"
+    <xsl:variable name="result" as="xs:string"
       select="concat($linkElem/@href,
               $linkElem/@type,
               $linkElem/@role,
