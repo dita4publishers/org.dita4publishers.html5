@@ -430,8 +430,6 @@
      <xsl:param name="doDebug" as="xs:boolean" tunnel="yes" select="false()"/>
      <xsl:param name="isChunkedMap" as="xs:boolean" tunnel="yes" />
     
-    <xsl:variable name="doDebug" as="xs:boolean" select="true()"/>
-    
     <!-- this is intended to allow developer to add custom hook -->
     <xsl:if test="$doDebug">
       <xsl:message>  + [INFO] Processing Chunked Map</xsl:message>
