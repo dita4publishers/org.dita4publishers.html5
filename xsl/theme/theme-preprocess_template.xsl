@@ -27,7 +27,7 @@
   xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl"
   xmlns:de="http://dnovatchev.wordpress.com"
   exclude-result-prefixes="df xs de relpath htmlutil xd"
-  version="2.0"
+  version="3.0"
  >
 
   <xsl:import href="theme-preprocessImpl.xsl"/>

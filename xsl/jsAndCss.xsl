@@ -28,7 +28,7 @@
   xmlns:dc="http://purl.org/dc/elements/1.1/"
   xmlns:json="http://json.org/"
   exclude-result-prefixes="#all"
-  version="2.0">
+  version="3.0">
   <!-- =============================================================
 
     DITA Map to HTML5 Transformation

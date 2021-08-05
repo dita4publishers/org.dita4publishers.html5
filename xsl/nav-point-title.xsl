@@ -28,7 +28,7 @@
   xmlns:mapdriven="http://dita4publishers.org/mapdriven"
   exclude-result-prefixes="#all"
   xmlns:java="org.dita.dost.util.ImgUtils"
-  version="2.0">
+  version="3.0">
 
 
   <xsl:template match="*" mode="nav-point-title" />

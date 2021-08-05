@@ -28,7 +28,7 @@
   xmlns:str="http://www.w3.org/2005/xpath-functions"
   xmlns:json="http://json.org/"
   exclude-result-prefixes="#all"
-  version="2.0"
+  version="3.0"
 >
 
   <xsl:output name="json" method="text" indent="no" encoding="utf-8" omit-xml-declaration="yes"/>

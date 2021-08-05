@@ -29,7 +29,7 @@
   xmlns:index-terms="http://dita4publishers.org/index-terms"
   exclude-result-prefixes="#all"
   xmlns:java="org.dita.dost.util.ImgUtils"
-  version="2.0">
+  version="3.0">
 
   <!-- put first to be overridden by recent plugin -->
 

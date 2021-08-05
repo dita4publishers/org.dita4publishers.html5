@@ -27,7 +27,7 @@
   xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl"
   xmlns:dc="http://purl.org/dc/elements/1.1/"
   exclude-result-prefixes="#all"
-  version="2.0">
+  version="3.0">
   
   <!-- Reduces the stored size of result HTML files by squeezing out
        all unneeded white space.

@@ -18,7 +18,7 @@
        under the License.
 -->
 
-<xsl:stylesheet version="2.0"
+<xsl:stylesheet version="3.0"
                 xmlns:dc="http://purl.org/dc/elements/1.1/"
                 xmlns:df="http://dita2indesign.org/dita/functions"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"

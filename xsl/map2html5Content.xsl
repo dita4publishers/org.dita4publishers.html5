@@ -26,7 +26,7 @@
   xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl"
   xmlns:date="java:java.util.Date"
   exclude-result-prefixes="#all"
-  version="2.0"
+  version="3.0"
 >
 
   <xsl:template match="*[df:class(., 'map/map')]" mode="generate-content">
