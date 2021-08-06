@@ -120,7 +120,7 @@
     <xsl:message>topic-title is: <xsl:value-of select="$topic-title"/></xsl:message-->
         
     <xsl:if test="$doDebug">
-      <xsl:message  > + [DEBUG] Writing topic <xsl:sequence select="document-uri(root(.))"/> to HTML file "<xsl:sequence
+      <xsl:message>+ [DEBUG] Writing topic <xsl:sequence select="document-uri(root(.))"/> to HTML file "<xsl:sequence
         select="$resultUri"/>"...</xsl:message>
     </xsl:if>
 
@@ -129,6 +129,7 @@
         <xsl:with-param name="relativePath" select="$relativePath" as="xs:string" tunnel="yes"/>
         <xsl:with-param name="resultUri" as="xs:string" select="$resultUri" tunnel="yes"/>
         <xsl:with-param name="topicref" select="$topicref" as="element()?" tunnel="yes"/>
+        <xsl:with-param name="doDebug" as="xs:boolean" tunnel="yes" select="$doDebug"/>
       </xsl:apply-templates>
     </xsl:result-document>
     

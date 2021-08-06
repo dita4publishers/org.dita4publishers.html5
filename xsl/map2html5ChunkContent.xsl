@@ -29,10 +29,15 @@
 >
 
   <xsl:template match="*[contains-token(@class, 'map/map')]" mode="generate-chunked-map-content">
+    <xsl:param name="doDebug" as="xs:boolean" tunnel="yes" select="false()"/>
     <xsl:param name="uniqueTopicRefs" as="element()*" tunnel="yes"/>
     <xsl:param name="rootMapDocUrl" as="xs:string" tunnel="yes"/>
     <xsl:param name="indexUri" as="xs:string" tunnel="yes"/>
     <xsl:param name="documentation-title" as="xs:string" tunnel="yes"/>
+
+    <xsl:if test="$doDebug">
+      <xsl:message>+ [DEBUG] generate-chunked-map-content: {name(..)}/{name(.)}...</xsl:message>
+    </xsl:if>
 
     <xsl:variable name="topics">
       <xsl:document>
@@ -43,11 +48,26 @@
       </xsl:document>
     </xsl:variable>
 
+    <xsl:if test="$doDebug">
+      <xsl:message>+ [DEBUG] generate-chunked-map-content:   Collected topics</xsl:message>
+    </xsl:if>
+    
     <xsl:variable name="content">
       <xsl:apply-templates select="$topics/*" mode="render"/>
     </xsl:variable>
 
+    <xsl:if test="$doDebug">
+      <xsl:message>+ [DEBUG] generate-chunked-map-content:   content:
+<xsl:sequence select="$content"/>        
+      </xsl:message>
+    </xsl:if>
+    
     <xsl:result-document format="html5" href="{$indexUri}">
+      <xsl:if test="$doDebug">
+        <xsl:message>+ [DEBUG] generate-chunked-map-content:   generating HTML5 page:
+          <xsl:sequence select="$content"/>        
+        </xsl:message>
+      </xsl:if>
       <xsl:apply-templates mode="generate-html5-page" select=".">
         <xsl:with-param name="resultUri" as="xs:string" select="$indexUri" tunnel="yes"/>
         <xsl:with-param name="is-root" as="xs:boolean" select="true()"/>

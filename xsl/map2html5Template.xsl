@@ -27,6 +27,7 @@
   xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl"
   xmlns:dc="http://purl.org/dc/elements/1.1/"
   exclude-result-prefixes="#all"
+  expand-text="yes"
   version="3.0">
 
 
@@ -70,6 +71,11 @@
 
 
   <xsl:template match="*" mode="generate-html5-page">
+    <xsl:param name="doDebug" as="xs:boolean" tunnel="yes" select="false()"/>
+    
+    <xsl:if test="$doDebug">
+      <xsl:message>+ [DEBUG] generate-html5-page: {name(..)}/{name(.)} starting...</xsl:message>
+    </xsl:if>
     <html>
       <xsl:attribute name = "lang" select="$TEMPLATELANG" />
       <xsl:apply-templates select="." mode="generate-head"/>
@@ -175,6 +181,12 @@
   <!-- generate body -->
   <xsl:template match="*" mode="generate-body">
     <xsl:param name="map-metadata" as="element()*" tunnel="yes" />
+    <xsl:param name="doDebug" as="xs:boolean" tunnel="yes" select="false()"/>
+    
+    <xsl:if test="$doDebug">
+      <xsl:message>+ [DEBUG] generate-body: {name(..)}/{name(.)} starting...</xsl:message>
+    </xsl:if>
+    
     <body>
       <xsl:apply-templates select="." mode="set-body-class-attr" />
       <xsl:apply-templates select="." mode="gen-user-body-top" />
@@ -188,12 +200,17 @@
   <xsl:template match="*" mode="generate-main">
     <xsl:param name="is-root" as="xs:boolean"  tunnel="yes" select="false()" />
     <xsl:param name="navigation" as="element()*"  tunnel="yes" />
-
+    <xsl:param name="doDebug" as="xs:boolean" tunnel="yes" select="false()"/>
+    
+    <xsl:if test="$doDebug">
+      <xsl:message>+ [DEBUG] generate-main: {name(..)}/{name(.)} starting...</xsl:message>
+    </xsl:if>
+    
     <section id="page">
       <div>
        
-       <xsl:call-template name="commonattributes"/>
-       <xsl:call-template name="set_an_anchor" />
+        <xsl:call-template name="commonattributes"/>
+        <xsl:call-template name="set_an_anchor" />
 
         <!-- Already put xml:lang on <html>; do not copy to body with commonattributes -->
         <xsl:apply-templates select="*[contains(@class,' ditaot-d/ditaval-startprop ')]/@outputclass" mode="add-ditaval-style"/>
@@ -217,9 +234,16 @@
             <xsl:sequence select="$navigation"/>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:variable name="content">
+            <xsl:variable name="content" as="node()*">
               <xsl:apply-templates />
             </xsl:variable>
+            <xsl:if test="$doDebug">
+              <xsl:message>+ [DEBUG] generate-main:  After applying templates in default mode, content is:
+<xsl:sequence select="$content"/>
+=====================                
+              </xsl:message>
+            </xsl:if>
+            
             <xsl:apply-templates select="$content"  mode="clean-linebreaks"/>
           </xsl:otherwise>
         </xsl:choose>
@@ -260,6 +284,12 @@
 
   <!-- generate main container -->
   <xsl:template match="*" mode="generate-main-container">
+    <xsl:param name="doDebug" as="xs:boolean" tunnel="yes" select="false()"/>
+    
+    <xsl:if test="$doDebug">
+      <xsl:message>+ [DEBUG] generate-main-container: {name(..)}/{name(.)} starting...</xsl:message>
+    </xsl:if>
+    
     <div id="{$IDMAINCONTAINER}" class="{$CLASSMAINCONTAINER}" role="application">
       <xsl:call-template name="gen-page-links" />
       <xsl:apply-templates select="." mode="generate-header"/>
@@ -287,31 +317,33 @@
    <!-- generate main content -->
   <xsl:template match="*" mode="generate-main-content">
     <xsl:param name="is-root" as="xs:boolean"  tunnel="yes" select="false()" />
-    <xsl:param name="content" tunnel="yes" />
+    <xsl:param name="content" tunnel="yes" />    
+    <xsl:param name="doDebug" as="xs:boolean" tunnel="yes" select="false()"/>
+    
+    <xsl:if test="$doDebug">
+      <xsl:message>+ [DEBUG] generate-main-content: {name(..)}/{name(.)} starting...</xsl:message>
+    </xsl:if>
+    
     <div id="{$IDMAINCONTENT}">
-      <xsl:attribute name="class">
+      <xsl:attribute name="class"
+        select="
+        if ($is-root)
+        then $CLASSROOTMAINCONTENT
+        else $CLASSMAINCONTENT" 
+      />
+      <article>
+        <xsl:apply-templates select="." mode="generate-breadcrumb"/>
         <xsl:choose>
-          <xsl:when test="$is-root">
-            <xsl:value-of select="$CLASSROOTMAINCONTENT" />
+          <xsl:when test="$content">
+            <div id="topic-content">
+              <xsl:sequence select="$content" />
+            </div>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:value-of select="$CLASSMAINCONTENT" />
+            <xsl:apply-templates select="." mode="generate-main"/>
           </xsl:otherwise>
-        </xsl:choose>
-      </xsl:attribute>
-          <article>
-            <xsl:apply-templates select="." mode="generate-breadcrumb"/>
-            <xsl:choose>
-              <xsl:when test="$content">
-                <div id="topic-content">
-                  <xsl:sequence select="$content" />
-                </div>
-              </xsl:when>
-              <xsl:otherwise>
-                <xsl:apply-templates select="." mode="generate-main"/>
-              </xsl:otherwise>
-              </xsl:choose>
-            </article>
+          </xsl:choose>
+        </article>
       <div class="clear" /><xsl:sequence select="'&#x0a;'"/>
     </div>
   </xsl:template>

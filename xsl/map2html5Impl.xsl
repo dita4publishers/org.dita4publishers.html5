@@ -94,11 +94,9 @@
 
   <xsl:param name="inputFileNameParam"/>
 
-  <!-- Directory into which the generated output is put adding  as="xs:string"
-       cause plugin to crash on Unbuntu + Mac OS X.8 on some installation
-       Must find why in order to set the param properly
+  <!-- Directory into which the generated output is put
   -->
-  <xsl:param name="outdir" select="./html5" />
+  <xsl:param name="outdir" select="'./html5'" as="xs:string" />
   <!-- The directory containing the original input root map (not the
        the temporary directory containing the map we're already processing.
 
@@ -114,7 +112,7 @@
   -->
   <xsl:param name="OUTEXT" select="'.html'" as="xs:string"/>
   <xsl:param name="jsOutExt" select="$OUTEXT"/>
-  <xsl:param name="tempdir" select="./temp" as="xs:string"/>
+  <xsl:param name="tempdir" select="'./temp'" as="xs:string"/>
 
  <!--
     The path of the directory, relative the $outdir parameter,
@@ -221,7 +219,7 @@
   <xsl:param name="HTML5THEMECONFIGDIR" select="''" />
 
   <xsl:param name="DRAFT" select="''" />
-  <xsl:param name="ISDRAFT" as="xs:boolean" select="if($DRAFT = 'yes') then true() else false()" />
+  <xsl:param name="ISDRAFT" as="xs:boolean" select="$DRAFT eq 'yes'" />
   <!-- CSS classes and IDs -->
   <xsl:param name="IDMAINCONTAINER" select="'d4h5-main-container'" />
   <xsl:param name="CLASSMAINCONTAINER" select="''" />
@@ -259,29 +257,20 @@
   <xsl:variable name="maxTocDepthInt" select="xs:integer($maxTocDepth)" as="xs:integer"/>
   <xsl:variable name="version" select="if(/map/topicmeta/prodinfo/vrmlist/vrm/@version) then /map/topicmeta/prodinfo/vrmlist/vrm/@version else ''" as="xs:string"/>
 
-  <xsl:variable name="xsloutput">
-    <xsl:choose>
-      <xsl:when test="$html5outputsizestrategyBoolean and not($ISDRAFT)">
-        <xsl:value-of select="'html5-no-indent'"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:value-of select="'html5'"/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:variable>
+  <xsl:variable name="xsloutput"
+    select="
+      if ($html5outputsizestrategyBoolean and not($ISDRAFT))
+         then 'html5-no-indent'
+         else 'html5'"
+  />
 
-  <xsl:variable name="newline">
-   <xsl:choose>
-      <xsl:when test="$html5outputsizestrategyBoolean and not($ISDRAFT)">
-        <xsl:value-of select="''"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:text>
-</xsl:text>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:variable>
-
+  <xsl:variable name="newline"
+    select="
+    if ($html5outputsizestrategyBoolean and not($ISDRAFT))
+    then ''
+    else '&#x0a;'
+    "
+  />
 
   <xsl:variable name="platform" as="xs:string"
     select="
@@ -294,31 +283,25 @@
 
   <xsl:variable name="debugBinary" select="$debug = 'true'" as="xs:boolean"/>
 
-  <xsl:variable name="topicsOutputPath">
-    <xsl:choose>
-      <xsl:when test="$topicsOutputDir != ''">
-        <xsl:sequence select="concat($outdir, $topicsOutputDir)"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:sequence select="$outdir"/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:variable>
+  <xsl:variable name="topicsOutputPath" as="xs:string"
+    select="
+    if ($topicsOutputDir != '')
+    then concat($outdir, $topicsOutputDir)
+    else $outdir
+    "
+  />
 
 
-  <xsl:variable name="imagesOutputPath">
-    <xsl:choose>
-      <xsl:when test="$imagesOutputDir != ''">
-        <xsl:sequence select="concat($outdir,
-            if (ends-with($outdir, '/')) then '' else '/',
-            $imagesOutputDir)"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:sequence select="$outdir"/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:variable>
-
+  <xsl:variable name="imagesOutputPath" as="xs:string"
+    select="if ($imagesOutputDir ne '')
+    then concat($outdir,
+                if (ends-with($outdir, '/')) 
+                then '' 
+                else '/',
+                $imagesOutputDir)
+    else $outdir
+    "
+  />
 
   <xsl:variable name="indexUri" as="xs:string" select="concat($html5IndexFilename, $OUTEXT)"/>
   <xsl:variable name="HTML5THEMECONFIGDOC" select="document($HTML5THEMECONFIG)" />
@@ -405,8 +388,6 @@
 
     <!-- If entire map is one big chunk we need to operate a little differently -->
     <xsl:variable name="isChunkedMap" as="xs:boolean" select="df:mapIsChunkToContent(.)" />
-
-    <xsl:apply-templates select="." mode="html5-impl" />
 
     <xsl:choose>
       <xsl:when test="$isChunkedMap">
@@ -658,8 +639,6 @@
   <xsl:template match="*[contains(@class,' topic/title ')]" mode="generate-map-title">
     <xsl:sequence select="." />
   </xsl:template>
-
-  <xsl:template mode="html5-impl" match="*" />
 
   <xsl:template match="*[df:isTopicGroup(.)]" mode="nav-point-title">
     <!-- Per the 1.2 spec, topic group navtitles are always ignored -->
