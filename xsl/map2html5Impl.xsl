@@ -33,8 +33,6 @@
 
   <!-- put first to be overridden by recent plugin -->
 
-  <xsl:import href="plugin:org.dita-community.common.xslt:xsl/dita-support-lib.xsl"/>
-  <xsl:import href="plugin:org.dita-community.common.xslt:xsl/relpath_util.xsl"/>
   <xsl:import href="plugin:org.dita4publishers.common.mapdriven:xsl/dataCollection.xsl"/>
 
   <xsl:import href="plugin:org.dita4publishers.common.xslt:xsl/reportParametersBase.xsl"/>
@@ -44,7 +42,6 @@
   <!-- Import the base HTML output generation transform. -->
   <xsl:import href="plugin:org.dita.html5:xsl/dita2html5impl.xsl"/>
 
-  <xsl:import href="plugin:org.dita.html5:xsl/hi-d.xsl"/>
   <xsl:import href="plugin:org.dita4publishers.common.mapdriven:xsl/mapdrivenEnumerationD4P.xsl"/>
 
   <xsl:import href="plugin:org.dita4publishers.common.xslt:xsl/graphicMap2AntCopyScript.xsl"/>
@@ -53,7 +50,6 @@
 
   <!-- json library -->
   <xsl:import href="plugin:org.dita4publishers.json:xsl/xml2json/xml-to-json.xsl"/>
-  <xsl:import href="plugin:org.dita.base:xsl/common/dita-utilities.xsl"/>
 
   <xsl:import 
     href="plugin:org.dita4publishers.common.html:xsl/functions-lt-2.3.1.xsl"

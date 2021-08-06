@@ -52,7 +52,98 @@
   </target>
 
   <target name="dita.map.html5.init" description="Initialize HTML5 plugin properties">
+    
+    <!-- These are copied from old preprocess-extensions, which are obsolete with newer OT versions -->
+    <condition property="isOT1.8.5">
+      <equals arg1="${otversion}" arg2="1.8.5"></equals> 
+    </condition>
+    
+    <condition property="otmajorversion" value="1">
+      <matches string="${otversion}" pattern="^1\.8\."></matches> 
+    </condition>
+    
+    <condition property="otmajorversion" value="2">
+      <matches string="${otversion}" pattern="^2\."></matches> 
+    </condition>
 
+    <condition property="otmajorversion" value="3">
+      <matches string="${otversion}" pattern="^3\."></matches> 
+    </condition>
+    
+    <condition property="otshortversion" value="3.6">
+      <matches string="${otversion}" pattern="^3\.6\."></matches> 
+    </condition>
+    
+    <condition property="otshortversion" value="3.5">
+      <matches string="${otversion}" pattern="^3\.5\."></matches> 
+    </condition>
+    
+    <condition property="otshortversion" value="3.4">
+      <matches string="${otversion}" pattern="^3\.4\."></matches> 
+    </condition>
+    
+    <condition property="otshortversion" value="3.3">
+      <matches string="${otversion}" pattern="^3\.3\."></matches> 
+    </condition>
+    
+    <condition property="otshortversion" value="3.2">
+      <matches string="${otversion}" pattern="^3\.2\."></matches> 
+    </condition>
+    
+    <condition property="otshortversion" value="3.1">
+      <matches string="${otversion}" pattern="^3\.1\."></matches> 
+    </condition>
+    
+    <condition property="otshortversion" value="3">
+      <matches string="${otversion}" pattern="^3\.0\."></matches> 
+    </condition>
+
+    <condition property="otshortversion" value="2.5">
+      <matches string="${otversion}" pattern="^2\.5\."></matches> 
+    </condition>
+    <condition property="otshortversion" value="2.4">
+      <matches string="${otversion}" pattern="^2\.4\."></matches> 
+    </condition>
+    <condition property="otshortversion" value="2.3">
+      <matches string="${otversion}" pattern="^2\.3\."></matches> 
+    </condition>
+
+    <condition property="otshortversion" value="2.2">
+      <matches string="${otversion}" pattern="^2\.2\."></matches> 
+    </condition>
+    
+    <condition property="otshortversion" value="2.1">
+      <matches string="${otversion}" pattern="^2\.1\."></matches> 
+    </condition>
+    
+    <condition property="otshortversion" value="2">
+      <matches string="${otversion}" pattern="^2\.0\."></matches> 
+    </condition>
+
+    <condition property="otshortversion" value="1.8">
+      <matches string="${otversion}" pattern="^1\.8\."></matches> 
+    </condition>
+    
+    <condition property="otshortversion" value="1.7">
+      <matches string="${otversion}" pattern="^1\.7\."></matches> 
+    </condition>
+    
+    <condition property="isOT3">
+      <matches string="${otversion}" pattern="^3\."></matches> 
+    </condition>
+    
+    <condition property="isOT2">
+      <matches string="${otversion}" pattern="^2\."></matches> 
+    </condition>
+    
+    <condition property="isOT2.2">
+      <matches string="${otversion}" pattern="^2\.2\."></matches> 
+    </condition>
+    
+    <echo message="+ [DEBUG] otmajorversion=${otmajorversion}"/>
+    <echo message="+ [DEBUG] otshortversion=${otshortversion}"/>
+    <echo message="+ [DEBUG] isOT3         =${isOT3}"/>
+    
     <condition property="debug" value="false">
       <not>
         <isset property="debug" />
