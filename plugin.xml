@@ -44,7 +44,7 @@
   <template file="xsl/map2html5_template.xsl"/>
   <template file="xsl/theme/theme-preprocess_template.xsl" />
 
-  <feature extension="dita.conductor.transtype.check" value="d4p-html5" type="txt"/>
+  <feature extension="dita.conductor.transtype.check" value="d4p-html5" type="text"/>
   <feature extension="dita.conductor.target.relative" value="build.xml" type="file"/>
   <feature extension="dita.xsl.xhtml" file="xsl/map2html5flagging.xsl"/>
   <feature extension="dita.xsl.html5" file="xsl/map2html5flagging.xsl"/>

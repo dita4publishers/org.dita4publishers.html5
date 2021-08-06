@@ -38,7 +38,7 @@
     <xsl:value-of select="$navPointTitleString"/>
   </xsl:template>
 
-  <xsl:template match="*[df:class(., 'topic/tm')]" mode="nav-point-title">
+  <xsl:template match="*[contains-token(@class, 'topic/tm')]" mode="nav-point-title">
 
     <xsl:apply-templates mode="#current"/>
 

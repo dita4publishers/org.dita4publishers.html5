@@ -31,8 +31,13 @@
   xmlns:json="http://json.org/"
   xmlns:related-links="http://dita-ot.sourceforge.net/ns/200709/related-links"
   xmlns:local="urn:functions:local"
+  xmlns:dita2html="http://dita-ot.sourceforge.net/ns/200801/dita2html"
   exclude-result-prefixes="#all"
   version="3.0">
+  
+  <!-- FIXME: (1.0.0RC28) This seems (and probably is) largely obsolete as of OT 3.x but 
+              don't have time to do the rework on the HTML5 transform.
+    -->
 
   <!-- Omit prereq links from unordered related-links (handled by mode="prereqs" template). -->
   <xsl:key name="omit-from-unordered-links" 
@@ -568,21 +573,24 @@
 
   <!-- section processor - div with no generated title -->
   <xsl:template match="*[contains(@class, ' topic/section ')]" name="topic.section">
-    <xsl:choose>
-      <xsl:when test="$html5AnchorStrategyBoolean">
-         <div class="section" id="{local:getIdForHtmlSection(.)}">
-           <xsl:call-template name="commonattributes"/>
-           <xsl:call-template name="set_an_anchor" />
-           <xsl:apply-templates select="."  mode="section-fmt" />
-         </div><xsl:value-of select="'&#x0a;'"/>
-      </xsl:when>
-      <xsl:otherwise>
-         <div class="section" id="{df:getIdForElement(.)}">
-            <xsl:call-template name="commonattributes"/>
-            <xsl:apply-templates select="."  mode="section-fmt" />
-         </div><xsl:value-of select="'&#x0a;'"/>
-       </xsl:otherwise>
-    </xsl:choose>
+    <xsl:variable name="sectionId" as="xs:string"
+      select="
+      if ($html5AnchorStrategyBoolean)
+      then local:getIdForHtmlSection(.)
+      else df:getIdForElement(.)
+      "
+    />
+    <!-- RC28: Reworked to use <section> instead of <div> and use the processing from the org.dita.xhtml5/topic.xsl topic.section
+               template minus the setidname template call since we have our own ID-setting logic here.
+      -->
+   <section class="section" id="{$sectionId}">
+     <xsl:call-template name="commonattributes"/>
+     <xsl:call-template name="gen-toc-id"/>
+     <xsl:apply-templates select="*[contains(@class, ' ditaot-d/ditaval-startprop ')]" mode="out-of-line"/>
+     <xsl:apply-templates select="." mode="dita2html:section-heading"/>
+     <xsl:apply-templates select="*[not(contains(@class, ' topic/title '))] | text() | comment() | processing-instruction()"/>
+     <xsl:apply-templates select="*[contains(@class, ' ditaot-d/ditaval-endprop ')]" mode="out-of-line"/>
+   </section><xsl:value-of select="'&#x0a;'"/>
   </xsl:template>
 
   <!-- child topics get a div wrapper and fall through -->

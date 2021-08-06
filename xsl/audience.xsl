@@ -33,7 +33,7 @@
  <xsl:variable name="activeAudience" select="/map/topicmeta/data[@name='active-audience'][1]/@value"/>
    
      
-  <xsl:template match="*[df:class(., 'map/map')]" mode="generate-audience-select">
+  <xsl:template match="*[contains-token(@class, 'map/map')]" mode="generate-audience-select">
     <xsl:param name="uniqueTopicRefs" as="element()*" tunnel="yes"/>
     <xsl:param name="rootMapDocUrl" as="xs:string" tunnel="yes"/>
     <xsl:message> + [INFO] Generating audience select </xsl:message>
@@ -45,7 +45,7 @@
         </button>
 
     <ul id="audience-select">
-        <xsl:apply-templates select="*[df:class(., 'map/topicmeta')]" mode="generate-audience-select"/>
+        <xsl:apply-templates select="*[contains-token(@class, 'map/topicmeta')]" mode="generate-audience-select"/>
       </ul>
     </span>
    

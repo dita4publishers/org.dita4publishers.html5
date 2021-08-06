@@ -29,7 +29,7 @@
   version="3.0"
 >
 
-  <xsl:template match="*[df:class(., 'map/map')]" mode="generate-content">
+  <xsl:template match="*[contains-token(@class, 'map/map')]" mode="generate-content">
     <xsl:param name="uniqueTopicRefs" as="element()*" tunnel="yes"/>
     <xsl:param name="rootMapDocUrl" as="xs:string" tunnel="yes"/>
     <xsl:message> + [INFO] Generating content...</xsl:message>
@@ -90,7 +90,7 @@
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template match="*[df:class(., 'topic/topic')]" mode="generate-content">
+  <xsl:template match="*[contains-token(@class, 'topic/topic')]" mode="generate-content">
     <!-- This template generates the output file for a referenced topic.
     -->
     <xsl:param name="rootMapDocUrl" as="xs:string" tunnel="yes"/>
@@ -120,7 +120,7 @@
     <xsl:message>topic-title is: <xsl:value-of select="$topic-title"/></xsl:message-->
         
     <xsl:if test="$doDebug">
-      <xsl:message  > + [DEBUG] Writing topic <xsl:sequence select="document-uri(root(.))"/> to HTML file "<xsl:sequence
+      <xsl:message>+ [DEBUG] Writing topic <xsl:sequence select="document-uri(root(.))"/> to HTML file "<xsl:sequence
         select="$resultUri"/>"...</xsl:message>
     </xsl:if>
 
@@ -129,12 +129,13 @@
         <xsl:with-param name="relativePath" select="$relativePath" as="xs:string" tunnel="yes"/>
         <xsl:with-param name="resultUri" as="xs:string" select="$resultUri" tunnel="yes"/>
         <xsl:with-param name="topicref" select="$topicref" as="element()?" tunnel="yes"/>
+        <xsl:with-param name="doDebug" as="xs:boolean" tunnel="yes" select="$doDebug"/>
       </xsl:apply-templates>
     </xsl:result-document>
     
   </xsl:template>
 
-  <xsl:template match="*[df:class(., 'topic/topic')]" priority="100" mode="map-driven-content-processing">
+  <xsl:template match="*[contains-token(@class, 'topic/topic')]" priority="100" mode="map-driven-content-processing">
     <!-- This template is a general dispatch template that applies
       templates to the topicref in a distinct mode so processors
       can do topic output processing based on the topicref context
@@ -155,7 +156,7 @@
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template mode="topicref-driven-content" match="*[df:class(., 'map/topicref')][not(@processing-role = 'resource-only')]">
+  <xsl:template mode="topicref-driven-content" match="*[contains-token(@class, 'map/topicref')][not(@processing-role = 'resource-only')]">
     <!-- Default topicref-driven content template. Simply applies normal processing
       in the default context to the topic parameter. -->
     <xsl:param name="topic" as="element()?"/>
@@ -182,9 +183,9 @@
 
   <xsl:template
     match="
-    *[df:class(., 'topic/body')]//*[df:class(., 'topic/indexterm')] |
-    *[df:class(., 'topic/shortdesc')]//*[df:class(., 'topic/indexterm')] |
-    *[df:class(., 'topic/abstract')]//*[df:class(., 'topic/indexterm')]
+    *[contains-token(@class, 'topic/body')]//*[contains-token(@class, 'topic/indexterm')] |
+    *[contains-token(@class, 'topic/shortdesc')]//*[contains-token(@class, 'topic/indexterm')] |
+    *[contains-token(@class, 'topic/abstract')]//*[contains-token(@class, 'topic/indexterm')]
     "
     priority="10">
     <xsl:if test="false() and $debugBoolean">
@@ -194,7 +195,7 @@
   </xsl:template>
 
   <!-- NOTE: the body of this template is taken from the base dita2xhtmlImpl.xsl -->
-  <xsl:template match="*[df:class(., 'topic/topic')]/*[df:class(., 'topic/title')]">
+  <xsl:template match="*[contains-token(@class, 'topic/topic')]/*[contains-token(@class, 'topic/title')]">
     <xsl:param name="topicref" select="()" as="element()?" tunnel="yes"/>
     <xsl:param name="collected-data" as="element()" tunnel="yes"/>
 
@@ -217,7 +218,7 @@
     </xsl:element>
   </xsl:template>
 
-  <xsl:template match="*[df:class(., 'map/topicmeta')]" priority="10"/>
+  <xsl:template match="*[contains-token(@class, 'map/topicmeta')]" priority="10"/>
 
 
 </xsl:stylesheet>
