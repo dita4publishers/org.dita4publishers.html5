@@ -402,7 +402,7 @@
     </xsl:apply-templates>
   </xsl:template>
 
-  <xsl:template match="/*[df:class(., 'map/map')]">
+  <xsl:template match="/*[contains-token(@class, 'map/map')]">
     <xsl:param name="doDebug" as="xs:boolean" tunnel="yes" select="false()"/>
 
     <xsl:apply-templates select="." mode="report-parameters"/>
@@ -426,7 +426,7 @@
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template match="/*[df:class(., 'map/map')]" mode="chunked-map-processing">
+  <xsl:template match="/*[contains-token(@class, 'map/map')]" mode="chunked-map-processing">
      <xsl:param name="doDebug" as="xs:boolean" tunnel="yes" select="false()"/>
      <xsl:param name="isChunkedMap" as="xs:boolean" tunnel="yes" />
     
@@ -496,7 +496,7 @@
 
   </xsl:template>
 
-  <xsl:template match="/*[df:class(., 'map/map')]" mode="standard-map-processing">
+  <xsl:template match="/*[contains-token(@class, 'map/map')]" mode="standard-map-processing">
     <xsl:param name="isChunkedMap" as="xs:boolean" tunnel="yes" />
     <xsl:param name="doDebug" as="xs:boolean" tunnel="yes" select="false()"/>
     <!-- this is intended to allow developper to add custom hook -->
@@ -639,7 +639,7 @@
 
   </xsl:template>
 
-  <xsl:template mode="generate-root-page-header" match="*[df:class(., 'map/map')]">
+  <xsl:template mode="generate-root-page-header" match="*[contains-token(@class, 'map/map')]">
     <!-- hook for a user-XSL title prefix -->
     <xsl:call-template name="gen-user-panel-title-pfx"/>
     <xsl:apply-templates select="." mode="generate-map-title-tree" />
@@ -669,7 +669,7 @@
     <!-- Per the 1.2 spec, topic group navtitles are always ignored -->
   </xsl:template>
 
-  <xsl:template mode="nav-point-title" match="*[df:class(., 'topic/fn')]" priority="10">
+  <xsl:template mode="nav-point-title" match="*[contains-token(@class, 'topic/fn')]" priority="10">
     <!-- Suppress footnotes in titles -->
   </xsl:template>
 

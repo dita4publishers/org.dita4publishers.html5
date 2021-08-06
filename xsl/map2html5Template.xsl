@@ -56,8 +56,8 @@
 
     <xsl:variable name="title">
       <xsl:choose>
-        <xsl:when test="*[df:class(., 'topic/title')][1]">
-          <xsl:value-of select="*[df:class(., 'topic/title')][1]" />
+        <xsl:when test="*[contains-token(@class, 'topic/title')][1]">
+          <xsl:value-of select="*[contains-token(@class, 'topic/title')][1]" />
         </xsl:when>
         <xsl:otherwise>
           <xsl:value-of select="$documentation-title" />

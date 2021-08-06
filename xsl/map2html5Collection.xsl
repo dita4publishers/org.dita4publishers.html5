@@ -25,7 +25,7 @@
                 exclude-result-prefixes="#all"
                 >
 
-  <xsl:template match="//*[df:class(., 'topic/audience')]">
+  <xsl:template match="//*[contains-token(@class, 'topic/audience')]">
     <xsl:message> + [INFO] Audience : <xsl:value-of select="@name"/> type: <xsl:value-of select="@type"/></xsl:message>
   </xsl:template>
   

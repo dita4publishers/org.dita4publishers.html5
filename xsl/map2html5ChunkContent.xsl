@@ -28,7 +28,7 @@
   version="3.0"
 >
 
-  <xsl:template match="*[df:class(., 'map/map')]" mode="generate-chunked-map-content">
+  <xsl:template match="*[contains-token(@class, 'map/map')]" mode="generate-chunked-map-content">
     <xsl:param name="uniqueTopicRefs" as="element()*" tunnel="yes"/>
     <xsl:param name="rootMapDocUrl" as="xs:string" tunnel="yes"/>
     <xsl:param name="indexUri" as="xs:string" tunnel="yes"/>
@@ -63,7 +63,7 @@
     <xsl:apply-templates select="." />
   </xsl:template>
 
-   <xsl:template match="*[df:class(., 'topic/topic')][not(ancestor::*[df:class(., 'topic/topic')])]" mode="render">
+   <xsl:template match="*[contains-token(@class, 'topic/topic')][not(ancestor::*[contains-token(@class, 'topic/topic')])]" mode="render">
       <article>
         <xsl:call-template name="set_an_anchor" />
         <xsl:apply-templates select="*" />

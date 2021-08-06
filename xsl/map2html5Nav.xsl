@@ -63,7 +63,7 @@
     <xsl:apply-templates select="." mode="generate-html5-nav-page-markup"/>
   </xsl:template>
 
-  <xsl:template match="*[df:class(., 'map/map')]" mode="generate-html5-nav">
+  <xsl:template match="*[contains-token(@class, 'map/map')]" mode="generate-html5-nav">
     <xsl:param name="collected-data" as="element()" tunnel="yes"/>
     <xsl:message> + [INFO] Generating HTML5 navigation structure...</xsl:message>
 
@@ -78,7 +78,7 @@
     <xsl:message> + [INFO] HTML5 navigation generation done.</xsl:message>
   </xsl:template>
 
-  <xsl:template mode="generate-html5-nav-page-markup" match="*[df:class(., 'map/map')]">
+  <xsl:template mode="generate-html5-nav-page-markup" match="*[contains-token(@class, 'map/map')]">
     <xsl:param name="collected-data" as="element()" tunnel="yes"/>
     <xsl:param name="documentation-title" tunnel="yes" />
     <xsl:param name="is-root" as="xs:boolean" tunnel="yes" select="false()" />
@@ -88,9 +88,9 @@
         <xsl:apply-templates mode="generate-html5-nav"
               select=".
               except (
-              *[df:class(., 'topic/title')],
-              *[df:class(., 'map/topicmeta')],
-              *[df:class(., 'map/reltable')]
+              *[contains-token(@class, 'topic/title')],
+              *[contains-token(@class, 'map/topicmeta')],
+              *[contains-token(@class, 'map/reltable')]
               )"
             />
     </xsl:variable>
@@ -113,11 +113,11 @@
     </nav>
   </xsl:template>
 
-  <xsl:template mode="generate-html5-nav-page-markup" match="*[df:class(., 'topic/title')][not(@toc = 'no')]">
+  <xsl:template mode="generate-html5-nav-page-markup" match="*[contains-token(@class, 'topic/title')][not(@toc = 'no')]">
     <h2 class="nav-pub-title"><xsl:apply-templates/></h2>
   </xsl:template>
 
-  <xsl:template mode="generate-html5-nav" match="*[df:class(., 'topic/title')][not(@toc = 'no')]"/>
+  <xsl:template mode="generate-html5-nav" match="*[contains-token(@class, 'topic/title')][not(@toc = 'no')]"/>
 
   <!-- Convert each topicref to a ToC entry. -->
   <xsl:template  mode="generate-html5-nav"
@@ -165,9 +165,9 @@
               reflected in the ToC before any subordinate topicrefs.
             -->
           <xsl:variable name="children">
-            <xsl:if test="$topic/*[df:class(., 'topic/topic')], *[df:class(., 'map/topicref')][not(@processing-role = 'resource-only')]">
+            <xsl:if test="$topic/*[contains-token(@class, 'topic/topic')], *[contains-token(@class, 'map/topicref')][not(@processing-role = 'resource-only')]">
               <xsl:variable name="listItems" as="node()*">
-                <xsl:apply-templates mode="#current" select="$topic/*[df:class(., 'topic/topic')], *[df:class(., 'map/topicref')][not(@processing-role = 'resource-only')]">
+                <xsl:apply-templates mode="#current" select="$topic/*[contains-token(@class, 'topic/topic')], *[contains-token(@class, 'map/topicref')][not(@processing-role = 'resource-only')]">
                   <xsl:with-param name="tocDepth" as="xs:integer" tunnel="yes"
                     select="$tocDepth + 1"/>
                 </xsl:apply-templates>
@@ -198,10 +198,10 @@
   </xsl:template>
 
   <xsl:template match="*[df:isTopicGroup(.)]" priority="20" mode="generate-html5-nav">
-    <xsl:apply-templates select="*[df:class(., 'map/topicref')][not(@processing-role = 'resource-only')]" mode="#current"/>
+    <xsl:apply-templates select="*[contains-token(@class, 'map/topicref')][not(@processing-role = 'resource-only')]" mode="#current"/>
   </xsl:template>
 
-  <xsl:template match="*[df:class(., 'topic/topic')]" mode="generate-html5-nav">
+  <xsl:template match="*[contains-token(@class, 'topic/topic')]" mode="generate-html5-nav">
     <!-- Non-root topics generate ToC entries if they are within the ToC depth -->
     <xsl:param name="tocDepth" as="xs:integer" tunnel="yes" select="0"/>
     <xsl:if test="$tocDepth le $maxTocDepthInt">
@@ -210,7 +210,7 @@
   </xsl:template>
 
   <xsl:template mode="#all"
-    match="*[df:class(., 'map/topicref') and (@processing-role = 'resource-only')]" priority="30"/>
+    match="*[contains-token(@class, 'map/topicref') and (@processing-role = 'resource-only')]" priority="30"/>
 
 
   <!-- topichead elements get a navPoint, but don't actually point to
@@ -221,7 +221,7 @@
     <xsl:if test="$tocDepth le $maxTocDepthInt">
       <xsl:variable name="navPointId" as="xs:string" select="generate-id(.)"/>
       <xsl:variable name="listItems" as="node()*">
-        <xsl:apply-templates select="*[df:class(., 'map/topicref')][not(@processing-role = 'resource-only')]" mode="#current">
+        <xsl:apply-templates select="*[contains-token(@class, 'map/topicref')][not(@processing-role = 'resource-only')]" mode="#current">
           <xsl:with-param name="tocDepth" as="xs:integer" tunnel="yes" select="$tocDepth + 1"/>
         </xsl:apply-templates>
       </xsl:variable>
@@ -236,7 +236,7 @@
     </xsl:if>
   </xsl:template>
 
-  <xsl:template match="*[df:class(., 'topic/tm')]" mode="generate-html5-nav">
+  <xsl:template match="*[contains-token(@class, 'topic/tm')]" mode="generate-html5-nav">
     <xsl:apply-templates mode="#current"/>
     <xsl:choose>
       <xsl:when test="@type = 'reg'">
@@ -254,23 +254,23 @@
 
   <xsl:template
     match="
-    *[df:class(., 'topic/topicmeta')] |
-    *[df:class(., 'map/navtitle')] |
-    *[df:class(., 'topic/ph')] |
-    *[df:class(., 'topic/cite')] |
-    *[df:class(., 'topic/image')] |
-    *[df:class(., 'topic/keyword')] |
-    *[df:class(., 'topic/term')]
+    *[contains-token(@class, 'topic/topicmeta')] |
+    *[contains-token(@class, 'map/navtitle')] |
+    *[contains-token(@class, 'topic/ph')] |
+    *[contains-token(@class, 'topic/cite')] |
+    *[contains-token(@class, 'topic/image')] |
+    *[contains-token(@class, 'topic/keyword')] |
+    *[contains-token(@class, 'topic/term')]
     "
     mode="generate-html5-nav">
     <xsl:apply-templates mode="#current"/>
   </xsl:template>
 
-  <xsl:template match="*[df:class(., 'topic/title')]//text()" mode="generate-html5-nav">
+  <xsl:template match="*[contains-token(@class, 'topic/title')]//text()" mode="generate-html5-nav">
     <xsl:copy copy-namespaces="no"/>
   </xsl:template>
 
-  <xsl:template match="*[df:class(., 'map/map')]" mode="generate-html5-nav-script-includes"/>
+  <xsl:template match="*[contains-token(@class, 'map/map')]" mode="generate-html5-nav-script-includes"/>
 
   <xsl:template match="text()" mode="generate-html5-nav"/>
 

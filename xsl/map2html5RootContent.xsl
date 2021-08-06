@@ -29,7 +29,7 @@
 >
 
   <!-- generate root pages -->
-  <xsl:template match="*[df:class(., 'map/map')]" mode="generate-root-pages">
+  <xsl:template match="*[contains-token(@class, 'map/map')]" mode="generate-root-pages">
     <xsl:param name="uniqueTopicRefs" as="element()*" tunnel="yes"/>
     <xsl:param name="rootMapDocUrl" as="xs:string" tunnel="yes"/>
 
@@ -82,7 +82,7 @@
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template match="*[df:class(., 'topic/topic')]" mode="generate-root-first-topic-page">
+  <xsl:template match="*[contains-token(@class, 'topic/topic')]" mode="generate-root-first-topic-page">
     <!-- This template generates the output file for a referenced topic.
     -->
     <xsl:param name="rootMapDocUrl" as="xs:string" tunnel="yes"/>
@@ -107,7 +107,7 @@
   </xsl:template>
 
 
-  <xsl:template match="*[df:class(., 'map/map')]" mode="generate-root-nav-page">
+  <xsl:template match="*[contains-token(@class, 'map/map')]" mode="generate-root-nav-page">
     <!-- Generate the root output page. By default this page contains the root
          navigation elements. The direct output of this template goes to the
          default output target of the XSLT transform.

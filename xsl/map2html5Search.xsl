@@ -33,7 +33,7 @@
 
   <xsl:output name="json" method="text" indent="no" encoding="utf-8" omit-xml-declaration="yes"/>
 
-  <xsl:template match="*[df:class(., 'map/map')]" mode="generate-search-index">
+  <xsl:template match="*[contains-token(@class, 'map/map')]" mode="generate-search-index">
     <xsl:param name="uniqueTopicRefs" as="element()*" tunnel="yes"/>
     <xsl:param name="rootMapDocUrl" as="xs:string" tunnel="yes"/>
 
@@ -100,7 +100,7 @@
       <xsl:sequence select="."/></xsl:message>
   </xsl:template-->
 
-  <xsl:template match="*[df:class(., 'topic/topic')]" mode="generate-search-index">
+  <xsl:template match="*[contains-token(@class, 'topic/topic')]" mode="generate-search-index">
     <!-- This template generates the output file for a referenced topic.
     -->
     <xsl:param name="rootMapDocUrl" as="xs:string" tunnel="yes"/>
@@ -121,12 +121,12 @@
 
     <id><xsl:value-of select="$id" /></id>
     <href><xsl:value-of select="$resultUri" /></href>
-    <title><xsl:value-of select="*[df:class(., 'topic/title')][1]" /></title>
+    <title><xsl:value-of select="*[contains-token(@class, 'topic/title')][1]" /></title>
     <desc>
-      <xsl:value-of select="*[df:class(., 'topic/shortdesc')][1]" />
+      <xsl:value-of select="*[contains-token(@class, 'topic/shortdesc')][1]" />
     </desc>
     <keywords>
-      <xsl:apply-templates select="//*[df:class(., 'topic/keyword')]" mode="search-filter" />
+      <xsl:apply-templates select="//*[contains-token(@class, 'topic/keyword')]" mode="search-filter" />
     </keywords>
 
   </xsl:template>

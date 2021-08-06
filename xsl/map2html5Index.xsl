@@ -31,7 +31,7 @@
   >
 
 
- <xsl:template match="*[df:class(., 'map/map')]" mode="generate-index">
+ <xsl:template match="*[contains-token(@class, 'map/map')]" mode="generate-index">
     <xsl:param name="collected-data" as="element()" tunnel="yes"/>
     <xsl:choose>
       <xsl:when test="$generateIndexBoolean">
@@ -43,11 +43,11 @@
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template match="*[df:class(., 'map/map')]" mode="generate-index-page">
+  <xsl:template match="*[contains-token(@class, 'map/map')]" mode="generate-index-page">
     <xsl:param name="collected-data" as="element()" tunnel="yes"/>
     <xsl:param name="index-content" tunnel="yes" />
     <xsl:variable name="pubTitle" as="xs:string*">
-      <xsl:apply-templates select="*[df:class(., 'topic/title')] | @title" mode="pubtitle"/>
+      <xsl:apply-templates select="*[contains-token(@class, 'topic/title')] | @title" mode="pubtitle"/>
     </xsl:variable>
 
 
